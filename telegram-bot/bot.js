@@ -21,7 +21,7 @@ bot.setChatMenuButton({
     web_app: {
 
       url:
-        "https://google.com"
+        "https://carpet-crm.onrender.com"
 
     }
 
