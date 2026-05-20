@@ -7,7 +7,7 @@ export default function getHours(
     const today = new Date()
     const fromDate = new Date(today)
 
-    return attendance
+    return (attendance || [])
 
     .filter((a) => {
 

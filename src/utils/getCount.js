@@ -7,7 +7,7 @@ export default function getCount(
   selectedDate
 ) {
 
-    return orders
+    return (orders || [])
 
     .filter((o) => {
 

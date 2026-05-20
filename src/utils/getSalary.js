@@ -20,7 +20,7 @@ export default function getSalary(
       fromDate.setDate( today.getDate() - days )
     }
 
-    return orders
+    return (orders || [])
 
     .filter((o) => {
 
