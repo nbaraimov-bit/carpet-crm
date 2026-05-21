@@ -185,12 +185,13 @@ function App() {
         "workers",
         worker.firebaseId
       ),
-      {telegramId}
+      { telegramId: tg?.initDataUnsafe?.user?.id || null}
     )
 
     const updatedWorker = {
       ...worker,
      roles,
+    telegramId: tg?.initDataUnsafe?.user?.id || null
     }
 
     setCurrentWorker(updatedWorker)
