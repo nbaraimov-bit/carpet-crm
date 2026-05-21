@@ -1,7 +1,34 @@
 import TelegramBot
 from "node-telegram-bot-api"
 
+import {
+  initializeApp
+}
+from "firebase/app"
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  updateDoc,
+  doc
+}
+from "firebase/firestore"
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDsE61F0Ze7jJffA7XapF112oZmpmSTmBM",
+  authDomain: "carpet-crm-1fc8a.firebaseapp.com",
+  projectId: "carpet-crm-1fc8a",
+  storageBucket: "carpet-crm-1fc8a.firebasestorage.app",
+  messagingSenderId: "216085452494",
+  appId: "1:216085452494:web:fc7751aead7a62d29ae29f"
+};
+
+const app = initializeApp(firebaseConfig)
+const db = getFirestore(app)
+
 const token = "7843106853:AAGDXuNZPv0jY6LRyWtoTJl0ZXJ6gWfcgVc"
+const ADMIN_ID = 5793538486
 
 const bot = new TelegramBot(
   token,
@@ -10,37 +37,262 @@ const bot = new TelegramBot(
   }
 )
 
-bot.setChatMenuButton({
-
-  menu_button: {
-
-    type: "web_app",
-
-    text: "Open",
-
-    web_app: {
-
-      url:
-        "https://carpet-crm.onrender.com"
-
-    }
-
-  }
-
-})
-
 console.log("Bot ishga tushdi")
 
 bot.onText(
   /\/start/,
-  (msg) => {
+  async (msg) => {
 
+    const workersSnapshot = await getDocs(
+      collection(db, "workers")
+    )
+
+    const workerDoc = workersSnapshot.docs.find(
+      (d) =>
+        d.data().telegramId == msg.chat.id
+    )
+
+    // worker topilmasa
+    if (!workerDoc) {
+
+      return bot.sendMessage(
+        msg.chat.id,
+        "Siz ro‘yxatdan o‘tmagansiz"
+      )
+
+    }
+
+    const worker = workerDoc.data()
+
+    // admin yoki ega bo‘lsa
+    if (
+      worker.roles?.includes("admin") ||
+      worker.roles?.includes("ega")
+    ) {
+
+      return bot.sendMessage(
+        msg.chat.id,
+        "Gilam CRM"
+      )
+
+    }
+
+    // oddiy worker bo‘lsa
     bot.sendMessage(
 
       msg.chat.id,
 
       "Gilam CRM",
 
+      {
+
+        reply_markup: {
+
+          keyboard: [
+
+            [
+              {
+                text:
+                  "Ishni boshlash"
+              }
+            ],
+
+          ],
+
+          resize_keyboard: true
+
+        }
+
+      }
+
+    )
+
+  }
+)
+
+bot.on(
+  "message",
+  async (msg) => {
+
+    if (
+      msg.text ===
+      "Ishni boshlash"
+    ) {
+
+      // workerni topish
+      const workersSnapshot = await getDocs(
+        collection(db, "workers")
+      )
+
+      const workerDoc = workersSnapshot.docs.find(
+        (d) => d.data().telegramId == msg.chat.id
+      )
+
+      // worker topilmasa
+      if (!workerDoc) {
+
+        return bot.sendMessage(
+          msg.chat.id,
+          "Siz ro‘yxatdan o‘tmagansiz"
+        )
+
+      }
+
+      const worker = workerDoc.data()
+
+      // allaqachon ishlayotgan bo‘lsa
+      if (worker.working) {
+
+        return bot.sendMessage(
+          msg.chat.id,
+          "Siz allaqachon ish boshlagansiz ✅"
+        )
+
+      }
+
+      await bot.sendMessage(
+        msg.chat.id,
+        "Admin tasdiqlashini kuting ⏳"
+      )
+
+      await bot.sendMessage(
+
+        ADMIN_ID,
+
+        `${msg.from.first_name} ish boshlamoqchi 👷`,
+
+        {
+          reply_markup: {
+
+            inline_keyboard: [[
+
+              {
+                text: "Tasdiqlash ✅",
+                callback_data:
+                  `approve_${msg.chat.id}`
+              },
+
+              {
+                text: "Rad ❌",
+                callback_data:
+                  `reject_${msg.chat.id}`
+              }
+
+            ]]
+
+          }
+
+        }
+
+      )
+
+    }
+
+  }
+)
+
+bot.on(
+  "callback_query",
+  async (query) => {
+
+    const data =
+      query.data
+
+    if (
+      data.startsWith(
+        "approve_"
+      )
+    ) {
+
+      const workerId =
+        data.split("_")[1]
+
+      await bot.sendMessage(
+
+        workerId,
+
+        "Tasdiqlandi ✅\n\nIshni boshlashingiz mumkin"
+
+      )
+
+      await bot.editMessageText(
+        "Tasdiqlandi ✅",
+        {
+          chat_id: query.message.chat.id,
+          message_id: query.message.message_id
+        }
+      )
+
+      const workersSnapshot = await getDocs(
+        collection(
+          db,
+          "workers"
+        )
+      )
+
+      const workerDoc = workersSnapshot.docs.find(
+        (d) => d.data().telegramId == workerId
+      )
+
+      if (workerDoc) {
+
+        await updateDoc(
+          doc(
+            db,
+            "workers",
+            workerDoc.id
+          ),
+
+          {working: true}
+        )
+
+      }
+
+    }
+
+    if (
+      data.startsWith(
+        "reject_"
+      )
+    ) {
+
+      const workerId = data.split("_")[1]
+
+      await bot.sendMessage(
+        workerId,
+        "So‘rovingiz rad etildi ❌"
+      )
+
+      const workersSnapshot = await getDocs(collection(db, "workers"))
+      const workerDoc = workersSnapshot.docs.find(
+        (d) => d.data().telegramId == workerId
+      )
+
+      if (workerDoc) {
+
+        await updateDoc(
+          doc(
+            db,
+            "workers",
+            workerDoc.id
+          ),
+          {working: false}
+        )
+
+      }
+
+    }
+
+  }
+)
+
+bot.onText(
+  /\/id/,
+  (msg) => {
+
+    bot.sendMessage(
+      msg.chat.id,
+      `Sizning ID: ${msg.chat.id}`
     )
 
   }

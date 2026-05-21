@@ -72,6 +72,8 @@ function App() {
   const [archives, setArchives] = useState([])
   const [archiveSearch, setArchiveSearch] = useState("")
 
+  const tg = window.Telegram.WebApp
+
 
   const sendWorkerRequest =
     async () => {
@@ -97,9 +99,9 @@ function App() {
           name: workerName,
           phone: workerPhone,
           requestedRoles,
+          telegramId: tg.initDataUnsafe?.user?.id,
           status: "pending",
-          createdAt:
-            serverTimestamp(),
+          createdAt: serverTimestamp(),
         }
       )
 
@@ -118,8 +120,8 @@ function App() {
       {
         name: request.name,
         phone: request.phone,
-        roles:
-          request.requestedRoles,
+        telegramId: request.telegramId,
+        roles: request.requestedRoles,
         approved: true,
         status: "nofaol",
         working: false,
@@ -173,8 +175,18 @@ function App() {
 
     const workerDoc = snapshot.docs[0]
     const worker = {firebaseId: workerDoc.id, ...workerDoc.data()}
+    const telegramId = tg.initDataUnsafe?.user?.id
  
     let roles = worker.roles
+
+    await updateDoc(
+      doc(
+        db,
+        "workers",
+        worker.firebaseId
+      ),
+      {telegramId}
+    )
 
     const updatedWorker = {
       ...worker,
