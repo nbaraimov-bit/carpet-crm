@@ -72,7 +72,7 @@ function App() {
   const [archives, setArchives] = useState([])
   const [archiveSearch, setArchiveSearch] = useState("")
 
-  const tg = window.Telegram.WebApp
+  const tg = window.Telegram?.WebApp
 
 
   const sendWorkerRequest =
@@ -99,7 +99,7 @@ function App() {
           name: workerName,
           phone: workerPhone,
           requestedRoles,
-          telegramId: tg.initDataUnsafe?.user?.id,
+          telegramId: tg?.initDataUnsafe?.user?.id,
           status: "pending",
           createdAt: serverTimestamp(),
         }
@@ -175,7 +175,7 @@ function App() {
 
     const workerDoc = snapshot.docs[0]
     const worker = {firebaseId: workerDoc.id, ...workerDoc.data()}
-    const telegramId = tg.initDataUnsafe?.user?.id
+    const telegramId = tg?.initDataUnsafe?.user?.id
  
     let roles = worker.roles
 
