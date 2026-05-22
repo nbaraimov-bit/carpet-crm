@@ -209,61 +209,50 @@ bot.on(
     const data =
       query.data
 
-    if (
-      data.startsWith(
-        "approve_"
-      )
-    ) {
+    if (data.startsWith("approve_")) {
 
-      const workerId =
-        data.split("_")[1]
+  const workerId = data.split("_")[1]
 
-      await bot.sendMessage(
+  const workersSnapshot = await getDocs(
+    collection(db, "workers")
+  )
 
-        workerId,
+  const workerDoc = workersSnapshot.docs.find(
+    (d) => String(d.data().telegramId) === String(workerId)
+  )
 
-        "Tasdiqlandi ✅\n\nIshni boshlashingiz mumkin"
+  if (!workerDoc) {
 
-      )
+    return bot.sendMessage(
+      query.message.chat.id,
+      "Worker topilmadi ❌"
+    )
 
-      await bot.editMessageText(
-        "Tasdiqlandi ✅",
-        {
-          chat_id: query.message.chat.id,
-          message_id: query.message.message_id
-        }
-      )
+  }
 
-      const workersSnapshot = await getDocs(
-        collection(
-          db,
-          "workers"
-        )
-      )
-
-      const workerDoc = workersSnapshot.docs.find(
-        (d) => String(d.data().telegramId) == String(workerId)
-      )
-
-      if (workerDoc) {
-
-        await updateDoc(
-          doc(
-            db,
-            "workers",
-            workerDoc.id
-          ),
-
-          {
-            working: true,
-            status: "faol",
-            startedAt: new Date()
-          }
-        )
-
-      }
-
+  await updateDoc(
+    doc(db, "workers", workerDoc.id),
+    {
+      working: true,
+      status: "faol",
+      startedAt: new Date()
     }
+  )
+
+  await bot.sendMessage(
+    workerId,
+    "Tasdiqlandi ✅\n\nIshni boshlashingiz mumkin"
+  )
+
+  await bot.editMessageText(
+    "Tasdiqlandi ✅",
+    {
+      chat_id: query.message.chat.id,
+      message_id: query.message.message_id
+    }
+  )
+
+}
 
     if (
       data.startsWith(

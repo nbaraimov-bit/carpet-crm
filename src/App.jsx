@@ -348,15 +348,14 @@ function App() {
     )
   }
 
-  const changeWorkerStatus = 
-  async (
+  const changeWorkerStatus =  async (
     workerId,
     newStatus
-  ) => {
-    console.log(
-  workerId,
-  newStatus
-)
+    ) => {
+      console.log(
+        workerId,
+        newStatus
+      )
 
     const workerRef =
       doc(
