@@ -78,6 +78,8 @@ function App() {
   const sendWorkerRequest =
     async () => {
 
+      const telegramId = tg?.initDataUnsafe?.user?.id
+
       if (!workerName.trim()) {
         alert("Ism kiriting")
         return
