@@ -47,10 +47,15 @@ bot.onText(
       collection(db, "workers")
     )
 
-    const workerDoc = workersSnapshot.docs.find(
-      (d) =>
-        d.data().telegramId == msg.chat.id
-    )
+    const workerDoc = workersSnapshot.docs.find((d) => {
+      const data = d.data()
+
+      return (
+        data.telegramId &&
+        Number(data.telegramId) === Number(msg.chat.id)
+      )
+
+    })
 
     // worker topilmasa
     if (!workerDoc) {
@@ -124,9 +129,15 @@ bot.on(
         collection(db, "workers")
       )
 
-      const workerDoc = workersSnapshot.docs.find(
-        (d) => d.data().telegramId == msg.chat.id
-      )
+      const workerDoc = workersSnapshot.docs.find((d) => {
+        const data = d.data()
+
+        return (
+          data.telegramId &&
+          Number(data.telegramId) === Number(msg.chat.id)
+        )
+
+      })
 
       // worker topilmasa
       if (!workerDoc) {
@@ -231,7 +242,7 @@ bot.on(
       )
 
       const workerDoc = workersSnapshot.docs.find(
-        (d) => d.data().telegramId == workerId
+        (d) => String(d.data().telegramId) == String(workerId)
       )
 
       if (workerDoc) {
@@ -243,7 +254,11 @@ bot.on(
             workerDoc.id
           ),
 
-          {working: true}
+          {
+            working: true,
+            status: "faol",
+            startedAt: new Date()
+          }
         )
 
       }
@@ -264,9 +279,16 @@ bot.on(
       )
 
       const workersSnapshot = await getDocs(collection(db, "workers"))
-      const workerDoc = workersSnapshot.docs.find(
-        (d) => d.data().telegramId == workerId
-      )
+      const workerDoc = workersSnapshot.docs.find((d) => {
+
+        const data = d.data()
+
+        return (
+          data.telegramId &&
+          Number(data.telegramId) === Number(workerId)
+        )
+
+      })
 
       if (workerDoc) {
 
