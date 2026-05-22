@@ -334,6 +334,13 @@ function App() {
         startedAt: null
       }
     )
+
+    setWorkers(
+      workers.map((w) =>
+        w.firebaseId === workerDoc.firebaseId
+        ? {...w, working: false} : w
+      )
+    )
   }
 
   const changeWorkerStatus = 
@@ -994,9 +1001,7 @@ function App() {
         <br /><br />  
 
         <button
-          onClick={() => {
-            console.log("bosildi") 
-            loginWorker()}}
+          onClick={() => {loginWorker()}}
         >
           Kirish
         </button> 
