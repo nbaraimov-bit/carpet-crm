@@ -1,0 +1,33 @@
+body {
+  background: #0f172a;
+  color: white;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+span,
+b {
+  color: white;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+input,
+select {
+  background: #1e293b;
+  color: white;
+  border: 1px solid #475569;
+}
