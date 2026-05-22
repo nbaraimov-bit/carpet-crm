@@ -439,6 +439,81 @@ function App() {
     return 0
   }
 
+  const today = new Date()
+
+  const todayArchives = archives.filter((o) => {
+
+    if (!o.createdAt) return false
+
+    const d =
+      o.createdAt.toDate()
+
+    return (
+      d.getDate() === today.getDate() &&
+      d.getMonth() === today.getMonth() &&
+      d.getFullYear() === today.getFullYear()
+    )
+
+  })
+
+  const dailyIncome = todayArchives.reduce(
+    (sum, o) =>
+      sum + Number(o.price || 0),
+    0
+  )
+
+  const dailyWasherSalary = todayArchives.reduce(
+    (sum, o) => {
+
+      return (
+        sum +
+        Number(o.carpetSalary || 0) +
+        Number(o.blanketSalary || 0) +
+        Number(o.yakandozSalary || 0) +
+        Number(o.curtainSalary || 0)
+      )
+
+    },
+    0
+  )
+
+  const todayAttendance = attendance.filter((a) => {
+
+    if (!a.createdAt) return false
+
+    const d =
+      a.createdAt.toDate()
+
+    return (
+      d.getDate() === today.getDate() &&
+      d.getMonth() === today.getMonth() &&
+      d.getFullYear() === today.getFullYear()
+    )
+
+  })
+
+  const dailyHourlySalary = todayAttendance.reduce(
+    (sum, a) => {
+
+      const worker = workers.find(
+        (w) => w.phone === a.workerPhone
+      )
+
+      const hourly = getHourlyPrice(worker)
+
+      return (
+        sum + hourly * Number(a.totalHours || 0)
+      )
+
+    },
+    0
+  )
+
+  const totalDailySalary =
+  dailyWasherSalary +
+  dailyHourlySalary
+
+
   {/* ===== use effectlar ===== */}
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -1460,11 +1535,30 @@ function App() {
           >
             <button
               onClick={() =>{
-                console.log(showArchive)
                 setShowArchive(!showArchive)}
               }
             >
               Arxiv
+            </button>
+          </div>
+        )}
+
+        {(allowedRoles.includes("admin") ||
+          allowedRoles.includes("ega")  
+        ) && (
+
+          <div
+            style={{
+              marginTop: 10,
+              padding: 8,
+              borderRadius: 5,
+              border: "3px solid #ff0000"
+            }}
+          >
+            <button
+              onClick={() => setRole("hisobot")}
+            >
+              📊 Hisobot  
             </button>
           </div>
         )}
@@ -1492,24 +1586,28 @@ function App() {
        
         <hr />
 
-        {workers.find(
-          (w) => w.phone === currentWorker?.phone
-        )?.working ? (
+        {!currentWorker?.roles?.includes("admin") &&
+          !currentWorker?.roles?.includes("ega") && (
+      
+          workers.find(
+            (w) => w.phone === currentWorker?.phone
+          )?.working ? (
 
-          <button
-            onClick={stopWork}
-          >
-            Ishni tugatish
-          </button>
+            <button
+              onClick={stopWork}
+            >
+              Ishni tugatish
+            </button>
 
-        ) : (
+          ) : ( 
+ 
+            <button
+              onClick={startWork}
+            >
+              Ishni boshlash
+            </button>
 
-          <button
-            onClick={startWork}
-          >
-            Ishni boshlash
-          </button>
-
+          )
         )}
 
       </div>
@@ -1769,95 +1867,170 @@ function App() {
     {/* ===== ega panel ===== */}
     {role === "ega"  && (
     
-    <>
-      <button onClick={() => setRole("")}
-        style={{fontSize: 25,}}>
-        {"⏪️"}
-      </button>
-        
-    <div
-      style={{
-        border:
-          "1px solid #ccc",
-        padding: 10,
-        marginTop: 20,
-      }}
-    >
-
-      <h2>Ish haqi</h2> 
-
-      <p>Gilam</p>
-
-      <input
-        value={ priceInputs.carpet || "" }
-
-        onChange={(e) =>
-          setPriceInputs({ ...priceInputs, carpet: e.target.value,})
-        }
-      />
-
-      <p>Adyol</p>
-
-      <input
-        value={ priceInputs.blanket || "" }
-
-        onChange={(e) =>
-          setPriceInputs({ ...priceInputs, blanket: e.target.value, })
-        }
-      />
-
-      <p>Yakandoz</p>
-
-      <input
-        value={ priceInputs.yakandoz || "" }
-
-        onChange={(e) =>
-          setPriceInputs({ ...priceInputs, yakandoz: e.target.value, })
-        }
-      />
-
-      <p>Parda</p>
-
-      <input
-        value={ priceInputs.curtain || "" }
-
-        onChange={(e) =>
-          setPriceInputs({ ...priceInputs, curtain: e.target.value, })
-        }
-      />
-
-      <p>Driver soatbay</p>
-
-      <input
-        value={driverPrices.hour || "" }
-
-        onChange={(e) =>
-            setDriverPrices({...driverPrices, hour: e.target.value,})
-        }
-      />
-
-      <p>Tayyorlovchi soatbay</p>
-
-      <input
-        value={tayyorlovchiPrices.hour || "" }
-
-        onChange={(e) =>
-          setTayyorlovchiPrices({...tayyorlovchiPrices, hour: e.target.value,})
-        }
-      />
-
-      <p>
-        <button
-          onClick={savePrices}
-        >
-          Saqlash
+      <>
+        <button onClick={() => setRole("")}
+          style={{fontSize: 25,}}>
+          {"⏪️"}
         </button>
-      </p>
+        
+        <div
+          style={{
+            border:
+              "1px solid #ccc",
+            padding: 10,
+            marginTop: 20,
+          }}
+        >
 
-    </div>
+        <h2>Ish haqi</h2> 
+  
+        <p>Gilam</p>
+  
+        <input
+          value={ priceInputs.carpet || "" }
+
+          onChange={(e) =>
+            setPriceInputs({ ...priceInputs, carpet: e.target.value,})
+          }
+        />
+
+        <p>Adyol</p>
+
+        <input
+          value={ priceInputs.blanket || "" }
+
+          onChange={(e) =>
+            setPriceInputs({ ...priceInputs, blanket: e.target.value, })
+          }
+        />
+
+        <p>Yakandoz</p>
+
+        <input
+          value={ priceInputs.yakandoz || "" }
+
+          onChange={(e) =>
+            setPriceInputs({ ...priceInputs, yakandoz: e.target.value, })
+          }
+        />
+
+        <p>Parda</p>
+
+        <input
+          value={ priceInputs.curtain || "" } 
+ 
+          onChange={(e) =>
+            setPriceInputs({ ...priceInputs, curtain: e.target.value, })
+          }
+        />
+
+        <p>Driver soatbay</p>
+
+        <input 
+          value={driverPrices.hour || "" }
+ 
+          onChange={(e) =>
+            setDriverPrices({...driverPrices, hour: e.target.value,})
+          }
+        />
+
+        <p>Tayyorlovchi soatbay</p>
+
+        <input
+          value={tayyorlovchiPrices.hour || "" }
+
+          onChange={(e) =>
+            setTayyorlovchiPrices({...tayyorlovchiPrices, hour: e.target.value,})
+          }
+        />
+
+        <p>
+          <button
+            onClick={savePrices}
+          >
+            Saqlash
+          </button>
+        </p>
+
+      </div>
     </>
     )}
 
+    {role === "hisobot" && (
+
+      <div
+        style={{
+          padding: 20,
+          color: "white"
+        }}
+      >
+
+        <h1>📊 Hisobot</h1>
+
+        <br /> 
+
+        <div
+          style={{
+            border: "2px solid #555",
+            borderRadius: 10,
+            padding: 15,
+            marginBottom: 15
+          }}
+        >
+
+          <h3>
+            Yakunlangan buyurtmalar:
+          </h3>
+
+          <h2>
+            {todayArchives.length} ta
+          </h2>
+    
+        </div>
+
+        <div
+          style={{
+            border: "2px solid #555",
+            borderRadius: 10,
+            padding: 15,
+            marginBottom: 15
+          }}
+        >
+
+          <h3>
+            Tushum:
+          </h3> 
+
+          <h2>
+            {dailyIncome.toLocaleString()}
+            so'm
+          </h2>
+
+        </div>
+
+        <div
+          style={{
+            border: "2px solid #555",
+            borderRadius: 10,
+            padding: 15,
+            marginBottom: 15
+          }}
+        >
+
+          <h3>
+            Ishchilar maoshi:
+          </h3>
+
+          <h2>
+            {totalDailySalary.toLocaleString()}
+            so'm
+          </h2>
+
+        </div>
+
+      </div>
+
+    )}
 
 
   </div>
