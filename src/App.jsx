@@ -351,7 +351,7 @@ function App() {
   const changeWorkerStatus =  async (
     workerId,
     newStatus
-    ) => {
+  ) => {
       console.log(
         workerId,
         newStatus
@@ -368,7 +368,8 @@ function App() {
       workerRef,
       {
         status: newStatus,
-        working: newStatus === "faol"
+        working: newStatus === "faol",
+        startedAt: newStatus === "faol" ? new Date() : null
       }
     )
   }
