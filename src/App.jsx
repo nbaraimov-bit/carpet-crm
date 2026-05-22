@@ -79,7 +79,7 @@ function App() {
   const sendWorkerRequest =
     async () => {
 
-      const telegramId = tg?.initDataUnsafe?.user?.id
+      const telegramId = String(tg?.initDataUnsafe?.user?.id || "")
 
       alert(tg?.initDataUnsafe?.user?.id)
 
@@ -104,7 +104,7 @@ function App() {
           name: workerName,
           phone: workerPhone,
           requestedRoles,
-          telegramId: telegramId,
+          telegramId,
           status: "pending",
           createdAt: serverTimestamp(),
         }
