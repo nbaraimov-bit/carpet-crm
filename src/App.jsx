@@ -71,6 +71,7 @@ function App() {
   const [showArchive, setShowArchive] = useState(false)
   const [archives, setArchives] = useState([])
   const [archiveSearch, setArchiveSearch] = useState("")
+  //const [telegramId, setTelegramId] = useState("")
 
   const tg = window.Telegram?.WebApp
 
@@ -79,6 +80,8 @@ function App() {
     async () => {
 
       const telegramId = tg?.initDataUnsafe?.user?.id
+
+      alert(tg?.initDataUnsafe?.user?.id)
 
       if (!workerName.trim()) {
         alert("Ism kiriting")
