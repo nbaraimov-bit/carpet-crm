@@ -1956,6 +1956,8 @@ function App() {
     </>
     )}
 
+
+    {/* ===== hisobot panel ===== */}
     {role === "hisobot" && (
 
       <div
@@ -1964,6 +1966,11 @@ function App() {
           color: "white"
         }}
       >
+
+        <button onClick={() => setRole("")}
+          style={{fontSize: 25,}}>
+          {"⏪️"}
+        </button>
 
         <h1>📊 Hisobot</h1>
 
