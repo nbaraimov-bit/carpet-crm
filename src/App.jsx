@@ -1396,32 +1396,50 @@ function App() {
       currentWorker?.roles?.includes("admin") ||
       currentWorker?.roles?.includes("ega")
       ?(
+      <div className="app-container">
+        <div className="welcome-card">
 
-      <div style={{ padding: 20 }}>
-        <h1>Xush kelibsiz</h1>
+          <div className="welcome-title">
+            Xush kelibsiz! 👋
+          </div>
 
-        {currentWorker && (
-          <p><b>{currentWorker.name}</b></p>
-        )}
+          <div className="welcome-name">
+            {currentWorker?.name}
+          </div>
 
+          <div
+            style={{
+              marginTop: 14,
+              color: "#cfd8ff",
+              fontSize: 15,
+            }}
+          >
+            O'z ish joyingizni tanlang
+          </div>
+
+        </div>
+
+        <div className="roles-grid">  
+    
         {(allowedRoles.includes("operator")
           || allowedRoles.includes("admin")
           || allowedRoles.includes("ega")
         ) && (
           <div
-            style={{
-              marginTop: 10,
-              padding: 8,
-              borderRadius: 5,
-              border: "3px solid #ff0000",
-
-            }}
+            className="role-card"
+            onClick={() => setRole("operator")}
           >
-            <button
-              onClick={() => setRole("operator")}
-            >
+            <div style={{ fontSize: 42 }}>
+              🎧
+            </div>
+
+            <div className="role-title">
               Operator
-            </button>
+            </div>
+
+            <div className="role-subtitle">
+              Buyurtmalarni qabul qilish va boshqarish
+            </div>
           </div>
         )}
 
@@ -1430,18 +1448,20 @@ function App() {
           || allowedRoles.includes("ega")
         ) && (
           <div
-            style={{
-              marginTop: 10,
-              padding: 8,
-              borderRadius: 5,
-              border: "3px solid #ff0000",
-            }}
+            className="role-card"
+            onClick={() => setRole("driver")}
           >
-            <button
-              onClick={() => setRole("driver")}
-            >
+            <div style={{ fontSize: 42 }}>
+              🚚
+            </div>
+
+            <div className="role-title">
               Driver
-            </button>
+            </div>
+
+            <div className="role-subtitle">
+              Buyurtmalarni yetkazish va statusni yangilash
+            </div>
           </div>
         )}
 
@@ -1450,18 +1470,20 @@ function App() {
           || allowedRoles.includes("ega")
         ) && (
           <div
-            style={{
-              marginTop: 10,
-              padding: 8,
-              borderRadius: 5,
-              border: "3px solid #ff0000",
-            }}
+            className="role-card"
+            onClick={() => setRole("washer")}
           >
-            <button
-              onClick={() => setRole("washer")}
-            >
+            <div style={{ fontSize: 42 }}>
+              🧼
+            </div>
+
+            <div className="role-title">
               Washer
-            </button>
+            </div>
+
+            <div className="role-subtitle">
+              Gilamlarni yuvish va holatini belgilash
+            </div>
           </div>
         )}
 
@@ -1470,18 +1492,20 @@ function App() {
           || allowedRoles.includes("ega")
         ) && (
           <div
-            style={{
-              marginTop: 10,
-              padding: 8,
-              borderRadius: 5,
-              border: "3px solid #ff0000",
-            }}
+            className="role-card"
+            onClick={() => setRole("tayyorlovchi")}
           >
-            <button
-              onClick={() => setRole("tayyorlovchi")}
-            >
+            <div style={{ fontSize: 42 }}>
+              📦
+            </div>
+
+            <div className="role-title">
               Tayyorlovchi
-            </button>
+            </div>
+
+            <div className="role-subtitle">
+              Gilamlarni tayyorlash va qadoqlash
+            </div>
           </div>
         )}
 
@@ -1489,77 +1513,81 @@ function App() {
           || allowedRoles.includes("ega")
         ) && (
           <div
-            style={{
-              marginTop: 10,
-              padding: 8,
-              borderRadius: 5,
-              border: "3px solid #ff0000",
-            }}
+            className="role-card"
+            onClick={() => setRole("admin")}
           >
-            <button
-              onClick={() => setRole("admin")}
-            >
+            <div style={{ fontSize: 42 }}>
+              🛡️
+            </div>
+
+            <div className="role-title">
               Admin
-            </button>
+            </div>
+
+            <div className="role-subtitle">
+              Tizimni boshqarish va nazorat qilish
+            </div>
           </div>
         )}
 
         {allowedRoles.includes("ega") && (
           <div
-            style={{
-              marginTop: 10,
-              padding: 10,
-              borderRadius: 5,
-              border: "3px solid #ff0000",
-            }}
+            className="role-card"
+            onClick={() => setRole("ega")}
           >
-            <button
-              onClick={() => setRole("ega")}
-            >
+            <div style={{ fontSize: 42 }}>
+              👑
+            </div>
+
+            <div className="role-title">
               Ega
-            </button>
+            </div>
+
+            <div className="role-subtitle">
+              Umumiy nazorat va tahlillar
+            </div>
           </div>
         )}
 
         {(allowedRoles.includes("admin") ||
           allowedRoles.includes("ega")
         ) && (
-
           <div
-            style={{
-            marginTop: 10,
-            padding: 10,
-            borderRadius: 5,
-            border: "3px solid #ff0000",
-            }}
+            className="role-card"
+            onClick={() => setShowArchive(!showArchive)}
           >
-            <button
-              onClick={() =>{
-                setShowArchive(!showArchive)}
-              }
-            >
+            <div style={{ fontSize: 42 }}>
+              🗂️
+            </div>
+
+            <div className="role-title">
               Arxiv
-            </button>
+            </div>
+
+            <div className="role-subtitle">
+              Arxivlangan buyurtmalar va ma'lumotlar
+            </div>
           </div>
         )}
 
         {(allowedRoles.includes("admin") ||
           allowedRoles.includes("ega")  
         ) && (
-
           <div
-            style={{
-              marginTop: 10,
-              padding: 8,
-              borderRadius: 5,
-              border: "3px solid #ff0000"
-            }}
+            className="role-card"
+            onClick={() => setRole("hisobot")}
           >
-            <button
-              onClick={() => setRole("hisobot")}
-            >
-              📊 Hisobot  
-            </button>
+            <div style={{ fontSize: 42 }}>
+              📊
+            </div>
+
+            <div className="role-title">
+              Hisobot
+            </div>
+
+            <div className="role-subtitle">
+              Statistikalar va hisobotlar
+            </div>
           </div>
         )}
 
@@ -1609,7 +1637,7 @@ function App() {
 
           )
         )}
-
+        </div>
       </div>
     ) : (
       <div
