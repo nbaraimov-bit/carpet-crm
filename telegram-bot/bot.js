@@ -313,3 +313,17 @@ bot.sendMessage(
   5793538486,
   "Test xabar 🚀"
 )
+
+import express from "express"
+
+const server = express()
+
+server.get("/", (req, res) => {
+  res.send("Bot ishlayapti")
+})
+
+const PORT = process.env.PORT || 3000
+
+server.listen(PORT, () => {
+  console.log("Server started")
+})
