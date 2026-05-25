@@ -308,6 +308,8 @@ function App() {
         60
       ).toFixed(2)
 
+      console.log("attendance yozilyapti")
+
     await addDoc(
       collection(
         db,
@@ -330,6 +332,8 @@ function App() {
           serverTimestamp(),
       }
     )
+
+     console.log("attendance yozildi")
 
     await updateDoc(
       workerRef,
