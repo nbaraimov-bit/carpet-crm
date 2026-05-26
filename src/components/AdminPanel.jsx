@@ -199,11 +199,8 @@ export default function AdminPanel({
     
                 <button
                   onClick={() =>
-                    stopWork(worker),
-                    changeWorkerStatus(
-                      worker.firebaseId,
-                      "nofaol"
-                    )
+                    stopWork(worker)
+                    
                   }
                 >
                   ⚪️
