@@ -39,6 +39,7 @@ export default function AdminPanel({
   setOrders,
   allowedRoles,
   setAllowedRoles,
+  stopWork,
 
 
 }) {
@@ -198,6 +199,7 @@ export default function AdminPanel({
     
                 <button
                   onClick={() =>
+                    stopWork(worker),
                     changeWorkerStatus(
                       worker.firebaseId,
                       "nofaol"

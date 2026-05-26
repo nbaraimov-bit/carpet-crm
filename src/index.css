@@ -171,6 +171,8 @@ app-container{
   grid-template-columns:
     repeat(2,1fr);
 
+  width: 100%;
+
   gap: 16px;
 }
 
@@ -198,6 +200,7 @@ app-container{
 
 .role-card:hover{
   transform: translateY(-4px);
+  min-width: 0;
 }
 
 .role-title{
@@ -214,4 +217,12 @@ app-container{
   color: #c9d4ff;
 
   line-height: 1.4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
 }

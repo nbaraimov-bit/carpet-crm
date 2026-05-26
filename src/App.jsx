@@ -274,15 +274,17 @@ function App() {
     )
   }
 
-  const stopWork = async () => {
+  const stopWork = async (workerData = null) => {
 
-    if (!currentWorker) return
+    const activeWorker = workerData || currentWorker
+
+    if (!activeWorker) return
 
     const workerDoc =
       workers.find(
         (w) =>
           w.phone ===
-          currentWorker.phone
+          activeWorker.phone
       )
 
     if (!workerDoc) return
@@ -1892,6 +1894,7 @@ function App() {
         setOrders={setOrders}
         allowedRoles={allowedRoles}
         setAllowedRoles={setAllowedRoles}
+        stopWork={stopWork}
 
       />
     )}
