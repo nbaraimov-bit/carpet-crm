@@ -198,7 +198,7 @@ export default function AdminPanel({
                 </button>
     
                 <button
-                  onClick={() =>{
+                  onClick={async() =>{
                     await stopWork(worker),
                     await changeWorkerStatus(
                       worker.firebaseId,
