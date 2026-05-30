@@ -247,7 +247,7 @@ function App() {
   const startWork =
   async () => {
 
-    if (worker.status === "faol") return
+    if (worker.working) return
 
     if (!currentWorker) return
 
@@ -279,7 +279,7 @@ function App() {
   const stopWork = async (workerData = null) => {
 
     const activeWorker = workerData || currentWorker
-    if (worker.status === "nofaol") return
+    if (!worker.working) return
 
     if (!activeWorker) return
 
