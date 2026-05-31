@@ -280,7 +280,11 @@ function App() {
 
   const stopWork = async (workerData = null) => {
 
+    console.log("stopwork bosildi")
+
     const activeWorker = workerData || currentWorker
+
+    console.log(activeWorker)
 
     const workerDoc =
       workers.find(
