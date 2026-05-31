@@ -230,21 +230,22 @@ export default function AdminPanel({
               {worker.roles?.join(", ")}
     
               <button
-              style={{marginLeft:3}}
-              onClick={() =>
-                setEditingWorker(
-                  editingWorker === worker.firebaseId
-                  ? null : worker.firebaseId
-                )
-              }
-            >
+                style={{marginLeft:3}}
+                onClick={() =>
+                  setEditingWorker(
+                    editingWorker === worker.firebaseId
+                    ? null : worker.firebaseId,
+                  )
+                }
+              >
                 {editingWorker ===
-                worker.firebaseId
+                  worker.firebaseId
                   ? "▲"
-                  : "▼"}
-            </button>
+                  : "▼"
+                }
+              </button>
     
-            {editingWorker === worker.firebaseId && (
+              {editingWorker === worker.firebaseId && (
               <div
                 style={{
                   marginTop: 10,
@@ -265,9 +266,6 @@ export default function AdminPanel({
     
                 <label
                   key={role}
-                  style={{
-                    display: "block",
-                  }}
                 >
     
                   <input
@@ -321,7 +319,7 @@ export default function AdminPanel({
                   {role}
     
                 </label>
-              ))} 
+                ))} 
               </div>
       
             )}
