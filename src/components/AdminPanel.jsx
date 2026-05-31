@@ -1,3 +1,6 @@
+import { doc, updateDoc } from "firebase/firestore"
+import { db } from "../firebase"
+
 export default function AdminPanel({
 
   workers,
@@ -279,10 +282,6 @@ export default function AdminPanel({
                         role
                       )
                     }
-
-                    onClick={() =>
-    alert("checkbox bosildi")
-  }
     
                     onChange={async (e) => {
     
