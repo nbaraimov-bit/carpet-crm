@@ -846,7 +846,7 @@ function App() {
           phone,
           address,
           ordersCount: 1,
-          createdAt: Date.now(),
+          createdAt: serverTimestamp(),
         }
       )
 
@@ -878,7 +878,7 @@ function App() {
       status: "Yangi",
       comment,
       tarif,
-      createdAt: Date.now()
+      createdAt: serverTimestamp()
     }
 
     await addDoc(
@@ -911,7 +911,7 @@ function App() {
         ),{
           ...order,
           status: "Yetkazildi",
-          archivedAt: Date.now(),
+          archivedAt: serverTimestamp(),
         }
       )
 
