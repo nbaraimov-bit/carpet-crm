@@ -281,8 +281,6 @@ function App() {
     const activeWorker = workerData || currentWorker
     if (!activeWorker.working) return
 
-    if (!activeWorker) return
-
     const workerDoc =
       workers.find(
         (w) =>
