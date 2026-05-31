@@ -280,11 +280,7 @@ function App() {
 
   const stopWork = async (workerData = null) => {
 
-    console.log("stopwork bosildi")
-
     const activeWorker = workerData || currentWorker
-
-    console.log(activeWorker)
 
     const workerDoc =
       workers.find(
@@ -1671,14 +1667,17 @@ function App() {
         <h3>Sizda ruxsat yo‘q</h3>
         <p>Admin tasdiqlashini kuting</p>
 
-        <button
-          onClick={() => {
-          setRole("washer")
-          setWasherMode("cabinet")
-          }}
-        >
-          Shaxsiy kabinet
-        </button>
+        {currentWorker?.roles?.includes("admin") && (
+
+          <button
+            onClick={() => {
+            setRole("washer")
+            setWasherMode("cabinet")
+            }}
+          >
+            Shaxsiy kabinet
+          </button>
+        )}
 
       </div>
     ))
