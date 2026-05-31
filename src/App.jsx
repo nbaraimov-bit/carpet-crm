@@ -283,8 +283,6 @@ function App() {
 
     if (!activeWorker) return
 
-    console.log("1-kirdi")
-
     const workerDoc =
       workers.find(
         (w) =>
@@ -293,8 +291,6 @@ function App() {
       )
 
     if (!workerDoc) return
-
-    console.log("2-worker topildi")
 
     const workerRef = doc(
       db,
@@ -316,8 +312,6 @@ function App() {
         60 /
         60
       ).toFixed(2)
-
-      console.log("attendance yozilyapti")
 
     await addDoc(
       collection(
@@ -342,8 +336,6 @@ function App() {
       }
     )
 
-     console.log("3-attendance yozildi")
-
     await updateDoc(
       workerRef,
       {
@@ -365,10 +357,15 @@ function App() {
     workerId,
     newStatus
   ) => {
-      console.log(
-        workerId,
-        newStatus
-      )
+      if (newStatus === "nofaol") {
+        const worker = workers.find(
+          (w) => w.firebaseId === workerId
+        )
+
+        if (worker) {await stopWork(worker)}
+
+        return
+      }
 
     const workerRef =
       doc(
