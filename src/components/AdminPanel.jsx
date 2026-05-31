@@ -266,6 +266,9 @@ export default function AdminPanel({
     
                 <label
                   key={role}
+                  style={{
+                    display: "block",
+                  }}
                 >
     
                   <input
@@ -276,6 +279,10 @@ export default function AdminPanel({
                         role
                       )
                     }
+
+                    onClick={() =>
+    alert("checkbox bosildi")
+  }
     
                     onChange={async (e) => {
     
