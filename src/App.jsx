@@ -1646,7 +1646,7 @@ function App() {
           )?.working ? (
 
             <button
-              onClick={stopWork}
+              onClick={() => stopWork()}
             >
               Ishni tugatish
             </button>
