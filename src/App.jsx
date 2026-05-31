@@ -247,7 +247,7 @@ function App() {
   const startWork =
   async () => {
 
-    if (worker.working) return
+    if (activeWorker.working) return
 
     if (!currentWorker) return
 
@@ -279,9 +279,11 @@ function App() {
   const stopWork = async (workerData = null) => {
 
     const activeWorker = workerData || currentWorker
-    if (!worker.working) return
+    if (!activeWorker.working) return
 
     if (!activeWorker) return
+
+    console.log("1-kirdi")
 
     const workerDoc =
       workers.find(
@@ -291,6 +293,8 @@ function App() {
       )
 
     if (!workerDoc) return
+
+    console.log("2-worker topildi")
 
     const workerRef = doc(
       db,
@@ -338,7 +342,7 @@ function App() {
       }
     )
 
-     console.log("attendance yozildi")
+     console.log("3-attendance yozildi")
 
     await updateDoc(
       workerRef,
