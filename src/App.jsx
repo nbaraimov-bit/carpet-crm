@@ -343,12 +343,12 @@ function App() {
       }
     )
 
-    setWorkers(
-      workers.map((w) =>
-        w.firebaseId === workerDoc.firebaseId
-        ? {...w, working: false} : w
-      )
-    )
+    //*setWorkers(
+    //  workers.map((w) =>
+      //  w.firebaseId === workerDoc.firebaseId
+        //? {...w, working: false} : w
+      //)
+    //)
   }
 
   const changeWorkerStatus =  async (
