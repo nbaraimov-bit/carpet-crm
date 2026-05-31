@@ -373,6 +373,17 @@ function App() {
         workerId
       )
 
+    const workerDoc = workers.find(
+      (w) => w.firebaseId === workerId
+    )
+
+    if (
+      newStatus === "faol" &&
+      workerDoc?.working
+    ) {
+      return
+    }
+
     await updateDoc(
       workerRef,
       {
@@ -889,7 +900,7 @@ function App() {
         id
       )
 
-    if (status === "Yetkazildi") {
+    if (status === "Yetkazildi") { 
 
       const order = orders.find((o) => o.firebaseId === id)  
 
@@ -1897,7 +1908,6 @@ function App() {
         setOrders={setOrders}
         allowedRoles={allowedRoles}
         setAllowedRoles={setAllowedRoles}
-        stopWork={stopWork}
 
       />
     )}

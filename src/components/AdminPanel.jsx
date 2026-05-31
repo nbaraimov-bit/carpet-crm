@@ -39,8 +39,6 @@ export default function AdminPanel({
   setOrders,
   allowedRoles,
   setAllowedRoles,
-  stopWork,
-
 
 }) {
 
@@ -119,7 +117,11 @@ export default function AdminPanel({
           {/* ===== ishchilar malumoti ===== */}
           <h2>Ishchilar</h2>
     
-          {workers.map((worker) => (
+          {workers
+            .filter(
+              (worker) => !worker.roles?.includes("ega")
+            )
+            .map((worker) => (
           <div
             key={worker.firebaseId}
             style={{
