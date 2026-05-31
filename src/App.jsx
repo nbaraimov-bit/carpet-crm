@@ -247,6 +247,8 @@ function App() {
   const startWork =
   async () => {
 
+    const activeWorker = workerData || currentWorker
+
     if (activeWorker.working) return
 
     if (!currentWorker) return
@@ -279,7 +281,6 @@ function App() {
   const stopWork = async (workerData = null) => {
 
     const activeWorker = workerData || currentWorker
-    if (!activeWorker.working) return
 
     const workerDoc =
       workers.find(
