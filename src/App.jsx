@@ -893,6 +893,9 @@ function App() {
   {/* ===== update status ===== */}
   const updateStatus = async (id, status) => {
 
+    console.log("STATUS:", status)
+console.log("CURRENT:", currentWorker)
+
     const orderRef =
       doc(
         db,
