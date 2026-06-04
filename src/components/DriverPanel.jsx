@@ -26,6 +26,7 @@ export default function DriverPanel({
   setPrice,
   driverComment,
   setDriverComment,
+  currentWorker,
 
 }) {
 
@@ -114,7 +115,10 @@ export default function DriverPanel({
           <h2>Mening buyurtmalarim</h2>
 
           {orders
-            .filter((o) => o.status === "Olinmoqda")
+            .filter( (o) =>
+              o.status === "Olinmoqda" &&
+              o.assignedDriver === currentWorker?.phone
+            )
             .map((order) => (
               <div
                 key={order.id}

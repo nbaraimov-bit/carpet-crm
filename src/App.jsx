@@ -920,11 +920,21 @@ function App() {
       return
     }
 
+    const updates = {
+      status: status,
+    }
+
+    if (
+      status === "Olinmoqda" &&
+      currentWorker?.roles?.includes("driver")
+    ) {
+      updates.assignedDriver =
+        currentWorker.phone
+    }
+ 
     await updateDoc(
       orderRef,
-      {
-        status: status,
-      }
+      updates
     )
   }
 
@@ -1753,6 +1763,7 @@ function App() {
         setPrice={setPrice}
         driverComment={driverComment}
         setDriverComment={setDriverComment}
+        currentWorker={currentWorker}
 
       />
     )}
