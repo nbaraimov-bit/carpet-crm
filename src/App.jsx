@@ -127,6 +127,7 @@ function App() {
         phone: request.phone,
         telegramId: request.telegramId,
         roles: request.requestedRoles,
+        primaryRole: request.requestedRoles?.[0] || null,
         approved: true,
         status: "nofaol",
         working: false,
@@ -445,17 +446,19 @@ function App() {
   ) => {
 
     if (
-      worker.roles?.includes("driver")
+      worker.primaryRole ===
+      "driver"
     ) {
-      return (driverPrices.hour || 0)
+      return driverPrices.hour || 0
     }
 
     if (
-      worker.roles?.includes("tayyorlovchi")
+      worker.primaryRole ===
+      "tayyorlovchi"
     ) {
-      return (tayyorlovchiPrices.hour || 0)
+      return tayyorlovchiPrices.hour || 0
     }
-
+ 
     return 0
   }
 
@@ -929,7 +932,9 @@ console.log("CURRENT:", currentWorker)
 
     if (
       status === "Olinmoqda" &&
-      currentWorker?.roles?.includes("driver")
+      currentWorker?.roles?.includes("driver") ||
+      currentWorker?.roles?.includes("admin ") ||
+      currentWorker?.roles?.includes("ega")
     ) {
       updates.assignedDriver =
         currentWorker.phone

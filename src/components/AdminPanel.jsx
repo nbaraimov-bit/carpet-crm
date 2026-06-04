@@ -330,6 +330,42 @@ export default function AdminPanel({
       
             )}
 
+            <select
+              value={
+                worker.primaryRole ||
+                worker.roles?.[0] ||
+                ""
+              }
+
+              onChange={async (e) => {
+
+                await updateDoc(
+                  doc(
+                    db,
+                    "workers",
+                    worker.firebaseId
+                  ), {
+                    primaryRole:
+                    e.target.value
+                  }
+                )
+
+              }}
+            >
+
+              {worker.roles?.map((role) => (
+
+                <option
+                  key={role}
+                  value={role}
+                >
+                  {role}
+                </option>
+
+              ))}
+
+            </select>
+
             <br />
     
             <button
