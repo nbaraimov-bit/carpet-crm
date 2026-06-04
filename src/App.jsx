@@ -313,26 +313,21 @@ function App() {
         60
       ).toFixed(2)
 
+    const hourlyRate = getHourlyPrice(workerDoc)
+    const salary = Number(totalHours) * Number(hourlyRate)
+
     await addDoc(
-      collection(
-        db,
-        "attendance"
-      ),
+      collection(db, "attendance"),
       {
-        workerName:
-          workerDoc.name,
-
-        workerPhone:
-          workerDoc.phone,
-
+        workerName: workerDoc.name,
+        workerPhone: workerDoc.phone,
+        primaryRole: workerDoc.primaryRole,
         startedAt,
-        endedAt,  
-  
-        totalHours:
-          Number(totalHours), 
-
-        createdAt:
-          serverTimestamp(),
+        endedAt,
+        totalHours: Number(totalHours),
+        hourlyRate,
+        salary,
+        createdAt: serverTimestamp(),
       }
     )
 
