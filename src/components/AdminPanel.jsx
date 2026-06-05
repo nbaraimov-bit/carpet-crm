@@ -42,6 +42,7 @@ export default function AdminPanel({
   setOrders,
   allowedRoles,
   setAllowedRoles,
+  getAttendanceSalary,
 
 }) {
 
@@ -417,7 +418,7 @@ export default function AdminPanel({
                   <p>
                     <b>Bugungi ish haqi:</b>
       
-                    {" "}{Math.round(getHours(attendance, worker.phone, 1, selectedDate) * getHourlyPrice(worker))}  
+                    {" "}{getAttendanceSalary(attendance, worker.phone, 1, selectedDate)}
       
                     so'm
                   </p>
@@ -425,7 +426,7 @@ export default function AdminPanel({
                   <p>
                     <b>Haftalik:</b>
     
-                    {" "}{Math.round(getHours(attendance, worker.phone, 7, selectedDate) * getHourlyPrice(worker))}
+                    {" "}{getAttendanceSalary(attendance, worker.phone, 7, selectedDate)}
       
                     so'm
                   </p>
@@ -433,7 +434,7 @@ export default function AdminPanel({
                   <p>
                     <b>Oylik:</b>
     
-                    {" "}{Math.round(getHours(attendance, worker.phone, 30, selectedDate) * getHourlyPrice(worker))}
+                    {" "}{getAttendanceSalary(attendance, worker.phone, 30, selectedDate)}
       
                     so'm
                   </p>
@@ -441,7 +442,7 @@ export default function AdminPanel({
                   <p>
                     <b>jami:</b>
     
-                    {" "}{Math.round(getHours(attendance, worker.phone, "all", selectedDate) * getHourlyPrice(worker))}
+                    {" "}{getAttendanceSalary(attendance, worker.phone, "all", selectedDate)}
       
                     so'm
                   </p>
@@ -462,7 +463,7 @@ export default function AdminPanel({
                   <p>
                     <b>Bugungi ish haqi:</b>
       
-                    {" "}{Math.round(getHours(attendance, worker.phone, 1, selectedDate) * getHourlyPrice(worker))}  
+                    {" "}{getAttendanceSalary(attendance, worker.phone, 1, selectedDate)}  
       
                     so'm
                   </p>
@@ -470,7 +471,7 @@ export default function AdminPanel({
                   <p>
                     <b>Haftalik:</b>
     
-                    {" "}{Math.round(getHours(attendance, worker.phone, 7, selectedDate) * getHourlyPrice(worker))}
+                    {" "}{getAttendanceSalary(attendance, worker.phone, 7, selectedDate)}
       
                     so'm
                   </p>
@@ -478,7 +479,7 @@ export default function AdminPanel({
                   <p>
                     <b>Oylik:</b>
     
-                    {" "}{Math.round(getHours(attendance, worker.phone, 30, selectedDate) * getHourlyPrice(worker))}
+                    {" "}{getAttendanceSalary(attendance, worker.phone, 30, selectedDate)}
       
                     so'm
                   </p>
@@ -486,7 +487,7 @@ export default function AdminPanel({
                   <p>
                     <b>jami:</b>
     
-                    {" "}{Math.round(getHours(attendance, worker.phone, "all", selectedDate) * getHourlyPrice(worker))}
+                    {" "}{getAttendanceSalary(attendance, worker.phone, "all", selectedDate)}
       
                     so'm
                   </p>

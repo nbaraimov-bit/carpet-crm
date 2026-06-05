@@ -5,6 +5,7 @@ import AdminPanel from "./components/AdminPanel"
 import getCount from "./utils/getCount"
 import getHours from "./utils/getHours"
 import getSalary from "./utils/getSalary"
+import getAttendanceSalary from "./utils/getAttendanceSalary"
 import { useState, useEffect } from "react"
 import { db } from "./firebase";
 import {
@@ -299,9 +300,7 @@ function App() {
     )
 
     const startedAt = workerDoc.startedAt ?.toDate()
-
     const endedAt = new Date()
-
     const totalHours =
       (
         (
@@ -1925,6 +1924,7 @@ console.log("CURRENT:", currentWorker)
         setOrders={setOrders}
         allowedRoles={allowedRoles}
         setAllowedRoles={setAllowedRoles}
+        getAttendanceSalary={getAttendanceSalary}
 
       />
     )}
