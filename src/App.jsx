@@ -876,6 +876,7 @@ function App() {
       comment,
       tarif,
       driverNotified: false,
+      washerNotified: false,
       createdAt: serverTimestamp()
     }
 
