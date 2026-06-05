@@ -19,7 +19,7 @@ import {
   query,
   where,
   getDoc,
-  getDocs
+  getDocs,
 } from "firebase/firestore";
 
 function App() {
@@ -875,6 +875,7 @@ function App() {
       status: "Yangi",
       comment,
       tarif,
+      driverNotified: false,
       createdAt: serverTimestamp()
     }
 
