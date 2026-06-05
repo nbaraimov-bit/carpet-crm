@@ -1370,7 +1370,7 @@ console.log("CURRENT:", currentWorker)
                     }}
                   >
 
-                    <p><b>Sana:</b>{" "}{order.createdAt && new Date(order.createdAt).toLocaleString()}</p>
+                    <p><b>Sana:</b>{" "}{order.createdAt}</p>
                     <p><b>Buyurtma ID:</b>{" "}{order.id}</p>
                     <p><b>Manzil:</b>{" "}{order.address}</p>
                     {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
