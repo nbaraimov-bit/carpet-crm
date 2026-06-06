@@ -47,6 +47,8 @@ export default function WasherPanel({
         curtainMeter: 0,
       }
     )
+    console.log(currentWorker.phone)
+console.log(workerEarnings)
   }  
 
   return (
