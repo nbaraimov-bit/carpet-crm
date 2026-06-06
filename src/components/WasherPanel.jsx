@@ -589,13 +589,13 @@ export default function WasherPanel({
                 {/* ===== gilam ===== */}
                 {
                   getCount(
-                    orders, currentWorker.phone, "carpetWasher", "kvm", 1, selectedDate
+                    workerEarnings, currentWorker.phone, "carpetWasher", "kvm", 1, selectedDate
                   )> 0 && (
                     <p>
                       Gilam kv.m:
                       {
                         getCount(
-                          orders, currentWorker.phone, "carpetWasher", "kvm", 1, selectedDate
+                          workerEarnings, currentWorker.phone, "carpetWasher", "kvm", 1, selectedDate
                         )
                       }
                     </p>
@@ -605,13 +605,13 @@ export default function WasherPanel({
                 {/* ===== adyol ===== */}
                 {
                   getCount(
-                    orders, currentWorker.phone, "blanketWasher", "blanket", 1, selectedDate
+                    workerEarnings, currentWorker.phone, "blanketWasher", "blanket", 1, selectedDate
                   )> 0 && (
                     <p>
                       Adyol:
                       {
                         getCount(
-                          orders, currentWorker.phone, "blanketWasher", "blanket", 1, selectedDate
+                          workerEarnings, currentWorker.phone, "blanketWasher", "blanket", 1, selectedDate
                         )
                       }
                     </p>
@@ -621,13 +621,13 @@ export default function WasherPanel({
                 {/* ===== yakandoz ===== */}
                 {
                   getCount(
-                    orders, currentWorker.phone, "yakandozWasher", "yakandoz", 1, selectedDate
+                    workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz", 1, selectedDate
                   )> 0 && (
                     <p>
                       Yakandoz:
                       {
                         getCount(
-                          orders, currentWorker.phone, "yakandozWasher", "yakandoz", 1, selectedDate
+                          workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz", 1, selectedDate
                         )
                       }
                     </p>
@@ -643,7 +643,7 @@ export default function WasherPanel({
                       Parda:
                       {
                         getCount(
-                          orders, currentWorker.phone, "curtainWasher", "curtainMeter", 1, selectedDate
+                          workerEarnings, currentWorker.phone, "curtainWasher", "curtainMeter", 1, selectedDate
                         )
                       }
                     </p>
@@ -701,13 +701,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "carpetWasher", "kvm", 7, selectedDate
+                    workerEarnings, currentWorker.phone, "carpetWasher", "kvm", 7, selectedDate
                   ) > 0 && (
                     <p>
                       Gilam:
                       {
                         getCount(
-                          orders, currentWorker.phone, "carpetWasher", "kvm", 7, selectedDate
+                          workerEarnings, currentWorker.phone, "carpetWasher", "kvm", 7, selectedDate
                         )
                       }
                     </p>
@@ -716,13 +716,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "blanketWasher", "blanket", 7, selectedDate
+                    workerEarnings, currentWorker.phone, "blanketWasher", "blanket", 7, selectedDate
                   )> 0 && (
                     <p>
                       Adyol:
                       {
                         getCount(
-                          orders, currentWorker.phone, "blanketWasher", "blanket", 7, selectedDate
+                          workerEarnings, currentWorker.phone, "blanketWasher", "blanket", 7, selectedDate
                         )
                       }
                     </p>
@@ -731,13 +731,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "yakandozWasher", "yakandoz", 7, selectedDate
+                    workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz", 7, selectedDate
                   )> 0 && (
                     <p>
                       Yakandoz:
                       {
                         getCount(
-                          orders, currentWorker.phone, "yakandozWasher", "yakandoz", 7, selectedDate
+                          workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz", 7, selectedDate
                         )
                       }
                     </p>
@@ -746,13 +746,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "curtainWasher", "curtainMeter", 7, selectedDate
+                    workerEarnings, currentWorker.phone, "curtainWasher", "curtainMeter", 7, selectedDate
                   )> 0 && (
                     <p>
                       Parda:
                       {
                         getCount(
-                          orders, currentWorker.phone, "curtainWasher", "curtainMeter", 7, selectedDate
+                          workerEarnings, currentWorker.phone, "curtainWasher", "curtainMeter", 7, selectedDate
                         )
                       }
                     </p>
@@ -810,13 +810,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "carpetWasher", "kvm", 30, selectedDate
+                    workerEarnings, currentWorker.phone, "carpetWasher", "kvm", 30, selectedDate
                   ) > 0 && (
                     <p>
                       Gilam:
                       {
                         getCount(
-                          orders, currentWorker.phone, "carpetWasher", "kvm", 30, selectedDate
+                          workerEarnings, currentWorker.phone, "carpetWasher", "kvm", 30, selectedDate
                         )
                       }
                     </p>
@@ -825,13 +825,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "blanketWasher", "blanket", 30, selectedDate
+                    workerEarnings, currentWorker.phone, "blanketWasher", "blanket", 30, selectedDate
                   )> 0 && (
                     <p>
                       Adyol:
                       {
                         getCount(
-                          orders, currentWorker.phone, "blanketWasher", "blanket", 30, selectedDate
+                          workerEarnings, currentWorker.phone, "blanketWasher", "blanket", 30, selectedDate
                         )
                       }
                     </p>
@@ -840,13 +840,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "yakandozWasher", "yakandoz", 30, selectedDate
+                    workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz", 30, selectedDate
                   )> 0 && (
                     <p>
                       Yakandoz:
                       {
                         getCount(
-                          orders, currentWorker.phone, "yakandozWasher", "yakandoz", 30, selectedDate
+                          workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz", 30, selectedDate
                         )
                       }
                     </p>
@@ -855,13 +855,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "curtainWasher", "curtainMeter", 30, selectedDate
+                    workerEarnings, currentWorker.phone, "curtainWasher", "curtainMeter", 30, selectedDate
                   )> 0 && (
                     <p>
                       Parda:
                       {
                         getCount(
-                          orders, currentWorker.phone, "curtainWasher", "curtainMeter", 30, selectedDate
+                          workerEarnings, currentWorker.phone, "curtainWasher", "curtainMeter", 30, selectedDate
                         )
                       }
                     </p>
@@ -917,13 +917,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "carpetWasher", "kvm", "all", selectedDate
+                    workerEarnings, currentWorker.phone, "carpetWasher", "kvm", "all", selectedDate
                   ) > 0 && (
                     <p>
                       Gilam:
                       {
                         getCount(
-                          orders, currentWorker.phone, "carpetWasher", "kvm", "all", selectedDate
+                          workerEarnings, currentWorker.phone, "carpetWasher", "kvm", "all", selectedDate
                         )
                       }
                     </p>
@@ -932,13 +932,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "blanketWasher", "blanket", "all", selectedDate
+                    workerEarnings, currentWorker.phone, "blanketWasher", "blanket", "all", selectedDate
                   )> 0 && (
                     <p>
                       Adyol:
                       {
                         getCount(
-                          orders, currentWorker.phone, "blanketWasher", "blanket", "all", selectedDate
+                          workerEarnings, currentWorker.phone, "blanketWasher", "blanket", "all", selectedDate
                         )
                       }
                     </p>
@@ -947,13 +947,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "yakandozWasher", "yakandoz","all", selectedDate
+                    workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz","all", selectedDate
                   )> 0 && (
                     <p>
                       Yakandoz:
                       {
                         getCount(
-                          orders, currentWorker.phone, "yakandozWasher", "yakandoz", "all", selectedDate
+                          workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz", "all", selectedDate
                         )
                       }
                     </p>
@@ -962,13 +962,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "curtainWasher", "curtainMeter", "all", selectedDate
+                    workerEarnings, currentWorker.phone, "curtainWasher", "curtainMeter", "all", selectedDate
                   )> 0 && (
                     <p>
                       Parda:
                       {
                         getCount(
-                          orders, currentWorker.phone, "curtainWasher", "curtainMeter", "all", selectedDate
+                          workerEarnings, currentWorker.phone, "curtainWasher", "curtainMeter", "all", selectedDate
                         )
                       }
                     </p>
@@ -1039,13 +1039,13 @@ export default function WasherPanel({
                 </p>
                 {
                   getCount(
-                    orders, currentWorker.phone, "carpetWasher", "kvm", "custom", selectedDate
+                    workerEarnings, currentWorker.phone, "carpetWasher", "kvm", "custom", selectedDate
                   ) > 0 && (
                     <p>
                       Gilam:
                       {
                         getCount(
-                          orders, currentWorker.phone, "carpetWasher", "kvm", "custom", selectedDate
+                          workerEarnings, currentWorker.phone, "carpetWasher", "kvm", "custom", selectedDate
                         )
                       }
                     </p>
@@ -1054,13 +1054,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "blanketWasher", "blanket", "custom", selectedDate
+                    workerEarnings, currentWorker.phone, "blanketWasher", "blanket", "custom", selectedDate
                   )> 0 && (
                     <p>
                       Adyol:
                       {
                         getCount(
-                          orders, currentWorker.phone, "blanketWasher", "blanket", "custom", selectedDate
+                          workerEarnings, currentWorker.phone, "blanketWasher", "blanket", "custom", selectedDate
                         )
                       }
                     </p>
@@ -1069,13 +1069,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "yakandozWasher", "yakandoz","custom", selectedDate
+                    workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz","custom", selectedDate
                   )> 0 && (
                     <p>
                       Yakandoz:
                       {
                         getCount(
-                          orders, currentWorker.phone, "yakandozWasher", "yakandoz", "custom", selectedDate
+                          workerEarnings, currentWorker.phone, "yakandozWasher", "yakandoz", "custom", selectedDate
                         )
                       }
                     </p>
@@ -1084,13 +1084,13 @@ export default function WasherPanel({
 
                 {
                   getCount(
-                    orders, currentWorker.phone, "curtainWasher", "curtainMeter", "custom", selectedDate
+                    workerEarnings, currentWorker.phone, "curtainWasher", "curtainMeter", "custom", selectedDate
                   )> 0 && (
                     <p>
                       Parda:
                       {
                         getCount(
-                          orders, currentWorker.phone, "curtainWasher", "curtainMeter", "custom", selectedDate
+                          workerEarnings, currentWorker.phone, "curtainWasher", "curtainMeter", "custom", selectedDate
                         )
                       }
                     </p>
