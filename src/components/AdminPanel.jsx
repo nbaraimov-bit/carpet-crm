@@ -565,31 +565,26 @@ export default function AdminPanel({
     
                   <p>
                     <b>Jami:</b>
-                  //  {
-                  //    (
-                  //      ( 
-                  //        orders
+                    {
+                      (
+                        ( 
+                          orders
     
-                  //        .filter((o) => 
-                  //          o.carpetWasher !== worker.phone
-                  //        )
+                          .filter((o) => 
+                            o.carpetWasher !== worker.phone
+                          )
     
-                  //        .reduce(
-                  //          (sum, o) => sum + 
-                  //          Number(o.carpetSalary || 0) +
-                  //          Number(o.blanketSalary || 0) +
-                  //          Number(o.yakandozSalary || 0) +
-                  //          Number(o.curtainSalary || 0), 
-                  //          0
-                  //        )
-                  //      )
-                  //    ).toLocaleString()
+                          .reduce(
+                            (sum, o) => sum + 
+                            Number(o.carpetSalary || 0) +
+                            Number(o.blanketSalary || 0) +
+                            Number(o.yakandozSalary || 0) +
+                            Number(o.curtainSalary || 0), 
+                            0
+                          )
+                        )
+                      ).toLocaleString()
                     }
-
-                  {
-                    getSalary( workerEarnings, currentWorker.phone, "all", selectedDate )
-                    .toLocaleString()
-                  }
                     so'm
                   </p>
       
