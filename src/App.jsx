@@ -73,6 +73,7 @@ function App() {
   const [showArchive, setShowArchive] = useState(false)
   const [archives, setArchives] = useState([])
   const [archiveSearch, setArchiveSearch] = useState("")
+  const [workerEarnings, setWorkerEarnings] = useState({})
   //const [telegramId, setTelegramId] = useState("")
 
   const tg = window.Telegram?.WebApp
@@ -664,6 +665,27 @@ function App() {
         setAttendance(data)
       }
     )
+
+    return () => unsubscribe()
+
+  }, [])
+
+  useEffect(() => {
+
+    const unsubscribe =
+      onSnapshot(
+        collection(db, "workerEarnings"),
+        (snapshot) => {
+
+          const data = {}
+
+          snapshot.docs.forEach((doc) => {
+            data[doc.id] = doc.data()
+          })
+
+          setWorkerEarnings(data)
+        }
+      )
 
     return () => unsubscribe()
 
@@ -1875,6 +1897,7 @@ await setDoc(
         setAllOpen={setAllOpen}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
+        workerEarnings={workerEarnings}
   
       />
     )}
