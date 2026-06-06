@@ -43,6 +43,7 @@ export default function AdminPanel({
   allowedRoles,
   setAllowedRoles,
   getAttendanceSalary,
+  workerEarnings,
 
 }) {
 
@@ -546,44 +547,49 @@ export default function AdminPanel({
     
                   <p>
                     <b>Ish haqi:</b>
-                    {getSalary( orders, worker.phone, 1, selectedDate )}
+                    {getSalary( workerEarnings, worker.phone, 1, selectedDate )}
                     so‘m
                   </p>
     
                   <p>
                     <b>Haftalik:</b>
-                    {getSalary( orders, worker.phone, 7, selectedDate )}
+                    {getSalary( workerEarnings, worker.phone, 7, selectedDate )}
                     so‘m
                   </p>
     
                   <p>
                     <b>Oylik:</b>
-                    {getSalary( orders, worker.phone, 30, selectedDate )}
+                    {getSalary( workerEarnings, worker.phone, 30, selectedDate )}
                     so‘m
                   </p>
     
                   <p>
                     <b>Jami:</b>
-                    {
-                      (
-                        ( 
-                          orders
+                  //  {
+                  //    (
+                  //      ( 
+                  //        orders
     
-                          .filter((o) => 
-                            o.carpetWasher !== worker.phone
-                          )
+                  //        .filter((o) => 
+                  //          o.carpetWasher !== worker.phone
+                  //        )
     
-                          .reduce(
-                            (sum, o) => sum + 
-                            Number(o.carpetSalary || 0) +
-                            Number(o.blanketSalary || 0) +
-                            Number(o.yakandozSalary || 0) +
-                            Number(o.curtainSalary || 0), 
-                            0
-                          )
-                        )
-                      ).toLocaleString()
+                  //        .reduce(
+                  //          (sum, o) => sum + 
+                  //          Number(o.carpetSalary || 0) +
+                  //          Number(o.blanketSalary || 0) +
+                  //          Number(o.yakandozSalary || 0) +
+                  //          Number(o.curtainSalary || 0), 
+                  //          0
+                  //        )
+                  //      )
+                  //    ).toLocaleString()
                     }
+
+                  {
+                    getSalary( workerEarnings, currentWorker.phone, "all", selectedDate )
+                    .toLocaleString()
+                  }
                     so'm
                   </p>
       

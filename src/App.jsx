@@ -2024,6 +2024,7 @@ await setDoc(
         allowedRoles={allowedRoles}
         setAllowedRoles={setAllowedRoles}
         getAttendanceSalary={getAttendanceSalary}
+        workerEarnings={workerEarnings}
 
       />
     )}
