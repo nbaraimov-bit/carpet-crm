@@ -1,101 +1,123 @@
 export default function getSalary(
-  orders,
+  workerEarnings,
   workerPhone,
   days,
   selectedDate
 ) {
 
-    const today = new Date()
-    const fromDate = new Date(today)
+  const today = new Date()
+  let total = 0
+
+  Object.entries(
+    workerEarnings || {}
+  ).forEach(([dateId, data]) => {
+
+    const worker =
+      data?.[workerPhone]
+
+    if (!worker) return
+
+    const date =
+      new Date(dateId)
+
+    if (
+      selectedDate &&
+      days === "custom"
+    ) {
+
+      const selected =
+        new Date(selectedDate)
+
+      if (
+        date.getDate() ===
+          selected.getDate() &&
+        date.getMonth() ===
+          selected.getMonth() &&
+        date.getFullYear() ===
+          selected.getFullYear()
+      ) {
+        total +=
+          Number(
+            worker.salary || 0
+          )
+      }
+
+      return
+    }
+
+    if (days === "all") {
+      total +=
+        Number(
+          worker.salary || 0
+        )
+      return
+    }
+
+    if (days === 1) {
+
+      if (
+        date.getDate() ===
+          today.getDate() &&
+        date.getMonth() ===
+          today.getMonth() &&
+        date.getFullYear() ===
+          today.getFullYear()
+      ) {
+        total +=
+          Number(
+            worker.salary || 0
+          )
+      }
+
+      return
+    }
 
     if (days === 7) {
 
-      const day = today.getDay()
-      const diff = day === 0 ? 6 : day - 1
+      const monday =
+        new Date(today)
 
-      fromDate.setDate( today.getDate() - diff )
+      const day =
+        today.getDay()
+
+      const diff =
+        day === 0
+          ? 6
+          : day - 1
+
+      monday.setDate(
+        today.getDate() -
+        diff
+      )
+
+      if (date >= monday) {
+        total +=
+          Number(
+            worker.salary || 0
+          )
+      }
+
+      return
     }
 
-    else {
-      fromDate.setDate( today.getDate() - days )
+    if (days === 30) {
+
+      if (
+        date.getMonth() ===
+          today.getMonth() &&
+        date.getFullYear() ===
+          today.getFullYear()
+      ) {
+        total +=
+          Number(
+            worker.salary || 0
+          )
+      }
+
+      return
     }
 
-    return (orders || [])
+  })
 
-    .filter((o) => {
-
-      const isWorker =
-      o.carpetWasher === workerPhone ||
-      o.blanketWasher === workerPhone ||
-      o.yakandozWasher === workerPhone ||
-      o.curtainWasher === workerPhone
-
-      if (!isWorker) return false
-
-      const dateField =
-        o.carpetDate ||
-        o.blanketDate ||
-        o.yakandozDate ||
-        o.curtainDate
-
-      if (!dateField || !dateField.toDate)
-      return false
-
-      const date = dateField.toDate()
-
-      if (selectedDate && days === "custom") {
-
-        const selected = new Date(selectedDate)
-
-        return (
-          date.getDate() === selected.getDate() &&
-          date.getMonth() === selected.getMonth() &&
-          date.getFullYear() === selected.getFullYear()
-        )
-
-      }
-
-      if (days === "all") {return true}
-
-      if (days === 1) {
-        return (
-          date.getDate() === today.getDate() &&
-          date.getMonth() === today.getMonth() &&
-          date.getFullYear() === today.getFullYear()
-        )
-      }
-
-      if (days === 7) {
-        const day = today.getDay()
-        const diff = day === 0 ? 6 : day - 1
-        fromDate.setDate( today.getDate() - diff)
-      }
-
-      else {
-        fromDate.setDate( today.getDate() - days)
-      }
-
-      if (days === 30) {
-
-        return (
-          date.getMonth() === today.getMonth() &&
-          date.getFullYear() === today.getFullYear()
-        )
-
-      }
-
-      return ( date >= fromDate )
-
-    })
-
-    .reduce(
-
-      (sum, o) => sum +
-      Number(o.carpetSalary || 0) +
-      Number(o.blanketSalary || 0) +
-      Number(o.yakandozSalary || 0) +
-      Number(o.curtainSalary || 0),
-      0
-    )
-
+  return total
 }

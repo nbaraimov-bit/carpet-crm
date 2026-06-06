@@ -26,30 +26,7 @@ export default function WasherPanel({
   attendance,
   workerEarnings,
 
-}) {
-
-  const getWorkerDayData = (
-    workerPhone,
-    selectedDate
-  ) => {
-
-    const data =
-      workerEarnings?.[
-        selectedDate
-      ]
-
-    return (
-      data?.[workerPhone] || {
-        salary: 0,
-        carpetKvm: 0,
-        blanketCount: 0,
-        yakandozCount: 0,
-        curtainMeter: 0,
-      }
-    )
-    console.log(currentWorker.phone)
-console.log(workerEarnings)
-  }  
+}) {  
 
   return (
     <>
@@ -603,7 +580,8 @@ console.log(workerEarnings)
                 <p>
                   Ish haqi:
                   {
-                    getWorkerDayData(currentWorker.phone, selectedDate).salary.toLocaleString()
+                    getSalary( workerEarnings, currentWorker.phone, 7, selectedDate )
+                    .toLocaleString()
                   }
                   so'm
                 </p>
@@ -714,7 +692,7 @@ console.log(workerEarnings)
                 <p>
                   Ish haqi:
                   {
-                    getSalary( orders, currentWorker.phone, 7, selectedDate )
+                    getSalary( workerEarnings, currentWorker.phone, 7, selectedDate )
                     .toLocaleString()
                   }
                   so'm
@@ -824,7 +802,7 @@ console.log(workerEarnings)
                 <p>
                   Ish haqi:
                   {
-                    getSalary( orders, currentWorker.phone, 30, selectedDate )
+                    getSalary( workerEarnings, currentWorker.phone, 30, selectedDate )
                     .toLocaleString()
                   }
                   so'm
@@ -931,7 +909,7 @@ console.log(workerEarnings)
                 <p>
                   Ish haqi:
                   {
-                    getSalary( orders, currentWorker.phone, "all", selectedDate )
+                    getSalary( workerEarnings, currentWorker.phone, "all", selectedDate )
                     .toLocaleString()
                   }
                   so'm
@@ -1054,7 +1032,7 @@ console.log(workerEarnings)
                 <p>
                   Ish haqi:
                   {
-                    getSalary( orders, currentWorker.phone, "custom", selectedDate )
+                    getSalary( workerEarnings, currentWorker.phone, "custom", selectedDate )
                     .toLocaleString()
                   }
                   so'm
