@@ -20,6 +20,7 @@ import {
   where,
   getDoc,
   getDocs,
+  setDoc,
 } from "firebase/firestore";
 
 function App() {
@@ -1034,6 +1035,79 @@ console.log("CURRENT:", currentWorker)
         )
       ]
         = currentWorker.phone
+
+        const today = new Date()
+const dateId =
+  today.getFullYear() +
+  "-" +
+  String(today.getMonth() + 1).padStart(2, "0") +
+  "-" +
+  String(today.getDate()).padStart(2, "0")
+
+const earningsRef = doc(
+  db,
+  "workerEarnings",
+  dateId
+)
+
+const earningsSnap =
+  await getDoc(earningsRef)
+
+const phone =
+  currentWorker.phone
+
+let earningsData = {}
+
+if (earningsSnap.exists()) {
+  earningsData =
+    earningsSnap.data()
+}
+
+const oldWorkerData =
+  earningsData[phone] || {
+    name:
+      currentWorker.name,
+    salary: 0,
+    carpetKvm: 0,
+    blanketCount: 0,
+    yakandozCount: 0,
+    curtainMeter: 0,
+  }
+
+const newWorkerData = {
+  ...oldWorkerData,
+  salary:
+    oldWorkerData.salary +
+    washerSalary,
+}
+
+if (field === "carpetStatus") {
+  newWorkerData.carpetKvm +=
+    Number(order.kvm || 0)
+}
+
+if (field === "blanketStatus") {
+  newWorkerData.blanketCount +=
+    Number(order.blanket || 0)
+}
+
+if (field === "yakandozStatus") {
+  newWorkerData.yakandozCount +=
+    Number(order.yakandoz || 0)
+}
+
+if (field === "curtainStatus") {
+  newWorkerData.curtainMeter +=
+    Number(order.curtainMeter || 0)
+}
+
+earningsData[phone] =
+  newWorkerData
+
+await setDoc(
+  earningsRef,
+  earningsData
+)
     }
 
     const carpetDone =
