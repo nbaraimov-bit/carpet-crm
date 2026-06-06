@@ -1466,7 +1466,16 @@ await setDoc(
                     }}
                   >
 
-                    <p><b>Sana:</b>{" "}{order.createdAt}</p>
+                    <p>
+  <b>Sana:</b>{" "}
+  {
+    order.createdAt?.toDate
+      ? order.createdAt
+          .toDate()
+          .toLocaleDateString("uz-UZ")
+      : "-"
+  }
+</p>
                     <p><b>Buyurtma ID:</b>{" "}{order.id}</p>
                     <p><b>Manzil:</b>{" "}{order.address}</p>
                     {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
