@@ -28,6 +28,27 @@ export default function WasherPanel({
 
 }) {
 
+  const getWorkerDayData = (
+    workerPhone,
+    selectedDate
+  ) => {
+
+    const data =
+      workerEarnings?.[
+        selectedDate
+      ]
+
+    return (
+      data?.[workerPhone] || {
+        salary: 0,
+        carpetKvm: 0,
+        blanketCount: 0,
+        yakandozCount: 0,
+        curtainMeter: 0,
+      }
+    )
+  }  
+
   return (
     <>
       {washerMode === "" && (
@@ -579,8 +600,8 @@ export default function WasherPanel({
                 {/* ===== ish haqi ===== */}
                 <p>
                   Ish haqi:
-                  {getSalary(orders, currentWorker.phone, 1,selectedDate )
-                    .toLocaleString()
+                  {
+                    getWorkerDayData(currentWorker.phone, selectedDate).salary.toLocaleString()
                   }
                   so'm
                 </p>
