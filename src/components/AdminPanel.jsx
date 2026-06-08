@@ -513,7 +513,7 @@ export default function AdminPanel({
                     <b>Gilam kv.m:</b>
                     {
                       getCount(
-                        orders, worker.phone, "carpetWasher", "kvm", 1, selectedDate
+                        workerEarnings, worker.phone, "carpetWasher", "kvm", 1, selectedDate
                       )
                     }  
                   </p>
@@ -522,7 +522,7 @@ export default function AdminPanel({
                     <b>Adyol:</b> 
                     { 
                       getCount(
-                        orders, worker.phone, "blanketWasher", "blanket", 1, selectedDate
+                        workerEarnings, worker.phone, "blanketWasher", "blanket", 1, selectedDate
                       )
                     }
                   </p>
@@ -531,7 +531,7 @@ export default function AdminPanel({
                     <b>Yakandoz:</b>
                     {
                       getCount(
-                        orders, worker.phone, "yakandozWasher", "yakandoz", 1, selectedDate
+                        workerEarnings, worker.phone, "yakandozWasher", "yakandoz", 1, selectedDate
                       )
                     }
                   </p>
@@ -540,7 +540,7 @@ export default function AdminPanel({
                     <b>Parda metri:</b>              
                       {
                         getCount(
-                          orders, worker.phone, "curtainWasher", "curtainMeter", 1, selectedDate
+                          workerEarnings, worker.phone, "curtainWasher", "curtainMeter", 1, selectedDate
                         )
                       }
                   </p>

@@ -915,9 +915,6 @@ function App() {
   {/* ===== update status ===== */}
   const updateStatus = async (id, status) => {
 
-    console.log("STATUS:", status)
-console.log("CURRENT:", currentWorker)
-
     const orderRef =
       doc(
         db,
@@ -952,7 +949,7 @@ console.log("CURRENT:", currentWorker)
     if (
       status === "Olinmoqda" &&
       currentWorker?.roles?.includes("driver") ||
-      currentWorker?.roles?.includes("admin ") ||
+      currentWorker?.roles?.includes("admin") ||
       currentWorker?.roles?.includes("ega")
     ) {
       updates.assignedDriver =

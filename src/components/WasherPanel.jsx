@@ -580,7 +580,7 @@ export default function WasherPanel({
                 <p>
                   Ish haqi:
                   {
-                    getSalary( workerEarnings, currentWorker.phone, 7, selectedDate )
+                    getSalary( workerEarnings, currentWorker.phone, 7, selectedDate ) 
                     .toLocaleString()
                   }
                   so'm
