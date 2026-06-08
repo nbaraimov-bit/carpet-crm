@@ -406,9 +406,9 @@ export default function AdminPanel({
               >
     
                 {/*  ===== Driver statistic ===== */}
-                {worker.roles?.includes(
+                {worker.primaryRole ===
                   "driver"
-                ) && (
+                  && (
                 <div>
     
                   <p>
@@ -451,9 +451,9 @@ export default function AdminPanel({
                 </div>
                 )}
     
-                {worker.roles?.includes(
+                {worker.primaryRole ===
                   "tayyorlovchi"
-                ) && (
+                  && (
                 <div>
     
                   <p>
