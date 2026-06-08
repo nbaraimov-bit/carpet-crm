@@ -577,9 +577,6 @@ export default function WasherPanel({
               >
 
                 {/* ===== ish haqi ===== */}
-
-                <p>Phone: {currentWorker?.phone}</p>
-<p>Attendance soni: {attendance?.length}</p>
                 <p>
                   Ish haqi:
                   {

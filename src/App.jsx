@@ -1904,6 +1904,7 @@ await setDoc(
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
         workerEarnings={workerEarnings}
+        attendance={attendance}
   
       />
     )}
