@@ -344,7 +344,8 @@ export default function OperatorPanel({
               <div
                 style={{
                   marginBottom: 10,
-                  fontSize: 19
+                  fontSize: 19,
+                  color: "black"
                 }}
               >
                <h3>
