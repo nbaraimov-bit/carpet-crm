@@ -345,10 +345,13 @@ export default function OperatorPanel({
                 style={{
                   marginBottom: 10,
                   fontSize: 19,
-                  color: "black"
                 }}
               >
-               <h3>
+                <h3
+                  style={{
+                   color: "black"
+                  }}
+                >
                   Buyurtma
                   o'chirilsinmi?
                 </h3>
