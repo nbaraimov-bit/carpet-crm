@@ -6,6 +6,7 @@ import getCount from "./utils/getCount"
 import getHours from "./utils/getHours"
 import getSalary from "./utils/getSalary"
 import getAttendanceSalary from "./utils/getAttendanceSalary"
+import EgaPanel from "./components/EgaPanel";
 import { useState, useEffect } from "react"
 import { db } from "./firebase";
 import {
@@ -410,29 +411,18 @@ function App() {
     )
 
     await updateDoc(
-      doc(
-        db,
-        "settings",
-        "driverPrices"
-      ),
-
+      doc(db, "settings", "driverPrices"),
       {
-        hour: Number(driverPrices.hour)
+        pickup: Number(driverPrices.pickup),
+        delivery: Number(driverPrices.delivery),
       }
-
     )
 
     await updateDoc(
-      doc(
-        db,
-        "settings",
-        "tayyorlovchiPrices"
-      ),
-
+      doc(db, "settings", "tayyorlovchiPrices"),
       {
-        hour:Number(tayyorlovchiPrices.hour)
+        kvm: Number(tayyorlovchiPrices.kvm)
       }
-
     )
   }
 
@@ -2039,93 +2029,21 @@ await setDoc(
     {/* ===== ega panel ===== */}
     {role === "ega"  && (
     
-      <>
-        <button onClick={() => setRole("")}
-          style={{fontSize: 25,}}>
-          {"⏪️"}
-        </button>
-        
-        <div
-          style={{
-            border:
-              "1px solid #ccc",
-            padding: 10,
-            marginTop: 20,
-          }}
-        >
+      <EgaPanel
+        setRole={setRole}
 
-        <h2>Ish haqi</h2> 
-  
-        <p>Gilam</p>
-  
-        <input
-          value={ priceInputs.carpet || "" }
+        priceInputs={priceInputs}
+        setPriceInputs={setPriceInputs}
 
-          onChange={(e) =>
-            setPriceInputs({ ...priceInputs, carpet: e.target.value,})
-          }
-        />
+        driverPrices={driverPrices}
+        setDriverPrices={setDriverPrices}
 
-        <p>Adyol</p>
+        tayyorlovchiPrices={tayyorlovchiPrices}
+        setTayyorlovchiPrices={setTayyorlovchiPrices}
 
-        <input
-          value={ priceInputs.blanket || "" }
+        savePrices={savePrices}
+      />
 
-          onChange={(e) =>
-            setPriceInputs({ ...priceInputs, blanket: e.target.value, })
-          }
-        />
-
-        <p>Yakandoz</p>
-
-        <input
-          value={ priceInputs.yakandoz || "" }
-
-          onChange={(e) =>
-            setPriceInputs({ ...priceInputs, yakandoz: e.target.value, })
-          }
-        />
-
-        <p>Parda</p>
-
-        <input
-          value={ priceInputs.curtain || "" } 
- 
-          onChange={(e) =>
-            setPriceInputs({ ...priceInputs, curtain: e.target.value, })
-          }
-        />
-
-        <p>Driver soatbay</p>
-
-        <input 
-          value={driverPrices.hour || "" }
- 
-          onChange={(e) =>
-            setDriverPrices({...driverPrices, hour: e.target.value,})
-          }
-        />
-
-        <p>Tayyorlovchi soatbay</p>
-
-        <input
-          value={tayyorlovchiPrices.hour || "" }
-
-          onChange={(e) =>
-            setTayyorlovchiPrices({...tayyorlovchiPrices, hour: e.target.value,})
-          }
-        />
-
-        <p>
-          <button
-            onClick={savePrices}
-          >
-            Saqlash
-          </button>
-        </p>
-
-      </div>
-    </>
     )}
 
 
