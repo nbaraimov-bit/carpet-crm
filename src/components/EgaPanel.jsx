@@ -13,15 +13,56 @@ export default function EgaPanel({
   tayyorlovchiPrices,
   setTayyorlovchiPrices,
 
-  savePrices,
-
 }) 
 
 {
 
-  return(
+  const savePrices = async () => {
 
-    <div>
+    await updateDoc(
+      doc(db, "settings", "washerPrices"),
+      {
+        carpet: Number(priceInputs.carpet),
+        blanket: Number(priceInputs.blanket),
+        yakandoz: Number(priceInputs.yakandoz),
+        curtain: Number(priceInputs.curtain),
+      }
+    );
+
+    await updateDoc(
+      doc(db, "settings", "driverPrices"),
+      {
+        pickupCarpet: Number(driverPrices.pickupCarpet),
+        pickupBlanket: Number(driverPrices.pickupBlanket),
+        pickupYakandoz: Number(driverPrices.pickupYakandoz),
+        pickupCurtain: Number(driverPrices.pickupCurtain),
+
+        deliveryCarpet: Number(driverPrices.deliveryCarpet),
+        deliveryBlanket: Number(driverPrices.deliveryBlanket),
+        deliveryYakandoz: Number(driverPrices.deliveryYakandoz),
+        deliveryCurtain: Number(driverPrices.deliveryCurtain),
+
+        leaderPercent: Number(driverPrices.leaderPercent),
+        helperPercent: Number(driverPrices.helperPercent),
+      }
+    );
+
+    await updateDoc(
+      doc(db, "settings", "tayyorlovchiPrices"),
+      {
+        carpet: Number(tayyorlovchiPrices.carpet),
+        blanket: Number(tayyorlovchiPrices.blanket),
+        yakandoz: Number(tayyorlovchiPrices.yakandoz),
+        curtain: Number(tayyorlovchiPrices.curtain),
+      }
+    );
+
+    alert("Narxlar saqlandi ✅");
+  };
+
+    return(
+
+      <div>
     
         <>
           <button onClick={() => setRole("")}
