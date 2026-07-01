@@ -392,41 +392,6 @@ function App() {
     )
   }
 
-  const savePrices = async () => {
-
-    await updateDoc(
-
-      doc(
-        db,
-        "settings",
-        "washerPrices"
-      ),
-
-      {
-        carpet: Number(priceInputs.carpet),
-        blanket: Number(priceInputs.blanket),
-        yakandoz: Number(priceInputs.yakandoz),
-        curtain: Number(priceInputs.curtain),
-      }
-    )
-
-    await updateDoc(
-      doc(db, "settings", "driverPrices"),
-      {
-        pickup: Number(driverPrices.pickup),
-        delivery: Number(driverPrices.delivery),
-      }
-    )
-
-    await updateDoc(
-      doc(db, "settings", "tayyorlovchiPrices"),
-      {
-        kvm: Number(tayyorlovchiPrices.kvm)
-      }
-    )
-  }
-
-
   const getHourlyPrice = (
     worker
   ) => {
@@ -1993,7 +1958,6 @@ await setDoc(
         setWasherPrices={setWasherPrices}
         priceInputs={priceInputs}
         setPriceInputs={setPriceInputs}
-        savePrices={savePrices}
         attendance={attendance}
         getSalary={getSalary}
         getHours={getHours}
@@ -2041,7 +2005,6 @@ await setDoc(
         tayyorlovchiPrices={tayyorlovchiPrices}
         setTayyorlovchiPrices={setTayyorlovchiPrices}
 
-        savePrices={savePrices}
       />
 
     )}
