@@ -20,6 +20,29 @@ export default function TeamsPanel({
   });
   const hasTeam = myTeams.length > 0;
 
+  const teamTypes = [
+  {
+    id: "washer",
+    title: "Gilam yuvish",
+    icon: "🧼",
+  },
+  {
+    id: "curtain",
+    title: "Parda yuvish",
+    icon: "🪟",
+  },
+  {
+    id: "driver",
+    title: "Yetkazib berish",
+    icon: "🚚",
+  },
+  {
+    id: "tayyorlovchi",
+    title: "Tayyorlovchi",
+    icon: "📦",
+  },
+]
+
   return (
     <div style={{ padding: 20 }}>
       <button onClick={() => setPage("home")}>
@@ -67,7 +90,7 @@ export default function TeamsPanel({
         >
           <div
             style={{
-              width: 320,
+              width: 320, 
               background: "#111827",
               borderRadius: 20,
               padding: 20,
@@ -77,10 +100,53 @@ export default function TeamsPanel({
 
             <p>Jamoa nomi</p>
 
-              <input
-                value={teamName}
-                onChange={(e)=>setTeamName(e.target.value)}
-              />
+            <input
+              value={teamName}
+              onChange={(e)=>setTeamName(e.target.value)}
+            />
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 10,
+                marginTop: 20,
+              }}
+            >
+              {teamTypes.map((type) => (
+                <div
+                  key={type.id}
+                  onClick={() => setSelectedType(type.id)}
+                  style={{
+                    padding: 15,
+                    borderRadius: 15,
+                    cursor: "pointer",
+   
+                    textAlign: "center",
+
+                    border:
+                      selectedType === type.id
+                      ? "2px solid #6d5dfc"
+                      : "1px solid #555",
+
+                    background:
+                      selectedType === type.id
+                      ? "linear-gradient(135deg,#4f46e5,#7c3aed)"  
+                      : "#1e293b",
+ 
+                    transition: ".2s",
+                  }}
+                >
+                  <div style={{ fontSize: 32 }}>
+                    {type.icon}  
+                  </div>
+
+                  <div>
+                    {type.title}
+                  </div>
+                </div>
+              ))}
+            </div>
 
             <button onClick={() => setShowCreateTeam(false)}>
               Bekor qilish
