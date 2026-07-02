@@ -37,7 +37,7 @@ export default function TeamsPanel({
         >
 
           <p>
-  {team.members[currentWorker.phone].role === "leader"
+  {team.members[currentWorker.phone].lavozim === "leader"
     ? "👑 Leader"
     : "👤 Member"}
 </p>
