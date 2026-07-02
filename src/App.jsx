@@ -1368,7 +1368,7 @@ await setDoc(
         style={{ padding: 20 }}
       >
         <button
-          onClick={() => setShowArchive(false)}
+          onClick={() => setPage("home")}
           style={{fontSize: 20}}
         >
           ⏪️
@@ -1661,7 +1661,7 @@ await setDoc(
         ) && (
           <div
             className="role-card"
-            onClick={() => setShowArchive(!showArchive)}
+            onClick={() => setPage("archive")}
           >
             <div style={{ fontSize: 42 }}>
               🗂️
@@ -1697,6 +1697,23 @@ await setDoc(
             </div>
           </div>
         )}
+
+        <div
+  className="role-card"
+  onClick={() => setPage("teams")}
+>
+  <div style={{ fontSize: 42 }}>
+    👥
+  </div>
+
+  <div className="role-title">
+    Teams
+  </div>
+
+  <div className="role-subtitle">
+    Jamoalarni boshqarish
+  </div>
+</div>
 
         <br /><br />
 
