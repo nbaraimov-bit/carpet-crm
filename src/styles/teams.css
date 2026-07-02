@@ -1,3 +1,7 @@
+body{
+    background:red !important;
+}
+
 .team-type-card{
     position: relative;
     overflow: hidden;
