@@ -13,6 +13,9 @@ export default function TeamsPanel({
     return team.members?.[currentWorker.phone];
   });
 
+  const me = team.members[currentWorker.phone]
+  const isLeader = me.lavozim === "leader"
+
   return (
     <div style={{ padding: 20 }}>
       <button onClick={() => setPage("home")}>
@@ -24,6 +27,7 @@ export default function TeamsPanel({
       <p>Bu yerda barcha jamoalar chiqadi.</p>
 
       {myTeams.map((team) => (
+
         <div
           key={team.teamId}
           style={{
@@ -33,11 +37,12 @@ export default function TeamsPanel({
             marginTop: 10,
           }}
         >
+
+          <p>{isLeader ? "👑 Leader" : "👤 Member"}</p>
           <b>{team.teamName}</b>
-
           <p>{team.type}</p>
-
           <p>{team.leader}</p>
+
         </div>
       ))}
     </div>
