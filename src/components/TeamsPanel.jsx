@@ -1,5 +1,6 @@
 import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase"
+import { useState } from "react"
 
 export default function TeamsPanel({
   teams,
@@ -9,6 +10,8 @@ export default function TeamsPanel({
   workers,
   setPage,
 }) {
+
+  const [showCreateTeam, setShowCreateTeam] = useState(false)
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -36,11 +39,21 @@ export default function TeamsPanel({
         >
           <h3>Siz hali hech qaysi jamoaga qo'shilmagansiz</h3>
 
-          <button>➕ Jamoa yaratish</button>
+          <button
+            onClick={() => setShowCreateTeam(true)}
+          >
+            ➕ Jamoa yaratish
+          </button>
 
           <button style={{ marginLeft: 10 }}>
             📨 Jamoaga qo'shilish
           </button>
+        </div>
+      )}
+
+      {showCreateTeam && (
+        <div>
+          Modal shu yerda bo'ladi
         </div>
       )}
 
