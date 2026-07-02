@@ -31,3 +31,20 @@
 
     font-weight:600;
 }
+
+team-type-card.active{
+    background: linear-gradient(
+        135deg,
+        #5b4dff,
+        #7b5cff
+    );
+
+    border: 2px solid #9d8dff;
+
+    transform: scale(1.04);
+
+    box-shadow:
+        0 0 25px rgba(123,92,255,.35);
+
+    color: white;
+}
