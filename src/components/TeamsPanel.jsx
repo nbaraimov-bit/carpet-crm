@@ -117,7 +117,10 @@ export default function TeamsPanel({
               {teamTypes.map((type) => (
                 <div
   key={type.id}
-  onClick={() => setSelectedType(type.id)}
+  onClick={() => {
+  console.log("Bosildi:", type.id)
+  setSelectedType(type.id)
+}}
   className={
     selectedType === type.id
       ? "team-type-card active"
