@@ -52,10 +52,33 @@ export default function TeamsPanel({
       )}
 
       {showCreateTeam && (
-        <div>
-          Modal shu yerda bo'ladi
-        </div>
-      )}
+  <div
+    style={{
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0,0,0,0.6)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 999,
+    }}
+  >
+    <div
+      style={{
+        width: 320,
+        background: "#111827",
+        borderRadius: 20,
+        padding: 20,
+      }}
+    >
+      <h3>Jamoa yaratish</h3>
+
+      <button onClick={() => setShowCreateTeam(false)}>
+        Bekor qilish
+      </button>
+    </div>
+  </div>
+)}
 
       {myTeams.map((team) => (
 
