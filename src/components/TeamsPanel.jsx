@@ -13,6 +13,7 @@ export default function TeamsPanel({
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
   });
+  const hasTeam = myTeams.length > 0;
 
   return (
     <div style={{ padding: 20 }}>
@@ -23,6 +24,25 @@ export default function TeamsPanel({
       <h2>Jamoalar</h2>
 
       <p>Bu yerda barcha jamoalar chiqadi.</p>
+
+      {!hasTeam && (  
+        <div
+          style={{
+            border: "1px solid #555",
+            borderRadius: 10,
+            padding: 15,
+            marginBottom: 15,
+          }}
+        >
+          <h3>Siz hali hech qaysi jamoaga qo'shilmagansiz</h3>
+
+          <button>➕ Jamoa yaratish</button>
+
+          <button style={{ marginLeft: 10 }}>
+            📨 Jamoaga qo'shilish
+          </button>
+        </div>
+      )}
 
       {myTeams.map((team) => (
 
@@ -37,7 +57,7 @@ export default function TeamsPanel({
         >
 
           <p>
-  {team.members[currentWorker.phone].lavozim === "leader"
+  {team.members[currentWorker.phone].rank === "leader"
     ? "👑 Leader"
     : "👤 Member"}
 </p>
