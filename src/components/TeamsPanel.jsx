@@ -1,7 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase"
 import { useState } from "react"
-import "src/styles/teams.css"
+import "./styles/teams.css"
 
 export default function TeamsPanel({
   teams,
