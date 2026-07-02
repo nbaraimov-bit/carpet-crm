@@ -13,7 +13,7 @@ export default function TeamsPanel({
     return team.members?.[currentWorker.phone];
   });
 
-  const me = team.members[currentWorker.phone]
+  const me = teams.members[currentWorker.phone]
   const isLeader = me.lavozim === "leader"
 
   return (
