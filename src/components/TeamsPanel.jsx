@@ -8,33 +8,38 @@ export default function TeamsPanel({
   workers,
   setPage,
 }) {
-    return (
-  <div style={{ padding: 20 }}>
-    <button onClick={() => setPage("home")}>
-      ⏪
-    </button>
+    
+  const myTeams = teams.filter((team) => {
+    return team.members?.[currentWorker.phone];
+  });
 
-    <h2>Jamoalar</h2>
+  return (
+    <div style={{ padding: 20 }}>
+      <button onClick={() => setPage("home")}>
+        ⏪
+      </button>
 
-    <p>Bu yerda barcha jamoalar chiqadi.</p>
+      <h2>Jamoalar</h2>
 
-    {teams.map((team) => (
-      <div
-        key={team.teamId}
-        style={{
-          border: "1px solid #555",
-          borderRadius: 10,
-          padding: 10,
-          marginTop: 10,
-        }}
-      >
-        <b>{team.teamName}</b>
+      <p>Bu yerda barcha jamoalar chiqadi.</p>
 
-        <p>{team.type}</p>
+      {myTeams.map((team) => (
+        <div
+          key={team.teamId}
+          style={{
+            border: "1px solid #555",
+            borderRadius: 10,
+            padding: 10,
+            marginTop: 10,
+          }}
+        >
+          <b>{team.teamName}</b>
 
-        <p>{team.leader}</p>
-      </div>
-    ))}
-  </div>
-)
+          <p>{team.type}</p>
+
+          <p>{team.leader}</p>
+        </div>
+      ))}
+    </div>
+  )
 }
