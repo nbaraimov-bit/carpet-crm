@@ -1,6 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase"
 import { useState } from "react"
+import "src/styles/teams.css"
 
 export default function TeamsPanel({
   teams,
@@ -115,36 +116,22 @@ export default function TeamsPanel({
             >
               {teamTypes.map((type) => (
                 <div
-                  key={type.id}
-                  onClick={() => setSelectedType(type.id)}
-                  style={{
-                    padding: 15,
-                    borderRadius: 15,
-                    cursor: "pointer",
-   
-                    textAlign: "center",
+  key={type.id}
+  onClick={() => setSelectedType(type.id)}
+  className={
+    selectedType === type.id
+      ? "team-type-card active"
+      : "team-type-card"
+  }
+>
+  <div className="team-type-icon">
+    {type.icon}
+  </div>
 
-                    border:
-                      selectedType === type.id
-                      ? "2px solid #6d5dfc"
-                      : "1px solid #555",
-
-                    background:
-                      selectedType === type.id
-                      ? "linear-gradient(135deg,#4f46e5,#7c3aed)"  
-                      : "#1e293b",
- 
-                    transition: ".2s",
-                  }}
-                >
-                  <div style={{ fontSize: 32 }}>
-                    {type.icon}  
-                  </div>
-
-                  <div>
-                    {type.title}
-                  </div>
-                </div>
+  <div className="team-type-title">
+    {type.title}
+  </div>
+</div>
               ))}
             </div>
 
