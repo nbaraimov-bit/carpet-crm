@@ -12,6 +12,8 @@ export default function TeamsPanel({
 }) {
 
   const [showCreateTeam, setShowCreateTeam] = useState(false)
+  const [teamName, setTeamName] = useState("")
+  const [selectedType, setSelectedType] = useState("")
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -52,33 +54,40 @@ export default function TeamsPanel({
       )}
 
       {showCreateTeam && (
-  <div
-    style={{
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.6)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      zIndex: 999,
-    }}
-  >
-    <div
-      style={{
-        width: 320,
-        background: "#111827",
-        borderRadius: 20,
-        padding: 20,
-      }}
-    >
-      <h3>Jamoa yaratish</h3>
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.6)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 999,
+          }}
+        >
+          <div
+            style={{
+              width: 320,
+              background: "#111827",
+              borderRadius: 20,
+              padding: 20,
+            }}
+          >
+            <h2>👥 Jamoa yaratish</h2>
 
-      <button onClick={() => setShowCreateTeam(false)}>
-        Bekor qilish
-      </button>
-    </div>
-  </div>
-)}
+            <p>Jamoa nomi</p>
+
+              <input
+                value={teamName}
+                onChange={(e)=>setTeamName(e.target.value)}
+              />
+
+            <button onClick={() => setShowCreateTeam(false)}>
+              Bekor qilish
+            </button>
+          </div>
+        </div>
+      )}
 
       {myTeams.map((team) => (
 
