@@ -1,0 +1,20 @@
+:root {
+
+  --bg: #070b1a;
+
+  --card: #121a38;
+  --card2: #18234a;
+
+  --text: #ffffff;
+  --subtext: #b7c3e3;
+
+  --blue: #3b82f6;
+  --green: #22c55e;
+  --purple: #8b5cf6;
+  --orange: #f97316;
+  --red: #ef4444;
+  --cyan: #06b6d4;
+
+  --radius: 22px;
+
+}

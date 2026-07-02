@@ -31,7 +31,6 @@ export default function AdminPanel({
   selectedDate,
   setSelectedDate,
   driverPrices,
-  tayyorlovchiPrices,
   getHourlyPrice,
   setRole,
   editingStatus,

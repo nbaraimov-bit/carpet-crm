@@ -7,6 +7,8 @@ import getHours from "./utils/getHours"
 import getSalary from "./utils/getSalary"
 import getAttendanceSalary from "./utils/getAttendanceSalary"
 import EgaPanel from "./components/EgaPanel";
+import TeamsPanel from "./components/TeamsPanel";
+import BottomNavigation from "./components/BottomNavigation";  
 import { useState, useEffect } from "react"
 import { db } from "./firebase";
 import {
@@ -75,6 +77,8 @@ function App() {
   const [archives, setArchives] = useState([])
   const [archiveSearch, setArchiveSearch] = useState("")
   const [workerEarnings, setWorkerEarnings] = useState({})
+  const [teams, setTeams] = useState([])
+  const [page, setPage] = useState("home");
   //const [telegramId, setTelegramId] = useState("")
 
   const tg = window.Telegram?.WebApp
@@ -778,6 +782,20 @@ function App() {
 
   }, [])
 
+  useEffect(() => {
+    return onSnapshot(
+      collection(db, "teams"),
+      (snapshot) => {
+        setTeams(
+          snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+        )
+      }
+    )
+  }, [])
+
   {/* ===== add order ===== */}
   const addOrder = async () => {
 
@@ -1477,9 +1495,7 @@ await setDoc(
   }
 
   {/* ===== rolelar ===== */}
-  if (
-    !role 
-  ) {
+  if (!role && page === "home") {
     return (
       workers.find(
         (w) => w.phone === currentWorker?.phone
@@ -1666,7 +1682,7 @@ await setDoc(
         ) && (
           <div
             className="role-card"
-            onClick={() => setRole("hisobot")}
+            onClick={() => setPage("report")}
           >
             <div style={{ fontSize: 42 }}>
               📊
@@ -1973,7 +1989,6 @@ await setDoc(
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
         driverPrices={driverPrices}
-        tayyorlovchiPrices={tayyorlovchiPrices}
         getHourlyPrice={getHourlyPrice}
         setRole={setRole}
         editingStatus={editingStatus}
@@ -2011,7 +2026,7 @@ await setDoc(
 
 
     {/* ===== hisobot panel ===== */}
-    {role === "hisobot" && (
+    {page === "report" && (
 
       <div
         style={{
@@ -2020,7 +2035,7 @@ await setDoc(
         }}
       >
 
-        <button onClick={() => setRole("")}
+        <button onClick={() => setPage("home")}
           style={{fontSize: 25,}}>
           {"⏪️"}
         </button>
@@ -2092,6 +2107,16 @@ await setDoc(
 
     )}
 
+    {page === "teams" && (
+      <TeamsPanel
+        teams={teams}
+        setTeams={setTeams}
+        workers={workers}
+        currentWorker={currentWorker}
+        setPage={setPage}
+        role={role}
+      />
+    )}
 
   </div>
   )
