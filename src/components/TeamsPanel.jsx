@@ -1,4 +1,5 @@
-
+import { doc, updateDoc } from "firebase/firestore"
+import { db } from "../firebase"
 
 export default function TeamsPanel({
   teams,
@@ -12,9 +13,6 @@ export default function TeamsPanel({
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
   });
-
-  const me = teams.members[currentWorker.phone]
-  const isLeader = me.lavozim === "leader"
 
   return (
     <div style={{ padding: 20 }}>
@@ -38,11 +36,15 @@ export default function TeamsPanel({
           }}
         >
 
-          <p>{isLeader ? "👑 Leader" : "👤 Member"}</p>
+          <p>
+  {team.members[currentWorker.phone].role === "leader"
+    ? "👑 Leader"
+    : "👤 Member"}
+</p>
           <b>{team.teamName}</b>
           <p>{team.type}</p>
           <p>{team.leader}</p>
-
+          
         </div>
       ))}
     </div>
