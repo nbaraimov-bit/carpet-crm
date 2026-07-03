@@ -207,6 +207,7 @@
     background: rgba(255,255,255,.04);
     border: 1px solid rgba(255,255,255,.08);
     transition: .25s;
+    overflow: hidden;
 }
 
 .team-accent{
@@ -217,8 +218,24 @@
     width:5px;
     height:100%;
     background:#facc15;
-    box-shadow:
-        0 0 10px rgba(250,204,21,.45),
-        12px 0 50px rgba(250,204,21,.50);
+
+}
+
+.team-accent::after{
+
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 180px;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(250,204,21,.22),
+        rgba(250,204,21,.12),
+        rgba(250,204,21,.05),
+        transparent
+    );
+    pointer-events: none;
 
 }
