@@ -59,11 +59,15 @@ export default function TeamsPanel({
       icon: "🚚",
     },
     {
-      id: "tayyorlovchi",
+      id: "packing",
       title: "Tayyorlovchi",
       icon: "📦",
     },
   ]
+
+  const teamTypeMap = Object.fromEntries(
+    teamTypes.map((type) => [type.id, type])
+  )
 
   useEffect(() => {
 
@@ -302,13 +306,17 @@ export default function TeamsPanel({
             key={team.id}
           >
 
-            <div className="team-accent"></div>
+            <div className="team -accent"></div>
 
             <p>🟡 Tasdiqlanishi kutilmoqda</p>
 
             <b>{team.teamName}</b>
 
-            <p>{team.type}</p>
+            <p>
+              {teamTypeMap[team.type]?.icon}
+              {" "}
+              {teamTypeMap[team.type]?.title}
+            </p>
 
             <p>Admin tasdiqlashini kutmoqda</p>
           </div>
