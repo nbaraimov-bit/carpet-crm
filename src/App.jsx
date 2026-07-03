@@ -2124,6 +2124,7 @@ await setDoc(
 
     )}
 
+    {/* ===== teams panel ===== */}
     {page === "teams" && (
       <TeamsPanel
         teams={teams}
@@ -2131,7 +2132,7 @@ await setDoc(
         workers={workers}
         currentWorker={currentWorker}
         setPage={setPage}
-        role={role}
+        role={currentWorker?.role}
       />
     )}
 
