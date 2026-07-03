@@ -148,7 +148,7 @@ export default function TeamsPanel({
 
             teamType: team.type,
 
-            leader: team.leader,
+            leader: team.leaderName,
 
             createdBy: team.createdBy,
 
@@ -164,7 +164,7 @@ export default function TeamsPanel({
 
                 [team.createdBy]:{
 
-                    name: team.leader,
+                    name: team.leaderName,
 
                     phone: team.createdBy,
 
