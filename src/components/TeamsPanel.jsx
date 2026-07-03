@@ -170,7 +170,7 @@ export default function TeamsPanel({
 
                     {disabled && (
                       <div className="team-stamp">
-                        A'ZO
+                        BAND
                       </div>
                     )}
 
