@@ -92,3 +92,42 @@
         scale(30);
 
 }
+
+.team-name-input{
+    width:100%;
+
+    padding:14px 16px;
+
+    margin-top:8px;
+
+    border-radius:16px;
+
+    border:2px solid rgba(255,255,255,.08);
+
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(14px);
+
+    color:white;
+
+    font-size:16px;
+
+    outline:none;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.team-name-input::placeholder{
+    color:#9ca3af;
+}
+
+.team-name-input:focus{
+
+    border-color:#7b5cff;
+
+    box-shadow:
+        0 0 20px rgba(123,92,255,.25);
+
+}

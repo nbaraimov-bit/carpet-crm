@@ -91,7 +91,8 @@ export default function TeamsPanel({
         >
           <div
             style={{
-              width: 320, 
+              width: "90%",
+              maxWidth: 380,  
               background: "#111827",
               borderRadius: 20,
               padding: 20,
@@ -102,8 +103,10 @@ export default function TeamsPanel({
             <p>Jamoa nomi</p>
 
             <input
+              className="team-name-input"
+              placeholder="Masalan: fatality"
               value={teamName}
-              onChange={(e)=>setTeamName(e.target.value)}
+              onChange={(e) => setTeamName(e.target.value)}
             />
 
             <div
@@ -116,25 +119,22 @@ export default function TeamsPanel({
             >
               {teamTypes.map((type) => (
                 <div
-  key={type.id}
-  onClick={() => {
-  console.log("Bosildi:", type.id)
-  setSelectedType(type.id)
-}}
-  className={
-    selectedType === type.id
-      ? "team-type-card active"
-      : "team-type-card"
-  }
->
-  <div className="team-type-icon">
-    {type.icon}
-  </div>
+                  key={type.id}
+                  onClick={() => {setSelectedType(type.id)}}
+                  className={
+                    selectedType === type.id
+                    ? "team-type-card active"
+                    : "team-type-card"
+                  }
+                >
+                  <div className="team-type-icon">
+                    {type.icon}
+                  </div>
 
-  <div className="team-type-title">
-    {type.title}
-  </div>
-</div>
+                  <div className="team-type-title">
+                    {type.title}
+                  </div>
+                </div>
               ))}
             </div>
 
