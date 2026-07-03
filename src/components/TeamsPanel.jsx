@@ -1,5 +1,5 @@
 import { db } from "../firebase"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import "../styles/teams.css"
 import {
   doc,
@@ -7,9 +7,13 @@ import {
   addDoc,
   collection,
   serverTimestamp,
+  onSnapshot,
+  query,
+  where,
 } from "firebase/firestore"
 
 export default function TeamsPanel({
+
   teams,
   setTeams,
   role,
@@ -17,12 +21,14 @@ export default function TeamsPanel({
   workers,
   setPage,
   allowedRoles
+
 }) {
 
   const [showCreateTeam, setShowCreateTeam] = useState(false)
   const [teamName, setTeamName] = useState("")
   const [selectedType, setSelectedType] = useState("")
   const [loading, setLoading] = useState(false)
+  const [pendingTeams, setPendingTeams] = useState([])
 
   const nameLength = teamName.trim().length
   const isNameValid = nameLength >= 5 && nameLength <= 20
@@ -59,7 +65,29 @@ export default function TeamsPanel({
     },
   ]
 
-  console.log("Role:", role)
+  useEffect(() => {
+
+    const q = query(
+      collection(db, "pendingTeams"),
+      where("createdBy", "==", currentWorker.phone)
+    )
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+
+      const list = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+
+      setPendingTeams(list)
+
+    })
+
+    return () => unsubscribe()
+
+  }, [currentWorker.phone])
+
+  console.log(pendingTeams)
 
   function handleCloseCreateModal() {
     setTeamName("")
@@ -68,11 +96,6 @@ export default function TeamsPanel({
   }
 
   async function handleCreateTeam() {
-
-    console.log({
-      teamName,
-      selectedType,
-    })
 
     const pendingTeam = {
 
@@ -85,8 +108,6 @@ export default function TeamsPanel({
 
     }
 
-    console.log(pendingTeam)
-
     try {
 
       setLoading(true)
@@ -97,8 +118,6 @@ export default function TeamsPanel({
       )
 
       handleCloseCreateModal()
-
-      console.log("Team yuborildi")
   
     } catch (error) {
 
