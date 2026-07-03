@@ -80,6 +80,21 @@ export default function TeamsPanel({
 
     console.log(pendingTeam)
 
+    try {
+
+      await addDoc(
+        collection(db, "pendingTeams"),
+        pendingTeam
+      )
+
+      console.log("Team yuborildi")
+  
+    } catch (error) {
+
+      console.error(error)
+
+    }
+
   }
 
   return (
