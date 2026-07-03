@@ -240,10 +240,6 @@
 
 }
 
-.team-header{
-
-}
-
 .team-status{
 
     display:inline-flex;
@@ -291,5 +287,52 @@
     color:#8b93a7;
     font-size:13px;
     line-height:1.5;
+
+}
+
+.team-actions{
+
+    margin-top:18px;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+
+}
+
+.approve-team-btn{
+
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    background:#22c55e;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+
+}
+
+.approve-team-btn:hover{
+
+    transform:translateY(-1px);
+    background:#16a34a;
+
+}
+
+.reject-team-btn{
+
+    padding:10px 16px;
+    border-radius:10px;
+    border:1px solid rgba(255,80,80,.4);
+    background:transparent;
+    color:#ff7272;
+    cursor:pointer;
+    transition:.25s;
+
+}
+
+.reject-team-btn:hover{
+
+    background:rgba(255,80,80,.12);
 
 }

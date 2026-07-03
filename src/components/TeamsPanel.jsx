@@ -384,8 +384,17 @@ export default function TeamsPanel({
             </div>
 
             <div className="team-footer">
-              Admin tasdiqlaganidan so'ng
-              jamoangiz avtomatik faollashadi.
+              <div className="team-actions">
+
+                <button className="reject-team-btn">  
+                  Rad etish
+                </button>
+
+                <button className="approve-team-btn">
+                  Tasdiqlash
+                </button>
+
+              </div>
             </div>
 
           </div>
