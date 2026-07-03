@@ -297,24 +297,22 @@ export default function TeamsPanel({
         <p>Jamoalarim</p>
 
         {pendingTeams.map((team) => (
-  <div
-    key={team.id}
-    style={{
-      border: "1px solid #facc15",
-      borderRadius: 10,
-      padding: 10,
-      marginTop: 10,
-    }}
-  >
-    <p>🟡 Tasdiqlanishi kutilmoqda</p>
+          <div
+            className="pending-team-card"
+            key={team.id}
+          >
 
-    <b>{team.teamName}</b>
+            <div className="team-accent"></div>
 
-    <p>{team.type}</p>
+            <p>🟡 Tasdiqlanishi kutilmoqda</p>
 
-    <p>Admin tasdiqlashini kutmoqda</p>
-  </div>
-))}
+            <b>{team.teamName}</b>
+
+            <p>{team.type}</p>
+
+            <p>Admin tasdiqlashini kutmoqda</p>
+          </div>
+        ))}
 
         {myTeams.map((team) => (
 

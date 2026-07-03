@@ -1,35 +1,25 @@
 .team-type-card{
+    
     position: relative;
     overflow: hidden;
-
     padding: 18px;
-
     border-radius: 20px;
-
     background: rgba(255,255,255,.05);
-
     backdrop-filter: blur(16px);
-
     border: 2px solid rgba(255,255,255,.08);
-
     cursor: pointer;
-
     user-select: none;
-
     transition:
         transform .22s ease,
         box-shadow .22s ease,
         border-color .22s ease;
-
     text-align: center;
 }
 
 .team-type-card.disabled .team-content{
 
     filter:grayscale(100%);
-
     opacity:.7;
-
     cursor:not-allowed;
 
 }
@@ -37,9 +27,7 @@
 .team-type-icon{
 
     font-size:34px;
-
     margin-bottom:10px;
-
     transition:transform .25s ease;
 
 }
@@ -47,7 +35,6 @@
 .team-type-title{
 
     font-size:17px;
-
     font-weight:600;
 
 }
@@ -55,9 +42,7 @@
 .team-type-card.active{
 
     border-color:#7b5cff;
-
     transform:scale(1.04);
-
     box-shadow:
         0 0 30px rgba(123,92,255,.28);
 
@@ -68,31 +53,22 @@
     content:"";
 
     position:absolute;
-
     left:50%;
     top:50%;
-
     width:10px;
     height:10px;
-
     border-radius:50%;
-
     background:
         radial-gradient(
             circle,
             rgba(123,92,255,.55),
             transparent 70%
         );
-
     transform:
         translate(-50%,-50%)
         scale(0);
-
-    transition:
-        transform .35s ease;
-
+    transition: transform .35s ease;
     pointer-events:none;
-
 }
 
 .team-type-card.active::before{
@@ -104,26 +80,17 @@
 }
 
 .team-name-input{
+
     width:100%;
-
     padding:14px 16px;
-
     margin-top:8px;
-
     border-radius:16px;
-
     border:2px solid rgba(255,255,255,.08);
-
     background:rgba(255,255,255,.05);
-
     backdrop-filter:blur(14px);
-
     color:white;
-
     font-size:16px;
-
     outline:none;
-
     transition:
         border-color .25s ease,
         box-shadow .25s ease;
@@ -136,9 +103,7 @@
 .team-name-input:focus{
 
     border-color:#7b5cff;
-
-    box-shadow:
-        0 0 20px rgba(123,92,255,.25);
+    box-shadow: 0 0 20px rgba(123,92,255,.25);
 
 }
 
@@ -148,17 +113,13 @@
 
 .team-name-input.invalid{
     border-color:#ef4444;
-
-    box-shadow:
-        0 0 18px rgba(239,68,68,.25);
+    box-shadow: 0 0 18px rgba(239,68,68,.25);
 }
 
 .create-team-buttons{
 
     display:flex;
-
     gap:12px;
-
     margin-top:24px;
 
 }
@@ -166,19 +127,12 @@
 .create-team-buttons button{
 
     flex:1;
-
     padding:14px;
-
     border:none;
-
     border-radius:16px;
-
     font-size:16px;
-
     font-weight:600;
-
     cursor:pointer;
-
     transition:
         transform .2s ease,
         background .25s ease,
@@ -190,11 +144,8 @@
 .cancel-button{
 
     background:rgba(255,255,255,.06);
-
     color:white;
-
     border:1px solid rgba(255,255,255,.08);
-
     backdrop-filter:blur(14px);
 
 }
@@ -207,30 +158,18 @@
 
 .create-button{
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b4dff,
-            #7b5cff
-        );
-
+    background: linear-gradient( 135deg, #5b4dff, #7b5cff );
     color:white;
-
-    box-shadow:
-        0 0 18px rgba(123,92,255,.28);
+    box-shadow: 0 0 18px rgba(123,92,255,.28);
 
 }
 
 .create-button:disabled{
 
     background:#3b3b3b;
-
     color:#888;
-
     box-shadow:none;
-
     cursor:not-allowed;
-
     opacity:.7;
 
 }
@@ -238,37 +177,46 @@
 .team-stamp{
 
     position:absolute;
-
     top:50%;
-
     left:50%;
-
     transform:
         translate(-50%,-50%)
         rotate(-18deg);
-
     padding:6px 18px;
-
     border:2px solid rgba(220,38,38,.65);
-
     border-radius:8px;
-
     color:rgba(220,38,38,.75);
-
     text-shadow: 0 0 6px rgba(220,38,38,.25);
-
     font-size:20px;
-
     font-weight:900;
-
     letter-spacing:3px;
-
     text-transform:uppercase;
-
     opacity:.75;
-
     pointer-events:none;
-
     user-select:none;
+
+}
+
+.pending-team-card{
+
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    padding: 18px;
+    margin-top: 14px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    transition: .25s;
+}
+
+.team-accent{
+
+    position:absolute;
+    left:0;
+    top:0;
+    width:5px;
+    height:100%;
+    background:#facc15;
+    box-shadow: 8px 0 22px rgba(250,204,21,.30);
 
 }
