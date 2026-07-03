@@ -217,6 +217,8 @@
     width:5px;
     height:100%;
     background:#facc15;
-    box-shadow: 8px 0 100px rgba(250,204,21,.30);
+    box-shadow:
+        0 0 10px rgba(250,204,21,.45),
+        12px 0 50px rgba(250,204,21,.18);
 
 }
