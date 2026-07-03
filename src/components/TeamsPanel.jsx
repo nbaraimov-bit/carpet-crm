@@ -138,6 +138,64 @@ export default function TeamsPanel({
 
   }
 
+  const approveTeam = async (team) => {
+
+    try{
+
+        await addDoc(collection(db,"teams"),{
+
+            teamName: team.teamName,
+
+            teamType: team.Type,
+
+            leader: team.leader,
+
+            createdBy: team.createdBy,
+
+            createdAt: team.createdAt,
+
+            approvedBy: currentWorker.phone,
+
+            approvedAt: serverTimestamp(),
+
+            status:"active",
+
+            members:{
+
+                [team.createdBy]:{
+
+                    name: team.leader,
+
+                    phone: team.createdBy,
+
+                    rank:"leader",
+
+                    carpet:0,
+
+                    blanket:0,
+
+                    yakandoz:0,
+
+                    curtain:0,
+
+                    working:true,
+
+                }
+
+            }
+
+        })
+
+        console.log("Team qo'shildi")
+
+    }catch(err){
+
+        console.log(err)
+
+    }
+
+  }
+
   return (
     <div style={{ padding: 20 }}>
       <button onClick={() => setPage("home")}>
@@ -320,6 +378,18 @@ export default function TeamsPanel({
               👥 {team.teamName}
             </div>
 
+            <div team-leader-info>
+
+              <div className="team-leader">
+                👤 {team.leaderName}
+              </div>
+
+              <div className="team-phone">
+                📞 {team.createdBy}
+              </div>
+
+            </div>
+
             <div className="team-type">
               {teamTypeMap[team.type]?.icon}
               {" "}
@@ -402,7 +472,10 @@ export default function TeamsPanel({
                   Rad etish
                 </button>
 
-                <button className="approve-team-btn">
+                <button 
+                  className="approve-team-btn"
+                  onClick={() => approveTeam(team)}
+                >
                   Tasdiqlash
                 </button>
 
