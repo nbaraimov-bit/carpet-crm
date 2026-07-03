@@ -86,8 +86,6 @@ export default function TeamsPanel({
 
   }, [currentWorker.phone])
 
-  console.log(pendingTeams)
-
   function handleCloseCreateModal() {
     setTeamName("")
     setSelectedType("")
@@ -124,7 +122,7 @@ export default function TeamsPanel({
 
     } finally {
 
-      setLoading(false)
+      setLoading(false) 
 
     }
 
@@ -296,24 +294,33 @@ export default function TeamsPanel({
         <p>Jamoalarim</p>
 
         {pendingTeams.map((team) => (
-          <div
-            className="pending-team-card"
-            key={team.id}
-          >
+          <div className="pending-team-card">
 
-            <div className="team -accent"></div>
+            <div className="team-accent"></div>
 
-            <p>🟡 Tasdiqlanishi kutilmoqda</p>
+            <div className="team-header">
 
-            <b>{team.teamName}</b>
+              <div className="team-status pending">
+                  🟡 Tasdiqlanishi kutilmoqda
+              </div>
 
-            <p>
+            </div>
+
+            <div className="team-title">
+              👥 {team.teamName}
+            </div>
+
+            <div className="team-type">
               {teamTypeMap[team.type]?.icon}
               {" "}
               {teamTypeMap[team.type]?.title}
-            </p>
+            </div>
 
-            <p>Admin tasdiqlashini kutmoqda</p>
+            <div className="team-footer">
+              Admin tasdiqlaganidan so'ng
+              jamoangiz avtomatik faollashadi.
+            </div>
+
           </div>
         ))}
 
