@@ -24,6 +24,16 @@
     text-align: center;
 }
 
+.team-type-card.disabled{
+
+    filter:grayscale(100%);
+
+    opacity:.7;
+
+    cursor:not-allowed;
+
+}
+
 .team-type-icon{
 
     font-size:34px;
@@ -222,5 +232,41 @@
     cursor:not-allowed;
 
     opacity:.7;
+
+}
+
+.team-stamp{
+
+    position:absolute;
+
+    top:50%;
+
+    left:50%;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(-18deg);
+
+    padding:6px 18px;
+
+    border:2px solid rgba(220,38,38,.65);
+
+    border-radius:8px;
+
+    color:rgba(220,38,38,.75);
+
+    font-size:18px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    opacity:.45;
+
+    pointer-events:none;
+
+    user-select:none;
 
 }
