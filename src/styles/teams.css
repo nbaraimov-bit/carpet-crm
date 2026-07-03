@@ -131,3 +131,14 @@
         0 0 20px rgba(123,92,255,.25);
 
 }
+
+.team-name-input.valid{
+    border-color:#7b5cff;
+}
+
+.team-name-input.invalid{
+    border-color:#ef4444;
+
+    box-shadow:
+        0 0 18px rgba(239,68,68,.25);
+}
