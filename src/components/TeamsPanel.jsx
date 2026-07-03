@@ -15,6 +15,9 @@ export default function TeamsPanel({
   const [showCreateTeam, setShowCreateTeam] = useState(false)
   const [teamName, setTeamName] = useState("")
   const [selectedType, setSelectedType] = useState("")
+
+  const nameLength = teamName.trim().length
+  const isNameValid = nameLength >= 5 && nameLength <= 20
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -103,11 +106,29 @@ export default function TeamsPanel({
             <p>Jamoa nomi</p>
 
             <input
-              className="team-name-input"
+              className={
+                nameLength === 0
+                ? "team-name-input"
+                : isNameValid
+                ? "team-name-input valid"
+                : "team-name-input invalid"
+              }
               placeholder="Masalan: fatality"
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
             />
+
+            {nameLength > 0 && nameLength < 5 && (
+              <p className="input-error">
+                Kamida 5 ta belgi kiriting
+              </p>
+            )}
+
+            {nameLength > 20 && (
+              <p className="input-error">
+                Eng ko'pi 20 ta belgi bo'lishi mumkin
+              </p> 
+            )}
 
             <div
               style={{
