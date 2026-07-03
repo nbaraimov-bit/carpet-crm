@@ -16,6 +16,7 @@ export default function TeamsPanel({
   currentWorker,
   workers,
   setPage,
+  allowedRoles
 }) {
 
   const [showCreateTeam, setShowCreateTeam] = useState(false)
@@ -32,8 +33,8 @@ export default function TeamsPanel({
   const hasTeam = myTeams.length > 0;
   const joinedTypes = myTeams.map((team) => team.type)
 
-  const isAdmin = role === "admin" || role === "ega"
-  const isWorker = role === "worker"
+  const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega")
+  const isWorker = allowedRoles.includes("worker")
 
   const teamTypes = [
     {

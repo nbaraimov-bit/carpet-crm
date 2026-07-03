@@ -2133,6 +2133,7 @@ await setDoc(
         currentWorker={currentWorker}
         setPage={setPage}
         role={currentWorker?.role}
+        allowedRoles={allowedRoles}
       />
     )}
 
