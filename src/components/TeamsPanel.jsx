@@ -359,6 +359,35 @@ export default function TeamsPanel({
         <h3>Barcha jamoalar</h3>
 
         <p>Pending va Active jamoalar shu yerda chiqadi.</p>
+
+        <div className="pending-team-card">
+
+            <div className="team-accent"></div>
+
+            <div className="team-header">
+
+              <div className="team-status pending">
+                  🟡 Tasdiqlanishi kutilmoqda
+              </div>
+
+            </div>
+
+            <div className="team-title">
+              👥 {team.teamName}
+            </div>
+
+            <div className="team-type">
+              {teamTypeMap[team.type]?.icon}
+              {" "}
+              {teamTypeMap[team.type]?.title}
+            </div>
+
+            <div className="team-footer">
+              Admin tasdiqlaganidan so'ng
+              jamoangiz avtomatik faollashadi.
+            </div>
+
+        </div>
       </>)}
 
     </div>
