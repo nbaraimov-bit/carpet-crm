@@ -66,10 +66,20 @@ export default function TeamsPanel({
 
   useEffect(() => {
 
-    const q = query(
-      collection(db, "pendingTeams"),
-      where("createdBy", "==", currentWorker.phone)
-    )
+    let q 
+
+    if (isAdmin) {
+
+      q = collection(db, "pendingTeams")
+
+    } else {
+
+      q = query(
+        collection(db, "pendingTeams"),
+        where("createdBy", "==", currentWorker.phone)
+      )
+
+    }
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
 
