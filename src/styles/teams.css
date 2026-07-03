@@ -24,7 +24,7 @@
     text-align: center;
 }
 
-.team-type-card.disabled{
+.team-type-card.disabled .team-content{
 
     filter:grayscale(75%);
 

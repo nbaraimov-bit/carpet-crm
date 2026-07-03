@@ -158,12 +158,14 @@ export default function TeamsPanel({
                       : "team-type-card"
                     }
                   >
-                    <div className="team-type-icon">
-                      {type.icon}
-                    </div>  
+                    <div className="team-content">
+                      <div className="team-type-icon">
+                        {type.icon}
+                      </div>  
 
-                    <div className="team-type-title">
-                      {type.title}
+                      <div className="team-type-title">
+                        {type.title}
+                      </div>
                     </div>
 
                     {disabled && (
