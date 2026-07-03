@@ -380,7 +380,7 @@ export default function TeamsPanel({
             <div team-leader-info>
 
               <div className="team-leader">
-                👤 {team.leader}
+                👤 {team.leaderName}
               </div>
 
               <div className="team-phone">
