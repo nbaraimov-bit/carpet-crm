@@ -54,32 +54,32 @@ export default function TeamsPanel({
         ⏪
       </button>
 
-      <h2>Jamoalar</h2>
-
-      <p>Bu yerda barcha jamoalar chiqadi.</p>
-
-      {!hasTeam && (  
-        <div
-          style={{
-            border: "1px solid #555",
-            borderRadius: 10,
-            padding: 15,
-            marginBottom: 15,
-          }}
-        >
+      <h2>Jamoa boshqaruv paneli</h2>
+       
+      <div
+        style={{
+          border: "1px solid #555",
+          borderRadius: 10,
+          padding: 15,
+          marginBottom: 15,
+        }}
+      >
+          
+        {!hasTeam && ( 
           <h3>Siz hali hech qaysi jamoaga qo'shilmagansiz</h3>
+        )}
 
-          <button
-            onClick={() => setShowCreateTeam(true)}
-          >
-            ➕ Jamoa yaratish
-          </button>
+        <button
+          onClick={() => setShowCreateTeam(true)}
+        >
+          ➕ Jamoa yaratish
+        </button>
 
-          <button style={{ marginLeft: 10 }}>
-            📨 Jamoaga qo'shilish
-          </button>
-        </div>
-      )}
+        <button style={{ marginLeft: 10 }}>
+          📨 Jamoaga qo'shilish
+        </button>
+      </div>
+      
 
       {showCreateTeam && (
         <div
@@ -204,6 +204,8 @@ export default function TeamsPanel({
           </div>
         </div>
       )}
+
+      <p>Jamoalarim</p>
 
       {myTeams.map((team) => (
 
