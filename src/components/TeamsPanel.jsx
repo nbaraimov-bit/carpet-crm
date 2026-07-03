@@ -159,9 +159,28 @@ export default function TeamsPanel({
               ))}
             </div>
 
-            <button onClick={() => setShowCreateTeam(false)}>
-              Bekor qilish
-            </button>
+            <div className="create-team-buttons">
+
+              <button
+                className="cancel-button"
+                onClick={() => setShowCreateTeam(false)}
+              >
+                Bekor
+              </button>
+
+              <button
+                className="create-button"
+                disabled={
+                  teamName.trim().length < 5 ||
+                  teamName.trim().length > 20 ||
+                  !selectedType
+                }
+              >
+                Yaratish
+              </button>
+
+            </div>
+
           </div>
         </div>
       )}

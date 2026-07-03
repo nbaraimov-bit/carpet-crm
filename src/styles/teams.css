@@ -142,3 +142,85 @@
     box-shadow:
         0 0 18px rgba(239,68,68,.25);
 }
+
+.create-team-buttons{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:24px;
+
+}
+
+.create-team-buttons button{
+
+    flex:1;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:16px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        background .25s ease,
+        box-shadow .25s ease,
+        opacity .25s ease;
+
+}
+
+.cancel-button{
+
+    background:rgba(255,255,255,.06);
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+
+}
+
+.cancel-button:hover{
+
+    background:rgba(255,255,255,.1);
+
+}
+
+.create-button{
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b4dff,
+            #7b5cff
+        );
+
+    color:white;
+
+    box-shadow:
+        0 0 18px rgba(123,92,255,.28);
+
+}
+
+.create-button:disabled{
+
+    background:#3b3b3b;
+
+    color:#888;
+
+    box-shadow:none;
+
+    cursor:not-allowed;
+
+    opacity:.7;
+
+}
