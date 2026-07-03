@@ -26,7 +26,7 @@
 
 .team-type-card.disabled{
 
-    filter:grayscale(100%);
+    filter:grayscale(75%);
 
     opacity:.7;
 
@@ -255,15 +255,15 @@
 
     color:rgba(220,38,38,.75);
 
-    font-size:18px;
+    font-size:20px;
 
-    font-weight:800;
+    font-weight:850;
 
-    letter-spacing:2px;
+    letter-spacing:3px;
 
     text-transform:uppercase;
 
-    opacity:.45;
+    opacity:.65;
 
     pointer-events:none;
 
