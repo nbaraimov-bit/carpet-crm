@@ -7,15 +7,10 @@
   );
 
   border:1px solid rgba(255,255,255,.08);
-
   border-radius:24px;
-
   padding:18px;
-
   transition:.25s;
-
   cursor:pointer;
-
   overflow:hidden;
 
 }
@@ -29,15 +24,10 @@
   );
 
   border:1px solid rgba(255,255,255,.08);
-
   border-radius:24px;
-
   padding:18px;
-
   transition:.25s;
-
   cursor:pointer;
-
   overflow:hidden;
 
 }
@@ -45,9 +35,7 @@
 .role-title{
 
   color:var(--text);
-
   font-size:28px;
-
   font-weight:700;
 
 }
@@ -55,9 +43,7 @@
 .role-subtitle{
 
   color:var(--sub);
-
   margin-top:8px;
-
   line-height:1.4;
 
 }

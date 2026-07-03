@@ -26,27 +26,42 @@ export default function TeamsPanel({
   const joinedTypes = myTeams.map((team) => team.type)
 
   const teamTypes = [
-  {
-    id: "washer",
-    title: "Gilam yuvish",
-    icon: "🧼",
-  },
-  {
-    id: "curtain",
-    title: "Parda yuvish",
-    icon: "🪟",
-  },
-  {
-    id: "driver",
-    title: "Yetkazib berish",
-    icon: "🚚",
-  },
-  {
-    id: "tayyorlovchi",
-    title: "Tayyorlovchi",
-    icon: "📦",
-  },
-]
+    {
+      id: "washer",
+      title: "Gilam yuvish",
+      icon: "🧼",
+    },
+    {
+      id: "curtain",
+      title: "Parda yuvish",
+      icon: "🪟",
+    },
+    {
+      id: "driver",
+      title: "Yetkazib berish",
+      icon: "🚚",
+    },
+    {
+      id: "tayyorlovchi",
+      title: "Tayyorlovchi",
+      icon: "📦",
+    },
+  ]
+
+  function handleCloseCreateModal() {
+    setTeamName("")
+    setSelectedType("")
+    setShowCreateTeam(false)
+  }
+
+  async function handleCreateTeam() {
+
+    console.log({
+      teamName,
+      selectedType,
+    })
+
+  }
 
   return (
     <div style={{ padding: 20 }}>
@@ -185,7 +200,7 @@ export default function TeamsPanel({
 
               <button
                 className="cancel-button"
-                onClick={() => setShowCreateTeam(false)}
+                onClick={handleCloseCreateModal}
               >
                 Bekor
               </button>
@@ -197,6 +212,7 @@ export default function TeamsPanel({
                   teamName.trim().length > 20 ||
                   !selectedType
                 }
+                onClick={handleCreateTeam}
               >
                 Yaratish
               </button>
