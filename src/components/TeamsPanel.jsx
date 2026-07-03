@@ -24,7 +24,6 @@ export default function TeamsPanel({
   });
   const hasTeam = myTeams.length > 0;
   const joinedTypes = myTeams.map((team) => team.type)
-  const disabled = joinedTypes.includes(type.id)
 
   const teamTypes = [
   {
