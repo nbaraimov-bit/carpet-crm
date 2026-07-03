@@ -309,6 +309,11 @@
     font-weight:600;
     cursor:pointer;
     transition:.25s;
+    background: linear-gradient(
+        180deg,
+        #34d399,
+        #22c55e
+);
 
 }
 
@@ -335,4 +340,13 @@
 
     background:rgba(255,80,80,.12);
 
+}
+
+.team-leader,
+.team-phone{
+    margin-top:8px;
+
+    color:#b7bcc8;
+
+    font-size:14px;
 }

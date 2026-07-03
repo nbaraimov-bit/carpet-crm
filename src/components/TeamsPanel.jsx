@@ -377,6 +377,18 @@ export default function TeamsPanel({
               👥 {team.teamName}
             </div>
 
+            <div team-leader-info>
+
+              <div className="team-leader">
+                👤 {team.leader}
+              </div>
+
+              <div className="team-phone">
+                📞 {team.createdBy}
+              </div>
+
+            </div>
+
             <div className="team-type">
               {teamTypeMap[team.type]?.icon}
               {" "}
