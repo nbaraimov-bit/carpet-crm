@@ -2,49 +2,93 @@
     position: relative;
     overflow: hidden;
 
+    padding: 18px;
+
     border-radius: 20px;
 
-    padding: 18px;
+    background: rgba(255,255,255,.05);
+
+    backdrop-filter: blur(16px);
+
+    border: 2px solid rgba(255,255,255,.08);
 
     cursor: pointer;
 
-    border: 1px solid rgba(255,255,255,.08);
-
-    background: rgba(255,255,255,.04);
-
-    backdrop-filter: blur(14px);
+    user-select: none;
 
     transition:
-        all .28s ease;
+        transform .22s ease,
+        box-shadow .22s ease,
+        border-color .22s ease;
 
-    user-select: none;
+    text-align: center;
 }
 
 .team-type-icon{
+
     font-size:34px;
 
-    margin-bottom:12px;
+    margin-bottom:10px;
+
+    transition:transform .25s ease;
+
 }
 
 .team-type-title{
-    font-size:18px;
+
+    font-size:17px;
 
     font-weight:600;
+
 }
 
-team-type-card.active{
-    background: linear-gradient(
-        135deg,
-        #5b4dff,
-        #7b5cff
-    );
+.team-type-card.active{
 
-    border: 2px solid #9d8dff;
+    border-color:#7b5cff;
 
-    transform: scale(1.04);
+    transform:scale(1.04);
 
     box-shadow:
-        0 0 25px rgba(123,92,255,.35);
+        0 0 30px rgba(123,92,255,.28);
 
-    color: white;
+}
+
+.team-type-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(123,92,255,.55),
+            transparent 70%
+        );
+
+    transform:
+        translate(-50%,-50%)
+        scale(0);
+
+    transition:
+        transform .35s ease;
+
+    pointer-events:none;
+
+}
+
+.team-type-card.active::before{
+
+    transform:
+        translate(-50%,-50%)
+        scale(30);
+
 }

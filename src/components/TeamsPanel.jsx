@@ -123,7 +123,7 @@ export default function TeamsPanel({
 }}
   className={
     selectedType === type.id
-      ? "team-type-card.active"
+      ? "team-type-card active"
       : "team-type-card"
   }
 >
