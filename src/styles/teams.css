@@ -221,16 +221,6 @@
 
 }
 
-@keyframes breathingGlow {
-    0%,100%{
-        opacity:.18;
-    }
-
-    50%{
-        opacity:.30;
-    }
-}
-
 .team-accent::after{
 
     content: "";
@@ -246,7 +236,27 @@
         rgba(250,204,21,.05),
         transparent
     );
+
     pointer-events: none;
-     animation: breathingGlow 7s ease-in-out infinite;
+
+}
+
+.team-header{
+
+}
+
+.team-status{
+
+}
+
+.team-title{
+
+}
+
+.team-type{
+
+}
+
+.team-footer{
 
 }

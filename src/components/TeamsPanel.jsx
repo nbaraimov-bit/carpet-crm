@@ -49,11 +49,6 @@ export default function TeamsPanel({
       icon: "🧼",
     },
     {
-      id: "curtain",
-      title: "Parda yuvish",
-      icon: "🪟",
-    },
-    {
       id: "driver",
       title: "Yetkazib berish",
       icon: "🚚",
