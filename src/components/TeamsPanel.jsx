@@ -21,6 +21,7 @@ export default function TeamsPanel({
   const [showCreateTeam, setShowCreateTeam] = useState(false)
   const [teamName, setTeamName] = useState("")
   const [selectedType, setSelectedType] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const nameLength = teamName.trim().length
   const isNameValid = nameLength >= 5 && nameLength <= 20
@@ -82,16 +83,24 @@ export default function TeamsPanel({
 
     try {
 
+      setLoading(true)
+
       await addDoc(
         collection(db, "pendingTeams"),
         pendingTeam
       )
+
+      handleCloseCreateModal()
 
       console.log("Team yuborildi")
   
     } catch (error) {
 
       console.error(error)
+
+    } finally {
+
+      setLoading(false)
 
     }
 
@@ -242,13 +251,14 @@ export default function TeamsPanel({
               <button
                 className="create-button"
                 disabled={
+                  loading ||
                   teamName.trim().length < 5 ||
                   teamName.trim().length > 20 ||
                   !selectedType
                 }
                 onClick={handleCreateTeam}
               >
-                Yaratish
+                {loading ? "Yaratilmoqda..." : "Yaratish"}
               </button>
 
             </div>
