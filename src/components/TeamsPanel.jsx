@@ -146,7 +146,7 @@ export default function TeamsPanel({
 
             teamName: team.teamName,
 
-            teamType: team.Type,
+            teamType: team.type,
 
             leader: team.leader,
 
