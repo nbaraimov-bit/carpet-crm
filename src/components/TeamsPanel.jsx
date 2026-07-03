@@ -58,6 +58,8 @@ export default function TeamsPanel({
     },
   ]
 
+  console.log("Role:", role)
+
   function handleCloseCreateModal() {
     setTeamName("")
     setSelectedType("")
