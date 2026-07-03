@@ -23,6 +23,8 @@ export default function TeamsPanel({
     return team.members?.[currentWorker.phone];
   });
   const hasTeam = myTeams.length > 0;
+  const joinedTypes = myTeams.map((team) => team.type)
+  const disabled = joinedTypes.includes(type.id)
 
   const teamTypes = [
   {
@@ -138,25 +140,44 @@ export default function TeamsPanel({
                 marginTop: 20,
               }}
             >
-              {teamTypes.map((type) => (
-                <div
-                  key={type.id}
-                  onClick={() => {setSelectedType(type.id)}}
-                  className={
-                    selectedType === type.id
-                    ? "team-type-card active"
-                    : "team-type-card"
-                  }
-                >
-                  <div className="team-type-icon">
-                    {type.icon}
+              {teamTypes.map((type) => {
+
+                const disabled = joinedTypes.includes(type.id)
+
+                return(
+
+                  <div
+                    key={type.id}
+                    onClick={() => {
+                      if(disabled) return
+                      setSelectedType(type.id)
+                    }}
+                    className={
+                      disabled ? "team-type-card disabled"
+                      :selectedType === type.id
+                      ? "team-type-card active"
+                      : "team-type-card"
+                    }
+                  >
+                    <div className="team-type-icon">
+                      {type.icon}
+                    </div>  
+
+                    <div className="team-type-title">
+                      {type.title}
+                    </div>
+
+                    {disabled && (
+                      <div className="team-stamp">
+                        A'ZO
+                      </div>
+                    )}
+
                   </div>
 
-                  <div className="team-type-title">
-                    {type.title}
-                  </div>
-                </div>
-              ))}
+                )
+
+              })}
             </div>
 
             <div className="create-team-buttons">
