@@ -255,9 +255,11 @@
 
     color:rgba(220,38,38,.75);
 
+    text-shadow: 0 0 6px rgba(220,38,38,.25);
+
     font-size:20px;
 
-    font-weight:850;
+    font-weight:900;
 
     letter-spacing:3px;
 
