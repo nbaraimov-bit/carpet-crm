@@ -360,7 +360,8 @@ export default function TeamsPanel({
 
         <p>Pending va Active jamoalar shu yerda chiqadi.</p>
 
-        <div className="pending-team-card">
+        {pendingTeams.map((team) => (
+          <div className="pending-team-card">
 
             <div className="team-accent"></div>
 
@@ -387,7 +388,8 @@ export default function TeamsPanel({
               jamoangiz avtomatik faollashadi.
             </div>
 
-        </div>
+          </div>
+        ))}
       </>)}
 
     </div>
