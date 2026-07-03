@@ -1,7 +1,13 @@
-import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase"
 import { useState } from "react"
 import "../styles/teams.css"
+import {
+  doc,
+  updateDoc,
+  addDoc,
+  collection,
+  serverTimestamp,
+} from "firebase/firestore"
 
 export default function TeamsPanel({
   teams,
@@ -60,6 +66,19 @@ export default function TeamsPanel({
       teamName,
       selectedType,
     })
+
+    const pendingTeam = {
+
+      teamName: teamName.trim(),
+      type: selectedType,
+      createdBy: currentWorker.phone,
+      leaderName: currentWorker.name,
+      status: "pending",
+      createdAt: serverTimestamp(),
+
+    }
+
+    console.log(pendingTeam)
 
   }
 
