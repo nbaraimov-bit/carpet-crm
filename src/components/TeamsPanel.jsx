@@ -197,6 +197,35 @@ export default function TeamsPanel({
 
   }
 
+  const rejectTeam = async (team) => {
+
+    try{
+
+      await updateDoc(
+        doc(db, "pendingTeams", team.id),
+        {
+
+          status: "rejected",
+
+          rejectedBy: currentWorker.phone,
+
+          rejectedAt: serverTimestamp(),
+
+          rejectReason: "",
+
+        }
+      )
+
+      console.log("Jamoa rad etildi")
+
+    }catch(err){
+
+        console.log(err)
+
+    }
+
+  }
+
   return (
     <div style={{ padding: 20 }}>
       <button onClick={() => setPage("home")}>
@@ -469,7 +498,10 @@ export default function TeamsPanel({
             <div className="team-footer">
               <div className="team-actions">
 
-                <button className="reject-team-btn">  
+                <button 
+                  className="reject-team-btn"
+                  onClick={() => rejectTeam(team)}
+                >
                   Rad etish
                 </button>
 
