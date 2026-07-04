@@ -225,7 +225,7 @@
 
 .team-accent.rejected{
 
-    --team-accent:255,77,79;
+    --team-accent:rgb(255, 0, 0);
 
 }
 
@@ -273,6 +273,20 @@
     background:rgba(250,204,21,.14);
     color:#facc15;
     border:1px solid rgba(250,204,21,.35);
+}
+
+.team-status.rejected{
+
+    color:#ff6b6b;
+    background:rgba(255,77,79,.15);
+    border:1px solid rgba(255,77,79,.35);
+    border-radius:999px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 18px;
+    font-weight:600;
+
 }
 
 .team-title{
