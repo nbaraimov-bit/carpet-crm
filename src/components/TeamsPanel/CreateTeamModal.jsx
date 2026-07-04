@@ -1,4 +1,4 @@
-import teamTypes, { teamTypeMap } from "./TeamTypes";
+import TeamTypes, { teamTypeMap } from "./TeamTypes";
 
 export default function CreateTeamModal({
   showCreateTeam,
