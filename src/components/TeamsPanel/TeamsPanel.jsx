@@ -34,9 +34,6 @@ export default function TeamsPanel({
   const [selectedType, setSelectedType] = useState("")
   const [loading, setLoading] = useState(false)
   const [pendingTeams, setPendingTeams] = useState([])
-
-  const nameLength = teamName.trim().length
-  const isNameValid = nameLength >= 5 && nameLength <= 20
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -251,7 +248,6 @@ export default function TeamsPanel({
             setTeamName={setTeamName}
             selectedType={selectedType}
             handleCreateTeam={handleCreateTeam}
-            isNameValid={isNameValid}
             teamTypes={teamTypes}
             loading={loading}
             setLoading={setLoading}
