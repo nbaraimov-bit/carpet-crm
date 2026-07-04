@@ -1,4 +1,4 @@
-import { teamTypeMap } from "./teamTypes";
+import { teamTypeMap } from "./TeamTypes";
 
 export default function PendingTeamCard({
   team,

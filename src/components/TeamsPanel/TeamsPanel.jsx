@@ -2,7 +2,7 @@ import { db } from "../../firebase"
 import { useState, useEffect } from "react"
 import "./teams.css"
 import PendingTeamCard from "./PendingTeamCard";
-import teamTypes, { teamTypeMap } from "./teamTypes";
+import teamTypes, { teamTypeMap } from "./TeamTypes";
 
 import {
   doc,
