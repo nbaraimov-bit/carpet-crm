@@ -152,9 +152,10 @@ export default function TeamsPanel({
         <p>So'rovlar</p>
 
         {pendingCards}
-        {activeCards}
 
         <p>Faol jamoalar ro'yxati</p>
+
+        {activeCards}
 
       </>)}
 
