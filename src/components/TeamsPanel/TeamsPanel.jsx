@@ -39,7 +39,6 @@ export default function TeamsPanel({
     return team.members?.[currentWorker.phone];
   });
   const hasTeam = myTeams.length > 0;
-  const joinedTypes = myTeams.map((team) => team.type)
 
   const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega")
   const isWorker = allowedRoles.includes("worker")

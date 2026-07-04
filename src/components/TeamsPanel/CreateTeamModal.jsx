@@ -12,6 +12,7 @@ export default function CreateTeamModal({
 
   const nameLength = teamName.trim().length
   const isNameValid = nameLength >= 5 && nameLength <= 20
+  const joinedTypes = myTeams.map((team) => team.type)
 
   return(
 
