@@ -15,7 +15,7 @@ import {
 
 export default function CreateTeamModal({
   showCreateTeam,
-  setShowCreateModal,
+  setShowCreateTeam,
   myTeams,
   currentWorker,
 }) {
