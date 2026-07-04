@@ -116,93 +116,6 @@ export default function TeamsPanel({
 
   }
 
-  const approveTeam = async (team) => {
-
-    try{
-
-        await addDoc(collection(db,"teams"),{
-
-            teamName: team.teamName,
-
-            teamType: team.type,
-
-            leader: team.leaderName,
-
-            createdBy: team.createdBy,
-
-            createdAt: team.createdAt,
-
-            approvedBy: currentWorker.phone,
-
-            approvedAt: serverTimestamp(),
-
-            status:"active",
-
-            members:{
-
-                [team.createdBy]:{
-
-                    name: team.leaderName,
-
-                    phone: team.createdBy,
-
-                    rank:"leader",
-
-                    carpet:0,
-
-                    blanket:0,
-
-                    yakandoz:0,
-
-                    curtain:0,
-
-                    working:true,
-
-                }
-
-            }
-
-        })
-
-      await deleteDoc(doc(db, "pendingTeams", team.id))
-
-    }catch(err){
-
-        console.log(err)
-
-    }
-
-  }
-
-  const rejectTeam = async (team) => {
-
-    try{
-
-      await updateDoc(
-        doc(db, "pendingTeams", team.id),
-        {
-
-          status: "rejected",
-
-          rejectedBy: currentWorker.phone,
-
-          rejectedAt: serverTimestamp(),
-
-          rejectReason: "",
-
-        }
-      )
-
-      console.log("Jamoa rad etildi")
-
-    }catch(err){
-
-        console.log(err)
-
-    }
-
-  }
-
   return (
     <div style={{ padding: 20 }}>
       <button onClick={() => setPage("home")}>
@@ -262,11 +175,8 @@ export default function TeamsPanel({
         {pendingTeams.map((team) => (
 
           <PendingTeamCard
-            key={team.id}
             team={team}
             showActions={isAdmin}
-            approveTeam={approveTeam}
-            rejectTeam={rejectTeam}
             showActions={false}
           />
 
@@ -301,11 +211,8 @@ export default function TeamsPanel({
         {pendingTeams.map((team) => (
 
           <PendingTeamCard
-            key={team.id}
             team={team}
-            showActions={isAdmin}
-            approveTeam={approveTeam}
-            rejectTeam={rejectTeam}
+            showActions={isAdmin} 
             showActions={true}
           />
 

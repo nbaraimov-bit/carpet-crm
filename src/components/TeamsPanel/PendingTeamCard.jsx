@@ -1,11 +1,113 @@
 import { teamTypeMap } from "./teamTypes";
+import {
+  doc,
+  updateDoc,
+  addDoc,
+  collection,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  where,
+  deleteDoc
+} from "firebase/firestore";
 
 export default function PendingTeamCard({
   team,
   showActions,
-  approveTeam,
-  rejectTeam,
 }) {
+
+
+  const approveTeam = async (team) => {
+  
+    try{
+  
+      await addDoc(collection(db,"teams"),{
+  
+        teamName: team.teamName,
+        type: team.type,
+        leader: team.leaderName,
+        createdBy: team.createdBy,
+        createdAt: team.createdAt,
+        approvedBy: currentWorker.phone,
+        approvedAt: serverTimestamp(),
+        status:"active",
+        members:{
+
+          [team.createdBy]:{
+
+            name: team.leaderName,
+            phone: team.createdBy,
+            rank:"leader",
+            carpet:0,
+            blanket:0,
+            yakandoz:0,
+            curtain:0,
+            working:true,
+  
+          }
+  
+        }
+  
+      })
+  
+      await deleteDoc(doc(db, "pendingTeams", team.id))
+  
+    }catch(err){
+  
+      console.log(err)
+  
+    }
+  
+  }
+  
+
+  const rejectTeam = async (team) => {
+  
+    try{
+  
+      await updateDoc(
+        doc(db, "pendingTeams", team.id),
+        {
+  
+          status: "rejected",
+          rejectedBy: currentWorker.phone,
+          rejectedAt: serverTimestamp(),
+          rejectReason: "",
+  
+        }
+      )
+  
+      console.log("Jamoa rad etildi")
+  
+    }catch(err){
+  
+      console.log(err)
+  
+    }
+  
+  }
+
+  const deletePendingTeam = async (team) => {
+
+    const ok = window.confirm(
+      "Jamoani o'chirmoqchimisiz?"
+    );
+
+    if (!ok) return;
+
+    try {
+
+      await deleteDoc(
+        doc(db, "pendingTeams", team.id)
+      );
+
+    } catch (err) {
+
+      console.error(err);
+
+    }
+
+  };
 
   const isRejected = team.status === "rejected";
 
@@ -82,7 +184,7 @@ export default function PendingTeamCard({
 
               <button
                 className="delete-team-btn"
-                onClick={() => rejectTeam(team)}
+                onClick={() => deletePendingTeam(team)}
               >
                 O'chirish
               </button>
@@ -90,7 +192,7 @@ export default function PendingTeamCard({
           ) : (
             <button
               className="delete-team-btn"
-              onClick={() => rejectTeam(team)}
+              onClick={() => deletePendingTeam(team)}
             >
               O'chirish
             </button>
