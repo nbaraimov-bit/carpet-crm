@@ -144,25 +144,6 @@ export default function TeamsPanel({
         {pendingCards}
         {activeCards}
 
-        {myTeams.map((team) => (
-
-          <div
-            key={team.teamId}
-            style={{
-              border: "1px solid #555",
-              borderRadius: 10,
-              padding: 10,
-              marginTop: 10,
-            }}
-          >
-
-            <p>{team.members[currentWorker.phone].rank === "leader" ? "👑 Leader" : "👤 Member"}</p>
-            <b>{team.teamName}</b>
-            <p>{team.type}</p>
-            <p>{team.leader}</p>
-          
-          </div>
-        ))}
       </>)}
 
       {isAdmin && (<>
