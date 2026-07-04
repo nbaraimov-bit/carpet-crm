@@ -1,7 +1,7 @@
 import TeamAdminPanel from "./TeamAdminPanel";
 import TeamLeaderPanel from "./TeamLeaderPanel";
 import TeamMemberPanel from "./TeamMemberPanel";
-import { teamTypeMap } from "../teamTypes";
+import teamTypes, { teamTypeMap } from "../teamTypes";
 
 export default function ActiveTeams({
   team,
