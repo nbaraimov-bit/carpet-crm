@@ -1,6 +1,6 @@
-import TeamAdminPanel from "./panels/TeamAdminPanel";
-import TeamLeaderPanel from "./panels/TeamLeaderPanel";
-import TeamMemberPanel from "./panels/TeamMemberPanel";
+import TeamAdminPanel from "./TeamAdminPanel";
+import TeamLeaderPanel from "./TeamLeaderPanel";
+import TeamMemberPanel from "./TeamMemberPanel";
 
 export default function ActiveTeams({
   team,
