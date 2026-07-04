@@ -1,3 +1,5 @@
+import { teamTypeMap } from "./teamTypes";
+
 export default function PendingTeamCard({
   team,
   showActions,
