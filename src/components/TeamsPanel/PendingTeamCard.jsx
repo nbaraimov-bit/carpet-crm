@@ -82,7 +82,7 @@ export default function PendingTeamCard({
 
               <button
                 className="delete-team-btn"
-                onClick={() => deletePendingTeam(team)}
+                onClick={() => rejectTeam(team)}
               >
                 O'chirish
               </button>
@@ -90,7 +90,7 @@ export default function PendingTeamCard({
           ) : (
             <button
               className="delete-team-btn"
-              onClick={() => deletePendingTeam(team)}
+              onClick={() => rejectTeam(team)}
             >
               O'chirish
             </button>
