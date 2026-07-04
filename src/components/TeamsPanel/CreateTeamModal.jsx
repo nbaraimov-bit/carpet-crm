@@ -1,23 +1,73 @@
+import { db } from "../../firebase"
 import teamTypes, { teamTypeMap } from "./teamTypes";
 import "./teams.css"
+import {
+  doc,
+  updateDoc,
+  addDoc,
+  collection,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  where,
+  deleteDoc
+} from "firebase/firestore"
 
 export default function CreateTeamModal({
   showCreateTeam,
   setShowCreateModal,
-  teamName,
-  setTeamName,
-  selectedType,
-  setSelectedType,
-  handleCreateTeam,
-  handleCloseCreateModal,
-  loading,
-  setLoading,
-  myTeams,
+  myTeams, 
 }) {
+
+  const [teamName, setTeamName] = useState("")
+  const [selectedType, setSelectedType] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const nameLength = teamName.trim().length
   const isNameValid = nameLength >= 5 && nameLength <= 20
   const joinedTypes = myTeams.map((team) => team.type)
+
+  function handleCloseCreateModal() {
+    setTeamName("")
+    setSelectedType("")
+    setShowCreateTeam(false)
+  }
+  
+  async function handleCreateTeam() {
+  
+    const pendingTeam = {
+  
+      teamName: teamName.trim(),
+      type: selectedType,
+      createdBy: currentWorker.phone,
+      leaderName: currentWorker.name,
+      status: "pending",
+      createdAt: serverTimestamp(),
+  
+    }
+  
+    try {
+  
+      setLoading(true)
+  
+      await addDoc(
+        collection(db, "pendingTeams"),
+        pendingTeam
+      )
+  
+      handleCloseCreateModal()
+    
+    } catch (error) {
+  
+      console.error(error)
+  
+    } finally {
+  
+      setLoading(false) 
+  
+    }
+  
+  }
 
   return(
 

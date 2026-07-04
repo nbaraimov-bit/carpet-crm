@@ -29,9 +29,6 @@ export default function TeamsPanel({
 }) {
 
   const [showCreateTeam, setShowCreateTeam] = useState(false)
-  const [teamName, setTeamName] = useState("")
-  const [selectedType, setSelectedType] = useState("")
-  const [loading, setLoading] = useState(false)
   const [pendingTeams, setPendingTeams] = useState([])
     
   const myTeams = teams.filter((team) => {
@@ -74,48 +71,6 @@ export default function TeamsPanel({
 
   }, [currentWorker.phone])
 
-  function handleCloseCreateModal() {
-    setTeamName("")
-    setSelectedType("")
-    setShowCreateTeam(false)
-  }
-
-  async function handleCreateTeam() {
-
-    const pendingTeam = {
-
-      teamName: teamName.trim(),
-      type: selectedType,
-      createdBy: currentWorker.phone,
-      leaderName: currentWorker.name,
-      status: "pending",
-      createdAt: serverTimestamp(),
-
-    }
-
-    try {
-
-      setLoading(true)
-
-      await addDoc(
-        collection(db, "pendingTeams"),
-        pendingTeam
-      )
-
-      handleCloseCreateModal()
-  
-    } catch (error) {
-
-      console.error(error)
-
-    } finally {
-
-      setLoading(false) 
-
-    }
-
-  }
-
   return (
     <div style={{ padding: 20 }}>
       <button onClick={() => setPage("home")}>
@@ -155,15 +110,7 @@ export default function TeamsPanel({
 
             showCreateTeam={showCreateTeam}
             setShowCreateTeam={setShowCreateTeam}
-            teamName={teamName}
-            setTeamName={setTeamName}
-            selectedType={selectedType}
-            setSelectedType={setSelectedType}
-            handleCreateTeam={handleCreateTeam}
-            loading={loading}
-            setLoading={setLoading}
             myTeams={myTeams}
-            handleCloseCreateModal={handleCloseCreateModal}
   
           />
         )}
