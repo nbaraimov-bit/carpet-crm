@@ -2,7 +2,7 @@ import { db } from "../../firebase"
 import { useState, useEffect } from "react"
 import "./teams.css"
 import PendingTeamCard from "./PendingTeamCard";
-import TeamTypes, { teamTypeMap } from "./TeamTypes";
+import teamTypes, { teamTypeMap } from "./teamTypes";
 import CreateTeamModal from "./CreateTeamModal";
 
 import {
@@ -248,7 +248,6 @@ export default function TeamsPanel({
             selectedType={selectedType}
             setSelectedType={setSelectedType}
             handleCreateTeam={handleCreateTeam}
-            teamTypes={teamTypes}
             loading={loading}
             setLoading={setLoading}
             myTeams={myTeams}

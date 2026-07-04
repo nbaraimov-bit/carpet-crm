@@ -1,4 +1,5 @@
-import TeamTypes, { teamTypeMap } from "./TeamTypes";
+import teamTypes, { teamTypeMap } from "./teamTypes";
+import "./teams.css"
 
 export default function CreateTeamModal({
   showCreateTeam,
@@ -9,7 +10,6 @@ export default function CreateTeamModal({
   setSelectedType,
   handleCreateTeam,
   handleCloseCreateModal,
-  teamTypes,
   loading,
   setLoading,
   myTeams,
