@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import "./teams.css"
 import PendingTeamCard from "./PendingTeamCard";
 import CreateTeamModal from "./CreateTeamModal";
+import ActiveTeams from "./ActiveTeams/ActiveTeams";
 
 import {
   doc,
