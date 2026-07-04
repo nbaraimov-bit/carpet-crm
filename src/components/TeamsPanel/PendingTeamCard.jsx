@@ -179,7 +179,7 @@ export default function PendingTeamCard({
 
             <>
               <div className="team-note">
-                  Jamoangiz rad etildi. Uni o'chirib yangi jamoa yaratishingiz mumkin.
+                  Admin tasdiqlaganidan so'ng jamoangiz avtomatik faollashadi.
               </div>
 
               <button
@@ -194,7 +194,7 @@ export default function PendingTeamCard({
 
             <>
               <div className="team-note">
-                "Admin tasdiqlaganidan so'ng jamoangiz avtomatik faollashadi."
+                Jamoangiz rad etildi. Uni o'chirib yangi jamoa yaratishingiz mumkin.
               </div>
 
               <button

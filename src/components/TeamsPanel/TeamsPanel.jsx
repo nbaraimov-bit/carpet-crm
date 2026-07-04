@@ -71,7 +71,9 @@ export default function TeamsPanel({
 
   }, [currentWorker.phone])
 
-  const pendingCards = pendingTeams.map((team) => (
+  const pendingCards = pendingTeams
+  .filter(team => isWorker || team.status !== "rejected")
+  .map(team => (
     <PendingTeamCard
       key={team.id}
       team={team}
@@ -119,7 +121,6 @@ export default function TeamsPanel({
 
             showCreateTeam={showCreateTeam}
             setShowCreateTeam={setShowCreateTeam}
-            pendingTeams={pendingTeams}
             myTeams={myTeams}
             currentWorker={currentWorker}
   
