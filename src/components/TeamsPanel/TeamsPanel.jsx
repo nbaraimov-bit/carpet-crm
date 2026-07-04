@@ -71,6 +71,15 @@ export default function TeamsPanel({
 
   }, [currentWorker.phone])
 
+  const pendingCards = pendingTeams.map((team) => (
+    <PendingTeamCard
+      key={team.id}
+      team={team}
+      showActions={isAdmin}
+      currentWorker={currentWorker}
+    />
+  ));
+
   return (
     <div style={{ padding: 20 }}>
       <button onClick={() => setPage("home")}>
@@ -118,18 +127,7 @@ export default function TeamsPanel({
 
         <p>Jamoalarim</p>
 
-        
-
-        {pendingTeams.map((team) => (
-
-          <PendingTeamCard
-            team={team}
-            showActions={isAdmin}
-            showActions={false}
-            currentWorker={currentWorker}
-          />
-
-        ))}
+        {pendingCards}
 
         {myTeams.map((team) => (
 
@@ -155,18 +153,11 @@ export default function TeamsPanel({
       {isAdmin && (<>
         <h3>Barcha jamoalar</h3>
 
-        <p>Pending va Active jamoalar shu yerda chiqadi.</p>
+        <p>So'rovlar</p>
 
-        {pendingTeams.map((team) => (
+        {pendingCards}
 
-          <PendingTeamCard
-            team={team}
-            showActions={isAdmin} 
-            showActions={true}
-            currentWorker={currentWorker}
-          />
-
-        ))}
+        <p>Faol jamoalar ro'yxati</p>
 
       </>)}
 
