@@ -119,6 +119,7 @@ export default function TeamsPanel({
 
             showCreateTeam={showCreateTeam}
             setShowCreateTeam={setShowCreateTeam}
+            pendingTeams={pendingTeams}
             myTeams={myTeams}
             currentWorker={currentWorker}
   

@@ -1,4 +1,5 @@
 import { db } from "../../firebase"
+import { useState, useEffect } from "react"
 import teamTypes, { teamTypeMap } from "./teamTypes";
 import "./teams.css"
 import {
