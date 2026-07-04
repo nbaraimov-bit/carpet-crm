@@ -218,7 +218,7 @@
     width:5px;
     height:100%;
     --team-accent: 250,204,21;
-    background: rgb(var(--accent-color));
+    background: rgb(var(--team-accent));
 
 
 }
