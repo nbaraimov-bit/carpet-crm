@@ -1,6 +1,6 @@
 import TeamAdminPanel from "./panels/TeamAdminPanel";
 import TeamLeaderPanel from "./panels/TeamLeaderPanel";
-import TeamWorkerPanel from "./panels/TeamWorkerPanel";
+import TeamMemberPanel from "./panels/TeamMemberPanel";
 
 export default function ActiveTeams({
   team,
@@ -8,8 +8,9 @@ export default function ActiveTeams({
   isAdmin,
 }) {
 
-  const isLeader =
-  team.members[currentWorker.phone]?.rank === "leader";
+  const teamMember = team.members?.[currentWorker.phone];
+  const isLeader = teamMember?.rank === "leader";
+  const isMember = teamMember?.rank === "member";
 
   return (
 
@@ -27,7 +28,7 @@ export default function ActiveTeams({
 
       {isLeader && <TeamLeaderPanel />}
 
-      {isWorker && <TeamWorkerPanel />}
+      {isMember && <TeamMemberPanel />}
 
     </div>
 

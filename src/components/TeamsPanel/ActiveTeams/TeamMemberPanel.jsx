@@ -1,4 +1,4 @@
-export default function TeamWorkerPanel() {
+export default function TeamMemberPanel() {
 
     return (
         <>
