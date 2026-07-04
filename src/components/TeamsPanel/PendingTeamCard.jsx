@@ -7,16 +7,18 @@ export default function PendingTeamCard({
   rejectTeam,
 }) {
 
+  const isRejected = team.status === "rejected";
+
   return (
 
     <div className="pending-team-card">
 
-      <div className="team-accent"></div>
+      <div className={`team-accent ${isRejected ? "rejected" : ""}`}></div>
 
       <div className="team-header">
 
-        <div className="team-status pending">
-          🟡 Tasdiqlanishi kutilmoqda
+        <div className={`team-status ${isRejected ? "rejected" : "pending"}`}>
+          {isRejected ? "🔴 Rad etilgan" : "🟡 Tasdiqlanishi kutilmoqda"}
         </div>
 
       </div>
@@ -70,8 +72,10 @@ export default function PendingTeamCard({
 
         <div className="team-footer">
 
-          Admin tasdiqlaganidan so'ng
-          jamoangiz avtomatik faollashadi.
+          {isRejected
+            ? "Jamoangiz rad etildi. Uni o'chirib yangi jamoa yaratishingiz mumkin."
+            : "Admin tasdiqlaganidan so'ng jamoangiz avtomatik faollashadi."
+          }
 
         </div>
 

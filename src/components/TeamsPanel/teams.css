@@ -240,6 +240,13 @@
 
 }
 
+.team-accent.rejected{
+    background:#ff4d4f;
+    box-shadow:
+        0 0 20px rgba(255,77,79,.45),
+        0 0 60px rgba(255,77,79,.18);
+}
+
 .team-status{
 
     display:inline-flex;
