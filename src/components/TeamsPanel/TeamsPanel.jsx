@@ -1,6 +1,6 @@
 import { db } from "../firebase"
 import { useState, useEffect } from "react"
-import "../styles/teams.css"
+import "./teams.css"
 import {
   doc,
   updateDoc,

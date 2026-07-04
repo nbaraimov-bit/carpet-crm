@@ -7,7 +7,7 @@ import getHours from "./utils/getHours"
 import getSalary from "./utils/getSalary"
 import getAttendanceSalary from "./utils/getAttendanceSalary"
 import EgaPanel from "./components/EgaPanel";
-import TeamsPanel from "./components/TeamsPanel";
+import TeamsPanel from "./components/TeamsPanel/TeamsPanel";
 import BottomNavigation from "./components/BottomNavigation";  
 import { useState, useEffect } from "react"
 import { db } from "./firebase";
