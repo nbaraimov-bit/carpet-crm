@@ -397,13 +397,12 @@ export default function TeamsPanel({
         {pendingTeams.map((team) => (
 
           <PendingTeamCard
-
             key={team.id}
             team={team}
             showActions={isAdmin}
             approveTeam={approveTeam}
             rejectTeam={rejectTeam}
-            
+            showActions={false}
           />
 
         ))}
@@ -435,62 +434,18 @@ export default function TeamsPanel({
         <p>Pending va Active jamoalar shu yerda chiqadi.</p>
 
         {pendingTeams.map((team) => (
-          <div className="pending-team-card">
 
-            <div className="team-accent"></div>
+          <PendingTeamCard
+            key={team.id}
+            team={team}
+            showActions={isAdmin}
+            approveTeam={approveTeam}
+            rejectTeam={rejectTeam}
+            showActions={true}
+          />
 
-            <div className="team-header">
-
-              <div className="team-status pending">
-                  🟡 Tasdiqlanishi kutilmoqda
-              </div>
-
-            </div>
-
-            <div className="team-title">
-              👥 {team.teamName}
-            </div>
-
-            <div team-leader-info>
-
-              <div className="team-leader">
-                👤 {team.leaderName}
-              </div>
-
-              <div className="team-phone">
-                📞 {team.createdBy}
-              </div>
-
-            </div>
-
-            <div className="team-type">
-              {teamTypeMap[team.type]?.icon}
-              {" "}
-              {teamTypeMap[team.type]?.title}
-            </div>
-
-            <div className="team-footer">
-              <div className="team-actions">
-
-                <button 
-                  className="reject-team-btn"
-                  onClick={() => rejectTeam(team)}
-                >
-                  Rad etish
-                </button>
-
-                <button 
-                  className="approve-team-btn"
-                  onClick={() => approveTeam(team)}
-                >
-                  Tasdiqlash
-                </button>
-
-              </div>
-            </div>
-
-          </div>
         ))}
+
       </>)}
 
     </div>
