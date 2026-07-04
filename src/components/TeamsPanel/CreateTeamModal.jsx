@@ -7,6 +7,7 @@ export default function CreateTeamModal({
   setTeamName,
   selectedType,
   handleCreateTeam,
+  handleCloseCreateModal,
   teamTypes,
   loading,
   setLoading,
