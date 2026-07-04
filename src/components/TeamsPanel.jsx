@@ -186,7 +186,7 @@ export default function TeamsPanel({
 
         })
 
-        console.log("Team qo'shildi")
+      await deleteDoc(doc(db, "pendingTeams", team.id))
 
     }catch(err){
 
