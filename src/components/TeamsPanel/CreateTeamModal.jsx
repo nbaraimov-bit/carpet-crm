@@ -11,6 +11,9 @@ export default function CreateTeamModal({
   setLoading,
 }) {
 
+  const nameLength = teamName.trim().length
+  const isNameValid = nameLength >= 5 && nameLength <= 20
+
   return(
 
     <div
