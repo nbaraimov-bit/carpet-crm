@@ -32,7 +32,7 @@ export default function DriverPanel({
 
   return (
 
-    <div>
+      <div>
 
         <h1>Driver panel</h1>
 

@@ -82,6 +82,17 @@ export default function TeamsPanel({
     />
   ));
 
+  const activeCards = myTeams.map((team) => (
+
+    <ActiveTeams
+      key={team.teamId}
+      team={team}
+      currentWorker={currentWorker}
+      isAdmin={isAdmin}
+    />
+
+  ));
+
   return (
     <div style={{ padding: 20 }}>
       <button onClick={() => setPage("home")}>
@@ -130,6 +141,7 @@ export default function TeamsPanel({
         <p>Jamoalarim</p>
 
         {pendingCards}
+        {activeCards}
 
         {myTeams.map((team) => (
 
@@ -158,6 +170,7 @@ export default function TeamsPanel({
         <p>So'rovlar</p>
 
         {pendingCards}
+        {activeCards}
 
         <p>Faol jamoalar ro'yxati</p>
 
