@@ -225,7 +225,7 @@
 
 .team-accent.rejected{
 
-    --team-accent:rgb(255, 0, 0);
+    --team-accent:255,77,79;
 
 }
 
@@ -286,7 +286,7 @@
     gap:8px;
     padding:8px 18px;
     font-weight:600;
-
+    
 }
 
 .team-title{
@@ -369,6 +369,27 @@
 .reject-team-btn:hover{
 
     background:rgba(255,80,80,.12);
+
+}
+
+.delete-team-btn{
+
+    width:100%;
+    margin-top:14px;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.05);
+    color:#fff;
+    cursor:pointer;
+    transition:.2s;
+    
+}
+
+.delete-team-btn:hover{
+
+    background:rgba(255,77,79,.12);
+    border-color:rgba(255,77,79,.35);
 
 }
 

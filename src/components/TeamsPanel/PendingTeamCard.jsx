@@ -71,12 +71,30 @@ export default function PendingTeamCard({
       ) : (
 
         <div className="team-footer">
+          {team.status === "pending" ? (
+            <>
+              <div className="team-note">
+                {isRejected
+                  ? "Jamoangiz rad etildi. Uni o'chirib yangi jamoa yaratishingiz mumkin."
+                  : "Admin tasdiqlaganidan so'ng jamoangiz avtomatik faollashadi."
+                }
+              </div>
 
-          {isRejected
-            ? "Jamoangiz rad etildi. Uni o'chirib yangi jamoa yaratishingiz mumkin."
-            : "Admin tasdiqlaganidan so'ng jamoangiz avtomatik faollashadi."
-          }
-
+              <button
+                className="delete-team-btn"
+                onClick={() => deletePendingTeam(team)}
+              >
+                O'chirish
+              </button>
+            </>
+          ) : (
+            <button
+              className="delete-team-btn"
+              onClick={() => deletePendingTeam(team)}
+            >
+              O'chirish
+            </button>
+          )}
         </div>
 
       )}
