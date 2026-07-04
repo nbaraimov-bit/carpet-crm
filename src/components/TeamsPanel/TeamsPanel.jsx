@@ -1,6 +1,7 @@
 import { db } from "../../firebase"
 import { useState, useEffect } from "react"
 import "./teams.css"
+import PendingTeamCard from "./PendingTeamCard";
 import {
   doc,
   updateDoc,
@@ -391,48 +392,15 @@ export default function TeamsPanel({
 
         <p>Jamoalarim</p>
 
+        
+
         {pendingTeams.map((team) => (
-          <div className="pending-team-card">
 
-            <div className="team-accent"></div>
+    <PendingTeamCard
+        key={team.id}
+    />
 
-            <div className="team-header">
-
-              <div className="team-status pending">
-                  🟡 Tasdiqlanishi kutilmoqda
-              </div>
-
-            </div>
-
-            <div className="team-title">
-              👥 {team.teamName}
-            </div>
-
-            <div team-leader-info>
-
-              <div className="team-leader">
-                👤 {team.leaderName}
-              </div>
-
-              <div className="team-phone">
-                📞 {team.createdBy}
-              </div>
-
-            </div>
-
-            <div className="team-type">
-              {teamTypeMap[team.type]?.icon}
-              {" "}
-              {teamTypeMap[team.type]?.title}
-            </div>
-
-            <div className="team-footer">
-              Admin tasdiqlaganidan so'ng
-              jamoangiz avtomatik faollashadi.
-            </div>
-
-          </div>
-        ))}
+))}
 
         {myTeams.map((team) => (
 
