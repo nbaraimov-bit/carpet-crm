@@ -10,6 +10,7 @@ import {
   onSnapshot,
   query,
   where,
+  deleteDoc
 } from "firebase/firestore"
 
 export default function TeamsPanel({
