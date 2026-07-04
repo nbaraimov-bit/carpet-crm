@@ -396,11 +396,17 @@ export default function TeamsPanel({
 
         {pendingTeams.map((team) => (
 
-    <PendingTeamCard
-        key={team.id}
-    />
+          <PendingTeamCard
 
-))}
+            key={team.id}
+            team={team}
+            showActions={isAdmin}
+            approveTeam={approveTeam}
+            rejectTeam={rejectTeam}
+            
+          />
+
+        ))}
 
         {myTeams.map((team) => (
 

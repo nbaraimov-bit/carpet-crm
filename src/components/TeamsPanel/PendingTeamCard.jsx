@@ -1,10 +1,15 @@
-export default function PendingTeamCard() {
+export default function PendingTeamCard({
+  team,
+  showActions,
+  approveTeam,
+  rejectTeam,
+}) {
 
     return (
 
         <div>
 
-            Pending Team
+            {team.teamName}
 
         </div>
 
