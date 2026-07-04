@@ -246,6 +246,7 @@ export default function TeamsPanel({
             teamName={teamName}
             setTeamName={setTeamName}
             selectedType={selectedType}
+            setSelectedType={setSelectedType}
             handleCreateTeam={handleCreateTeam}
             teamTypes={teamTypes}
             loading={loading}
