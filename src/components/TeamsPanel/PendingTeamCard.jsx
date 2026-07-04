@@ -15,6 +15,7 @@ import {
 export default function PendingTeamCard({
   team,
   showActions,
+  currentWorker,
 }) {
 
 

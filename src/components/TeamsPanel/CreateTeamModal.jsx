@@ -16,7 +16,8 @@ import {
 export default function CreateTeamModal({
   showCreateTeam,
   setShowCreateModal,
-  myTeams, 
+  myTeams,
+  currentWorker,
 }) {
 
   const [teamName, setTeamName] = useState("")

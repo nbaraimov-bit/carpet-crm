@@ -111,6 +111,7 @@ export default function TeamsPanel({
             showCreateTeam={showCreateTeam}
             setShowCreateTeam={setShowCreateTeam}
             myTeams={myTeams}
+            currentWorker={currentWorker}
   
           />
         )}
@@ -125,6 +126,7 @@ export default function TeamsPanel({
             team={team}
             showActions={isAdmin}
             showActions={false}
+            currentWorker={currentWorker}
           />
 
         ))}
@@ -161,6 +163,7 @@ export default function TeamsPanel({
             team={team}
             showActions={isAdmin} 
             showActions={true}
+            currentWorker={currentWorker}
           />
 
         ))}
