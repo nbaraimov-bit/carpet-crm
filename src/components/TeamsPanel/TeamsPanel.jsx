@@ -251,6 +251,7 @@ export default function TeamsPanel({
             loading={loading}
             setLoading={setLoading}
             myTeams={myTeams}
+            handleCloseCreateModal={handleCloseCreateModal}
   
           />
         )}
