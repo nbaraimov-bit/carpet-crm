@@ -217,7 +217,21 @@
     top:0;
     width:5px;
     height:100%;
-    background:#facc15;
+    --team-accent: 250,204,21;
+    background: rgb(var(--accent-color));
+
+
+}
+
+.team-accent.rejected{
+
+    --team-accent:255,77,79;
+
+}
+
+.team-accent.active{
+
+    --team-accent:34,197,94;
 
 }
 
@@ -231,21 +245,16 @@
     height: 100%;
     background: linear-gradient(
         90deg,
-        rgba(250,204,21,.22),
-        rgba(250,204,21,.12),
-        rgba(250,204,21,.05),
+        rgba(var(--team-accent), .22),
+        rgba(var(--team-accent), .12),
+        rgba(var(--team-accent), .05),
         transparent
     );
     pointer-events: none;
 
 }
 
-.team-accent.rejected{
-    background:#ff4d4f;
-    box-shadow:
-        0 0 20px rgba(255,77,79,.45),
-        0 0 60px rgba(255,77,79,.18);
-}
+
 
 .team-status{
 
