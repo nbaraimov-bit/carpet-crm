@@ -1,3 +1,4 @@
+import { db } from "../../firebase"
 import { teamTypeMap } from "./teamTypes";
 import {
   doc,
