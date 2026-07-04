@@ -250,6 +250,7 @@ export default function TeamsPanel({
             teamTypes={teamTypes}
             loading={loading}
             setLoading={setLoading}
+            myTeams={myTeams}
   
           />
         )}

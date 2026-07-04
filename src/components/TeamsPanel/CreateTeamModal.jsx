@@ -8,6 +8,7 @@ export default function CreateTeamModal({
   teamTypes,
   loading,
   setLoading,
+  myTeams,
 }) {
 
   const nameLength = teamName.trim().length
