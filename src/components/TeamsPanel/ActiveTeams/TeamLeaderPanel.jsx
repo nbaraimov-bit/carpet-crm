@@ -54,86 +54,86 @@ export default function TeamLeaderPanel({
       {mode === "memberPrices" && (
 
         <div className="member-card">
+  
+          <div className="member-accent"></div>
 
-    <div className="member-accent"></div>
+          <div className="member-header">
 
-    <div className="member-header">
+            <div>
 
-        <div>
-
-            <div className="member-name">
+              <div className="member-name">
                 👤 Ali
-            </div>
+              </div>
 
-            <div className="member-rank">
+              <div className="member-rank">
                 👤 Member
+              </div>
+
             </div>
 
-        </div>
+            <div className="member-status active">
+              🟢 Faol
+            </div>
 
-        <div className="member-status active">
-            🟢 Faol
-        </div>
+          </div>
 
-    </div>
+          <div className="member-prices">
 
-    <div className="member-prices">
-
-        <div>🧼 Gilam</div>
-        <div>
-            <input
+            <div>🧼 Gilam</div>
+            <div>
+              <input
                 className="member-price-input"
                 placeholder="0"
-            />
-        </div>
+              />
+            </div>
 
-        <div>🛏️ Adyol</div>
-        <div>
-            <input
+            <div>🛏️ Adyol</div>
+            <div>
+              <input
                 className="member-price-input"
                 placeholder="0"
-            />
-        </div>
+              />
+            </div>
 
-        <div>🧵 Yakandoz</div>
-        <div>
-            <input
+            <div>🧵 Yakandoz</div>
+            <div>
+              <input
                 className="member-price-input"
                 placeholder="0"
-            />
-        </div>
+              />
+            </div>
 
-        <div>🪟 Parda</div>
-        <div>
-            <input
+            <div>🪟 Parda</div>
+            <div>
+              <input
                 className="member-price-input"
                 placeholder="0"
-            />
+              />
+            </div>
+
+          </div>
+
+          <div className="member-salary">
+
+            💰 Bugungi ish haqi
+
+            <b>0 so'm</b>
+
+          </div>
+
+          <div className="member-actions">
+
+            <button className="remove-member-btn">
+              🚪 Chiqarib yuborish
+            </button>
+
+            <button className="working-btn">
+              ⚪️ Nofaol
+            </button>
+
+          </div>
+
         </div>
-
-    </div>
-
-    <div className="member-salary">
-
-        💰 Bugungi ish haqi
-
-        <b>0 so'm</b>
-
-    </div>
-
-    <div className="member-actions">
-
-        <button className="remove-member-btn">
-            🚪 Chiqarib yuborish
-        </button>
-
-        <button className="working-btn">
-            ⚪️ Nofaol
-        </button>
-
-    </div>
-
-</div>
 
       )}
 

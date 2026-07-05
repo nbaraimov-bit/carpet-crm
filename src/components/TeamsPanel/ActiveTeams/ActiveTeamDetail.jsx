@@ -1,6 +1,19 @@
+import { db } from "../../firebase"
+import { useState, useEffect } from "react"
 import "./ActiveTeams.css"
 import teamTypes, { teamTypeMap } from "../teamTypes";
 import TeamLeaderPanel from "./TeamLeaderPanel";
+import {
+  doc,
+  updateDoc,
+  addDoc,
+  collection,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  where,
+  deleteDoc
+} from "firebase/firestore"
 
 export default function ActiveTeamDetail({
 
@@ -87,7 +100,7 @@ export default function ActiveTeamDetail({
 
       {isLeader ? (
         <TeamLeaderPanel
-        mode={"memberPrice"}
+          mode={"memberPrices"}
           team={team}
           currentWorker={currentWorker}
         />
