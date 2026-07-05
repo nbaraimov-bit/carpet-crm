@@ -33,8 +33,7 @@ export default function ActiveTeams({
         </div>
 
         <div className="active-team-type">
-            {teamTypeMap[team.type]?.icon}{" "}
-            {teamTypeMap[team.type]?.title}
+          {teamType?.icon} {teamType?.title}
         </div>
 
         <div className="active-team-info">
