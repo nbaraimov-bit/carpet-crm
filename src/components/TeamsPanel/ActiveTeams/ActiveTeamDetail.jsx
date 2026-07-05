@@ -1,5 +1,5 @@
 import "./ActiveTeams.css"
-import teamTypes, { teamTypeMap } from "./teamTypes";
+import teamTypes, { teamTypeMap } from "../teamTypes";
 
 export default function ActiveTeamDetail({
 
