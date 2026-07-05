@@ -153,16 +153,7 @@ export default function TeamsPanel({
           <p>Jamoalarim</p>
 
           {pendingCards}
-          {!selectedTeam && activeCards}
-
-          {selectedTeam && (
-            <ActiveTeamDetail
-              team={selectedTeam}
-              currentWorker={currentWorker}
-              isAdmin={isAdmin}
-              closeTeam={closeTeam}
-            />
-          )}
+          {activeCards}
 
         </>)}
 
@@ -178,6 +169,15 @@ export default function TeamsPanel({
           {activeCards}
 
         </>)}
+
+        {selectedTeam && (
+            <ActiveTeamDetail
+              team={selectedTeam}
+              currentWorker={currentWorker}
+              isAdmin={isAdmin}
+              closeTeam={closeTeam}
+            />
+          )}
 
     </div>
   )
