@@ -153,7 +153,7 @@ export default function TeamsPanel({
 
           {pendingCards}
           <div
-            onClick={() => openTeam(team)}
+            onClick={() => openTeam}
           >
             {activeCards}
           </div>
