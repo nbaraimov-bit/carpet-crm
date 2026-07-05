@@ -1,4 +1,5 @@
 import "./ActiveTeams.css"
+import teamTypes, { teamTypeMap } from "./teamTypes";
 
 export default function ActiveTeamDetail({
 
@@ -12,6 +13,7 @@ export default function ActiveTeamDetail({
   const workingCount = Object.values(team.members || {})
   .filter(member => member.working)
   .length;
+  const teamType = teamTypeMap[team.type];
 
   return (
 
