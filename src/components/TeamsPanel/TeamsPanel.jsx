@@ -170,7 +170,10 @@ export default function TeamsPanel({
 
         </>)}
 
-        {selectedTeam && (
+    </div>
+  )
+
+  {selectedTeam && (
             <ActiveTeamDetail
               team={selectedTeam}
               currentWorker={currentWorker}
@@ -178,7 +181,4 @@ export default function TeamsPanel({
               closeTeam={closeTeam}
             />
           )}
-
-    </div>
-  )
 }
