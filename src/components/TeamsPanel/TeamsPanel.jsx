@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import "./teams.css"
 import PendingTeamCard from "./PendingTeamCard";
 import CreateTeamModal from "./CreateTeamModal";
-import ActiveTeams from "./ActiveTeams/ActiveTeams";
+import ActiveTeamCard from "./ActiveTeams/ActiveTeamCard";
 
 import {
   doc,
@@ -94,18 +94,19 @@ export default function TeamsPanel({
 
   const activeCards = myTeams.map((team) => (
 
-    <ActiveTeams
+    <ActiveTeamCard
       key={team.teamId}
       team={team}
       currentWorker={currentWorker}
       isAdmin={isAdmin}
+      openTeam={openTeam}
     />
 
   ));
 
   return (
     <div style={{ padding: 20 }}>
-      {!selectedTeam &&(<>
+     
         <button onClick={() => setPage("home")}>
           ⏪
         </button> 
@@ -172,7 +173,7 @@ export default function TeamsPanel({
           {activeCards}
 
         </>)}
-      </>)}
+      
 
       {selectedTeam && (<>
         

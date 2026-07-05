@@ -9,9 +9,8 @@ export default function ActiveTeams({
   team,
   currentWorker,
   isAdmin,
+  openTeam
 }) {
-
-  const [selectedTeam, setSelectedTeam] = useState(null);
 
   const teamMember = team.members?.[currentWorker.phone];
   const isLeader = teamMember?.rank === "leader";
@@ -19,19 +18,10 @@ export default function ActiveTeams({
   const teamType = teamTypeMap[team.type];
   const memberCount = Object.keys(team.members || {}).length;
 
-  const openTeam = (team) => {
-    setSelectedTeam(team);
-  };
-  const closeTeam = () => {
-    setSelectedTeam(null);
-  }
-
   return (<>
 
-    {!selectedTeam && (<>
-
       <div className="active-team-card"
-       
+       onClick={() => openTeam(team)}
       > 
 
         <div className="active-team-accent"></div>
@@ -57,28 +47,6 @@ export default function ActiveTeams({
         </div>
 
       </div>
-    
-    </>)}
-
-    {selectedTeam && (
-
-      <div>
-
-        Team Detail
-
-        <button onClick={closeTeam}>
-          ⬅️ Orqaga
-        </button>
-
-        {isAdmin && <TeamAdminPanel />}
-
-        {isLeader && <TeamLeaderPanel />}
-
-        {isMember && <TeamMemberPanel />}
-
-      </div>
-
-    )}
 
   </>)
   
