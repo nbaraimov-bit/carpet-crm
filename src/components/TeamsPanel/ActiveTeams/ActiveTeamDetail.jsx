@@ -1,5 +1,6 @@
 import "./ActiveTeams.css"
 import teamTypes, { teamTypeMap } from "../teamTypes";
+import TeamLeaderPanel from "./TeamLeaderPanel";
 
 export default function ActiveTeamDetail({
 
@@ -7,6 +8,7 @@ export default function ActiveTeamDetail({
     currentWorker,
     closeTeam,
     allowedRoles,
+    role,
 
 }) {
 
