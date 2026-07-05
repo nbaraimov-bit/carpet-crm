@@ -10,6 +10,8 @@ export default function ActiveTeams({
   isAdmin,
 }) {
 
+  const [selectedTeam, setSelectedTeam] = useState(null);
+
   const teamMember = team.members?.[currentWorker.phone];
   const isLeader = teamMember?.rank === "leader";
   const isMember = teamMember?.rank === "member";
@@ -17,10 +19,15 @@ export default function ActiveTeams({
   const memberCount = Object.keys(team.members || {}).length;
 
   const openTeam = (team) => {
-    console.log(team);
+    setSelectedTeam(team);
   };
+  const closeTeam = () => {
+    setSelectedTeam(null);
+  }
 
-  return (
+  return (<>
+
+    {!selectedTeam && (<>
 
       <div className="active-team-card"
         onClick={() => openTeam(team)}
@@ -48,6 +55,20 @@ export default function ActiveTeams({
           👑 {team.leader}
         </div>
 
+      </div>
+    
+    </>)}
+
+    {selectedTeam && (
+
+      <div>
+
+        Team Detail
+
+        <button onClick={closeTeam}>
+          ⬅️ Orqaga
+        </button>
+
         {isAdmin && <TeamAdminPanel />}
 
         {isLeader && <TeamLeaderPanel />}
@@ -56,8 +77,8 @@ export default function ActiveTeams({
 
       </div>
 
-     
+    )}
 
-  )
+  </>)
   
 }
