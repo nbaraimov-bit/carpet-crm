@@ -1,12 +1,14 @@
+import "./ActiveTeams.css"
 export default function TeamLeaderPanel({
   team,
   currentWorker,
   mode,
 }) {
 
-  if (mode === "joinRequests") {
-    return (
-      <>
+  return (
+    <>
+
+      {mode === "joinRequests" && (
 
         <div className="join-request-card">
 
@@ -45,8 +47,98 @@ export default function TeamLeaderPanel({
           </div>
 
         </div>
-      </>
-    );
-  }
+
+      )}
+
+      {/* ===== Leader uchun MemberCardlar ===== */}
+      {mode === "memberPrices" && (
+
+        <div className="member-card">
+
+    <div className="member-accent"></div>
+
+    <div className="member-header">
+
+        <div>
+
+            <div className="member-name">
+                👤 Ali
+            </div>
+
+            <div className="member-rank">
+                👤 Member
+            </div>
+
+        </div>
+
+        <div className="member-status active">
+            🟢 Faol
+        </div>
+
+    </div>
+
+    <div className="member-prices">
+
+        <div>🧼 Gilam</div>
+        <div>
+            <input
+                className="member-price-input"
+                placeholder="0"
+            />
+        </div>
+
+        <div>🛏️ Adyol</div>
+        <div>
+            <input
+                className="member-price-input"
+                placeholder="0"
+            />
+        </div>
+
+        <div>🧵 Yakandoz</div>
+        <div>
+            <input
+                className="member-price-input"
+                placeholder="0"
+            />
+        </div>
+
+        <div>🪟 Parda</div>
+        <div>
+            <input
+                className="member-price-input"
+                placeholder="0"
+            />
+        </div>
+
+    </div>
+
+    <div className="member-salary">
+
+        💰 Bugungi ish haqi
+
+        <b>0 so'm</b>
+
+    </div>
+
+    <div className="member-actions">
+
+        <button className="remove-member-btn">
+            🚪 Chiqarib yuborish
+        </button>
+
+        <button className="working-btn">
+            ⚪️ Nofaol
+        </button>
+
+    </div>
+
+</div>
+
+      )}
+
+    </>
+  );
+
   return null
 }
