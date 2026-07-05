@@ -2,6 +2,7 @@ import TeamAdminPanel from "./TeamAdminPanel";
 import TeamLeaderPanel from "./TeamLeaderPanel";
 import TeamMemberPanel from "./TeamMemberPanel";
 import teamTypes, { teamTypeMap } from "../teamTypes";
+import { useState, useEffect } from "react"
 import "./ActiveTeams.css"
 
 export default function ActiveTeams({
