@@ -32,7 +32,8 @@ export default function TeamsPanel({
 
   const [showCreateTeam, setShowCreateTeam] = useState(false)
   const [pendingTeams, setPendingTeams] = useState([])
-  const [selectedTeam, setSelectedTeam] = useState("");
+  const [teamMode, setTeamMode] = useState("list");
+  const [selectedTeam, setSelectedTeam] = useState(null);
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -44,11 +45,12 @@ export default function TeamsPanel({
 
   const openTeam = (team) => {
     setSelectedTeam(team);
-  };
-
+    setTeamMode("detail");
+  }
   const closeTeam = () => {
-    setSelectedTeam("");
-  };
+    setSelectedTeam(null);
+    setTeamMode("list");
+  }
 
   useEffect(() => {
 
@@ -104,8 +106,10 @@ export default function TeamsPanel({
 
   ));
 
-  return (
-    <div style={{ padding: 20 }}>
+  return (<>
+
+    {teamMode === "list" && (
+      <div style={{ padding: 20 }}>
      
         <button onClick={() => setPage("home")}>
           ⏪
@@ -170,19 +174,20 @@ export default function TeamsPanel({
 
         </>)}
 
-    </div>
-  )
-
-      {selectedTeam === team && (
-
+      </div>
+    )}
   
-            <ActiveTeamDetail
-              team={selectedTeam}
-              currentWorker={currentWorker}
-              isAdmin={isAdmin}
-              closeTeam={closeTeam}
-            />
-      )}
-          
+
+    {teamMode === "detail" && (
+
+      <ActiveTeamDetail
+        team={selectedTeam}
+        currentWorker={currentWorker}
+        isAdmin={isAdmin}
+        closeTeam={closeTeam}
+      />
+    )}
+
+  </>)  
         
 }
