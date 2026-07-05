@@ -14,6 +14,7 @@ export default function ActiveTeams({
   const isLeader = teamMember?.rank === "leader";
   const isMember = teamMember?.rank === "member";
   const teamType = teamTypeMap[team.type];
+  const memberCount = Object.keys(team.members || {}).length;
 
   return (
 
@@ -22,19 +23,26 @@ export default function ActiveTeams({
         <div className="active-team-accent"></div>
 
         <div className="active-team-header">
-          <h3>{team.teamName}</h3>
+
+          <div className="team-status active">
+            🟢 Faol
+          </div>
+
+           <h3>{team.teamName}</h3>
+
         </div>
 
         <div className="active-team-type">
-          {teamType?.icon} {teamType?.title}
+            {teamTypeMap[team.type]?.icon}{" "}
+            {teamTypeMap[team.type]?.title}
         </div>
 
         <div className="active-team-info">
-          👥 {Object.keys(team.members || {}).length} ta a'zo
+          👥 {memberCount} ta a'zo
         </div>
 
         <div className="active-team-info">
-          👑 {team.leaderName}
+          👑 {team.leader}
         </div>
 
         {isAdmin && <TeamAdminPanel />}
