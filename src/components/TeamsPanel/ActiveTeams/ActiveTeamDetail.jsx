@@ -115,25 +115,25 @@ export default function ActiveTeamDetail({
               <div>
 
                 <div className="member-name">
-                  👤 {member.name}
+                  👤 namuna
                 </div>
 
                 <div className="member-rank">
 
-                  {member.rank === "leader"
+                  {/*{member.rank === "leader"
                     ? "👑 Leader"
                     : "👤 Member"
-                  }
+                  }*/}
 
                 </div>
 
               </div>
 
-              <div className={`member-status ${member.working ? "true" : "false"}`}>
+              {/*<div className={`member-status ${member.working ? "true" : "false"}`}>
 
                 {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
 
-              </div>
+              </div>*/}
 
             </div>
 
