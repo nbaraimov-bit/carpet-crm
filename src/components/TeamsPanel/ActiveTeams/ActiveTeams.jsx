@@ -18,7 +18,7 @@ export default function ActiveTeams({
 
   return (
 
-      <div className="active-team-card">
+      <div className="active-team-card"> 
 
         <div className="active-team-accent"></div>
 
@@ -27,9 +27,7 @@ export default function ActiveTeams({
         </div>
 
         <div className="active-team-header">
-
-           <h3>{team.teamName}</h3>
-
+          {team.teamName}
         </div>
 
         <div className="active-team-type">
