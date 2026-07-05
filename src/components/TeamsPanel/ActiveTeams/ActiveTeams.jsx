@@ -22,11 +22,11 @@ export default function ActiveTeams({
 
         <div className="active-team-accent"></div>
 
-        <div className="active-team-header">
-
-          <div className="team-status active">
+        <div className="team-status active">
             🟢 Faol
-          </div>
+        </div>
+
+        <div className="active-team-header">
 
            <h3>{team.teamName}</h3>
 
