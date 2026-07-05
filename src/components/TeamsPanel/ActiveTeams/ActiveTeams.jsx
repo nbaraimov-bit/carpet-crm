@@ -31,7 +31,7 @@ export default function ActiveTeams({
     {!selectedTeam && (<>
 
       <div className="active-team-card"
-        onClick={() => openTeam(team)}
+       
       > 
 
         <div className="active-team-accent"></div>

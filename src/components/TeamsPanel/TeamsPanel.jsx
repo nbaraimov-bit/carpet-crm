@@ -32,14 +32,6 @@ export default function TeamsPanel({
   const [showCreateTeam, setShowCreateTeam] = useState(false)
   const [pendingTeams, setPendingTeams] = useState([])
   const [selectedTeam, setSelectedTeam] = useState(null);
-
-  const openTeam = (team) => {
-    setSelectedTeam(team);
-  };
-
-  const closeTeam = () => {
-    setSelectedTeam(null);
-  };
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -48,6 +40,14 @@ export default function TeamsPanel({
 
   const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega")
   const isWorker = allowedRoles.includes("worker")
+
+  const openTeam = (team) => {
+    setSelectedTeam(team);
+  };
+
+  const closeTeam = () => {
+    setSelectedTeam(null);
+  };
 
   useEffect(() => {
 
@@ -152,7 +152,11 @@ export default function TeamsPanel({
           <p>Jamoalarim</p>
 
           {pendingCards}
-          {activeCards}
+          <div
+            onClick={() => openTeam(team)}
+          >
+            {activeCards}
+          </div>
 
         </>)}
 
