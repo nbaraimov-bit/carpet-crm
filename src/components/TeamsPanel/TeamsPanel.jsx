@@ -31,6 +31,15 @@ export default function TeamsPanel({
 
   const [showCreateTeam, setShowCreateTeam] = useState(false)
   const [pendingTeams, setPendingTeams] = useState([])
+  const [selectedTeam, setSelectedTeam] = useState(null);
+
+  const openTeam = (team) => {
+    setSelectedTeam(team);
+  };
+
+  const closeTeam = () => {
+    setSelectedTeam(null);
+  };
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -96,67 +105,75 @@ export default function TeamsPanel({
 
   return (
     <div style={{ padding: 20 }}>
-      <button onClick={() => setPage("home")}>
-        ⏪
-      </button>
+      {!selectedTeam &&(<>
+        <button onClick={() => setPage("home")}>
+          ⏪
+        </button> 
 
-      {isWorker && (<>
+        {isWorker && (<>
 
-        <h2>Jamoa boshqaruv paneli</h2>
+          <h2>Jamoa boshqaruv paneli</h2>
        
-        <div
-          style={{
-            border: "1px solid #555",
-            borderRadius: 10,
-            padding: 15,
-            marginBottom: 15,
-          }}
-        >
+          <div
+            style={{
+              border: "1px solid #555",
+              borderRadius: 10,
+              padding: 15,
+              marginBottom: 15,
+            }}
+          >
           
-          {!hasTeam && ( 
-            <h3>Siz hali hech qaysi jamoaga qo'shilmagansiz</h3>
+            {!hasTeam && ( 
+              <h3>Siz hali hech qaysi jamoaga qo'shilmagansiz</h3>
+            )}
+
+            <button
+              onClick={() => setShowCreateTeam(true)}
+            >
+              ➕ Jamoa yaratish
+            </button>   
+ 
+            <button style={{ marginLeft: 10 }}>
+              📨 Jamoaga qo'shilish
+            </button>
+          </div>
+
+          {showCreateTeam && (
+            <CreateTeamModal
+
+              showCreateTeam={showCreateTeam}
+              setShowCreateTeam={setShowCreateTeam}
+              myTeams={myTeams}
+              currentWorker={currentWorker}
+  
+            />
           )}
 
-          <button
-            onClick={() => setShowCreateTeam(true)}
-          >
-            ➕ Jamoa yaratish
-          </button>  
+          <p>Jamoalarim</p>
 
-          <button style={{ marginLeft: 10 }}>
-            📨 Jamoaga qo'shilish
-          </button>
-        </div>
+          {pendingCards}
+          {activeCards}
 
-        {showCreateTeam && (
-          <CreateTeamModal
+        </>)}
 
-            showCreateTeam={showCreateTeam}
-            setShowCreateTeam={setShowCreateTeam}
-            myTeams={myTeams}
-            currentWorker={currentWorker}
-  
-          />
-        )}
+        {isAdmin && (<>
+          <h3>Barcha jamoalar</h3>
 
-        <p>Jamoalarim</p>
+          <p>So'rovlar</p>
 
-        {pendingCards}
-        {activeCards}
+          {pendingCards}
 
+          <p>Faol jamoalar ro'yxati</p>
+
+          {activeCards}
+
+        </>)}
       </>)}
 
-      {isAdmin && (<>
-        <h3>Barcha jamoalar</h3>
-
-        <p>So'rovlar</p>
-
-        {pendingCards}
-
-        <p>Faol jamoalar ro'yxati</p>
-
+      {selectedTeam && (<>
+        
         {activeCards}
-
+        
       </>)}
 
     </div>
