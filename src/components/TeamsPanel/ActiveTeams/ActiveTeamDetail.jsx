@@ -7,6 +7,7 @@ export default function ActiveTeamDetail({
     currentWorker,
     isAdmin,
     closeTeam,
+    allowedRoles,
 
 }) {
 
@@ -14,6 +15,10 @@ export default function ActiveTeamDetail({
   .filter(member => member.working)
   .length;
   const teamType = teamTypeMap[team.type];
+  const teamMember = team.members?.[currentWorker.phone];
+  const isLeader = teamMember?.rank === "leader";
+  const isMember = teamMember?.rank === "member";
+  const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega");
 
   return (
 
@@ -71,6 +76,8 @@ export default function ActiveTeamDetail({
       </div>
 
     </div>
+
+    {isLeader && <TeamLeaderPanel />}
 
   )
 

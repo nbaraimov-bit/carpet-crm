@@ -82,8 +82,8 @@
     background:rgba(156,163,175,.08);
 }
 
-/* ===== Team Detail Summary ===== */
 
+/* ===== Team Detail Summary ===== */
 .team-detail-summary {
     background: linear-gradient(135deg, #1b1f2d, #141824);
     border: 1px solid #30384a;
@@ -154,4 +154,56 @@
     font-size: 20px;
     font-weight: 700;
     color: #4ade80;
+}
+
+
+/* ===== Team leader Summary ===== */
+.team-leader-panel{
+    margin-top:20px;
+}
+
+.join-request-card{
+    position:relative;
+    overflow:hidden;
+
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+
+    padding:16px;
+    margin-bottom:14px;
+
+    background:rgba(255,255,255,.03);
+}
+
+.join-request-accent{
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:5px;
+    height:100%;
+
+    --accent:234,179,8;
+
+    background:rgb(var(--accent));
+}
+
+.join-request-accent::after{
+    content:"";
+
+    position:absolute;
+
+    left:100%;
+    top:0;
+
+    width:260px;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        rgba(var(--accent),.20),
+        rgba(var(--accent),.08),
+        transparent
+    );
 }

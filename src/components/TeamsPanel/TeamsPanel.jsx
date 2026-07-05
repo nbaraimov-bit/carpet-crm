@@ -185,6 +185,7 @@ export default function TeamsPanel({
         currentWorker={currentWorker}
         isAdmin={isAdmin}
         closeTeam={closeTeam}
+        allowedRoles={allowedRoles}
       />
     )}
 
