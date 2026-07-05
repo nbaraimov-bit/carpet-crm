@@ -4,6 +4,7 @@ import "./teams.css"
 import PendingTeamCard from "./PendingTeamCard";
 import CreateTeamModal from "./CreateTeamModal";
 import ActiveTeamCard from "./ActiveTeams/ActiveTeamCard";
+import ActiveTeamDetail from "./ActiveTeams/ActiveTeamDetail";
 
 import {
   doc,
@@ -95,7 +96,6 @@ export default function TeamsPanel({
   const activeCards = myTeams.map((team) => (
 
     <ActiveTeamCard
-      key={team.teamId}
       team={team}
       currentWorker={currentWorker}
       isAdmin={isAdmin}
@@ -153,11 +153,16 @@ export default function TeamsPanel({
           <p>Jamoalarim</p>
 
           {pendingCards}
-          <div
-            onClick={() => openTeam}
-          >
-            {activeCards}
-          </div>
+          {!selectedTeam && activeCards}
+
+          {selectedTeam && (
+            <ActiveTeamDetail
+              team={selectedTeam}
+              currentWorker={currentWorker}
+              isAdmin={isAdmin}
+              closeTeam={closeTeam}
+            />
+          )}
 
         </>)}
 
@@ -173,13 +178,6 @@ export default function TeamsPanel({
           {activeCards}
 
         </>)}
-      
-
-      {selectedTeam && (<>
-        
-        {activeCards}
-        
-      </>)}
 
     </div>
   )
