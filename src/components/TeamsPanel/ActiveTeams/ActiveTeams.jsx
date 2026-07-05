@@ -16,9 +16,15 @@ export default function ActiveTeams({
   const teamType = teamTypeMap[team.type];
   const memberCount = Object.keys(team.members || {}).length;
 
+  const openTeam = (team) => {
+    console.log(team);
+  };
+
   return (
 
-      <div className="active-team-card"> 
+      <div className="active-team-card"
+        onClick={() => openTeam(team)}
+      > 
 
         <div className="active-team-accent"></div>
 
