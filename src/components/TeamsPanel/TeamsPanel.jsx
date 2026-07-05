@@ -173,12 +173,16 @@ export default function TeamsPanel({
     </div>
   )
 
-  {selectedTeam && (
+     if (selectedTeam) {
+
+      return (
             <ActiveTeamDetail
               team={selectedTeam}
               currentWorker={currentWorker}
               isAdmin={isAdmin}
               closeTeam={closeTeam}
             />
-          )}
+      )}
+          
+        
 }
