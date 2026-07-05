@@ -78,8 +78,10 @@ export default function ActiveTeamDetail({
 
       {isLeader && <TeamLeaderPanel
         
+        mode="joinRequests"
         team={team}
         currentWorker={currentWorker}
+
 
       />}
 
