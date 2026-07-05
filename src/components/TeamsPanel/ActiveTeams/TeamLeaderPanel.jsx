@@ -1,4 +1,7 @@
-export default function TeamLeaderPanel() {
+export default function TeamLeaderPanel({
+  team,
+  currentWorker,
+}) {
 
   return (
     <>

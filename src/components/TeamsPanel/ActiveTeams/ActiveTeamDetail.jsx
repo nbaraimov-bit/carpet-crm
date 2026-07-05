@@ -75,9 +75,14 @@ export default function ActiveTeamDetail({
 
       </div>
 
-    </div>
+      {isLeader && <TeamLeaderPanel
+        
+        team={team}
+        currentWorker={currentWorker}
 
-    {isLeader && <TeamLeaderPanel />}
+      />}
+
+    </div>
 
   )
 
