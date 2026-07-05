@@ -32,7 +32,7 @@ export default function TeamsPanel({
 
   const [showCreateTeam, setShowCreateTeam] = useState(false)
   const [pendingTeams, setPendingTeams] = useState([])
-  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState("");
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -47,7 +47,7 @@ export default function TeamsPanel({
   };
 
   const closeTeam = () => {
-    setSelectedTeam(null);
+    setSelectedTeam("");
   };
 
   useEffect(() => {
@@ -173,9 +173,9 @@ export default function TeamsPanel({
     </div>
   )
 
-     if (selectedTeam) {
+      {selectedTeam === team && (
 
-      return (
+  
             <ActiveTeamDetail
               team={selectedTeam}
               currentWorker={currentWorker}
