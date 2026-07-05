@@ -5,7 +5,6 @@ export default function ActiveTeamDetail({
 
     team,
     currentWorker,
-    isAdmin,
     closeTeam,
     allowedRoles,
 
