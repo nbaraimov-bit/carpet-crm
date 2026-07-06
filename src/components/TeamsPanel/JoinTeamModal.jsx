@@ -4,12 +4,6 @@ export default function JoinTeamModal({
 
 }) {
 
-  function handleCloseJoinModal() {
-
-    setShowJoinTeam(false)
-
-  }
-
   return (
 
     <div
@@ -37,7 +31,7 @@ export default function JoinTeamModal({
         <h2>👥 Jamoaga qo'shilish</h2>
 
         <button
-          onClick={handleCloseJoinModal}
+          onClick={setShowJoinTeam(false)}
         >
           Bekor
         </button>
