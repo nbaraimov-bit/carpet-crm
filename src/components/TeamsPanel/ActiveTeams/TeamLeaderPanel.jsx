@@ -1,6 +1,6 @@
 import "./ActiveTeams.css"
 import { useEffect, useState } from "react";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import { teamTypeMap } from "../teamTypes";
 import {
   collection,
@@ -19,91 +19,85 @@ export default function TeamLeaderPanel({
 
   useEffect(() => {
 
-  if (!team?.id) return;
+    if (!team?.id) return;
 
-  const q = query(
+    const q = query(
 
-    collection(db, "joinRequests"),
+      collection(db, "joinRequests"),
+      where("teamId", "==", team.id),
+      where("status", "==", "pending")
 
-    where("teamId", "==", team.id),
+    );
 
-    where("status", "==", "pending")
+    const unsubscribe = onSnapshot(q, (snapshot) => {
 
-  );
+      const list = snapshot.docs.map(doc => ({
 
-  const unsubscribe = onSnapshot(q, (snapshot) => {
+        id: doc.id,
+        ...doc.data(),
 
-    const list = snapshot.docs.map(doc => ({
+      }));
 
-      id: doc.id,
-      ...doc.data(),
+      setJoinRequests(list);
 
-    }));
+    });
 
-    setJoinRequests(list);
+    return () => unsubscribe();
 
-  });
-
-  return () => unsubscribe();
-
-}, [team]);
+  }, [team]);
 
   return (
     <>
 
-      {mode === "joinRequests" && (
+      {mode === "joinRequests" && (<>
 
-  <>
+        {joinRequests.map((request) => (
 
-    {joinRequests.map((request) => (
+          <div
+            key={request.id}
+            className="join-request-card"
+          >
 
-      <div
-        key={request.id}
-        className="join-request-card"
-      >
+            <div className="join-request-accent"></div>
 
-        <div className="join-request-accent"></div>
+            <div className="join-request-header">
 
-        <div className="join-request-header">
+              <div className="join-request-title">
+                📋 Qo'shilish so'rovi
+              </div>
 
-          <div className="join-request-title">
-            📋 Qo'shilish so'rovi
+              <div className="join-request-status">
+                Kutilmoqda
+              </div>
+
+            </div>
+
+            <div className="join-request-worker">
+              👤 {request.name}
+            </div>
+
+            <div className="join-request-role">
+              {teamTypeMap[request.type]?.icon}{" "}
+              {teamTypeMap[request.type]?.title}
+            </div>
+
+            <div className="join-request-buttons">
+
+              <button className="reject-button">
+                ❌ Rad etish
+              </button>
+
+              <button className="approve-button">
+                ✅ Tasdiqlash
+              </button>
+
+            </div>
+
           </div>
 
-          <div className="join-request-status">
-            Kutilmoqda
-          </div>
+        ))}
 
-        </div>
-
-        <div className="join-request-worker">
-          👤 {request.name}
-        </div>
-
-        <div className="join-request-role">
-          {teamTypeMap[request.type]?.icon}{" "}
-          {teamTypeMap[request.type]?.title}
-        </div>
-
-        <div className="join-request-buttons">
-
-          <button className="reject-button">
-            ❌ Rad etish
-          </button>
-
-          <button className="approve-button">
-            ✅ Tasdiqlash
-          </button>
-
-        </div>
-
-      </div>
-
-    ))}
-
-  </>
-
-)}
+      </>)}
 
       {/* ===== Leader uchun MemberCardlar ===== */}
       {mode === "memberPrices" && (
