@@ -10,6 +10,7 @@ import {
   query,
   where,
   onSnapshot,
+  serverTimestamp,
 } from "firebase/firestore";
 
 export default function TeamLeaderPanel({
@@ -51,10 +52,6 @@ export default function TeamLeaderPanel({
 
   const approveJoinRequest = async (request) => {
 
-    console.log("Approve bosildi", request);
-    console.log("team.id =", team.id);
-console.log("request =", request);
-
     try {
 
       await updateDoc(
@@ -91,6 +88,32 @@ console.log("request =", request);
     }
 
   };
+
+  const rejectJoinRequest = async (request) => {
+
+  try {
+
+    await updateDoc(
+
+      doc(db, "joinRequests", request.id),
+
+      {
+
+        status: "rejected",
+        rejectedBy: currentWorker.phone,
+        rejectedAt: serverTimestamp(),
+
+      }
+
+    );
+
+  } catch (err) {
+
+    console.error(err);
+
+  }
+
+};
 
   return (
     <>
@@ -130,16 +153,13 @@ console.log("request =", request);
             <div className="join-request-buttons">
 
               <button className="reject-button"
-                  onClick={() => alert("bosildi")}
+                onClick={() => rejectJoinRequest(request)}
               >
                 ❌ Rad etish
               </button>
 
               <button className="approve-button"
-                onClick={() => { 
-                  alert("bosildi");
-                  approveJoinRequest(request);
-                }}
+                onClick={() => approveJoinRequest(request)}
               >
                 ✅ Tasdiqlash
               </button>
