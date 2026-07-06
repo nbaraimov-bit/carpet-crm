@@ -162,7 +162,7 @@ export default function TeamsPanel({
           {showJoinTeam && (
             <JoinTeamModal
 
-              closeModal={() => setShowJoinTeam(false)}
+              setShowJoinTeam={setShowJoinTeam}
             
             />
           )}
