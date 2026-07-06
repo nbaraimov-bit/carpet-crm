@@ -37,14 +37,11 @@ export default function TeamsPanel({
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [showJoinTeam, setShowJoinTeam] = useState(false);
   const [pendingJoinTeams, setPendingJoinTeams] = useState([]);
-    
-  const myTeams = teams.filter((team) => {
-    return team.members?.[currentWorker.phone];
-  });
-  const hasTeam = myTeams.length > 0;
 
   const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega")
   const isWorker = allowedRoles.includes("worker")
+  
+  const myTeams = isAdmin ? teams : teams.filter(team => team.members?.[currentWorker.phone]);
 
   const openTeam = (team) => {
     setSelectedTeam(team);
@@ -89,34 +86,33 @@ export default function TeamsPanel({
 
   useEffect(() => {
 
-  if (!isWorker) return;
+    if (!isWorker) return;
 
-  const q = query(
-    collection(db, "joinRequests"),
-    where("sender", "==", currentWorker.phone)
-  );
+    const q = query(
+      collection(db, "joinRequests"),
+      where("sender", "==", currentWorker.phone)
+    );
 
-  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const unsubscribe = onSnapshot(q, (snapshot) => {
 
-    const list = snapshot.docs.map(doc => ({
+      const list = snapshot.docs.map(doc => ({
 
-      id: doc.id,
-      ...doc.data(),
+        id: doc.id,
+        ...doc.data(),
 
-    }));
+      }));
 
-    setPendingJoinTeams(list);
+      setPendingJoinTeams(list);
 
-  });
+    });
 
-  return () => unsubscribe();
+    return () => unsubscribe();
 
-}, [currentWorker.phone, isWorker]);
+  }, [currentWorker.phone, isWorker]);
 
   const pendingCards = [
 
-  ...pendingTeams
-    .filter(team => isWorker || team.status !== "rejected")
+    ...pendingTeams.filter(team => isWorker || team.status !== "rejected")
     .map(team => (
 
       <PendingTeamCard
@@ -129,18 +125,18 @@ export default function TeamsPanel({
 
     )),
 
-  ...pendingJoinTeams.map(team => (
+    ...pendingJoinTeams.map(team => (
 
-    <PendingTeamCard
-      key={`join-${team.id}`}
-      team={team}
-      pendingMode="joinTeam"
-      currentWorker={currentWorker}
-    />
+      <PendingTeamCard
+        key={`join-${team.id}`}
+        team={team}
+        pendingMode="joinTeam"
+        currentWorker={currentWorker}
+      />
 
-  )),
+    )),
 
-];
+  ];
 
   const activeCards = myTeams.map((team) => (
 
