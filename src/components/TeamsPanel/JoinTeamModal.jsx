@@ -3,13 +3,17 @@ import { useState, useEffect } from "react"
 import { teamTypeMap } from "./teamTypes"
 
 import {
+  addDoc,
   collection,
   onSnapshot,
+  serverTimestamp,
 } from "firebase/firestore"
+import { type } from "firebase/firestore/pipelines"
 
 export default function JoinTeamModal({
 
   setShowJoinTeam,
+  currentWorker,
 
 }) {
 
@@ -19,7 +23,7 @@ export default function JoinTeamModal({
 
     const unsubscribe = onSnapshot(
 
-      collection(db, "teams"),
+      collection(db, "t eams"),
 
       (snapshot) => {
 
@@ -45,6 +49,38 @@ export default function JoinTeamModal({
     setShowJoinTeam(false)
 
   }
+
+  async function handleJoinTeam(team) {
+
+  try {
+
+    await addDoc(
+
+      collection(db, "joinRequests"),
+
+      {
+
+        sender: currentWorker.phone,
+        name: currentWorker.name,
+        teamId: team.id,
+        teamName: team.teamName,
+        type: team.type,
+        status: "pending",
+        createdAt: serverTimestamp(),
+
+      }
+
+    )
+
+    setShowJoinTeam(false)
+
+  } catch (error) {
+
+    console.error(error)
+
+  }
+
+}
 
   return (
 
@@ -92,6 +128,7 @@ export default function JoinTeamModal({
               <div
                 key={team.id}
                 className="join-team-card"
+                onClick={() => handleJoinTeam(team)}
               >
 
                 <h3>{team.teamName}</h3> 

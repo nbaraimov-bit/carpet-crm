@@ -163,6 +163,7 @@ export default function TeamsPanel({
             <JoinTeamModal
 
               setShowJoinTeam={setShowJoinTeam}
+              currentWorker={currentWorker}
             
             />
           )}
