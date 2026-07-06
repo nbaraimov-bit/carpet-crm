@@ -1,6 +1,6 @@
 import "./ActiveTeams.css"
 import teamTypes, { teamTypeMap } from "../teamTypes";
-export default function TeamInfoPanel({
+export default function TeamInfoCard({
     workingCount,
     teamType,
     team

@@ -3,7 +3,8 @@ import { useState, useEffect } from "react"
 import "./ActiveTeams.css"
 import teamTypes, { teamTypeMap } from "../teamTypes";
 import TeamLeaderPanel from "./TeamLeaderPanel";
-import TeamInfoPanel from "./TeamInfoPanel";
+import TeamInfoCard from "./TeamInfoCard";
+import TeamMemberCard from "./TeamMemberCard";
 import {
   doc,
   updateDoc,
@@ -45,7 +46,7 @@ export default function ActiveTeamDetail({
           ⬅️
         </button>
 
-        <TeamInfoPanel
+        <TeamInfoCard
           team={team}
           teamType={teamType}
           workingCount={workingCount}
@@ -69,64 +70,11 @@ export default function ActiveTeamDetail({
           currentWorker={currentWorker}
         />
       ) : (
-        <>
-          <div className="member-card">
-  
-            <div className="member-accent"></div>
+           
+        <TeamMemberCard
+          team={team}
+        />
 
-            <div className="member-header">
-
-              <div>
-
-                <div className="member-name">
-                  👤 namuna
-                </div>
-
-                <div className="member-rank">
-
-                  {/*{member.rank === "leader"
-                    ? "👑 Leader"
-                    : "👤 Member"
-                  }*/}
-
-                </div>
-
-              </div>
-
-              {/*<div className={`member-status ${member.working ? "true" : "false"}`}>
-
-                {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
-
-              </div>*/}
-
-            </div>
-
-            <div className="member-prices">
-
-              <div>🧼 Gilam</div>
-              <div>0 so'm</div>
-
-              <div>🛏️ Adyol</div>
-              <div>0 so'm</div>
-
-              <div>🧵 Yakandoz</div>
-              <div>0 so'm</div>
-
-              <div>🪟 Parda</div>
-              <div>0 so'm</div>
-
-            </div>
-
-            <div className="member-salary"> 
-
-              💰 Bugungi ish haqi
-
-              <b>0 so'm</b>
-
-            </div>
-
-          </div>
-        </>
       )}
 
       {(isLeader || isAdmin) && (
