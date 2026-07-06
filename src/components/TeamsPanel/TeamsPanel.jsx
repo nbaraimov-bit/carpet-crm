@@ -43,6 +43,8 @@ export default function TeamsPanel({
   
   const myTeams = isAdmin ? teams : teams.filter(team => team.members?.[currentWorker.phone]);
 
+  const hasTeam = myTeams.length > 0;
+
   const openTeam = (team) => {
     setSelectedTeam(team);
     setTeamMode("detail");
