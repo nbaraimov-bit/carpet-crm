@@ -5,6 +5,7 @@ import PendingTeamCard from "./PendingTeamCard";
 import CreateTeamModal from "./CreateTeamModal";
 import ActiveTeamCard from "./ActiveTeams/ActiveTeamCard";
 import ActiveTeamDetail from "./ActiveTeams/ActiveTeamDetail";
+import JoinTeamModal from "./JoinTeamModal";
 
 import {
   doc,
@@ -34,6 +35,7 @@ export default function TeamsPanel({
   const [pendingTeams, setPendingTeams] = useState([])
   const [teamMode, setTeamMode] = useState("list");
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const [showJoinTeam, setShowJoinTeam] = useState(false);
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -138,7 +140,10 @@ export default function TeamsPanel({
               ➕ Jamoa yaratish
             </button>   
  
-            <button style={{ marginLeft: 10 }}>
+            <button 
+              style={{ marginLeft: 10 }}
+              onClick={() => setShowJoinTeam(true)}
+            >
               📨 Jamoaga qo'shilish
             </button>
           </div>
@@ -151,6 +156,14 @@ export default function TeamsPanel({
               myTeams={myTeams}
               currentWorker={currentWorker}
   
+            />
+          )}
+
+          {showJoinTeam && (
+            <JoinTeamModal
+
+              closeModal={() => setShowJoinTeam(false)}
+            
             />
           )}
 
