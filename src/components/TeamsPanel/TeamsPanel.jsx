@@ -36,6 +36,7 @@ export default function TeamsPanel({
   const [teamMode, setTeamMode] = useState("list");
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [showJoinTeam, setShowJoinTeam] = useState(false);
+  const [pendingJoinTeams, setPendingJoinTeams] = useState([]);
     
   const myTeams = teams.filter((team) => {
     return team.members?.[currentWorker.phone];
@@ -86,26 +87,60 @@ export default function TeamsPanel({
 
   }, [currentWorker.phone])
 
-  const pendingCards = pendingTeams
-  .filter(team => isWorker || team.status !== "rejected")
-  .map(team => (
-    <PendingTeamCard
-      key={team.id}
-      team={team}
-      showActions={isAdmin}
-      currentWorker={currentWorker}
-      pendingMode="createTeam"
-    />
-  )
-  (
-        <PendingTeamCard
-          key={request.id}
-          team={request}
-          pendingMode="joinTeam"
-          currentWorker={currentWorker}
-        />
-      )
+  useEffect(() => {
+
+  if (!isWorker) return;
+
+  const q = query(
+    collection(db, "joinRequests"),
+    where("sender", "==", currentWorker.phone)
   );
+
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+
+    const list = snapshot.docs.map(doc => ({
+
+      id: doc.id,
+      ...doc.data(),
+
+    }));
+
+    setPendingJoinTeams(list);
+
+  });
+
+  return () => unsubscribe();
+
+}, [currentWorker.phone, isWorker]);
+
+  const pendingCards = [
+
+  ...pendingTeams
+    .filter(team => isWorker || team.status !== "rejected")
+    .map(team => (
+
+      <PendingTeamCard
+        key={`create-${team.id}`}
+        team={team}
+        pendingMode="createTeam"
+        showActions={isAdmin}
+        currentWorker={currentWorker}
+      />
+
+    )),
+
+  ...pendingJoinTeams.map(team => (
+
+    <PendingTeamCard
+      key={`join-${team.id}`}
+      team={team}
+      pendingMode="joinTeam"
+      currentWorker={currentWorker}
+    />
+
+  )),
+
+];
 
   const activeCards = myTeams.map((team) => (
 
