@@ -1,54 +1,109 @@
 import "./ActiveTeams.css"
+import { useEffect, useState } from "react";
+import { db } from "../../firebase";
+import { teamTypeMap } from "../teamTypes";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
+
 export default function TeamLeaderPanel({
   team,
   currentWorker,
   mode,
 }) {
 
+  const [joinRequests, setJoinRequests] = useState([]);
+
+  useEffect(() => {
+
+  if (!team?.id) return;
+
+  const q = query(
+
+    collection(db, "joinRequests"),
+
+    where("teamId", "==", team.id),
+
+    where("status", "==", "pending")
+
+  );
+
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+
+    const list = snapshot.docs.map(doc => ({
+
+      id: doc.id,
+      ...doc.data(),
+
+    }));
+
+    setJoinRequests(list);
+
+  });
+
+  return () => unsubscribe();
+
+}, [team]);
+
   return (
     <>
 
       {mode === "joinRequests" && (
 
-        <div className="join-request-card">
+  <>
 
-          <div className="join-request-accent"></div>
+    {joinRequests.map((request) => (
 
-          <div className="join-request-header">
+      <div
+        key={request.id}
+        className="join-request-card"
+      >
 
-            <div className="join-request-title">
-              📩 Qo'shilish so'rovi
-            </div>
+        <div className="join-request-accent"></div>
 
-            <div className="join-request-status">
-              Kutilmoqda
-            </div>
+        <div className="join-request-header">
 
+          <div className="join-request-title">
+            📋 Qo'shilish so'rovi
           </div>
 
-          <div className="join-request-worker">
-            👤 Ali Valiyev
-          </div>
-
-          <div className="join-request-role">
-            🧼 Gilam yuvuvchi
-          </div>
-
-          <div className="join-request-buttons">
-
-            <button className="reject-button">
-              ❌ Rad etish
-            </button>
-
-            <button className="approve-button">
-              ✅ Tasdiqlash
-            </button>
-
+          <div className="join-request-status">
+            Kutilmoqda
           </div>
 
         </div>
 
-      )}
+        <div className="join-request-worker">
+          👤 {request.name}
+        </div>
+
+        <div className="join-request-role">
+          {teamTypeMap[request.type]?.icon}{" "}
+          {teamTypeMap[request.type]?.title}
+        </div>
+
+        <div className="join-request-buttons">
+
+          <button className="reject-button">
+            ❌ Rad etish
+          </button>
+
+          <button className="approve-button">
+            ✅ Tasdiqlash
+          </button>
+
+        </div>
+
+      </div>
+
+    ))}
+
+  </>
+
+)}
 
       {/* ===== Leader uchun MemberCardlar ===== */}
       {mode === "memberPrices" && (
