@@ -134,7 +134,10 @@ console.log("request =", request);
               </button>
 
               <button className="approve-button"
-                onClick={() => approveJoinRequest(request)}
+                onClick={() => { 
+                  alert("bosildi");
+                  approveJoinRequest(request);
+                }}
               >
                 ✅ Tasdiqlash
               </button>
