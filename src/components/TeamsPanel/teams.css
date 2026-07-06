@@ -383,7 +383,7 @@
     color:#fff;
     cursor:pointer;
     transition:.2s;
-    
+
 }
 
 .delete-team-btn:hover{
@@ -396,8 +396,21 @@
 .team-leader,
 .team-phone{
     margin-top:8px;
-
     color:#b7bcc8;
-
     font-size:14px;
+}
+
+/* ===== jointeam card =====*/
+.join-team-card {
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    cursor: pointer;
+    transition: .2s;
+}
+
+.join-team-card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-2px);
 }
