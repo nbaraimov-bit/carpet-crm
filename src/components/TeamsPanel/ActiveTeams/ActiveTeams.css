@@ -206,6 +206,11 @@
     color: #22c55e;
 }
 
+.join-request-accent,
+.join-request-accent::after {
+    pointer-events: none;
+}
+
 
 /* ===== Member Card ===== */
 .member-card {
