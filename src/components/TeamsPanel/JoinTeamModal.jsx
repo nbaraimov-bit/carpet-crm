@@ -74,9 +74,9 @@ export default function JoinTeamModal({
 
     setShowJoinTeam(false)
 
-  } catch (error) {
+  } catch (err) {
 
-    console.error(error)
+    console.error(err)
 
   }
 
