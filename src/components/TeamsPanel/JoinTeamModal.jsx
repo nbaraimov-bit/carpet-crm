@@ -19,7 +19,7 @@ export default function JoinTeamModal({
 
     const unsubscribe = onSnapshot(
 
-      collection(db, "activeTeams"),
+      collection(db, "teams"),
 
       (snapshot) => {
 
