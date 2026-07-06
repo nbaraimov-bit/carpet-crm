@@ -112,6 +112,28 @@ export default function PendingTeamCard({
 
   };
 
+  const deleteJoinRequest = async (team) => {
+
+  const ok = window.confirm(
+    "So'rovni bekor qilmoqchimisiz?"
+  );
+
+  if (!ok) return;
+
+  try {
+
+    await deleteDoc(
+      doc(db, "joinRequests", team.id)
+    );
+
+  } catch (err) {
+
+    console.error(err);
+
+  }
+
+};
+
   const isRejected = team.status === "rejected";
 
   return (<>
@@ -218,14 +240,99 @@ export default function PendingTeamCard({
     )}
 
     {pendingMode === "joinTeam" && (
-   
-      <div className="pending-team-card">
 
-        Join Team Pending
+  <div className="pending-team-card">
+
+    <div
+      className={`team-accent ${
+        team.status === "rejected"
+          ? "rejected"
+          : ""
+      }`}
+    ></div>
+
+    <div className="team-header">
+
+      <div
+        className={`team-status ${
+          team.status === "rejected"
+            ? "rejected"
+            : "pending"
+        }`}
+      >
+
+        {team.status === "rejected"
+          ? "🔴 Rad etilgan"
+          : "🟡 Qo'shilish so'rovi"}
 
       </div>
- 
-    )}
+
+    </div>
+
+    <div className="team-title">
+      👥 {team.teamName}
+    </div>
+
+    <div className="team-leader-info">
+
+      <div className="team-leader">
+        👤 {team.name}
+      </div>
+
+      <div className="team-phone">
+        📞 {team.sender}
+      </div>
+
+    </div>
+
+    <div className="team-type">
+      {teamTypeMap[team.type]?.icon}{" "}
+      {teamTypeMap[team.type]?.title}
+    </div>
+
+    <div className="team-footer">
+
+      {team.status === "pending" ? (
+
+        <>
+
+          <div className="team-note">
+            Leader tasdiqlaganidan so'ng siz jamoaga qo'shilasiz.
+          </div>
+
+          <button
+            className="delete-team-btn"
+            onClick={() => deleteJoinRequest(team)}
+          >
+            So'rovni bekor qilish
+          </button>
+
+        </>
+
+      ) : (
+
+        <>
+
+          <div className="team-note">
+            Leader so'rovingizni rad etdi. Boshqa jamoaga yuborishingiz mumkin.
+          </div>
+
+          <button
+            className="delete-team-btn"
+            onClick={() => deleteJoinRequest(team)}
+          >
+            O'chirish
+          </button>
+
+        </>
+
+      )}
+
+    </div>
+
+  </div>
+
+)}
 
   </>)
 
