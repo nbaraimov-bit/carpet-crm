@@ -94,8 +94,18 @@ export default function TeamsPanel({
       team={team}
       showActions={isAdmin}
       currentWorker={currentWorker}
+      pendingMode="createTeam"
     />
-  ));
+  )
+  (
+        <PendingTeamCard
+          key={request.id}
+          team={request}
+          pendingMode="joinTeam"
+          currentWorker={currentWorker}
+        />
+      )
+  );
 
   const activeCards = myTeams.map((team) => (
 
