@@ -60,13 +60,10 @@
     display:inline-flex;
     align-items:center;
     gap:6px;
-
     padding:6px 14px;
     border-radius:999px;
-
     font-size:14px;
     font-weight:600;
-
     margin-bottom:7px;
 }
 
@@ -165,41 +162,30 @@
 .join-request-card{
     position:relative;
     overflow:hidden;
-
     border:1px solid rgba(255,255,255,.08);
     border-radius:16px;
-
     padding:16px;
     margin-bottom:14px;
-
     background:rgba(255,255,255,.03);
 }
 
 .join-request-accent{
     position:absolute;
-
     left:0;
     top:0;
-
     width:5px;
     height:100%;
-
     --accent:234,179,8;
-
     background:rgb(var(--accent));
 }
 
 .join-request-accent::after{
     content:"";
-
     position:absolute;
-
     left:100%;
     top:0;
-
     width:260px;
     height:100%;
-
     background:linear-gradient(
         90deg,
         rgba(var(--accent),.20),
@@ -224,36 +210,27 @@
 /* ===== Member Card ===== */
 .member-card {
     position: relative;
-
     margin-top: 16px;
     padding: 18px;
-
     border-radius: 16px;
     border: 1px solid rgba(255,255,255,.08);
-
     background: rgba(255,255,255,.03);
-
     overflow: hidden;
 }
 
 .member-accent {
     position: absolute;
-
     left: 0;
     top: 0;
-
     width: 5px;
     height: 100%;
-
     background: #22c55e;
 }
 
 .member-header {
     display: flex;
-
     justify-content: space-between;
     align-items: flex-start;
-
     margin-bottom: 18px;
 }
 
@@ -264,16 +241,13 @@
 
 .member-rank {
     margin-top: 4px;
-
     color: #a3a3a3;
     font-size: 14px;
 }
 
 .member-status {
     padding: 6px 12px;
-
     border-radius: 999px;
-
     font-size: 13px;
     font-weight: 600;
 }
@@ -290,85 +264,86 @@
 
 .member-prices {
     display: grid;
-
     grid-template-columns: 1fr auto;
-
     gap: 12px;
-
     margin-bottom: 18px;
 }
 
 .member-price-input {
     width: 80px;
-
     padding: 6px 10px;
-
     border-radius: 8px;
     border: 1px solid rgba(255,255,255,.15);
-
     background: rgba(255,255,255,.05);
-
     color: white;
-
     text-align: center;
 }
 
 .member-price-input:focus {
     outline: none;
-
     border-color: #22c55e;
 }
 
 .member-salary {
     margin-top: 10px;
-
     padding-top: 14px;
-
     border-top: 1px solid rgba(255,255,255,.08);
-
     display: flex;
-
     justify-content: space-between;
     align-items: center;
-
     font-weight: 600;
 }
 
 .member-actions {
     display: flex;
-
     justify-content: space-between;
-
     gap: 10px;
-
     margin-top: 18px;
 }
 
 .member-actions button {
     flex: 1;
-
     padding: 10px;
-
     border: none;
     border-radius: 10px;
-
     cursor: pointer;
-
     font-weight: 600;
 }
 
 .remove-member-btn {
     background: rgba(239,68,68,.15);
-
     color: #ef4444;
-
     border: 1px solid rgba(239,68,68,.35);
 }
 
 .working-btn {
     background: rgba(34,197,94,.15);
-
     color: #22c55e;
-
     border: 1px solid rgba(34,197,94,.35);
+}
+
+.delete-team-card {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(239, 68, 68, .35);
+    background: rgba(239, 68, 68, .08);
+    cursor: pointer;
+    transition: .25s;
+}
+
+.delete-team-card:hover {
+    background: rgba(239, 68, 68, .15);
+}
+
+.delete-team-title {
+    color: #ef4444;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.delete-team-description {
+    margin-top: 8px;
+    color: #c7c7c7;
+    font-size: 14px;
 }

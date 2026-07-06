@@ -165,6 +165,22 @@ export default function ActiveTeamDetail({
         </>
       )}
 
+      {(isLeader || isAdmin) && (
+
+        <div className="delete-team-card">
+
+          <div className="delete-team-title">
+            🗑️ Jamoani o'chirish
+          </div>
+
+          <div className="delete-team-description">
+            Jamoani va unga tegishli barcha ma'lumotlarni o'chiradi.
+          </div>
+
+        </div>
+
+      )}
+
     </div>
 
   )
