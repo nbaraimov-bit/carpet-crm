@@ -129,7 +129,9 @@ console.log("request =", request);
 
             <div className="join-request-buttons">
 
-              <button className="reject-button">
+              <button className="reject-button"
+                  onClick={() => alert("bosildi")}
+              >
                 ❌ Rad etish
               </button>
 
