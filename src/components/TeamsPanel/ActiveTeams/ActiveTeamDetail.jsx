@@ -72,13 +72,15 @@ export default function ActiveTeamDetail({
           currentWorker={currentWorker}
         />
       ) : (
-           
-        <TeamMemberCard
-          key={members.phone}
-          team={team}
-          members={members}
-          currentWorker={currentWorker}
-        />
+        
+        members.map((member) => (
+          <TeamMemberCard
+            key={members.phone}
+            team={team}
+            member={member}
+            currentWorker={currentWorker}
+          />
+        ))
 
       )}
 

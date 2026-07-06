@@ -2,7 +2,7 @@ import "./ActiveTeams.css"
 import teamTypes, { teamTypeMap } from "../teamTypes";
 export default function TeamMemberCard({
   team,
-  members,
+  member,
   currentWorker,
 }) {
 
@@ -28,7 +28,7 @@ export default function TeamMemberCard({
 
               <div className="member-rank">
 
-                {members.rank === "leader"
+                {member.rank === "leader"
                   ? "👑 Leader"
                   : "👤 Member"
                 }
@@ -59,7 +59,7 @@ export default function TeamMemberCard({
       </div>
 
       <div className="member-price-value">
-        {(members?.[service.key] ?? 0).toLocaleString()} so'm
+        {(member?.[service.key] ?? 0).toLocaleString()} so'm
       </div>
 
     </div>
