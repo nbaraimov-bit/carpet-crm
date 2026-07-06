@@ -51,44 +51,42 @@ export default function TeamLeaderPanel({
 
   const approveJoinRequest = async (request) => {
 
-  try {
+    try {
 
-    await updateDoc(
+      await updateDoc(
 
-      doc(db, "teams", team.id),
+        doc(db, "teams", team.id),
 
-      {
+        {
 
-        [`members.${request.sender}`]: {
+          [`members.${request.sender}`]: {
 
-          name: request.name,
-          phone: request.sender,
-          rank: "member",
+            name: request.name,
+            phone: request.sender,
+            rank: "member",
+            carpet: 0,
+            blanket: 0,
+            yakandoz: 0,
+            curtain: 0,
+            working: true,
 
-          carpet: 0,
-          blanket: 0,
-          yakandoz: 0,
-          curtain: 0,
+          },
 
-          working: true,
+        }
 
-        },
+      );
 
-      }
+      await deleteDoc(
+        doc(db, "joinRequests", request.id)
+      );
 
-    );
+    } catch (err) {
 
-    await deleteDoc(
-      doc(db, "joinRequests", request.id)
-    );
+      console.error(err);
 
-  } catch (err) {
+    }
 
-    console.error(err);
-
-  }
-
-};
+  };
 
   return (
     <>
@@ -131,7 +129,9 @@ export default function TeamLeaderPanel({
                 ❌ Rad etish
               </button>
 
-              <button className="approve-button">
+              <button className="approve-button"
+                onClick={() => approveJoinRequest(request)}
+              >
                 ✅ Tasdiqlash
               </button>
 
