@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { db } from "../../../firebase";
 import { teamTypeMap } from "../teamTypes";
 import {
+  doc,
+  updateDoc,
+  deleteDoc,
   collection,
   query,
   where,
@@ -45,6 +48,47 @@ export default function TeamLeaderPanel({
     return () => unsubscribe();
 
   }, [team]);
+
+  const approveJoinRequest = async (request) => {
+
+  try {
+
+    await updateDoc(
+
+      doc(db, "teams", team.id),
+
+      {
+
+        [`members.${request.sender}`]: {
+
+          name: request.name,
+          phone: request.sender,
+          rank: "member",
+
+          carpet: 0,
+          blanket: 0,
+          yakandoz: 0,
+          curtain: 0,
+
+          working: true,
+
+        },
+
+      }
+
+    );
+
+    await deleteDoc(
+      doc(db, "joinRequests", request.id)
+    );
+
+  } catch (err) {
+
+    console.error(err);
+
+  }
+
+};
 
   return (
     <>
