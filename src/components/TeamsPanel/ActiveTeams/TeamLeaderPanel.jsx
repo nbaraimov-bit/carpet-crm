@@ -97,6 +97,11 @@ console.log("request =", request);
 
       {mode === "joinRequests" && (<>
 
+        <div
+          style={{ background: "red" }}
+    onClick={() => alert("wrapper")}
+        >
+
         {joinRequests.map((request) => (
 
           <div
@@ -149,6 +154,8 @@ console.log("request =", request);
           </div>
 
         ))}
+
+        </div>
 
       </>)}
 
