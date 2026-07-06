@@ -51,6 +51,10 @@ export default function TeamLeaderPanel({
 
   const approveJoinRequest = async (request) => {
 
+    console.log("Approve bosildi", request);
+    console.log("team.id =", team.id);
+console.log("request =", request);
+
     try {
 
       await updateDoc(
