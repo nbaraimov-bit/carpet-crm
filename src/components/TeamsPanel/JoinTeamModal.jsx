@@ -19,31 +19,6 @@ export default function JoinTeamModal({
 
   const [teams, setTeams] = useState([])
 
-  useEffect(() => {
-
-    const unsubscribe = onSnapshot(
-
-      collection(db, "t eams"),
-
-      (snapshot) => {
-
-        const list = snapshot.docs.map(doc => ({
-
-          id: doc.id,
-          ...doc.data(),
-
-        }))
-
-        setTeams(list)
-
-      }
-
-    )
-
-    return () => unsubscribe()
-
-  }, [])
-
   function handleCloseJoinModal() {
 
     setShowJoinTeam(false)
@@ -81,6 +56,31 @@ export default function JoinTeamModal({
   }
 
 }
+
+useEffect(() => {
+
+    const unsubscribe = onSnapshot(
+
+      collection(db, "t eams"),
+
+      (snapshot) => {
+
+        const list = snapshot.docs.map(doc => ({
+
+          id: doc.id,
+          ...doc.data(),
+
+        }))
+
+        setTeams(list)
+
+      }
+
+    )
+
+    return () => unsubscribe()
+
+  }, [])
 
   return (
 
