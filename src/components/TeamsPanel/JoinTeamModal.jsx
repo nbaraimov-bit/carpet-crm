@@ -8,7 +8,6 @@ import {
   onSnapshot,
   serverTimestamp,
 } from "firebase/firestore"
-import { type } from "firebase/firestore/pipelines"
 
 export default function JoinTeamModal({
 
@@ -61,7 +60,7 @@ useEffect(() => {
 
     const unsubscribe = onSnapshot(
 
-      collection(db, "t eams"),
+      collection(db, "teams"),
 
       (snapshot) => {
 
