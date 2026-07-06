@@ -1,4 +1,4 @@
-import TeamAdminPanel from "./TeamAdminPanel";
+import TeamLeaderPanel from "./TeamLeaderPanel";
 import teamTypes, { teamTypeMap } from "../teamTypes";
 import { useState, useEffect } from "react"
 import "./ActiveTeams.css"
