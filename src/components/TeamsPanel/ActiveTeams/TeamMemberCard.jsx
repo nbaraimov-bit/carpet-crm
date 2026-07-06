@@ -4,6 +4,8 @@ export default function TeamMemberCard({
   team,
 }) {
 
+  const services = teamTypeMap[team.type]?.services || [];
+
   return(<>
 
     {team.type === "washer" &&(
@@ -33,29 +35,36 @@ export default function TeamMemberCard({
 
             </div>
 
-            {/*<div className={`member-status ${member.working ? "true" : "false"}`}>
+            <div className="member-status">
 
-              {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
+              🟢 Faol
 
-            </div>*/}
-
-          </div>
-
-          <div className="member-prices">
-
-            <div>🧼 Gilam</div>
-            <div>0 so'm</div>
-
-            <div>🛏️ Adyol</div>
-            <div>0 so'm</div>
-
-            <div>🧵 Yakandoz</div>
-            <div>0 so'm</div>
-
-            <div>🪟 Parda</div>
-            <div>0 so'm</div>
+            </div>
 
           </div>
+
+          <div className="member-price-grid">
+
+  {services.map((service) => (
+
+    <div
+      key={service.key}
+      className="member-price-box"
+    >
+
+      <div className="member-price-title">
+        {service.icon} {service.title}
+      </div>
+
+      <div className="member-price-value">
+        {(member?.[service.key] ?? 0).toLocaleString()} so'm
+      </div>
+
+    </div>
+
+  ))}
+
+</div>
 
           <div className="member-salary"> 
 
