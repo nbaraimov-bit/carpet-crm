@@ -20,6 +20,15 @@ export default function TeamLeaderPanel({
 }) {
 
   const [joinRequests, setJoinRequests] = useState([]);
+  const [memberPrices, setMemberPrices] = useState({});
+
+  useEffect(() => {
+  if (!team?.members) return;
+
+  setMemberPrices(
+    JSON.parse(JSON.stringify(team.members))
+  );
+}, [team]);
 
   useEffect(() => {
 
@@ -49,6 +58,16 @@ export default function TeamLeaderPanel({
     return () => unsubscribe();
 
   }, [team]);
+
+  const updateMemberPrice = (phone, field, value) => {
+  setMemberPrices(prev => ({
+    ...prev,
+    [phone]: {
+      ...prev[phone],
+      [field]: Number(value) || 0,
+    },
+  }));
+};
 
   const approveJoinRequest = async (request) => {
 
@@ -91,29 +110,27 @@ export default function TeamLeaderPanel({
 
   const rejectJoinRequest = async (request) => {
 
-  try {
+    try {
 
-    await updateDoc(
+      await updateDoc(
 
-      doc(db, "joinRequests", request.id),
+        doc(db, "joinRequests", request.id),
 
-      {
+        {
+          status: "rejected",
+          rejectedBy: currentWorker.phone,
+          rejectedAt: serverTimestamp(),
+        }
 
-        status: "rejected",
-        rejectedBy: currentWorker.phone,
-        rejectedAt: serverTimestamp(),
+      );
 
-      }
+    } catch (err) {
 
-    );
+      console.error(err);
 
-  } catch (err) {
+    }
 
-    console.error(err);
-
-  }
-
-};
+  };
 
   return (
     <>
@@ -205,7 +222,12 @@ export default function TeamLeaderPanel({
             <div>
               <input
                 className="member-price-input"
-                placeholder="0"
+                value={memberPrices[member.phone]?.carpet ?? 0}
+                onChange={(e) => updateMemberPrice(
+                  member.phone,
+                  "carpet",
+                  e.target.value
+                )}
               />
             </div>
 
@@ -213,7 +235,12 @@ export default function TeamLeaderPanel({
             <div>
               <input
                 className="member-price-input"
-                placeholder="0"
+                value={memberPrices[member.phone]?.blanket ?? 0}
+                onChange={(e) => updateMemberPrice(
+                  member.phone,
+                  "blanket",
+                  e.target.value
+                )}   
               />
             </div>
 
@@ -221,16 +248,28 @@ export default function TeamLeaderPanel({
             <div>
               <input
                 className="member-price-input"
-                placeholder="0"
+                value={memberPrices[member.phone]?.yakandoz ?? 0}
+                onChange={(e) => updateMemberPrice(
+                  member.phone,
+                  "yakandoz",
+                  e.target.value
+                )}
               />
             </div>
 
             <div>🪟 Parda</div>
             <div>
               <input
-                className="member-price-input"
-                placeholder="0"
-              />
+  className="member-price-input"
+  value={memberPrices[member.phone]?.curtain ?? 0}
+  onChange={(e) =>
+    updateMemberPrice(
+      member.phone,
+      "curtain",
+      e.target.value
+    )
+  }
+/>
             </div>
 
           </div>
