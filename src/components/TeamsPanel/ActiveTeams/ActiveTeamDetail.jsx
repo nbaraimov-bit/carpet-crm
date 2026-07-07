@@ -22,6 +22,7 @@ export default function ActiveTeamDetail({
     team,
     currentWorker,
     closeTeam,
+    openTeam,
     allowedRoles,
     role,
 
@@ -46,33 +47,27 @@ export default function ActiveTeamDetail({
 
   useEffect(() => {
 
-  const today = new Date()
-    .toISOString()
-    .slice(0, 10);
+    const today = new Date() .toISOString() .slice(0, 10);
 
-  const unsubscribe = onSnapshot(
+    const unsubscribe = onSnapshot(
 
-    doc(db, "workerEarnings", today),
+      doc(db, "workerEarnings", today),
 
-    (snapshot) => {
+      (snapshot) => {
 
-      if (snapshot.exists()) {
-
-        setEarnings(snapshot.data());
-
-      } else {
-
-        setEarnings({});
+        if (snapshot.exists()) {
+          setEarnings(snapshot.data());
+        } else {
+          setEarnings({});
+        }
 
       }
 
-    }
+    );
 
-  );
+    return () => unsubscribe();
 
-  return () => unsubscribe();
-
-}, []);
+  }, []);
 
   return (
 
@@ -102,11 +97,16 @@ export default function ActiveTeamDetail({
       />}
 
       {isLeader ? (
-        <TeamLeaderPanel
-          mode={"memberPrices"}
-          team={team}
-          currentWorker={currentWorker}
-        />
+
+        members.map((member) => (
+          <TeamLeaderPanel
+            mode={"memberPrices"}
+            team={team}
+            currentWorker={currentWorker}
+            member={member}
+          />
+        ))
+
       ) : (
         
         members.map((member) => (

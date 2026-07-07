@@ -17,6 +17,7 @@ export default function TeamLeaderPanel({
   team,
   currentWorker,
   mode,
+  member,
 }) {
 
   const [joinRequests, setJoinRequests] = useState([]);
@@ -260,16 +261,14 @@ export default function TeamLeaderPanel({
             <div>🪟 Parda</div>
             <div>
               <input
-  className="member-price-input"
-  value={memberPrices[member.phone]?.curtain ?? 0}
-  onChange={(e) =>
-    updateMemberPrice(
-      member.phone,
-      "curtain",
-      e.target.value
-    )
-  }
-/>
+                className="member-price-input"
+                value={memberPrices[member.phone]?.curtain ?? 0}
+                onChange={(e) => updateMemberPrice(
+                  member.phone,
+                  "curtain",
+                  e.target.value
+                )}
+              />
             </div>
 
           </div>
