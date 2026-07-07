@@ -71,12 +71,7 @@ export default function TeamMemberCard({
 
             💰 Bugungi ish haqi
 
-            <b>
-
-  {(earnings?.[member.phone]?.salary ?? 0)
-    .toLocaleString()} so'm
-
-</b>
+            <b>{(earnings?.[member.phone]?.salary ?? 0) .toLocaleString()} so'm </b>
 
           </div>
 
