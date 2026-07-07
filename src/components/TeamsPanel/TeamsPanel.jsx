@@ -56,20 +56,6 @@ export default function TeamsPanel({
 
   useEffect(() => {
 
-  if (!selectedTeam) return;
-
-  const updatedTeam = teams.find(
-    t => t.id === selectedTeam.id
-  );
-
-  if (updatedTeam) {
-    setSelectedTeam(updatedTeam);
-  }
-
-}, [teams]);
-
-  useEffect(() => {
-
     let q 
 
     if (isAdmin) {
