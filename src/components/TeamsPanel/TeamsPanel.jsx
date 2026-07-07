@@ -46,13 +46,27 @@ export default function TeamsPanel({
   const hasTeam = myTeams.length > 0;
 
   const openTeam = (team) => {
-    setSelectedTeam(team.id);
+    setSelectedTeam(team);
     setTeamMode("detail");
   }
   const closeTeam = () => {
     setSelectedTeam(null);
     setTeamMode("list");
   }
+
+  useEffect(() => {
+
+  if (!selectedTeam) return;
+
+  const updatedTeam = teams.find(
+    t => t.id === selectedTeam.id
+  );
+
+  if (updatedTeam) {
+    setSelectedTeam(updatedTeam);
+  }
+
+}, [teams]);
 
   useEffect(() => {
 
