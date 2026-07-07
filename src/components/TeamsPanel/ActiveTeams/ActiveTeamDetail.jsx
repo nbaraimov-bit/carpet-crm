@@ -27,16 +27,52 @@ export default function ActiveTeamDetail({
 
 }) {
 
+  const [earnings, setEarnings] = useState({});
+
   const workingCount = Object.values(team.members || {})
   .filter(member => member.working)
   .length;
   const teamType = teamTypeMap[team.type];
-  const members = Object.values(team.members || {});
+  const members = Object.values(team.members || {}).sort((a, b) => {
+    if (a.rank === "leader") return -1;
+    if (b.rank === "leader") return 1;
+    return 0;
+  });
   const teamMember = team.members?.[currentWorker.phone];
   const activeMembers = members.filter(member => member.working);
   const isLeader = teamMember?.rank === "leader";
   const isMember = teamMember?.rank === "member";
   const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega");
+
+  useEffect(() => {
+
+  const today = new Date()
+    .toISOString()
+    .slice(0, 10);
+
+  const unsubscribe = onSnapshot(
+
+    doc(db, "workerEarnings", today),
+
+    (snapshot) => {
+
+      if (snapshot.exists()) {
+
+        setEarnings(snapshot.data());
+
+      } else {
+
+        setEarnings({});
+
+      }
+
+    }
+
+  );
+
+  return () => unsubscribe();
+
+}, []);
 
   return (
 
@@ -79,6 +115,7 @@ export default function ActiveTeamDetail({
             team={team}
             member={member}
             currentWorker={currentWorker}
+            earnings={earnings}
           />
         ))
 
