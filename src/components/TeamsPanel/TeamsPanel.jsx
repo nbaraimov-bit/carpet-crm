@@ -46,11 +46,11 @@ export default function TeamsPanel({
   const hasTeam = myTeams.length > 0;
 
   const openTeam = (team) => {
-    setSelectedTeamId(team.id);
+    setSelectedTeam(team.id);
     setTeamMode("detail");
   }
   const closeTeam = () => {
-    setSelectedTeamId(null);
+    setSelectedTeam(null);
     setTeamMode("list");
   }
 
