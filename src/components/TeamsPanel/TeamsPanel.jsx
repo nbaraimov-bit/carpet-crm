@@ -34,7 +34,7 @@ export default function TeamsPanel({
   const [showCreateTeam, setShowCreateTeam] = useState(false)
   const [pendingTeams, setPendingTeams] = useState([])
   const [teamMode, setTeamMode] = useState("list");
-  const [selectedTeamId, setSelectedTeamId] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState(null);
   const [showJoinTeam, setShowJoinTeam] = useState(false);
   const [pendingJoinTeams, setPendingJoinTeams] = useState([]);
 
@@ -252,7 +252,7 @@ export default function TeamsPanel({
     {teamMode === "detail" && (
 
       <ActiveTeamDetail
-        team={selectedTeamId}
+        team={selectedTeam}
         currentWorker={currentWorker}
         closeTeam={closeTeam}
         allowedRoles={allowedRoles}
