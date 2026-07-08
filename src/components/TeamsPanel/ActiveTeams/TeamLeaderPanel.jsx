@@ -120,16 +120,6 @@ export default function TeamLeaderPanel({
 
   };
 
-  
-
-console.log({
-  carpet: isCarpetValid,
-  blanket: isBlanketValid,
-  yakandoz: isYakandozValid,
-  curtain: isCurtainValid,
-  canSave,
-});
-
   return (
     <>
 
