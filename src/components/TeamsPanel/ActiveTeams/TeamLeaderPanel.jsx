@@ -57,16 +57,6 @@ export default function TeamLeaderPanel({
 
   }, [team]);
 
-  const updateMemberPrice = (phone, field, value) => {
-  setMemberPrices(prev => ({
-    ...prev,
-    [phone]: {
-      ...prev[phone],
-      [field]: Number(value) || 0,
-    },
-  }));
-};
-
   const approveJoinRequest = async (request) => {
 
     try {

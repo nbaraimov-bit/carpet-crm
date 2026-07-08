@@ -116,45 +116,45 @@ export default function ActiveTeamDetail({
 
   const calculateLimits = () => {
 
-  const workingMembers = Object.values(memberPrices) .filter(member => member.working);
+    const workingMembers = Object.values(memberPrices) .filter(member => member.working);
 
-  return {
+    return {
 
-    carpet: {
-      total: workingMembers.reduce(
-        (sum, member) => sum + (member.carpet || 0),
-        0
-      ),
-      limit: washerPrices?.carpet ?? 0,
-    },
+      carpet: {
+        total: workingMembers.reduce(
+          (sum, member) => sum + (member.carpet || 0),
+          0
+        ),
+        limit: washerPrices?.carpet ?? 0,
+      },
 
-    blanket: {
-      total: workingMembers.reduce(
-        (sum, member) => sum + (member.blanket || 0),
-        0
-      ),
-      limit: washerPrices?.blanket ?? 0,
-    },
+      blanket: {
+        total: workingMembers.reduce(
+          (sum, member) => sum + (member.blanket || 0),
+          0
+        ),
+        limit: washerPrices?.blanket ?? 0,
+      },
 
-    yakandoz: {
-      total: workingMembers.reduce(
-        (sum, member) => sum + (member.yakandoz || 0),
-        0
-      ),
-      limit: washerPrices?.yakandoz ?? 0,
-    },
+      yakandoz: {
+        total: workingMembers.reduce(
+          (sum, member) => sum + (member.yakandoz || 0),
+          0
+        ),
+        limit: washerPrices?.yakandoz ?? 0,
+      },
 
-    curtain: {
-      total: workingMembers.reduce(
-        (sum, member) => sum + (member.curtain || 0),
-        0
-      ),
-      limit: washerPrices?.curtain ?? 0,
-    },
+      curtain: {
+        total: workingMembers.reduce(
+          (sum, member) => sum + (member.curtain || 0),
+          0
+        ),
+        limit: washerPrices?.curtain ?? 0,
+      },
+
+    };
 
   };
-
-};
 
 const limits = calculateLimits();
 
@@ -242,41 +242,41 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
 
       {showSaveModal && (
 
-  <div className="save-modal">
+        <div className="save-modal">
 
-    <div>
-      canSave: {canSave ? "✅" : "❌"}
-    </div>
+          <div>
+            canSave: {canSave ? "✅" : "❌"}
+          </div>
 
-    <div>
-      🧼 Gilam:
-      {limits.carpet.total} / {limits.carpet.limit}
-    </div>
+          <div>
+            🧼 Gilam:
+            {limits.carpet.total} / {limits.carpet.limit}
+          </div>
 
-    <div>
-      🛏 Adyol:
-      {limits.blanket.total} / {limits.blanket.limit}
-    </div>
+          <div>
+            🛏 Adyol:
+            {limits.blanket.total} / {limits.blanket.limit}
+          </div>
 
-    <div>
-      🧵 Yakandoz:
-      {limits.yakandoz.total} / {limits.yakandoz.limit}
-    </div>
+          <div>
+            🧵 Yakandoz:
+            {limits.yakandoz.total} / {limits.yakandoz.limit}
+          </div>
 
-    <div>
-      🪟 Parda:
-      {limits.curtain.total} / {limits.curtain.limit}
-    </div>
+          <div>
+            🪟 Parda:
+            {limits.curtain.total} / {limits.curtain.limit}
+          </div>
 
-    <button
-      onClick={() => setShowSaveModal(false)}
-    >
-      Bekor qilish
-    </button>
+          <button
+            onClick={() => setShowSaveModal(false)}
+          >
+            Bekor qilish
+          </button>
 
-  </div>
+        </div>
 
-)}
+      )}
 
     </div>
 
