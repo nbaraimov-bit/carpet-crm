@@ -10,8 +10,8 @@ export default function EgaPanel({
   driverPrices,
   setDriverPrices,
 
-  tayyorlovchiPrices,
-  setTayyorlovchiPrices,
+  packingPrices,
+  setPackingPrices,
 
 }) 
 
@@ -48,12 +48,12 @@ export default function EgaPanel({
     );
 
     await updateDoc(
-      doc(db, "settings", "tayyorlovchiPrices"),
+      doc(db, "settings", "packingPrices"),
       {
-        carpet: Number(tayyorlovchiPrices.carpet),
-        blanket: Number(tayyorlovchiPrices.blanket),
-        yakandoz: Number(tayyorlovchiPrices.yakandoz),
-        curtain: Number(tayyorlovchiPrices.curtain),
+        carpet: Number(packingPrices.carpet),
+        blanket: Number(packingPrices.blanket),
+        yakandoz: Number(packingPrices.yakandoz),
+        curtain: Number(packingPrices.curtain),
       }
     );
 
@@ -229,40 +229,40 @@ export default function EgaPanel({
 
           <p>Gilam</p>
             <input
-              value={tayyorlovchiPrices.carpet || ""}
+              value={packingPricesPrices.carpet || ""}
               onChange={(e) =>
-                setTayyorlovchiPrices({
-                  ...tayyorlovchiPrices, carpet: e.target.value,
+                setPackingPrices({
+                  ...packingPrices, carpet: e.target.value,
                 })
               }
             />
 
             <p>Adyol</p>
             <input
-              value={tayyorlovchiPrices.blanket || ""}
+              value={packingPrices.blanket || ""}
               onChange={(e) =>
-                setTayyorlovchiPrices({
-                  ...tayyorlovchiPrices, blanket: e.target.value,
+                setPackingPrices({
+                  ...packingPrices, blanket: e.target.value,
                 })
               }
             />
 
             <p>Yakandoz</p>
             <input
-              value={tayyorlovchiPrices.yakandoz || ""}
+              value={packingPrices.yakandoz || ""}
               onChange={(e) =>
-                setTayyorlovchiPrices({
-                  ...tayyorlovchiPrices, yakandoz: e.target.value,
+                setPackingPrices({
+                  ...packingPrices, yakandoz: e.target.value,
                 })
               }
             />
 
            <p>Parda</p>
            <input
-              value={tayyorlovchiPrices.curtain || ""}
+              value={packingPrices.curtain || ""}
               onChange={(e) =>
-                setTayyorlovchiPrices({
-                  ...tayyorlovchiPrices, curtain: e.target.value,
+                setPackingPrices({
+                  ...packingPrices, curtain: e.target.value,
                 })
               }
             />

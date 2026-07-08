@@ -70,7 +70,7 @@ function App() {
   const [editComment, setEditComment] = useState("")
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [driverPrices, setDriverPrices] = useState({})
-  const [tayyorlovchiPrices, setTayyorlovchiPrices] = useState({})
+  const [packingPrices, setPackingPrices] = useState({})
   const [tarif, setTarif] = useState("standart")
   const [driverComment, setDriverComment] = useState("")
   const [showArchive, setShowArchive] = useState(false)
@@ -411,7 +411,7 @@ function App() {
       worker.primaryRole ===
       "tayyorlovchi"
     ) {
-      return tayyorlovchiPrices.hour || 0
+      return packingPrices.hour || 0
     }
  
     return 0
@@ -748,10 +748,10 @@ function App() {
       doc(
         db,
         "settings",
-        "tayyorlovchiPrices"
+        "packingPrices"
       ),
 
-      (snapshot) => {setTayyorlovchiPrices(snapshot.data() || {})}
+      (snapshot) => {setPackingPrices(snapshot.data() || {})}
 
     )
 
@@ -2034,8 +2034,8 @@ await setDoc(
         driverPrices={driverPrices}
         setDriverPrices={setDriverPrices}
 
-        tayyorlovchiPrices={tayyorlovchiPrices}
-        setTayyorlovchiPrices={setTayyorlovchiPrices}
+        packingPrices={packingPrices}
+        setPackingPrices={setPackingPrices}
 
       />
 

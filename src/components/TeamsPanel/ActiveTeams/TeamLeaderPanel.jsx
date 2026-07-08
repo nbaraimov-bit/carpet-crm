@@ -18,6 +18,7 @@ export default function TeamLeaderPanel({
   currentWorker,
   mode,
   member,
+  washerPrices,
 }) {
 
   const [joinRequests, setJoinRequests] = useState([]);
@@ -132,6 +133,54 @@ export default function TeamLeaderPanel({
     }
 
   };
+
+  const calculateLimits = () => {
+
+  const workingMembers = Object.values(memberPrices)
+    .filter(member => member.working);
+
+  return {
+
+    carpet: {
+      total: workingMembers.reduce(
+        (sum, member) => sum + (member.carpet || 0),
+        0
+      ),
+      limit: washerPrices?.carpet ?? 0,
+    },
+
+    blanket: {
+      total: workingMembers.reduce(
+        (sum, member) => sum + (member.blanket || 0),
+        0
+      ),
+      limit: washerPrices?.blanket ?? 0,
+    },
+
+    yakandoz: {
+      total: workingMembers.reduce(
+        (sum, member) => sum + (member.yakandoz || 0),
+        0
+      ),
+      limit: washerPrices?.yakandoz ?? 0,
+    },
+
+    curtain: {
+      total: workingMembers.reduce(
+        (sum, member) => sum + (member.curtain || 0),
+        0
+      ),
+      limit: washerPrices?.curtain ?? 0,
+    },
+
+  };
+
+};
+
+const limits = calculateLimits();
+
+console.log(limits);
+console.log(washerPrices);
 
   return (
     <>

@@ -29,6 +29,7 @@ export default function ActiveTeamDetail({
 }) {
 
   const [earnings, setEarnings] = useState({});
+  const [washerPrices, setWasherPrices] = useState(null);
 
   const workingCount = Object.values(team.members || {})
   .filter(member => member.working)
@@ -44,6 +45,26 @@ export default function ActiveTeamDetail({
   const isLeader = teamMember?.rank === "leader";
   const isMember = teamMember?.rank === "member";
   const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega");
+
+  useEffect(() => {
+
+  const unsubscribe = onSnapshot(
+
+    doc(db, "settings", "washerPrices"),
+
+    (snapshot) => {
+
+      if (snapshot.exists()) {
+        setWasherPrices(snapshot.data());
+      }
+
+    }
+
+  );
+
+  return unsubscribe;
+
+}, []);
 
   useEffect(() => {
 
@@ -104,6 +125,7 @@ export default function ActiveTeamDetail({
             team={team}
             currentWorker={currentWorker}
             member={member}
+            washerPrices={washerPrices}
           />
         ))
 
