@@ -179,7 +179,7 @@ export default function TeamLeaderPanel({
 
 const limits = calculateLimits();
 
-console.log(limits);
+console.log(limits.carpet);
 console.log(washerPrices);
 
   return (
