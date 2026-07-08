@@ -19,6 +19,8 @@ export default function TeamLeaderPanel({
   mode,
   member,
   washerPrices,
+  memberPrices,
+  setMemberPrices,
 }) {
 
   const [joinRequests, setJoinRequests] = useState([]);

@@ -135,6 +135,8 @@ export default function ActiveTeamDetail({
             currentWorker={currentWorker}
             member={member}
             washerPrices={washerPrices}
+            memberPrices={memberPrices}
+            setMemberPrices={setMemberPrices}
           />
         ))
 
