@@ -202,17 +202,17 @@ export default function TeamLeaderPanel({
             <div>
 
               <div className="member-name">
-                👤 Ali
+                👤 {member.name}
               </div>
 
               <div className="member-rank">
-                👤 Member
+                {member.rank === "leader" ? "👑 Leader" : "👤 Member"}
               </div>
 
             </div>
 
-            <div className="member-status active">
-              🟢 Faol
+            <div className={`member-status ${member.working ? "active" : ""}`}>
+              {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
             </div>
 
           </div>

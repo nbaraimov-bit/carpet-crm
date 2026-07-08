@@ -24,21 +24,19 @@ export default function TeamMemberCard({
             <div>
 
               <div className="member-name">
-                👤 namuna
+                👤 {member.name}
               </div>
 
               <div className="member-rank">
-
                 {member.rank === "leader"
                   ? "👑 Leader"
                   : "👤 Member"
                 }
-
               </div>
 
             </div>
 
-            <div className="member-status">
+            <div className={`member-status ${member.working ? "active" : ""}`}>
               {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
             </div>
 
