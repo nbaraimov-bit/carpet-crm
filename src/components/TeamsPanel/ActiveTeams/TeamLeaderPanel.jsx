@@ -179,8 +179,19 @@ export default function TeamLeaderPanel({
 
 const limits = calculateLimits();
 
-console.log(limits.carpet);
-console.log(washerPrices);
+const isCarpetValid = limits.carpet.total === limits.carpet.limit;
+const isBlanketValid = limits.blanket.total === limits.blanket.limit;
+const isYakandozValid = limits.yakandoz.total === limits.yakandoz.limit;
+const isCurtainValid = limits.curtain.total === limits.curtain.limit;
+const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainValid;
+
+console.log({
+  carpet: isCarpetValid,
+  blanket: isBlanketValid,
+  yakandoz: isYakandozValid,
+  curtain: isCurtainValid,
+  canSave,
+});
 
   return (
     <>
@@ -266,7 +277,7 @@ console.log(washerPrices);
 
           </div>
 
-          <div className="member-prices">
+          <div className="member-prices-grid">
 
             <div>🧼 Gilam</div>
             <div>
