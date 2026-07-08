@@ -30,6 +30,7 @@ export default function ActiveTeamDetail({
 
   const [earnings, setEarnings] = useState({});
   const [washerPrices, setWasherPrices] = useState(null);
+  const [memberPrices, setMemberPrices] = useState({});
 
   const workingCount = Object.values(team.members || {})
   .filter(member => member.working)
@@ -45,6 +46,14 @@ export default function ActiveTeamDetail({
   const isLeader = teamMember?.rank === "leader";
   const isMember = teamMember?.rank === "member";
   const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega");
+
+  useEffect(() => {
+  if (!team?.members) return;
+
+  setMemberPrices(
+    JSON.parse(JSON.stringify(team.members))
+  );
+}, [team]);
 
   useEffect(() => {
 

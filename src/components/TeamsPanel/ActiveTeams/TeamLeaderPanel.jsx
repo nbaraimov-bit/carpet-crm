@@ -22,15 +22,6 @@ export default function TeamLeaderPanel({
 }) {
 
   const [joinRequests, setJoinRequests] = useState([]);
-  const [memberPrices, setMemberPrices] = useState({});
-
-  useEffect(() => {
-  if (!team?.members) return;
-
-  setMemberPrices(
-    JSON.parse(JSON.stringify(team.members))
-  );
-}, [team]);
 
   useEffect(() => {
 
