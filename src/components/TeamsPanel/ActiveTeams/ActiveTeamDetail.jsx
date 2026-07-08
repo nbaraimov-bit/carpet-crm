@@ -55,6 +55,8 @@ export default function ActiveTeamDetail({
   );
 }, [team]);
 
+  console.log(memberPrices);
+
   useEffect(() => {
 
   const unsubscribe = onSnapshot(
