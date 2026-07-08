@@ -21,9 +21,10 @@ export default function TeamLeaderPanel({
   washerPrices,
   memberPrices,
   setMemberPrices,
+  updateMemberPrice,
+  limits,
+  canSave,
 }) {
-
-  console.log(memberPrices);
 
   const [joinRequests, setJoinRequests] = useState([]);
 
@@ -129,56 +130,7 @@ export default function TeamLeaderPanel({
 
   };
 
-  const calculateLimits = () => {
-
-  const workingMembers = Object.values(memberPrices)
-    .filter(member => member.working);
-
-  return {
-
-    carpet: {
-      total: workingMembers.reduce(
-        (sum, member) => sum + (member.carpet || 0),
-        0
-      ),
-      limit: washerPrices?.carpet ?? 0,
-    },
-
-    blanket: {
-      total: workingMembers.reduce(
-        (sum, member) => sum + (member.blanket || 0),
-        0
-      ),
-      limit: washerPrices?.blanket ?? 0,
-    },
-
-    yakandoz: {
-      total: workingMembers.reduce(
-        (sum, member) => sum + (member.yakandoz || 0),
-        0
-      ),
-      limit: washerPrices?.yakandoz ?? 0,
-    },
-
-    curtain: {
-      total: workingMembers.reduce(
-        (sum, member) => sum + (member.curtain || 0),
-        0
-      ),
-      limit: washerPrices?.curtain ?? 0,
-    },
-
-  };
-
-};
-
-const limits = calculateLimits();
-
-const isCarpetValid = limits.carpet.total === limits.carpet.limit;
-const isBlanketValid = limits.blanket.total === limits.blanket.limit;
-const isYakandozValid = limits.yakandoz.total === limits.yakandoz.limit;
-const isCurtainValid = limits.curtain.total === limits.curtain.limit;
-const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainValid;
+  
 
 console.log({
   carpet: isCarpetValid,
