@@ -55,8 +55,6 @@ export default function ActiveTeamDetail({
   );
 }, [team]);
 
-  console.log(memberPrices);
-
   useEffect(() => {
 
   const unsubscribe = onSnapshot(
@@ -124,6 +122,8 @@ export default function ActiveTeamDetail({
         mode="joinRequests"
         team={team}
         currentWorker={currentWorker}
+        memberPrices={memberPrices}
+        setMemberPrices={setMemberPrices}
 
 
       />}
