@@ -31,6 +31,7 @@ export default function ActiveTeamDetail({
   const [earnings, setEarnings] = useState({});
   const [washerPrices, setWasherPrices] = useState(null);
   const [memberPrices, setMemberPrices] = useState({});
+  const [showSaveModal, setShowSaveModal] = useState(false);
 
   const workingCount = Object.values(team.members || {})
   .filter(member => member.working)
@@ -48,32 +49,32 @@ export default function ActiveTeamDetail({
   const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega");
 
   useEffect(() => {
-  if (!team?.members) return;
+    if (!team?.members) return;
 
-  setMemberPrices(
-    JSON.parse(JSON.stringify(team.members))
-  );
-}, [team]);
+    setMemberPrices(
+      JSON.parse(JSON.stringify(team.members))
+    );
+  }, [team]);
 
   useEffect(() => {
 
-  const unsubscribe = onSnapshot(
+    const unsubscribe = onSnapshot(
 
-    doc(db, "settings", "washerPrices"),
+      doc(db, "settings", "washerPrices"),
 
-    (snapshot) => {
+      (snapshot) => {
 
-      if (snapshot.exists()) {
-        setWasherPrices(snapshot.data());
+        if (snapshot.exists()) {
+          setWasherPrices(snapshot.data());
+        }
+
       }
 
-    }
+    );
 
-  );
+    return unsubscribe;
 
-  return unsubscribe;
-
-}, []);
+  }, []);
 
   useEffect(() => {
 
@@ -98,6 +99,70 @@ export default function ActiveTeamDetail({
     return () => unsubscribe();
 
   }, []);
+
+  const updateMemberPrice = (phone, field, value) => {
+
+    setMemberPrices(prev => ({
+      ...prev,
+      [phone]: {
+        ...prev[phone],
+        [field]: Number(value) || 0,
+      },
+    }));
+
+    if (!showSaveModal) { setShowSaveModal(true); }
+
+  };
+
+  const calculateLimits = () => {
+
+  const workingMembers = Object.values(memberPrices) .filter(member => member.working);
+
+  return {
+
+    carpet: {
+      total: workingMembers.reduce(
+        (sum, member) => sum + (member.carpet || 0),
+        0
+      ),
+      limit: washerPrices?.carpet ?? 0,
+    },
+
+    blanket: {
+      total: workingMembers.reduce(
+        (sum, member) => sum + (member.blanket || 0),
+        0
+      ),
+      limit: washerPrices?.blanket ?? 0,
+    },
+
+    yakandoz: {
+      total: workingMembers.reduce(
+        (sum, member) => sum + (member.yakandoz || 0),
+        0
+      ),
+      limit: washerPrices?.yakandoz ?? 0,
+    },
+
+    curtain: {
+      total: workingMembers.reduce(
+        (sum, member) => sum + (member.curtain || 0),
+        0
+      ),
+      limit: washerPrices?.curtain ?? 0,
+    },
+
+  };
+
+};
+
+const limits = calculateLimits();
+
+const isCarpetValid = limits.carpet.total === limits.carpet.limit;
+const isBlanketValid = limits.blanket.total === limits.blanket.limit;
+const isYakandozValid = limits.yakandoz.total === limits.yakandoz.limit;
+const isCurtainValid = limits.curtain.total === limits.curtain.limit;
+const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainValid;
 
   return (
 
@@ -139,6 +204,9 @@ export default function ActiveTeamDetail({
             washerPrices={washerPrices}
             memberPrices={memberPrices}
             setMemberPrices={setMemberPrices}
+            updateMemberPrice={updateMemberPrice}
+            limits={limits}
+            canSave={canSave}
           />
         ))
 
@@ -171,6 +239,44 @@ export default function ActiveTeamDetail({
         </div>
 
       )}
+
+      {showSaveModal && (
+
+  <div className="save-modal">
+
+    <div>
+      canSave: {canSave ? "✅" : "❌"}
+    </div>
+
+    <div>
+      🧼 Gilam:
+      {limits.carpet.total} / {limits.carpet.limit}
+    </div>
+
+    <div>
+      🛏 Adyol:
+      {limits.blanket.total} / {limits.blanket.limit}
+    </div>
+
+    <div>
+      🧵 Yakandoz:
+      {limits.yakandoz.total} / {limits.yakandoz.limit}
+    </div>
+
+    <div>
+      🪟 Parda:
+      {limits.curtain.total} / {limits.curtain.limit}
+    </div>
+
+    <button
+      onClick={() => setShowSaveModal(false)}
+    >
+      Bekor qilish
+    </button>
+
+  </div>
+
+)}
 
     </div>
 
