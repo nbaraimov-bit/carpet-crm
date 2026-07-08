@@ -23,6 +23,8 @@ export default function TeamLeaderPanel({
   setMemberPrices,
 }) {
 
+  console.log(memberPrices);
+
   const [joinRequests, setJoinRequests] = useState([]);
 
   useEffect(() => {
