@@ -251,8 +251,10 @@ export default function TeamLeaderPanel({
               🚪 Chiqarib yuborish
             </button>
 
-            <button className="working-btn">
-              ⚪️ Nofaol
+            <button
+              className={`working-btn ${member.working ? "active" : "inactive"}`}
+            >
+              {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
             </button>
 
           </div>
