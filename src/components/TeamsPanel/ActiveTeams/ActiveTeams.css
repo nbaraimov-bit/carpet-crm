@@ -360,7 +360,7 @@
 .remove-member-btn{
     flex:1;
     height:48px;
-    border:none;
+    border: 1px solid #960000;
     border-radius:14px;
     background:#4a1f28;
     color:#ff6b6b;
@@ -390,6 +390,7 @@
 
 .working-btn.inactive{
     background:#3a3a3a;
+    border: 1px solid rgba(43, 43, 43, 0.35);
     color:#cfcfcf;
 }
 

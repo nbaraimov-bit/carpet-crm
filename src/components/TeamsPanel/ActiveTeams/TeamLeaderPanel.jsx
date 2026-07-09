@@ -248,7 +248,7 @@ export default function TeamLeaderPanel({
           <div className="member-actions">
 
             <button className="remove-member-btn">
-              🚪 Chiqarib yuborish
+              🪓 Chopish
             </button>
 
             <button
