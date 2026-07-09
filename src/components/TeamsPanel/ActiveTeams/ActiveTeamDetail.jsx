@@ -279,7 +279,7 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
         <div className="save-modal">
 
           <div className="save-modal-card">
-            
+
             <div className="save-limit-grid">
 
               {services.map((service) => {
@@ -312,18 +312,20 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
             </div>
           
 
-            <button
-              onClick={handleCancelChanges}
-            >
-              Bekor qilish
-            </button>
+            <div className="save-actions">
+              <button
+                onClick={handleCancelChanges}
+              >
+                Bekor qilish
+              </button>
 
-            <button
-              disabled={!canSave}
-              onClick={handleSaveChanges}
-            >
-              Saqlash
-            </button>
+              <button
+                disabled={!canSave}
+                onClick={handleSaveChanges}
+              >
+                Saqlash
+              </button>
+            </div>
 
           </div>
 
