@@ -114,6 +114,39 @@ export default function ActiveTeamDetail({
 
   };
 
+  const handleCancelChanges = () => {
+
+    setMemberPrices(
+      JSON.parse(JSON.stringify(team.members))
+    );
+
+    setShowSaveModal(false);
+
+  };
+
+  const handleSaveChanges = async () => {
+
+    if (!canSave) return;
+
+    try {
+
+      await updateDoc(
+
+        doc(db, "teams", team.id),
+        {members: memberPrices,}
+
+      );
+
+      setShowSaveModal(false);
+
+    } catch (err) {
+
+      console.error(err);
+
+    }
+
+  };
+
   const calculateLimits = () => {
 
     const workingMembers = Object.values(memberPrices) .filter(member => member.working);
@@ -269,9 +302,16 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
           </div>
 
           <button
-            onClick={() => setShowSaveModal(false)}
+            onClick={() => handleCancelChanges}
           >
             Bekor qilish
+          </button>
+
+          <button
+            disabled={!canSave}
+            onClick={handleSaveChanges}
+          >
+            Saqlash
           </button>
 
         </div>
