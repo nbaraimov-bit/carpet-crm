@@ -1,7 +1,7 @@
 import "./ActiveTeams.css"
 import { useEffect, useState } from "react";
 import { db } from "../../../firebase";
-import { teamTypeMap } from "../teamTypes";
+import teamTypes, { teamTypeMap } from "../teamTypes";
 import {
   doc,
   updateDoc,
@@ -27,6 +27,9 @@ export default function TeamLeaderPanel({
 }) {
 
   const [joinRequests, setJoinRequests] = useState([]);
+
+  const teamType = teamTypeMap[team.type];
+  const services = teamType?.services || [];
 
   useEffect(() => {
 
@@ -205,60 +208,26 @@ export default function TeamLeaderPanel({
           </div>
 
           <div className="member-prices-grid">
+  {services.map((service) => (
+    <div key={service.key}>
+      <div>
+        {service.icon} {service.title}
+      </div>
 
-            <div>🧼 Gilam</div>
-            <div>
-              <input
-                className="member-price-input"
-                value={memberPrices[member.phone]?.carpet ?? 0}
-                onChange={(e) => updateMemberPrice(
-                  member.phone,
-                  "carpet",
-                  e.target.value
-                )}
-              />
-            </div>
-
-            <div>🛏️ Adyol</div>
-            <div>
-              <input
-                className="member-price-input"
-                value={memberPrices[member.phone]?.blanket ?? 0}
-                onChange={(e) => updateMemberPrice(
-                  member.phone,
-                  "blanket",
-                  e.target.value
-                )}   
-              />
-            </div>
-
-            <div>🧵 Yakandoz</div>
-            <div>
-              <input
-                className="member-price-input"
-                value={memberPrices[member.phone]?.yakandoz ?? 0}
-                onChange={(e) => updateMemberPrice(
-                  member.phone,
-                  "yakandoz",
-                  e.target.value
-                )}
-              />
-            </div>
-
-            <div>🪟 Parda</div>
-            <div>
-              <input
-                className="member-price-input"
-                value={memberPrices[member.phone]?.curtain ?? 0}
-                onChange={(e) => updateMemberPrice(
-                  member.phone,
-                  "curtain",
-                  e.target.value
-                )}
-              />
-            </div>
-
-          </div>
+      <input
+        className="member-price-input"
+        value={memberPrices[member.phone]?.[service.key] ?? 0}
+        onChange={(e) =>
+          updateMemberPrice(
+            member.phone,
+            service.key,
+            e.target.value
+          )
+        }
+      />
+    </div>
+  ))}
+</div>
 
           <div className="member-salary">
 
