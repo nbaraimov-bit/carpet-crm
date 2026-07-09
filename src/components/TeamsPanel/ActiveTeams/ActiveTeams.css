@@ -382,12 +382,13 @@
     z-index: 9999;
     pointer-events: none;
     background: #000d3e;
+    border: 4px;
     border: #23003e;
     border-radius: 20px;
 }
 
 .save-modal-card{
-    width:360px;
+    width:400px;
     padding:14px;
     border-radius:16px;
     background:var(--card-color);
@@ -395,16 +396,16 @@
     pointer-events:auto;
 }
 
-.save-limit-grid{
+.save-limit-grid{ 
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns: repeat(4,1fr);
     gap:10px;
 }
 
 .save-limit-card{
     border:2px solid;
     border-radius:12px;
-    padding:10px;
+    padding:10px; 
 }
 
 .save-limit-card.success{
@@ -434,4 +435,31 @@
 
 .save-actions button{
     flex:1;
+}
+
+.save-actions button{
+    height:44px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:600;
+}
+
+.cancel-btn{
+    background:#c0392b;
+    color:white;
+}
+
+.cancel-btn:hover{
+    background:#e74c3c;
+}
+
+.save-btn{
+    background:#27ae60;
+    color:white;
+}
+
+.save-btn:disabled{
+    background:#555;
+    color:#bbb;
+    cursor:not-allowed;
 }
