@@ -208,26 +208,24 @@ export default function TeamLeaderPanel({
           </div>
 
           <div className="member-prices-grid">
-  {services.map((service) => (
-    <div key={service.key}>
-      <div>
-        {service.icon} {service.title}
-      </div>
+            {services.map((service) => (
+              <div key={service.key}>
+                <div>
+                  {service.icon} {service.title}
+                </div>
 
-      <input
-        className="member-price-input"
-        value={memberPrices[member.phone]?.[service.key] ?? 0}
-        onChange={(e) =>
-          updateMemberPrice(
-            member.phone,
-            service.key,
-            e.target.value
-          )
-        }
-      />
-    </div>
-  ))}
-</div>
+                <input
+                  className="member-price-input"
+                  value={memberPrices[member.phone]?.[service.key] ?? 0}
+                  onChange={(e) =>
+                    updateMemberPrice(
+                      member.phone, service.key, e.target.value
+                    )
+                  }
+                />
+              </div>
+            ))}
+          </div>
 
           <div className="member-salary">
 
