@@ -374,6 +374,24 @@
 
 
 /* ===== save modal ===== */
+.save-modal{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.save-modal-card{
+    width: min(92vw, 500px);
+    background: var(--card-color);
+    border-radius: 18px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+}
+
 .save-limit-grid{
     display:grid;
     grid-template-columns:1fr 1fr;

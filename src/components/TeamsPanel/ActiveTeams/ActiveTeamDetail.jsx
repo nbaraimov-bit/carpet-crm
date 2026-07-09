@@ -278,42 +278,38 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
 
         <div className="save-modal">
 
-          <div>
-            canSave: {canSave ? "✅" : "❌"}
+          <div className="save-modal-card">
+            <div className="save-limit-grid">
+
+              {services.map((service) => {
+
+                const item = limits[service.key];
+
+                return (
+    
+                  <div
+                    key={service.key}
+                    className={
+                      item.total === item.limit ? "save-limit-card success" : "save-limit-card error"
+                    }
+                  >
+
+                    <div className="save-limit-title">
+                      {service.icon} {service.title}
+                    </div>
+ 
+                    <div className="save-limit-value">
+                      {item.total} / {item.limit}
+                    </div>
+
+                  </div>
+
+                );
+
+              })}
+
+            </div>
           </div>
-
-          <div className="save-limit-grid">
-
-  {services.map((service) => {
-
-    const item = limits[service.key];
-
-    return (
-
-      <div
-        key={service.key}
-        className={
-          item.total === item.limit
-            ? "save-limit-card success"
-            : "save-limit-card error"
-        }
-      >
-
-        <div className="save-limit-title">
-          {service.icon} {service.title}
-        </div>
-
-        <div className="save-limit-value">
-          {item.total} / {item.limit}
-        </div>
-
-      </div>
-
-    );
-
-  })}
-
-</div>
 
           <button
             onClick={handleCancelChanges}
