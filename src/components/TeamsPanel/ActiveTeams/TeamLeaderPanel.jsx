@@ -216,7 +216,7 @@ export default function TeamLeaderPanel({
                 key={service.key}
               >
                
-                <div>
+                <div className="member-prices-title">
                   {service.icon} {service.title}
                 </div>
 
