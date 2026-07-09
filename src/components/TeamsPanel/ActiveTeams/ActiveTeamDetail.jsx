@@ -302,7 +302,7 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
           </div>
 
           <button
-            onClick={() => handleCancelChanges}
+            onClick={handleCancelChanges}
           >
             Bekor qilish
           </button>
