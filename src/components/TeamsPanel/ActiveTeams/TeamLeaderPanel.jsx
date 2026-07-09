@@ -32,6 +32,7 @@ export default function TeamLeaderPanel({
   const teamType = teamTypeMap[team.type];
   const services = teamType?.services || [];
 
+
   useEffect(() => {
 
     if (!team?.id) return;
@@ -60,6 +61,18 @@ export default function TeamLeaderPanel({
     return () => unsubscribe();
 
   }, [team]);
+
+
+  const toggleWorking = async () => {
+
+    const teamRef = doc(db, "teams", team.id);
+
+    await updateDoc(teamRef, {
+      [`members.${member.phone}.working`]: !member.working
+    });
+
+  };
+
 
   const approveJoinRequest = async (request) => {
 
@@ -99,6 +112,7 @@ export default function TeamLeaderPanel({
     }
 
   };
+
 
   const rejectJoinRequest = async (request) => {
 
@@ -253,6 +267,7 @@ export default function TeamLeaderPanel({
 
             <button
               className={`working-btn ${member.working ? "active" : "inactive"}`}
+              onClick={toggleWorking}
             >
               {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
             </button>
