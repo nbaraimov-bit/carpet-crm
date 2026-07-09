@@ -207,7 +207,7 @@ export default function TeamLeaderPanel({
 
           </div>
 
-          <div className="member-prices-grid">
+          <div className="member-price-grid">
 
             {services.map((service) => (
 
