@@ -376,7 +376,6 @@
 .working-btn{
     flex:1;
     height:48px;
-    border: 1px solid rgba(34,197,94,.35);
     border-radius:14px;
     font-weight:600;
     cursor:pointer;
@@ -385,6 +384,7 @@
 
 .working-btn.active{
     background:#14382c;
+    border: 1px solid rgba(34,197,94,.35);
     color:#38d977;
 }
 
