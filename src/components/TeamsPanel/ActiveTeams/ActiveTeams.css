@@ -371,3 +371,35 @@
     color: #c7c7c7;
     font-size: 14px;
 }
+
+
+/* ===== save modal ===== */
+.save-limit-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.save-limit-card{
+    border:2px solid;
+    border-radius:14px;
+    padding:14px;
+}
+
+.save-limit-card.success{
+    border-color:#2ecc71;
+}
+
+.save-limit-card.error{
+    border-color:#ff5b5b;
+}
+
+.save-limit-title{
+    font-weight:600;
+}
+
+.save-limit-value{
+    margin-top:10px;
+    font-size:22px;
+    font-weight:700;
+}

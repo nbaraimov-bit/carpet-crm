@@ -47,6 +47,7 @@ export default function ActiveTeamDetail({
   const isLeader = teamMember?.rank === "leader";
   const isMember = teamMember?.rank === "member";
   const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega");
+  const services = teamType?.services || [];
 
   useEffect(() => {
     if (!team?.members) return;
@@ -281,25 +282,38 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
             canSave: {canSave ? "✅" : "❌"}
           </div>
 
-          <div>
-            🧼 Gilam:
-            {limits.carpet.total} / {limits.carpet.limit}
-          </div>
+          <div className="save-limit-grid">
 
-          <div>
-            🛏 Adyol:
-            {limits.blanket.total} / {limits.blanket.limit}
-          </div>
+  {services.map((service) => {
 
-          <div>
-            🧵 Yakandoz:
-            {limits.yakandoz.total} / {limits.yakandoz.limit}
-          </div>
+    const item = limits[service.key];
 
-          <div>
-            🪟 Parda:
-            {limits.curtain.total} / {limits.curtain.limit}
-          </div>
+    return (
+
+      <div
+        key={service.key}
+        className={
+          item.total === item.limit
+            ? "save-limit-card success"
+            : "save-limit-card error"
+        }
+      >
+
+        <div className="save-limit-title">
+          {service.icon} {service.title}
+        </div>
+
+        <div className="save-limit-value">
+          {item.total} / {item.limit}
+        </div>
+
+      </div>
+
+    );
+
+  })}
+
+</div>
 
           <button
             onClick={handleCancelChanges}
