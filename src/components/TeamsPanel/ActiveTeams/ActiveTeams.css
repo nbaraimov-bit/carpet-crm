@@ -316,8 +316,9 @@
 
 .member-salary {
     margin-top: 10px;
-    padding-top: 14px;
+    padding: 8px;
     border: 1px solid rgba(74,222,128,.25);
+    border-radius: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
