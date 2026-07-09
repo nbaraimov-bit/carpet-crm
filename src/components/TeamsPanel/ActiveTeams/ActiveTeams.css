@@ -458,7 +458,7 @@
     color:white;
 }
 
-.save-btn:disabled{
+.save-btn.disabled{
     background:#555;
     color:#bbb;
     cursor:not-allowed;

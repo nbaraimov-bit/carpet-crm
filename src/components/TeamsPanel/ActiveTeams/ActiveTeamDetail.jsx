@@ -322,7 +322,7 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
               </button>
 
               <button
-              className="save-btn"
+              className={canSave ? "save-btn" : "save-btn disabled"}
                 disabled={!canSave}
                 onClick={handleSaveChanges}
               >
