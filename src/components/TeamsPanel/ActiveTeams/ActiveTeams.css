@@ -377,19 +377,24 @@
 .save-modal{
     position: fixed;
     inset: 0;
+    top: 70px;
     background: rgba(0,0,0,.45);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
 }
 
 .save-modal-card{
-    width: min(92vw, 500px);
+    width: min(92vw, 300px);
     background: var(--card-color);
     border-radius: 18px;
     padding: 20px;
     border: 1px solid var(--border-color);
+    pointer-events: auto;
 }
 
 .save-limit-grid{
