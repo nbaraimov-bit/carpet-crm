@@ -83,7 +83,7 @@
 /* ===== Team Detail Summary ===== */
 .team-detail-summary {
     background: linear-gradient(135deg, #1b1f2d, #141824);
-    border: 1px solid #30384a;
+    border: 2px solid rgba(74,222,128,.25);
     border-radius: 16px;
     padding: 18px;
     margin-bottom: 20px;
