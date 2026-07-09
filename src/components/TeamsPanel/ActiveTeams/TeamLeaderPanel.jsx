@@ -208,8 +208,14 @@ export default function TeamLeaderPanel({
           </div>
 
           <div className="member-prices-grid">
+
             {services.map((service) => (
-              <div key={service.key}>
+
+              <div
+                className="member-price-box"
+                key={service.key}
+              >
+               
                 <div>
                   {service.icon} {service.title}
                 </div>
@@ -223,8 +229,11 @@ export default function TeamLeaderPanel({
                     )
                   }
                 />
+
               </div>
+
             ))}
+
           </div>
 
           <div className="member-salary">
