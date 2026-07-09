@@ -67,9 +67,13 @@ export default function TeamMemberCard({
 
           <div className="member-salary"> 
 
-            💰 Bugungi ish haqi
+            <div className="member-salary-title">
+              💰 Bugungi ish haqi
+            </div>
 
-            <b>{(earnings?.[member.phone]?.salary ?? 0) .toLocaleString()} so'm </b>
+            <div className="member-salary-value">
+              <b>{(earnings?.[member.phone]?.salary ?? 0) .toLocaleString()} so'm </b>
+            </div>
 
           </div>
 

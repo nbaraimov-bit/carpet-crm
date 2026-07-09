@@ -324,6 +324,21 @@
     font-weight: 600;
 }
 
+.member-salary-title{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+}
+
+.member-salary-value{
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
 .member-actions {
     display: flex;
     justify-content: space-between;
