@@ -313,18 +313,22 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
           
 
             <div className="save-actions">
+
               <button
+              className="cancel-btn"
                 onClick={handleCancelChanges}
               >
                 Bekor qilish
               </button>
 
               <button
+              className="save-btn"
                 disabled={!canSave}
                 onClick={handleSaveChanges}
               >
                 Saqlash
               </button>
+
             </div>
 
           </div>
