@@ -24,6 +24,7 @@ export default function TeamLeaderPanel({
   updateMemberPrice,
   limits,
   canSave,
+  earnings,
 }) {
 
   const [joinRequests, setJoinRequests] = useState([]);
@@ -216,7 +217,7 @@ export default function TeamLeaderPanel({
                 key={service.key}
               >
                
-                <div className="member-prices-title">
+                <div className="member-price-title">
                   {service.icon} {service.title}
                 </div>
 
@@ -240,7 +241,7 @@ export default function TeamLeaderPanel({
 
             💰 Bugungi ish haqi
 
-            <b>0 so'm</b>
+            <b>{(earnings?.[member.phone]?.salary ?? 0) .toLocaleString()} so'm </b>
 
           </div>
 

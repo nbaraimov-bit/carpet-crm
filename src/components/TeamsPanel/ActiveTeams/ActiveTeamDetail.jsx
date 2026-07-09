@@ -36,7 +36,6 @@ export default function ActiveTeamDetail({
   const workingCount = Object.values(team.members || {})
   .filter(member => member.working)
   .length;
-  const teamType = teamTypeMap[team.type];
   const members = Object.values(team.members || {}).sort((a, b) => {
     if (a.rank === "leader") return -1;
     if (b.rank === "leader") return 1;
@@ -47,6 +46,7 @@ export default function ActiveTeamDetail({
   const isLeader = teamMember?.rank === "leader";
   const isMember = teamMember?.rank === "member";
   const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega");
+  const teamType = teamTypeMap[team.type];
   const services = teamType?.services || [];
 
   useEffect(() => {
@@ -241,6 +241,7 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
             updateMemberPrice={updateMemberPrice}
             limits={limits}
             canSave={canSave}
+            earnings={earnings}
           />
         ))
 
