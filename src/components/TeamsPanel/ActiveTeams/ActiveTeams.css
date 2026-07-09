@@ -144,7 +144,7 @@
 
 .team-total-card {
     background: rgba(74,222,128,.08);
-    border: 1px solid rgba(74,222,128,.25);
+    border: 2px solid rgba(74,222,128,.25);
     border-radius: 12px;
     padding: 16px;
     text-align: center;
@@ -317,11 +317,12 @@
 .member-salary {
     margin-top: 10px;
     padding-top: 14px;
-    border-top: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(74,222,128,.25);
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 600;
+    background: rgba(74,222,128,.08);;
 }
 
 .member-salary-title{
@@ -330,7 +331,7 @@
     gap: 8px;
     font-size: 18px;
     font-weight: 600;
-    color: white;
+    color: #4ade80;;
 }
 
 .member-salary-value{
