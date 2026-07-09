@@ -11,6 +11,7 @@ import {
   where,
   onSnapshot,
   serverTimestamp,
+  deleteField,
 } from "firebase/firestore";
 
 export default function TeamLeaderPanel({
@@ -70,6 +71,31 @@ export default function TeamLeaderPanel({
     await updateDoc(teamRef, {
       [`members.${member.phone}.working`]: !member.working
     });
+
+  };
+
+
+  const removeMember = async () => {
+
+    const ok = window.confirm(`${member.name} ni jamoadan chiqarilsinmi?`);
+
+    if (!ok) return;
+
+    try {
+
+      const teamRef = doc(db, "teams", team.id);
+
+      await updateDoc(teamRef, {
+        [`members.${member.phone}`]: deleteField(),
+      });
+
+    } catch (err) {
+
+      console.error(err);
+
+      alert("Xatolik yuz berdi");
+
+    }
 
   };
 
@@ -259,20 +285,25 @@ export default function TeamLeaderPanel({
 
           </div>
 
-          <div className="member-actions">
+          {member.rank !== "leader" && (
+            <div className="member-actions">
 
-            <button className="remove-member-btn">
-              🪓 Chopish
-            </button>
+              <button 
+                className="remove-member-btn"
+                onClick={removeMember}
+              >
+                🪓 Chopish
+              </button>
 
-            <button
-              className={`working-btn ${member.working ? "active" : "inactive"}`}
-              onClick={toggleWorking}
-            >
-              {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
-            </button>
+              <button
+                className={`working-btn ${member.working ? "active" : "inactive"}`}
+                onClick={toggleWorking}
+              >
+                {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
+              </button>
 
-          </div>
+            </div>
+          )}
 
         </div>
 
