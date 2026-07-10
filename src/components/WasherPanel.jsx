@@ -25,6 +25,7 @@ export default function WasherPanel({
   setSelectedDate,
   attendance,
   workerEarnings,
+  teams,
 
 }) {  
 

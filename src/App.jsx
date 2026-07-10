@@ -985,6 +985,11 @@ function App() {
       [field]: value,
     }
 
+    const team = teams.find(team =>
+      team.type === "washer" &&
+      team.members?.[currentWorker.phone]
+    );
+
     if (
       value === "Yuvildi" && currentWorker
     ) {
@@ -1026,12 +1031,12 @@ function App() {
           "Washer"
         )
       ]
-        = currentWorker.phone
+       = currentWorker.phone
 
         const today = new Date()
-const dateId =
-  today.getFullYear() +
-  "-" +
+        const dateId =
+          today.getFullYear() +
+      "-" +
   String(today.getMonth() + 1).padStart(2, "0") +
   "-" +
   String(today.getDate()).padStart(2, "0")
@@ -1893,6 +1898,7 @@ await setDoc(
         setSelectedDate={setSelectedDate}
         workerEarnings={workerEarnings}
         attendance={attendance}
+        teams={teams}
   
       />
     )}
