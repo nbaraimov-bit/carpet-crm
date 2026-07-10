@@ -26,6 +26,7 @@ export default function WasherPanel({
   attendance,
   workerEarnings,
   teams,
+  currentTeam,
 
 }) {  
 
@@ -117,10 +118,14 @@ export default function WasherPanel({
 
         {orders
           .filter(
-            (o) =>
-              o.carpetStatus === "Kutmoqda" &&
-              o.carpetCount
-          )
+  (o) =>
+    o.carpetStatus === "Kutmoqda" &&
+    o.carpetCount &&
+    (
+      !o.carpetWasherTeamId ||
+      o.carpetWasherTeamId === currentTeam?.id
+    )
+)
           .map((order) => (
             <div
               key={order.id}
@@ -163,10 +168,11 @@ export default function WasherPanel({
 
         {orders
           .filter(
-            (o) =>
-              o.carpetStatus === "Yuvilmoqda" &&
-              o.carpetCount
-          )
+  (o) =>
+    o.carpetStatus === "Yuvilmoqda" &&
+    o.carpetCount &&
+    o.carpetWasherTeamId === currentTeam?.id
+)
           .map((order) => (
             <div
               key={order.id}

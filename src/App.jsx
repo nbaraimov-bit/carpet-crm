@@ -487,6 +487,12 @@ function App() {
     0
   )
 
+  const currentWasherTeam = teams.find(
+    (team) =>
+    team.type === "washer" &&
+    team.members?.[currentWorker.phone]
+  );
+
   const totalDailySalary =
   dailyWasherSalary +
   dailyHourlySalary
@@ -991,9 +997,28 @@ function App() {
     );
 
     if (value === "Yuvilmoqda" && team) {
-      updates.washerTeamId = team.id;
-      updates.washerTeamName = team.teamName;
-    }
+
+  if (field === "carpetStatus") {
+    updates.carpetWasherTeamId = team.id;
+    updates.carpetWasherTeamName = team.teamName;
+  }
+
+  if (field === "blanketStatus") {
+    updates.blanketWasherTeamId = team.id;
+    updates.blanketWasherTeamName = team.teamName;
+  }
+
+  if (field === "yakandozStatus") {
+    updates.yakandozWasherTeamId = team.id;
+    updates.yakandozWasherTeamName = team.teamName;
+  }
+
+  if (field === "curtainStatus") {
+    updates.curtainWasherTeamId = team.id;
+    updates.curtainWasherTeamName = team.teamName;
+  }
+
+}
 
     if (
       value === "Yuvildi" && currentWorker
@@ -1904,6 +1929,7 @@ await setDoc(
         workerEarnings={workerEarnings}
         attendance={attendance}
         teams={teams}
+        currentTeam={currentWasherTeam}
   
       />
     )}
