@@ -101,6 +101,30 @@ export default function ActiveTeamDetail({
 
   }, []);
 
+
+  const deleteTeam = async () => {
+
+    const ok = window.confirm(
+      `"${team.name}" jamoasi o'chirilsinmi?\n\nBu amalni ortga qaytarib bo'lmaydi.`
+    );
+
+    if (!ok) return;
+
+    try {
+
+      await deleteDoc(doc(db, "teams", team.id));
+      closeTeam();
+
+    } catch (err) {
+
+      console.error(err);
+      alert("Jamoani o'chirib bo'lmadi.");
+
+    }
+
+  };
+
+
   const updateMemberPrice = (phone, field, value) => {
 
     setMemberPrices(prev => ({
@@ -114,6 +138,7 @@ export default function ActiveTeamDetail({
     if (!showSaveModal) { setShowSaveModal(true); }
 
   };
+
 
   const handleCancelChanges = () => {
 
@@ -261,7 +286,10 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
 
       {(isLeader || isAdmin) && (
 
-        <div className="delete-team-card">
+        <div 
+          className="delete-team-card"
+          onClick={deleteTeam}
+        >
 
           <div className="delete-team-title">
             🗑️ Jamoani o'chirish
