@@ -105,7 +105,7 @@ export default function ActiveTeamDetail({
   const deleteTeam = async () => {
 
     const ok = window.confirm(
-      `"${team.name}" jamoasi o'chirilsinmi?\n\nBu amalni ortga qaytarib bo'lmaydi.`
+      `"${team.teamName}" jamoasi o'chirilsinmi?\n\nBu amalni ortga qaytarib bo'lmaydi.`
     );
 
     if (!ok) return;
