@@ -990,6 +990,11 @@ function App() {
       team.members?.[currentWorker.phone]
     );
 
+    if (value === "Yuvilmoqda" && team) {
+      updates.washerTeamId = team.id;
+      updates.washerTeamName = team.teamName;
+    }
+
     if (
       value === "Yuvildi" && currentWorker
     ) {
