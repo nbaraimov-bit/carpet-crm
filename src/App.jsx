@@ -82,6 +82,7 @@ function App() {
   //const [telegramId, setTelegramId] = useState("")
 
   const tg = window.Telegram?.WebApp
+  const currentPhone = currentWorker?.phone;
 
 
   const sendWorkerRequest =
@@ -487,10 +488,11 @@ function App() {
     0
   )
 
-  const currentWasherTeam = teams.find(
+  const washerTeam = teams.find(
     (team) =>
     team.type === "washer" &&
-    team.members?.[currentWorker.phone]
+    currentWorker &&
+    team.members?.[currentPhone]
   );
 
   const totalDailySalary =
@@ -1929,7 +1931,7 @@ await setDoc(
         workerEarnings={workerEarnings}
         attendance={attendance}
         teams={teams}
-        currentTeam={currentWasherTeam}
+        washerTeam={washerTeam}
   
       />
     )}

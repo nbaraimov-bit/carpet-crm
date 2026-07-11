@@ -26,7 +26,7 @@ export default function WasherPanel({
   attendance,
   workerEarnings,
   teams,
-  currentTeam,
+  washerTeam, 
 
 }) {  
 
@@ -123,7 +123,7 @@ export default function WasherPanel({
     o.carpetCount &&
     (
       !o.carpetWasherTeamId ||
-      o.carpetWasherTeamId === currentTeam?.id
+      o.carpetWasherTeamId === washerTeam?.id
     )
 )
           .map((order) => (
@@ -171,7 +171,7 @@ export default function WasherPanel({
   (o) =>
     o.carpetStatus === "Yuvilmoqda" &&
     o.carpetCount &&
-    o.carpetWasherTeamId === currentTeam?.id
+    o.carpetWasherTeamId === washerTeam?.id
 )
           .map((order) => (
             <div
