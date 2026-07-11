@@ -1055,9 +1055,10 @@ function App() {
       const service = serviceMap[field];
       const washerTeam = teams.find((team) => team.id === order[`${service.key}WasherTeamId`]);
       const members = Object.values(washerTeam.members);
-      const washerSalary = service.amount *Number(member[service.key] || 0);
 
       for (const member of members) {
+
+        const washerSalary = service.amount *Number(member[service.key] || 0);
 
         console.log(
           member.name,
@@ -1066,7 +1067,7 @@ function App() {
 
       }
 
-      updates[
+      /*updates[
         field.replace(
           "Status",
           "Salary"
@@ -1079,7 +1080,7 @@ function App() {
           "Washer"
         )
       ]
-       = currentWorker.phone
+       = currentWorker.phone*/
 
         const today = new Date()
         const dateId =
