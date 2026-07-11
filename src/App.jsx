@@ -1059,6 +1059,10 @@ function App() {
 
       for (const member of members) {
 
+        const amount =
+        Number(serviceMap[service].amount) *
+        Number(member[serviceMap[service].teamField] || 0);
+
         const washerSalary = service.amount *Number(member[service.key] || 0);
 
         const today = new Date().toISOString().slice(0, 10);
