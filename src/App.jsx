@@ -1058,27 +1058,20 @@ function App() {
        (team) => team.id === order[`${service.key}WasherTeamId`]
       );
 
-      console.log(service);
-      console.log(washerTeam);
+      const members = Object.values(washerTeam.members);
 
-      let washerSalary = 0
+for (const member of members) {
 
-      if (field === "carpetStatus") {
-        washerSalary = Number(order.kvm || 0) * washerPrices.carpet
-      }
+  const washerSalary =
+    service.amount *
+    Number(member[service.key] || 0);
 
-      if (field === "blanketStatus") {
-        washerSalary = Number(order.blanket || 0) * washerPrices.blanket
-      }
+  console.log(
+    member.name,
+    washerSalary
+  );
 
-      if (field === "yakandozStatus") {
-        washerSalary = Number(order.yakandoz || 0) * washerPrices.yakandoz
-      }
-
-      if (field === "curtainStatus") {
-        washerSalary = Number(order.curtainMeter || 0) *
-        Number(order.curtainPrice || 0) * washerPrices.curtain
-      }
+}
 
       updates[
         field.replace(
