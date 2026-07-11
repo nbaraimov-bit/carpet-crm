@@ -1060,6 +1060,21 @@ function App() {
 
         const washerSalary = service.amount *Number(member[service.key] || 0);
 
+        const today = new Date().toISOString().slice(0, 10);
+
+const earningsRef = doc(db, "workerEarnings", today);
+
+await setDoc(
+  earningsRef,
+  {
+    [member.phone]: {
+      name: member.name,
+      washerSalary: increment(amount),
+    },
+  },
+  { merge: true }
+);
+
         console.log(
           member.name,
           washerSalary
