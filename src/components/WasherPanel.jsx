@@ -30,6 +30,17 @@ export default function WasherPanel({
 
 }) {  
 
+  const waitingFilter = (service) => (o) =>
+  o[`${service}Status`] === "Kutmoqda" &&
+  o[`${service}Count`] &&
+  !o[`${service}WasherTeamId`];
+
+  const washingFilter = (service) => (o) =>
+  o[`${service}Status`] === "Yuvilmoqda" &&
+  o[`${service}Count`] &&
+  o[`${service}WasherTeamId`] === washerTeam?.id;
+
+
   return (
     <>
       {washerMode === "" && (
@@ -116,16 +127,7 @@ export default function WasherPanel({
 
         <h2>Gilam buyurtmalari</h2>
 
-        {orders
-          .filter(
-  (o) =>
-    o.carpetStatus === "Kutmoqda" &&
-    o.carpetCount &&
-    (
-      !o.carpetWasherTeamId ||
-      o.carpetWasherTeamId === washerTeam?.id
-    )
-)
+        {orders.filter(waitingFilter("carpet"))
           .map((order) => (
             <div
               key={order.id}
@@ -166,13 +168,7 @@ export default function WasherPanel({
 
         <h2>Mening buyurtmalarim</h2>
 
-        {orders
-          .filter(
-  (o) =>
-    o.carpetStatus === "Yuvilmoqda" &&
-    o.carpetCount &&
-    o.carpetWasherTeamId === washerTeam?.id
-)
+        {orders.filter(washingFilter("carpet"))
           .map((order) => (
             <div
               key={order.id}
@@ -227,12 +223,7 @@ export default function WasherPanel({
 
         <h2>Adyol buyurtmalari</h2>
 
-        {orders
-          .filter(
-            (o) =>
-              o.blanketStatus === "Kutmoqda" &&
-              o.blanket
-          )
+        {orders.filter(waitingFilter("blanket"))
           .map((order) => (
             <div
               key={order.id}
@@ -270,12 +261,7 @@ export default function WasherPanel({
 
         <h2>Mening buyurtmalarim</h2>
 
-        {orders
-          .filter(
-            (o) =>
-              o.blanketStatus === "Yuvilmoqda" &&
-              o.blanket
-          )
+        {orders.filter(washingFilter("blanket"))
           .map((order) => (
             <div
               key={order.id}
@@ -328,12 +314,7 @@ export default function WasherPanel({
 
         <h2>Yakandoz buyurtmalari</h2>
 
-        {orders
-          .filter(
-            (o) =>
-              o.yakandozStatus === "Kutmoqda" &&
-              (o.yakandoz || o.other)
-          )
+        {orders.filter(waitingFilter("yakandoz"))
           .map((order) => (
             <div
               key={order.id}
@@ -373,12 +354,7 @@ export default function WasherPanel({
 
         <h2>Mening buyurtmalarim</h2>
  
-          {orders
-           .filter(
-            (o) =>
-              o.yakandozStatus === "Yuvilmoqda" &&
-              (o.yakandoz || o.other)
-          )
+          {orders.filter(washingFilter("yakandoz"))
           .map((order) => (
             <div
               key={order.id}
@@ -432,12 +408,7 @@ export default function WasherPanel({
 
         <h2>Parda buyurtmalari</h2>
  
-        {orders
-          .filter(
-            (o) =>
-              o.curtainStatus === "Kutmoqda" &&
-              o.curtainMeter
-          )
+        {orders.filter(waitingFilter("curtain"))
           .map((order) => (
             <div
               key={order.id}
@@ -480,12 +451,7 @@ export default function WasherPanel({
 
         < h2>Mening buyurtmalarim</h2>
   
-        {orders
-          .filter(
-            (o) =>
-              o.curtainStatus === "Yuvilmoqda" &&
-              o.curtainMeter
-          )
+        {orders.filter(washingFilter("curtain"))
           .map((order) => (
             <div
               key={order.id}
