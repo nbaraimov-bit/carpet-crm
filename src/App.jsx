@@ -24,6 +24,7 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  increment,
 } from "firebase/firestore";
 
 function App() {
@@ -1062,18 +1063,18 @@ function App() {
 
         const today = new Date().toISOString().slice(0, 10);
 
-const earningsRef = doc(db, "workerEarnings", today);
+        const earningsRef = doc(db, "workerEarnings", today);
 
-await setDoc(
-  earningsRef,
-  {
-    [member.phone]: {
-      name: member.name,
-      washerSalary: increment(amount),
-    },
-  },
-  { merge: true }
-);
+        await setDoc(
+          earningsRef,
+          {
+            [member.phone]: {
+              name: member.name,
+              washerSalary: increment(amount),
+            },
+          },
+          { merge: true }
+        );
 
         console.log(
           member.name,
