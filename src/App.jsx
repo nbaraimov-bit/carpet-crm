@@ -1000,27 +1000,27 @@ function App() {
 
     if (value === "Yuvilmoqda" && team) {
 
-  if (field === "carpetStatus") {
-    updates.carpetWasherTeamId = team.id;
-    updates.carpetWasherTeamName = team.teamName;
-  }
+      if (field === "carpetStatus") {
+        updates.carpetWasherTeamId = team.id;
+        updates.carpetWasherTeamName = team.teamName;
+      }
 
-  if (field === "blanketStatus") {
-    updates.blanketWasherTeamId = team.id;
-    updates.blanketWasherTeamName = team.teamName;
-  }
+      if (field === "blanketStatus") {
+        updates.blanketWasherTeamId = team.id;
+        updates.blanketWasherTeamName = team.teamName;
+      }
 
-  if (field === "yakandozStatus") {
-    updates.yakandozWasherTeamId = team.id;
-    updates.yakandozWasherTeamName = team.teamName;
-  }
+      if (field === "yakandozStatus") {
+        updates.yakandozWasherTeamId = team.id;
+        updates.yakandozWasherTeamName = team.teamName;
+      }
 
-  if (field === "curtainStatus") {
-    updates.curtainWasherTeamId = team.id;
-    updates.curtainWasherTeamName = team.teamName;
-  }
+      if (field === "curtainStatus") {
+        updates.curtainWasherTeamId = team.id;
+        updates.curtainWasherTeamName = team.teamName;
+      }
 
-}
+    }
 
     if (
       value === "Yuvildi" && currentWorker
@@ -1030,6 +1030,36 @@ function App() {
         "Status",
         "Date"
       )] = serverTimestamp() 
+
+      const serviceMap = {
+        carpetStatus: {
+          key: "carpet",
+          amount: Number(order.kvm || 0),
+        },
+        blanketStatus: {
+          key: "blanket",
+          amount: Number(order.blanket || 0),
+        },
+        yakandozStatus: {
+          key: "yakandoz",
+          amount: Number(order.yakandoz || 0),
+        },
+        curtainStatus: {
+          key: "curtain",
+          amount:
+            Number(order.curtainMeter || 0) *
+            Number(order.curtainPrice || 0),
+        },
+      };
+
+      const service = serviceMap[field];
+
+      const washerTeam = teams.find(  
+       (team) => team.id === order[`${service.key}WasherTeamId`]
+      );
+
+      console.log(service);
+      console.log(washerTeam);
 
       let washerSalary = 0
 
