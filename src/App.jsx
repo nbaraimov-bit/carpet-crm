@@ -1053,25 +1053,18 @@ function App() {
       };
 
       const service = serviceMap[field];
-
-      const washerTeam = teams.find(  
-       (team) => team.id === order[`${service.key}WasherTeamId`]
-      );
-
+      const washerTeam = teams.find((team) => team.id === order[`${service.key}WasherTeamId`]);
       const members = Object.values(washerTeam.members);
+      const washerSalary = service.amount *Number(member[service.key] || 0);
 
-for (const member of members) {
+      for (const member of members) {
 
-  const washerSalary =
-    service.amount *
-    Number(member[service.key] || 0);
+        console.log(
+          member.name,
+          washerSalary
+        );
 
-  console.log(
-    member.name,
-    washerSalary
-  );
-
-}
+      }
 
       updates[
         field.replace(
