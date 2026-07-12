@@ -1,5 +1,8 @@
 import { db } from "../../firebase"
-import { teamTypeMap } from "./teamTypes";
+import { 
+  teamTypeMap,
+  teamDefaultShares
+ } from "./teamTypes";
 import {
   doc,
   updateDoc,
@@ -41,10 +44,7 @@ export default function PendingTeamCard({
             name: team.leaderName,
             phone: team.createdBy,
             rank:"leader",
-            carpet:0,
-            blanket:0,
-            yakandoz:0,
-            curtain:0,
+            ...teamDefaultShares[team.type],
             working:true,
   
           }
