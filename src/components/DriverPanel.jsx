@@ -27,8 +27,11 @@ export default function DriverPanel({
   driverComment,
   setDriverComment,
   currentWorker,
+  driverTeam,
 
 }) {
+
+  console.log(driverTeam)
 
   return (
 

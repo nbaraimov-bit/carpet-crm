@@ -495,6 +495,14 @@ function App() {
     team.members?.[currentPhone]
   );
 
+
+  const driverTeam = teams.find(
+    (team) =>
+    team.type === "driver" &&
+    currentWorker &&
+    team.members?.[currentPhone]
+  );
+
   const totalDailySalary =
   dailyWasherSalary +
   dailyHourlySalary
@@ -1006,6 +1014,11 @@ function App() {
         id
       )
 
+      if (status === "Yetkazilmoqda") {
+        updates.deliveryDriverTeamId = driverTeam?.id;
+        updates.deliveryDriverTeamName = driverTeam?.teamName;
+       }
+
     if (status === "Yetkazildi") { 
 
       const order = orders.find((o) => o.firebaseId === id)  
@@ -1030,14 +1043,10 @@ function App() {
       status: status,
     }
 
-    if (
-      status === "Olinmoqda" &&
-      currentWorker?.roles?.includes("driver") ||
-      currentWorker?.roles?.includes("admin") ||
-      currentWorker?.roles?.includes("ega")
-    ) {
-      updates.assignedDriver =
-        currentWorker.phone
+    if (status === "Olinmoqda" ) {
+      updates.assignedDriver = currentWorker.phone
+      updates.pickupDriverTeamId = driverTeam?.id;
+      updates.pickupDriverTeamName = driverTeam?.teamName;
     }
  
     await updateDoc(
@@ -1079,6 +1088,7 @@ function App() {
     })
 
   }
+
   
   {/* ===== update wash status ===== */}
   const updateWashStatus = async (
@@ -1940,6 +1950,7 @@ function App() {
         driverComment={driverComment}
         setDriverComment={setDriverComment}
         currentWorker={currentWorker}
+        driverTeam={driverTeam}
 
       />
     )}
