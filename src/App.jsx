@@ -574,6 +574,10 @@ function App() {
       blanketCount: 0,
       yakandozCount: 0,
       curtainMeter: 0,
+      carpetSalary: 0,
+      blanketSalary: 0,
+      yakandozSalary: 0,
+      curtainSalary: 0,
     };
 
     teamData[teamId] = {
@@ -583,21 +587,15 @@ function App() {
 
       salary: oldTeam.salary + teamSalary,
 
-      carpetKvm: oldTeam.carpetKvm +
-      (service.key === "carpet"
-      ? Number(service.amount) : 0),
+      carpetKvm: oldTeam.carpetKvm + (service.key === "carpet" ? Number(service.amount) : 0),
+      blanketCount:  oldTeam.blanketCount + (service.key === "blanket" ? Number(service.amount) : 0),
+      yakandozCount: oldTeam.yakandozCount + (service.key === "yakandoz" ? Number(service.amount) : 0),
+      curtainMeter: oldTeam.curtainMeter + (service.key === "curtain" ? Number(service.amount) : 0),
 
-      blanketCount:  oldTeam.blanketCount +
-      (service.key === "blanket"
-      ? Number(service.amount) : 0),
-
-      yakandozCount: oldTeam.yakandozCount +
-      (service.key === "yakandoz"
-      ? Number(service.amount) : 0),
-
-      curtainMeter: oldTeam.curtainMeter +
-      (service.key === "curtain"
-      ? Number(service.amount) : 0),
+      carpetSalary: oldTeam.carpetSalary + (service.key === "carpet" ? teamSalary : 0),
+      blanketSalary: oldTeam.blanketSalary + (service.key === "blanket" ? teamSalary : 0),
+      yakandozSalary: oldTeam.yakandozSalary + (service.key === "yakandoz" ? teamSalary : 0),
+      curtainSalary: oldTeam.curtainSalary + (service.key === "curtain" ? teamSalary : 0),
     };
 
     await setDoc(teamRef, teamData);
