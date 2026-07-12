@@ -500,11 +500,6 @@ function App() {
   dailyHourlySalary
 
 
-  console.log("washerTeam =", washerTeam);
-console.log("teamId =", washerTeam?.id);
-console.log("teamName =", washerTeam?.teamName);
-
-
   const addWorkerEarnings = async ({
     dateId,
     members,
@@ -1185,6 +1180,8 @@ console.log("teamName =", washerTeam?.teamName);
         dateId,
         members,
         service,
+        teamId: washerTeam.id,
+        teamName: washerTeam.teamName,
       });
 
     }
