@@ -1152,8 +1152,7 @@ function App() {
         curtainStatus: {
           key: "curtain",
           amount:
-            Number(order.curtainMeter || 0) *
-            Number(order.curtainPrice || 0),
+            Number(order.curtainMeter || 0),
         },
       };
 
