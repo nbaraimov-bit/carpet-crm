@@ -235,14 +235,14 @@ export default function WasherPanel({
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
               <p><b>Telefon:</b> {order.phone}</p>
-              <p><b>Adyol:</b> {order.blanket}</p>
+              <p><b>Adyol:</b> {order.blanketCount}</p>
               <p><b>Tarif:</b>{" "}{order.tarif}</p>
               {order.comment && (<p><b>Izoh:</b>{" "}{order.comment}</p>)}
               {order.driverComment&&(<p><b>Izoh:</b>{" "}{order.driverComment}</p>)}
 
               <p>
                 <b>Ish haqi:</b>{" "}
-                {Number(order.blanket || 0) * washerPrices.blanket}
+                {Number(order.blanketCount || 0) * washerPrices.blanketCount}
               </p>
 
               <button
@@ -273,14 +273,14 @@ export default function WasherPanel({
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
               <p><b>Telefon:</b> {order.phone}</p>
-              <p><b>Adyol:</b> {order.blanket}</p>
+              <p><b>Adyol:</b> {order.blanketCount}</p>
               <p><b>Tarif:</b>{" "}{order.tarif}</p>
               {order.comment && (<p><b>Izoh:</b>{" "}{order.comment}</p>)}
               {order.driverComment&&(<p><b>Izoh:</b>{" "}{order.driverComment}</p>)}
 
               <p>
                 <b>Ish haqi:</b>{" "}
-                {Number(order.blanket || 0) * washerPrices.blanket}
+                {Number(order.blanketCount || 0) * washerPrices.blanketCount}
               </p>
  
               <button
@@ -326,7 +326,7 @@ export default function WasherPanel({
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
               <p><b>Telefon:</b> {order.phone}</p>
-              {order.yakandoz && (<p><b>Yakandoz:</b>{" "}{order.yakandoz}</p>)}
+              {order.yakandozCount && (<p><b>Yakandoz:</b>{" "}{order.yakandozCount}</p>)}
               {order.other && (<p><b>Boshqa:</b> {order.other}</p>)} 
               <p><b>Tarif:</b>{" "}{order.tarif}</p>  
               {order.comment && (<p><b>Izoh:</b>{" "}{order.comment}</p>)}
@@ -334,7 +334,7 @@ export default function WasherPanel({
 
               <p>
                 <b>Ish haqi:</b>{" "}
-                {Number(order.yakandoz || 0) * washerPrices.yakandoz}
+                {Number(order.yakandozCount || 0) * washerPrices.yakandozCount}
               </p>
 
               <button
@@ -366,7 +366,7 @@ export default function WasherPanel({
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
               <p><b>Telefon:</b> {order.phone}</p>
-              {order.yakandoz && (<p><b>Yakandoz:</b>{" "}{order.yakandoz}</p>)}
+              {order.yakandozCount && (<p><b>Yakandoz:</b>{" "}{order.yakandozCount}</p>)}
               {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}
               <p><b>Tarif:</b>{" "}{order.tarif}</p>
               {order.comment && (<p><b>Izoh:</b>{" "}{order.comment}</p>)}
@@ -374,7 +374,7 @@ export default function WasherPanel({
 
               <p>
                 <b>Ish haqi:</b>{" "}
-                {Number(order.yakandoz || 0) * washerPrices.yakandoz}
+                {Number(order.yakandozCount || 0) * washerPrices.yakandozCount}
               </p>   
  
               <button

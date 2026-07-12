@@ -10,10 +10,10 @@ export default function DriverPanel({
   setCarpetCount,
   kvm,
   setKvm,
-  blanket,
+  blanketCount,
   setBlanketCount,
   yakandozCount,
-  setYakandoz,
+  setYakandozCount,
   curtainCount,
   setCurtainCount,
   curtainMeter,
@@ -164,7 +164,7 @@ export default function DriverPanel({
 
                   <input
                     placeholder="Adyol"
-                    value={blanket}
+                    value={blanketCount}
                     onChange={(e) =>
                       setBlanketCount(e.target.value)
                     }
@@ -174,7 +174,7 @@ export default function DriverPanel({
 
                   <input
                     placeholder="Yakandoz"
-                    value={yakandoz}
+                    value={yakandozCount}
                     onChange={(e) =>
                       setYakandozCount(e.target.value)
                     }
@@ -298,8 +298,8 @@ export default function DriverPanel({
                   </summary>
                   {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
                   {order.kvm && (<p><b>Kv.m:</b> {order.kvm}</p>)}
-                  {order.blanket && (<p><b>Adyol:</b> {order.blanket}</p>)}
-                  {order.yakandoz && (<p><b>Yakandoz:</b> {order.yakandoz}</p>)}
+                  {order.blanketCount && (<p><b>Adyol:</b> {order.blanketCount}</p>)}
+                  {order.yakandozCount && (<p><b>Yakandoz:</b> {order.yakandozCount}</p>)}
                   {order.curtainCount && (<p><b>Parda:</b> {order.curtainCount}</p>)}
                   {order.curtainMeter && (<p><b>Parda metri:</b> {order.curtainMeter}</p>)}
                   {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}
@@ -353,8 +353,8 @@ export default function DriverPanel({
                   </summary>
                   {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
                   {order.kvm && (<p><b>Kv.m:</b> {order.kvm}</p>)}
-                  {order.blanket && (<p><b>Adyol:</b> {order.blanket}</p>)}
-                  {order.yakandoz && (<p><b>Yakandoz:</b> {order.yakandoz}</p>)}
+                  {order.blanketCount && (<p><b>Adyol:</b> {order.blanketCount}</p>)}
+                  {order.yakandozCount && (<p><b>Yakandoz:</b> {order.yakandozCount}</p>)}
                   {order.curtainCount && (<p><b>Parda:</b> {order.curtainCount}</p>)}
                   {order.curtainMeter && (<p><b>Parda metri:</b> {order.curtainMeter}</p>)}
                   {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}

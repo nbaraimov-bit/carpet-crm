@@ -950,8 +950,8 @@ function App() {
     await updateDoc(orderRef, {
       carpetCount,
       kvm,
-      blanket,
-      yakandoz,
+      blanketCount,
+      yakandozCount,
       curtainCount,
       curtainMeter,
       curtainPrice,
@@ -962,11 +962,11 @@ function App() {
         ? "Kutmoqda"
         : "",
    
-      blanketStatus: blanket
+      blanketStatus: blanketCount
         ? "Kutmoqda"
         : "",
 
-      yakandozStatus: yakandoz || other
+      yakandozStatus: yakandozCount || other
         ? "Kutmoqda"
         : "",
 
@@ -1038,11 +1038,11 @@ function App() {
         },
         blanketStatus: {
           key: "blanket",
-          amount: Number(order.blanket || 0),
+          amount: Number(order.blanketCount || 0),
         },
         yakandozStatus: {
           key: "yakandoz",
-          amount: Number(order.yakandoz || 0),
+          amount: Number(order.yakandozCount || 0),
         },
         curtainStatus: {
           key: "curtain",
@@ -1418,8 +1418,8 @@ function App() {
                     <p><b>Manzil:</b>{" "}{order.address}</p>
                     {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
                     {order.kvm && (<p><b>Kv.m:</b> {order.kvm}</p>)}
-                    {order.blanket && (<p><b>Adyol:</b> {order.blanket}</p>)}
-                    {order.yakandoz && (<p><b>Yakandoz:</b> {order.yakandoz}</p>)}
+                    {order.blanketCount && (<p><b>Adyol:</b> {order.blanketCount}</p>)}
+                    {order.yakandozCount && (<p><b>Yakandoz:</b> {order.yakandozCount}</p>)}
                     {order.curtainCount && (<p><b>Parda:</b> {order.curtainCount}</p>)}
                     {order.curtainMeter && (<p><b>Parda metri:</b> {order.curtainMeter}</p>)}
                     {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}
@@ -1809,9 +1809,9 @@ function App() {
         setCarpetCount={setCarpetCount}
         kvm={kvm}
         setKvm={setKvm}
-        blanket={blanket}
+        blanketCount={blanketCount}
         setBlanketCount={setBlanketCount}
-        yakandoz={yakandoz}
+        yakandozCount={yakandozCount}
         setYakandozCount={setYakandozCount}
         curtainCount={curtainCount}
         setCurtainCount={setCurtainCount}
@@ -1908,8 +1908,8 @@ function App() {
               </summary>
               {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
               {order.kvm && (<p><b>Kv.m:</b> {order.kvm}</p>)}
-              {order.blanket && (<p><b>Adyol:</b> {order.blanket}</p>)}
-              {order.yakandoz && (<p><b>Yakandoz:</b> {order.yakandoz}</p>)}
+              {order.blanketCount && (<p><b>Adyol:</b> {order.blanketCount}</p>)}
+              {order.yakandozCount && (<p><b>Yakandoz:</b> {order.yakandozCount}</p>)}
               {order.curtainCount && (<p><b>Parda:</b> {order.curtainCount}</p>)}
               {order.curtainMeter && (<p><b>Parda metri:</b> {order.curtainMeter}</p>)}
               {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}
