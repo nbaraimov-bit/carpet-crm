@@ -120,7 +120,7 @@ export default function DriverPanel({
           {orders
             .filter( (o) =>
               o.status === "Olinmoqda" &&
-              o.assignedDriver === currentWorker?.phone
+              o.pickupDriverTeamId === driverTeam?.id
             )
             .map((order) => (
               <div
@@ -281,7 +281,9 @@ export default function DriverPanel({
           <h2>Yetkazilmoqda</h2>
 
           {orders
-            .filter((o) => o.status === "Yetkazilmoqda")
+            .filter((o) =>
+             o.status === "Yetkazilmoqda" &&
+             o.deliveryDriverTeamId === driverTeam?.id)
             .map((order) => (
               <div
                 key={order.id}
