@@ -242,7 +242,7 @@ export default function WasherPanel({
 
               <p>
                 <b>Ish haqi:</b>{" "}
-                {Number(order.blanketCount || 0) * washerPrices.blanketCount}
+                {Number(order.blanketCount || 0) * washerPrices.blanket}
               </p>
 
               <button
@@ -280,7 +280,7 @@ export default function WasherPanel({
 
               <p>
                 <b>Ish haqi:</b>{" "}
-                {Number(order.blanketCount || 0) * washerPrices.blanketCount}
+                {Number(order.blanketCount || 0) * washerPrices.blanket}
               </p>
  
               <button
@@ -334,7 +334,7 @@ export default function WasherPanel({
 
               <p>
                 <b>Ish haqi:</b>{" "}
-                {Number(order.yakandozCount || 0) * washerPrices.yakandozCount}
+                {Number(order.yakandozCount || 0) * washerPrices.yakandoz}
               </p>
 
               <button
@@ -374,7 +374,7 @@ export default function WasherPanel({
 
               <p>
                 <b>Ish haqi:</b>{" "}
-                {Number(order.yakandozCount || 0) * washerPrices.yakandozCount}
+                {Number(order.yakandozCount || 0) * washerPrices.yakandoz}
               </p>   
  
               <button
