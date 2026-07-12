@@ -11,8 +11,8 @@ export default function DriverPanel({
   kvm,
   setKvm,
   blanket,
-  setBlanket,
-  yakandoz,
+  setBlanketCount,
+  yakandozCount,
   setYakandoz,
   curtainCount,
   setCurtainCount,
@@ -166,7 +166,7 @@ export default function DriverPanel({
                     placeholder="Adyol"
                     value={blanket}
                     onChange={(e) =>
-                      setBlanket(e.target.value)
+                      setBlanketCount(e.target.value)
                     }
                   />
 
@@ -176,7 +176,7 @@ export default function DriverPanel({
                     placeholder="Yakandoz"
                     value={yakandoz}
                     onChange={(e) =>
-                      setYakandoz(e.target.value)
+                      setYakandozCount(e.target.value)
                     }
                   />
 

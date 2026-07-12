@@ -24,7 +24,6 @@ import {
   getDoc,
   getDocs,
   setDoc,
-  increment,
 } from "firebase/firestore";
 
 function App() {
@@ -35,8 +34,8 @@ function App() {
   const [washerMode, setWasherMode] = useState("")
   const [carpetCount, setCarpetCount] = useState("")
   const [kvm, setKvm] = useState("")
-  const [blanket, setBlanket] = useState("")
-  const [yakandoz, setYakandoz] = useState("")
+  const [blanketCount, setBlanketCount] = useState("")
+  const [yakandozCount, setYakandozCount] = useState("")
   const [curtainCount, setCurtainCount] = useState("")
   const [curtainMeter, setCurtainMeter] = useState("")
   const [curtainPrice, setCurtainPrice] = useState("")
@@ -1059,121 +1058,15 @@ function App() {
 
       for (const member of members) {
 
-        const amount =
-        Number(serviceMap[service].amount) *
-        Number(member[serviceMap[service].teamField] || 0);
-
         const washerSalary = service.amount *Number(member[service.key] || 0);
-
-        const today = new Date().toISOString().slice(0, 10);
-
-        const earningsRef = doc(db, "workerEarnings", today);
-
-        await setDoc(
-          earningsRef,
-          {
-            [member.phone]: {
-              name: member.name,
-              washerSalary: increment(amount),
-            },
-          },
-          { merge: true }
-        );
 
         console.log(
           member.name,
           washerSalary
         );
 
-      }
+      } 
 
-      /*updates[
-        field.replace(
-          "Status",
-          "Salary"
-        )
-      ] = washerSalary
-
-      updates[
-        field.replace(
-          "Status",
-          "Washer"
-        )
-      ]
-       = currentWorker.phone*/
-
-        const today = new Date()
-        const dateId =
-          today.getFullYear() +
-      "-" +
-  String(today.getMonth() + 1).padStart(2, "0") +
-  "-" +
-  String(today.getDate()).padStart(2, "0")
-
-const earningsRef = doc(
-  db,
-  "workerEarnings",
-  dateId
-)
-
-const earningsSnap =
-  await getDoc(earningsRef)
-
-const phone =
-  currentWorker.phone
-
-let earningsData = {}
-
-if (earningsSnap.exists()) {
-  earningsData =
-    earningsSnap.data()
-}
-
-const oldWorkerData =
-  earningsData[phone] || {
-    name:
-      currentWorker.name,
-    salary: 0,
-    carpetKvm: 0,
-    blanketCount: 0,
-    yakandozCount: 0,
-    curtainMeter: 0,
-  }
-
-const newWorkerData = {
-  ...oldWorkerData,
-  salary:
-    oldWorkerData.salary +
-    washerSalary,
-}
-
-if (field === "carpetStatus") {
-  newWorkerData.carpetKvm +=
-    Number(order.kvm || 0)
-}
-
-if (field === "blanketStatus") {
-  newWorkerData.blanketCount +=
-    Number(order.blanket || 0)
-}
-
-if (field === "yakandozStatus") {
-  newWorkerData.yakandozCount +=
-    Number(order.yakandoz || 0)
-}
-
-if (field === "curtainStatus") {
-  newWorkerData.curtainMeter +=
-    Number(order.curtainMeter || 0)
-}
-
-earningsData[phone] =
-  newWorkerData
-
-await setDoc(
-  earningsRef,
-  earningsData
-)
     }
 
     const carpetDone =
@@ -1220,6 +1113,7 @@ await setDoc(
 
     await updateDoc(orderRef, updates)
   }
+
 
   const activeOrders = orders.filter(
     (o) =>
@@ -1916,9 +1810,9 @@ await setDoc(
         kvm={kvm}
         setKvm={setKvm}
         blanket={blanket}
-        setBlanket={setBlanket}
+        setBlanketCount={setBlanketCount}
         yakandoz={yakandoz}
-        setYakandoz={setYakandoz}
+        setYakandozCount={setYakandozCount}
         curtainCount={curtainCount}
         setCurtainCount={setCurtainCount}
         curtainMeter={curtainMeter}
