@@ -500,6 +500,61 @@ function App() {
   dailyHourlySalary
 
 
+  const addWorkerEarnings = async ({
+    dateId,
+    members,
+    service,
+    teamId,
+    teamName
+  }) => {
+
+    const earningsRef = doc(
+      db,
+      "workerEarnings",
+      dateId
+    );
+
+    const earningsSnap = await getDoc(earningsRef);
+
+    let earningsData = {};
+
+    if (earningsSnap.exists()) {
+      earningsData = earningsSnap.data();
+    }
+
+    let teamSalary = 0;
+
+    for (const member of members) {
+
+      const washerSalary =
+        service.amount *
+        Number(member[service.key] || 0);
+
+      teamSalary += washerSalary;
+
+      const oldWorker = earningsData[member.phone] || {
+        name: member.name,
+        washerSalary: 0,
+        driverSalary: 0,
+        packingSalary: 0,
+      };
+
+      earningsData[member.phone] = {
+        ...oldWorker,
+        name: member.name,
+        washerSalary: oldWorker.washerSalary + washerSalary,
+      };
+
+    }
+
+    await setDoc(
+      earningsRef, 
+      earningsData 
+    );
+
+  };
+
+
   {/* ===== use effectlar ===== */}
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -1052,20 +1107,30 @@ function App() {
         },
       };
 
+      const serviceStats = {
+        carpet: "carpetKvm",
+        blanket: "blanketCount",
+        yakandoz: "yakandozCount",
+        curtain: "curtainMeter",
+      }; 
+
       const service = serviceMap[field];
       const washerTeam = teams.find((team) => team.id === order[`${service.key}WasherTeamId`]);
       const members = Object.values(washerTeam.members);
+      const serviceAmount = service.amount;
+      const statField = serviceStats[service.key];
+  
+      const today = new Date();
 
-      for (const member of members) {
+      const dateId = today.getFullYear() +
+      "-" + String(today.getMonth() + 1).padStart(2, "0") +
+      "-" + String(today.getDate()).padStart(2, "0");
 
-        const washerSalary = service.amount *Number(member[service.key] || 0);
-
-        console.log(
-          member.name,
-          washerSalary
-        );
-
-      } 
+      await addWorkerEarnings({
+        dateId,
+        members,
+        service,
+      });
 
     }
 
