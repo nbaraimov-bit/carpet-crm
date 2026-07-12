@@ -500,6 +500,11 @@ function App() {
   dailyHourlySalary
 
 
+  console.log("washerTeam =", washerTeam);
+console.log("teamId =", washerTeam?.id);
+console.log("teamName =", washerTeam?.teamName);
+
+
   const addWorkerEarnings = async ({
     dateId,
     members,
@@ -553,63 +558,54 @@ function App() {
     );
 
     const teamRef = doc(
-  db,
-  "teamEarnings",
-  dateId
-);
+      db,
+      "teamEarnings",
+      dateId
+    );
 
-const teamSnap = await getDoc(teamRef);
+    const teamSnap = await getDoc(teamRef);
 
-let teamData = {};
+    let teamData = {};
 
-if (teamSnap.exists()) {
-  teamData = teamSnap.data();
-}
+    if (teamSnap.exists()) {
+      teamData = teamSnap.data();
+    }
 
-const oldTeam = teamData[teamId] || {
-  type: "washer",
-  teamName,
-  salary: 0,
-  carpetKvm: 0,
-  blanketCount: 0,
-  yakandozCount: 0,
-  curtainMeter: 0,
-};
+    const oldTeam = teamData[teamId] || {
+      type: "washer",
+      teamName,
+      salary: 0,
+      carpetKvm: 0,
+      blanketCount: 0,
+      yakandozCount: 0,
+      curtainMeter: 0,
+    };
 
-teamData[teamId] = {
-  ...oldTeam,
-  type: "washer",
-  teamName,
+    teamData[teamId] = {
+      ...oldTeam,
+      type: "washer",
+      teamName,
 
-  salary:
-    oldTeam.salary + teamSalary,
+      salary: oldTeam.salary + teamSalary,
 
-  carpetKvm:
-    oldTeam.carpetKvm +
-    (service.key === "carpet"
-      ? Number(service.amount)
-      : 0),
+      carpetKvm: oldTeam.carpetKvm +
+      (service.key === "carpet"
+      ? Number(service.amount) : 0),
 
-  blanketCount:
-    oldTeam.blanketCount +
-    (service.key === "blanket"
-      ? Number(service.amount)
-      : 0),
+      blanketCount:  oldTeam.blanketCount +
+      (service.key === "blanket"
+      ? Number(service.amount) : 0),
 
-  yakandozCount:
-    oldTeam.yakandozCount +
-    (service.key === "yakandoz"
-      ? Number(service.amount)
-      : 0),
+      yakandozCount: oldTeam.yakandozCount +
+      (service.key === "yakandoz"
+      ? Number(service.amount) : 0),
 
-  curtainMeter:
-    oldTeam.curtainMeter +
-    (service.key === "curtain"
-      ? Number(service.amount)
-      : 0),
-};
+      curtainMeter: oldTeam.curtainMeter +
+      (service.key === "curtain"
+      ? Number(service.amount) : 0),
+    };
 
-await setDoc(teamRef, teamData);
+    await setDoc(teamRef, teamData);
 
   };
 
