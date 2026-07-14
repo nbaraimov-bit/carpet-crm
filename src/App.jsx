@@ -551,15 +551,16 @@ function App() {
 
         if (!member.working) continue;
 
+        const total = Number(service.amount || 0) * Number(service.quantity || 0);
+
         if (activeMembers.length === 1) {
-
-          earned = service.amount;
-
+          earned = total;
         } else {
-
-          earned = member.rank === "leader" ? service.amount * 0.55 : service.amount * 0.45;
-
-        }
+          earned =
+            member.rank === "leader"
+            ? total * 0.55
+            : total * 0.45;
+        } 
 
       }
 
@@ -1047,22 +1048,26 @@ function App() {
   const updateStatus = async (id, status) => {
 
     const orderRef =
-      doc(
-        db,
-        "orders",
-        id
-      )
+    doc(
+      db,
+      "orders",
+      id
+    )
 
-      const orderSnap = await getDoc(orderRef);
+    const orderSnap = await getDoc(orderRef);
 
-      if (!orderSnap.exists()) return;
+    if (!orderSnap.exists()) return;
 
-      const order = orderSnap.data();
+    const order = orderSnap.data();
 
-      if (status === "Yetkazilmoqda") {
-        updates.deliveryDriverTeamId = driverTeam?.id;
-        updates.deliveryDriverTeamName = driverTeam?.teamName;
-       }
+    const updates = {
+      status: status,
+    }
+
+    if (status === "Yetkazilmoqda") {
+      updates.deliveryDriverTeamId = driverTeam?.id;
+      updates.deliveryDriverTeamName = driverTeam?.teamName;
+    }
 
     if (status === "Yetkazildi") { 
 
@@ -1086,12 +1091,53 @@ function App() {
 
     if (status === "Olindi") {
 
-      console.log(order);
+      const pickupTeam = teams.find(
+        (team) => team.id === order.pickupDriverTeamId
+      );
 
-    }
+      const dateId = new Date().toISOString().slice(0, 10);
 
-    const updates = {
-      status: status,
+      if (pickupTeam) {
+
+        const members = Object.values(pickupTeam.members);
+
+        const driverServices = [
+          {
+            key: "carpet",
+            amount: Number(driverPrices.pickupCarpet || 0),
+            quantity: Number(order.kvm || 0),
+          },
+          {  
+            key: "blanket",
+            amount: Number(driverPrices.pickupBlanket || 0),
+            quantity: Number(order.blanketCount || 0),
+          },
+          {
+            key: "yakandoz",
+            amount: Number(driverPrices.pickupYakandoz || 0),
+            quantity: Number(order.yakandozCount || 0),
+          },
+          {
+            key: "curtain",
+            amount: Number(driverPrices.pickupCurtain || 0),
+            quantity: Number(order.curtainMeter || 0),
+          },
+        ];
+
+        for (const service of driverServices) {
+          if (service.quantity <= 0) continue;
+
+          await addWorkerEarnings({
+            dateId,
+            members,
+            service,
+            teamId: pickupTeam.id,
+            teamName: pickupTeam.teamName,
+            teamType: "driver",
+          });
+        }
+      }
+
     }
 
     if (status === "Olinmoqda" ) {
