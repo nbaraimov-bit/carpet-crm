@@ -513,7 +513,8 @@ function App() {
     members,
     service,
     teamId,
-    teamName
+    teamName,
+    teamType,
   }) => {
 
     const earningsRef = doc(
@@ -532,13 +533,37 @@ function App() {
 
     let teamSalary = 0;
 
+    let activeMembers = members.filter(
+      (m) => m.working
+    );
+
     for (const member of members) {
 
-      const washerSalary =
-        service.amount *
-        Number(member[service.key] || 0);
+      let earned = 0;
 
-      teamSalary += washerSalary;
+      if (teamType === "washer") {
+
+        earned = service.amount * Number(member[service.key] || 0);
+
+      }
+
+      else if (teamType === "driver") {
+
+        if (!member.working) continue;
+
+        if (activeMembers.length === 1) {
+
+          earned = service.amount;
+
+        } else {
+
+          earned = member.rank === "leader" ? service.amount * 0.55 : service.amount * 0.45;
+
+        }
+
+      }
+
+      teamSalary += earned;
 
       const oldWorker = earningsData[member.phone] || {
         name: member.name,
@@ -550,7 +575,21 @@ function App() {
       earningsData[member.phone] = {
         ...oldWorker,
         name: member.name,
-        washerSalary: oldWorker.washerSalary + washerSalary,
+
+        washerSalary:
+          teamType === "washer"
+          ? oldWorker.washerSalary + earned
+          : oldWorker.washerSalary,  
+ 
+        driverSalary:
+          teamType === "driver"
+          ? oldWorker.driverSalary + earned
+          : oldWorker.driverSalary,
+
+        packingSalary:
+          teamType === "packing"
+          ? oldWorker.packingSalary + earned
+          : oldWorker.packingSalary,
       };
 
     }
@@ -575,7 +614,7 @@ function App() {
     }
 
     const oldTeam = teamData[teamId] || {
-      type: "washer",
+      type: teamType,
       teamName,
       salary: 0,
       carpetKvm: 0,
@@ -590,7 +629,7 @@ function App() {
 
     teamData[teamId] = {
       ...oldTeam,
-      type: "washer",
+      type: teamType,
       teamName,
 
       salary: oldTeam.salary + teamSalary,
@@ -1014,6 +1053,12 @@ function App() {
         id
       )
 
+      const orderSnap = await getDoc(orderRef);
+
+      if (!orderSnap.exists()) return;
+
+      const order = orderSnap.data();
+
       if (status === "Yetkazilmoqda") {
         updates.deliveryDriverTeamId = driverTeam?.id;
         updates.deliveryDriverTeamName = driverTeam?.teamName;
@@ -1039,12 +1084,17 @@ function App() {
       return
     }
 
+    if (status === "Olindi") {
+
+      console.log(order);
+
+    }
+
     const updates = {
       status: status,
     }
 
     if (status === "Olinmoqda" ) {
-      updates.assignedDriver = currentWorker.phone
       updates.pickupDriverTeamId = driverTeam?.id;
       updates.pickupDriverTeamName = driverTeam?.teamName;
     }
