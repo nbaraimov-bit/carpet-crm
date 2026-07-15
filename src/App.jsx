@@ -543,7 +543,7 @@ function App() {
 
       if (teamType === "washer") {
 
-        earned = service.amount * Number(member[service.key] || 0);
+        earned = Number(service.amount || 0) * Number(service.quantity || 0);
 
       }
 
@@ -635,10 +635,10 @@ function App() {
 
       salary: oldTeam.salary + teamSalary,
 
-      carpetKvm: oldTeam.carpetKvm + (service.key === "carpet" ? Number(service.amount) : 0),
-      blanketCount:  oldTeam.blanketCount + (service.key === "blanket" ? Number(service.amount) : 0),
-      yakandozCount: oldTeam.yakandozCount + (service.key === "yakandoz" ? Number(service.amount) : 0),
-      curtainMeter: oldTeam.curtainMeter + (service.key === "curtain" ? Number(service.amount) : 0),
+      carpetKvm: oldTeam.carpetKvm + (service.key === "carpet" ? Number(service.quantity || 0) : 0),
+      blanketCount:  oldTeam.blanketCount + (service.key === "blanket" ? Number(service.quantity || 0) : 0),
+      yakandozCount: oldTeam.yakandozCount + (service.key === "yakandoz" ? Number(service.quantity || 0) : 0),
+      curtainMeter: oldTeam.curtainMeter + (service.key === "curtain" ? Number(service.quantity || 0) : 0),
 
       carpetSalary: oldTeam.carpetSalary + (service.key === "carpet" ? teamSalary : 0),
       blanketSalary: oldTeam.blanketSalary + (service.key === "blanket" ? teamSalary : 0),
@@ -1243,20 +1243,26 @@ function App() {
       const serviceMap = {
         carpetStatus: {
           key: "carpet",
-          amount: Number(order.kvm || 0),
+          amount: Number(team.members[currentWorker.phone].carpet || 0),
+          quantity: Number(order.kvm || 0),
         },
+
         blanketStatus: {
           key: "blanket",
-          amount: Number(order.blanketCount || 0),
+          amount: Number(team.members[currentWorker.phone].blanket || 0),
+          quantity: Number(order.blanketCount || 0),
         },
+
         yakandozStatus: {
           key: "yakandoz",
-          amount: Number(order.yakandozCount || 0),
+          amount: Number(team.members[currentWorker.phone].yakandoz || 0),
+          quantity: Number(order.yakandozCount || 0),
         },
+
         curtainStatus: {
           key: "curtain",
-          amount:
-            Number(order.curtainMeter || 0),
+          amount: Number(team.members[currentWorker.phone].curtain || 0),
+          quantity: Number(order.curtainMeter || 0),
         },
       };
 
