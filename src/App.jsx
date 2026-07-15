@@ -676,7 +676,7 @@ function App() {
     const addValue = (name, value) => {
       const key = field(name);
 
-      return (oldTeam[key] || 0) + value;
+      return (oldTeam[key] || 0) + Number(value || 0);
     };
 
     teamData[teamId] = {
@@ -684,7 +684,7 @@ function App() {
       type: teamType,
       teamName,
 
-      salary: oldTeam.salary + teamSalary,
+      salary: Number(oldTeam.salary || 0) + teamSalary,
 
       [field("carpetKvm")] : addValue(
         "carpetKvm",
@@ -725,6 +725,16 @@ function App() {
         "curtainSalary",
         service.key === "curtain" ? teamSalary : 0
       ),
+
+      ...(teamType === "driver" && {
+        pickupSalary:
+        Number(oldTeam.pickupSalary || 0) +
+        (stage === "pickup" ? teamSalary : 0),
+
+        deliverySalary:
+        Number(oldTeam.deliverySalary || 0) +
+        (stage === "delivery" ? teamSalary : 0),
+      }),
     };
 
     await setDoc(teamRef, teamData);
