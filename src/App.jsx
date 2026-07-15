@@ -1291,6 +1291,7 @@ function App() {
         service,
         teamId: washerTeam.id,
         teamName: washerTeam.teamName,
+        teamType: "washer"
       });
 
     }
