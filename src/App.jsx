@@ -544,7 +544,7 @@ function App() {
 
       if (teamType === "washer") {
 
-        earned = Number(service.amount || 0) * Number(service.quantity || 0);
+        earned = Number(member[service.key] || 0) * Number(service.quantity || 0);
 
       }
 
@@ -615,51 +615,69 @@ function App() {
       teamData = teamSnap.data();
     }
 
-    const oldTeam = teamData[teamId] || {
-      type: teamType,
-      teamName,
-      pickupCarpetKvm: 0,
-      pickupBlanketCount: 0,
-      pickupYakandozCount: 0,
-      pickupCurtainMeter: 0,
+    let oldTeam = teamData[teamId];
 
-      pickupCarpetSalary: 0,
-      pickupBlanketSalary: 0,
-      pickupYakandozSalary: 0,
-      pickupCurtainSalary: 0,
+    if (!oldTeam) {
+      if (teamType === "driver") {
+        oldTeam = {
+          type: "driver",
+          teamName,
+     
+          pickupSalary: 0,
+          deliverySalary: 0,
+          salary: 0,
 
-      deliveryCarpetKvm: 0,
-      deliveryBlanketCount: 0,   
-      deliveryYakandozCount: 0,
-      deliveryCurtainMeter: 0,
+          pickupCarpetKvm: 0,
+          pickupBlanketCount: 0,
+          pickupYakandozCount: 0,
+          pickupCurtainMeter: 0,
+  
+          pickupCarpetSalary: 0,
+          pickupBlanketSalary: 0,
+          pickupYakandozSalary: 0,
+          pickupCurtainSalary: 0,
 
-      deliveryCarpetSalary: 0,
-      deliveryBlanketSalary: 0,
-      deliveryYakandozSalary: 0,
-      deliveryCurtainSalary: 0,
+          deliveryCarpetKvm: 0,
+          deliveryBlanketCount: 0,
+          deliveryYakandozCount: 0,
+          deliveryCurtainMeter: 0,
 
-      carpetKvm: 0,
-      blanketCount: 0,
-      yakandozCount: 0,
-      curtainMeter: 0,
+          deliveryCarpetSalary: 0,
+          deliveryBlanketSalary: 0,
+          deliveryYakandozSalary: 0,
+          deliveryCurtainSalary: 0,
+        };
+      } else {
+        oldTeam = {
+          type: teamType,
+          teamName,
 
-      carpetSalary: 0,
-      blanketSalary: 0,
-      yakandozSalary: 0,
-      curtainSalary: 0,
-    };
+          salary: 0,
+
+          carpetKvm: 0,
+          blanketCount: 0,
+          yakandozCount: 0,
+          curtainMeter: 0,
+
+          carpetSalary: 0,
+          blanketSalary: 0,
+          yakandozSalary: 0,
+          curtainSalary: 0,
+        };
+      }
+    }
 
     const field = (name) => {
-  if (teamType !== "driver") return name;
+      if (teamType !== "driver") return name;
 
-  return stage + name.charAt(0).toUpperCase() + name.slice(1);
-};
+      return stage + name.charAt(0).toUpperCase() + name.slice(1);
+    };
 
-const addValue = (name, value) => {
-  const key = field(name);
+    const addValue = (name, value) => {
+      const key = field(name);
 
-  return (oldTeam[key] || 0) + value;
-};
+      return (oldTeam[key] || 0) + value;
+    };
 
     teamData[teamId] = {
       ...oldTeam,
