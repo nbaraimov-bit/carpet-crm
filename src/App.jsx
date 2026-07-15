@@ -565,6 +565,18 @@ function App() {
 
       }
 
+      else if (teamType === "packing") {
+
+        if (!member.working) continue;
+
+        if (activeMembers.length === 0) continue;
+
+        const total = Number(service.amount || 0) * Number(service.quantity || 0);
+
+        earned = total / activeMembers.length;
+
+       }
+
       teamSalary += earned;
 
       const oldWorker = earningsData[member.phone] || {
@@ -1226,6 +1238,60 @@ function App() {
       await deleteDoc(orderRef)
 
       return
+    }
+
+    if (status === "Tayyor") {
+
+      const packingTeam = teams.find(
+        (team) => team.id === order.packingTeamId
+      );
+
+      updates.packingTeamId = packingTeam?.id;
+      updates.packingTeamName = packingTeam?.teamName;
+
+      const dateId = new Date().toISOString().slice(0, 10);
+
+      if (packingTeam) {
+
+        const members = Object.values(packingTeam.members);
+
+        const packingServices = [
+          {
+            key: "carpet",
+            amount: Number(packingPrices.carpet || 0),
+            quantity: Number(order.kvm || 0),
+          },
+          {
+            key: "blanket",
+            amount: Number(packingPrices.blanket || 0),
+            quantity: Number(order.blanketCount || 0),
+          },
+          {
+            key: "yakandoz",
+            amount: Number(packingPrices.yakandoz || 0),
+            quantity: Number(order.yakandozCount || 0),
+          },
+          {
+            key: "curtain",
+            amount: Number(packingPrices.curtain || 0),
+            quantity: Number(order.curtainMeter || 0),
+          },
+        ];
+
+        for (const service of packingServices) {
+          if (service.quantity <= 0) continue;
+ 
+          await addWorkerEarnings({
+            dateId,
+            members,
+            service,
+            teamId: packingTeam.id,
+            teamName: packingTeam.teamName,
+            teamType: "packing",
+          });
+        }
+      }
+
     }
 
     if (status === "Olindi") {
