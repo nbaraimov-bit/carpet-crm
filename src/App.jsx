@@ -1243,8 +1243,11 @@ function App() {
     if (status === "Tayyor") {
 
       const packingTeam = teams.find(
-        (team) => team.id === order.packingTeamId
-      );
+  (team) =>
+    team.type === "packing" &&
+    currentWorker &&
+    team.members?.[currentPhone]
+);
 
       updates.packingTeamId = packingTeam?.id;
       updates.packingTeamName = packingTeam?.teamName;
