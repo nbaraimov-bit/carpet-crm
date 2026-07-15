@@ -229,7 +229,7 @@ export default function EgaPanel({
 
           <p>Gilam</p>
             <input
-              value={packingPricesPrices.carpet || ""}
+              value={packingPrices.carpet || ""}
               onChange={(e) =>
                 setPackingPrices({
                   ...packingPrices, carpet: e.target.value,
