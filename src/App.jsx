@@ -515,6 +515,7 @@ function App() {
     teamId,
     teamName,
     teamType,
+    stage = null,
   }) => {
 
     const earningsRef = doc(
@@ -617,16 +618,48 @@ function App() {
     const oldTeam = teamData[teamId] || {
       type: teamType,
       teamName,
-      salary: 0,
+      pickupCarpetKvm: 0,
+      pickupBlanketCount: 0,
+      pickupYakandozCount: 0,
+      pickupCurtainMeter: 0,
+
+      pickupCarpetSalary: 0,
+      pickupBlanketSalary: 0,
+      pickupYakandozSalary: 0,
+      pickupCurtainSalary: 0,
+
+      deliveryCarpetKvm: 0,
+      deliveryBlanketCount: 0,   
+      deliveryYakandozCount: 0,
+      deliveryCurtainMeter: 0,
+
+      deliveryCarpetSalary: 0,
+      deliveryBlanketSalary: 0,
+      deliveryYakandozSalary: 0,
+      deliveryCurtainSalary: 0,
+
       carpetKvm: 0,
       blanketCount: 0,
       yakandozCount: 0,
       curtainMeter: 0,
+
       carpetSalary: 0,
       blanketSalary: 0,
       yakandozSalary: 0,
       curtainSalary: 0,
     };
+
+    const field = (name) => {
+  if (teamType !== "driver") return name;
+
+  return stage + name.charAt(0).toUpperCase() + name.slice(1);
+};
+
+const addValue = (name, value) => {
+  const key = field(name);
+
+  return (oldTeam[key] || 0) + value;
+};
 
     teamData[teamId] = {
       ...oldTeam,
@@ -635,15 +668,45 @@ function App() {
 
       salary: oldTeam.salary + teamSalary,
 
-      carpetKvm: oldTeam.carpetKvm + (service.key === "carpet" ? Number(service.quantity || 0) : 0),
-      blanketCount:  oldTeam.blanketCount + (service.key === "blanket" ? Number(service.quantity || 0) : 0),
-      yakandozCount: oldTeam.yakandozCount + (service.key === "yakandoz" ? Number(service.quantity || 0) : 0),
-      curtainMeter: oldTeam.curtainMeter + (service.key === "curtain" ? Number(service.quantity || 0) : 0),
+      [field("carpetKvm")] : addValue(
+        "carpetKvm",
+        service.key === "carpet" ? Number(service.quantity || 0) : 0
+      ),
 
-      carpetSalary: oldTeam.carpetSalary + (service.key === "carpet" ? teamSalary : 0),
-      blanketSalary: oldTeam.blanketSalary + (service.key === "blanket" ? teamSalary : 0),
-      yakandozSalary: oldTeam.yakandozSalary + (service.key === "yakandoz" ? teamSalary : 0),
-      curtainSalary: oldTeam.curtainSalary + (service.key === "curtain" ? teamSalary : 0),
+      [field("blanketCount")] : addValue(
+        "blanketCount",
+        service.key === "blanket" ? Number(service.quantity || 0) : 0
+      ),
+
+      [field("yakandozCount")] : addValue(
+        "yakandozCount",
+        service.key === "yakandoz" ? Number(service.quantity || 0) : 0
+      ),
+
+      [field("curtainMeter")] : addValue(
+        "curtainMeter",
+        service.key === "curtain" ? Number(service.quantity || 0) : 0
+      ),
+
+      [field("carpetSalary")] : addValue(
+        "carpetSalary",
+        service.key === "carpet" ? teamSalary : 0
+      ),
+
+      [field("blanketSalary")] : addValue(
+        "blanketSalary",
+        service.key === "blanket" ? teamSalary : 0
+      ),
+
+      [field("yakandozSalary")] : addValue(
+        "yakandozSalary",
+        service.key === "yakandoz" ? teamSalary : 0
+      ),
+
+      [field("curtainSalary")] : addValue(
+        "curtainSalary",
+        service.key === "curtain" ? teamSalary : 0
+      ),
     };
 
     await setDoc(teamRef, teamData);
@@ -1071,7 +1134,55 @@ function App() {
 
     if (status === "Yetkazildi") { 
 
-      const order = orders.find((o) => o.firebaseId === id)  
+      const order = orders.find((o) => o.firebaseId === id)
+
+      const deliveryTeam = teams.find(
+        (team) => team.id === order.deliveryDriverTeamId
+      );
+
+      const dateId = new Date().toISOString().slice(0, 10);
+
+      if (deliveryTeam) {
+
+        const members = Object.values(deliveryTeam.members);
+
+        const driverServices = [
+          {
+            key: "carpet",
+            amount: Number(driverPrices.deliveryCarpet || 0),
+            quantity: Number(order.kvm || 0),
+          },
+          {
+            key: "blanket",
+            amount: Number(driverPrices.deliveryBlanket || 0),
+            quantity: Number(order.blanketCount || 0),
+          },
+          {
+            key: "yakandoz",
+            amount: Number(driverPrices.deliveryYakandoz || 0),
+            quantity: Number(order.yakandozCount || 0),
+          },
+          {
+            key: "curtain",
+            amount: Number(driverPrices.deliveryCurtain || 0),
+            quantity: Number(order.curtainMeter || 0),
+          },
+        ];
+
+        for (const service of driverServices) {
+          if (service.quantity <= 0) continue;
+
+          await addWorkerEarnings({
+            dateId,
+            members,
+            service,
+            teamId: deliveryTeam.id,
+            teamName: deliveryTeam.teamName,
+            teamType: "driver",
+            stage: "delivery",
+          });
+        }
+      }
 
       await addDoc(
         collection(
@@ -1134,6 +1245,7 @@ function App() {
             teamId: pickupTeam.id,
             teamName: pickupTeam.teamName,
             teamType: "driver",
+            stage: "pickup"
           });
         }
       }
