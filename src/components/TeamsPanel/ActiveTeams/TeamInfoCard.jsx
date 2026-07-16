@@ -101,9 +101,9 @@ export default function TeamInfoCard({
         💰 Jami:
 
         <b>
-
+          
+          {" "}
           {data[totalField] || 0}
-
           {" so'm"}
 
         </b>
@@ -123,39 +123,35 @@ export default function TeamInfoCard({
 
   return (<>
 
-    {team.type === "washer" &&(
+    <div>
 
-      <div>
+      <div className="team-detail-summary">
 
-        <div className="team-detail-summary">
+        <div className="team-detail-header">
 
-          <div className="team-detail-header">
-
-            <div>
-              <h2>{team.teamName}</h2>
-              <p>{teamType?.icon} {teamType?.title}</p>
-            </div>
-
-            <div className="team-online">
-              🟢 {workingCount} kishi faol
-            </div>
-
+          <div>
+            <h2>{team.teamName}</h2>
+            <p>{teamType?.icon} {teamType?.title}</p>
           </div>
 
-          {team.type === "driver" ? (
-            <>
-              {renderStage("🚚 Olib kelish", "pickup")}
-              {renderStage("📦 Yetkazish", "delivery")}
-            </>
-          ) : (
-            renderStage()
-          )}
+          <div className="team-online">
+            🟢 {workingCount} kishi faol
+          </div>
 
         </div>
 
+        {team.type === "driver" ? (
+          <>
+            {renderStage("🚚 Olib kelish", "pickup")}
+            {renderStage("📦 Yetkazish", "delivery")}
+          </>
+        ) : (
+          renderStage()
+        )}
+
       </div>
 
-    )}
+    </div>
 
   </>)
 
