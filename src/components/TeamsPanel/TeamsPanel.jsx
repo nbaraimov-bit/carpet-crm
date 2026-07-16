@@ -27,7 +27,8 @@ export default function TeamsPanel({
   currentWorker,
   workers,
   setPage,
-  allowedRoles
+  allowedRoles,
+  teamEarnings,
 
 }) {
 
@@ -257,6 +258,7 @@ export default function TeamsPanel({
         closeTeam={closeTeam}
         allowedRoles={allowedRoles}
         role={role}
+        teamEarnings={teamEarnings}
       />
     )}
 

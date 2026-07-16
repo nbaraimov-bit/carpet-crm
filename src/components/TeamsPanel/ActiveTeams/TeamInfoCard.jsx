@@ -3,8 +3,46 @@ import teamTypes, { teamTypeMap } from "../teamTypes";
 export default function TeamInfoCard({
     workingCount,
     teamType,
-    team
+    team, 
+    todayTeam,
 }) {
+
+  const data = todayTeam || {}
+
+const services = [
+  {
+    key: "carpet",
+    title: "🧼 Gilam",
+    amount: "carpetKvm",
+    salary: "carpetSalary",
+    unit: "kv",
+  },
+  {
+    key: "blanket",
+    title: "🛏 Adyol",
+    amount: "blanketCount",
+    salary: "blanketSalary",
+    unit: "ta",
+  },
+  {
+    key: "yakandoz",
+    title: "🧵 Yakandoz",
+    amount: "yakandozCount",
+    salary: "yakandozSalary",
+    unit: "ta",
+  },
+  {
+    key: "curtain",
+    title: "🪟 Parda",
+    amount: "curtainMeter",
+    salary: "curtainSalary",
+    unit: "m",
+  },
+]
+
+  const field = (stage, name) => stage +
+  name.charAt(0).toUpperCase() +
+  name.slice(1)
 
   return (<>
 
@@ -29,31 +67,35 @@ export default function TeamInfoCard({
 
         <div className="team-stats-grid">
 
-          <div className="team-stat-box">
-            <h4>🧼 Gilam</h4>
-            <p>0 kv • 0 so'm</p>
-          </div>
+          {services.map((service) => (
 
-          <div className="team-stat-box">
-            <h4>🛏 Adyol</h4>
-            <p>0 ta • 0 so'm</p>
-          </div>
+            <div
+              className="team-stat-box"
+              key={service.key}
+            >
 
-          <div className="team-stat-box">
-            <h4>🧵 Yakandoz</h4>
-            <p>0 ta • 0 so'm</p>
-          </div>
+              <h4>{service.title}</h4>  
 
-          <div className="team-stat-box">
-            <h4>🪟 Parda</h4>
-            <p>0 m • 0 so'm</p>
-          </div>
+              <p>
+
+                {data[service.amount] || 0}
+                {" "}
+                {service.unit}
+                {" • "}
+                {Number(data[service.salary] || 0).toLocaleString()}
+                {" so'm"}
+
+              </p>
+
+            </div>
+
+          ))}
 
         </div>
 
         <div className="team-total-card">
 
-          💰 Jami: <b>0 so'm</b>
+          💰 Jami: <b>{Number(data.salary || 0).toLocaleString()}{" so'm"}</b>
 
         </div>
     

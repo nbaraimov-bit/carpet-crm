@@ -78,6 +78,7 @@ function App() {
   const [archiveSearch, setArchiveSearch] = useState("")
   const [workerEarnings, setWorkerEarnings] = useState({})
   const [teams, setTeams] = useState([])
+  const [teamEarnings, setTeamEarnings] = useState({})
   const [page, setPage] = useState("home");
   //const [telegramId, setTelegramId] = useState("")
 
@@ -912,6 +913,26 @@ function App() {
 
   }, [])
 
+
+  useEffect(() => {
+
+    const today = new Date().toISOString().slice(0, 10);
+
+    const unsubscribe = onSnapshot(
+
+      doc(db, "teamEarnings", today),
+
+      (snap) => {
+        setTeamEarnings(snap.data() || {});
+      }
+
+    );
+
+    return () => unsubscribe();
+
+  }, []);
+
+
   useEffect(() => {
 
     const getPrices = async () => {
@@ -1243,11 +1264,11 @@ function App() {
     if (status === "Tayyor") {
 
       const packingTeam = teams.find(
-  (team) =>
-    team.type === "packing" &&
-    currentWorker &&
-    team.members?.[currentPhone]
-);
+        (team) =>
+        team.type === "packing" &&
+        currentWorker &&
+        team.members?.[currentPhone]
+      );
 
       updates.packingTeamId = packingTeam?.id;
       updates.packingTeamName = packingTeam?.teamName;
@@ -2541,6 +2562,7 @@ function App() {
         setPage={setPage}
         role={currentWorker?.role}
         allowedRoles={allowedRoles}
+        teamEarnings={teamEarnings}
       />
     )}
 

@@ -25,6 +25,7 @@ export default function ActiveTeamDetail({
     openTeam,
     allowedRoles,
     role,
+    teamEarnings,
 
 }) {
 
@@ -237,6 +238,7 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
           team={team}
           teamType={teamType}
           workingCount={workingCount}
+          todayTeam={teamEarnings[team.id] || {}}
         />
 
       </div>
