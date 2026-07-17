@@ -3,6 +3,7 @@ import teamTypes, { teamTypeMap } from "../teamTypes";
 export default function TeamMemberCard({
   team,
   member,
+  members,
   currentWorker,
   earnings,
   toggleWorking,

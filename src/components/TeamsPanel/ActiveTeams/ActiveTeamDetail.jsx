@@ -300,6 +300,7 @@ export default function ActiveTeamDetail({
             key={members.phone}
             team={team}
             member={member}
+            members={members}
             currentWorker={currentWorker}
             earnings={earnings}
             driverPrices={driverPrices}
