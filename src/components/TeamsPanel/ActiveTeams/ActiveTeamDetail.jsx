@@ -308,6 +308,7 @@ export default function ActiveTeamDetail({
             toggleWorking={toggleWorking}
             removeMember={removeMember}
             isLeader={isLeader}
+            workingCount={workingCount}
           />
         ))
 

@@ -33,7 +33,28 @@ const teamTypes = [
     title: "Yetkazib berish",
     icon: "🚚",
 
-    services: [],
+    services: [
+      {
+        key: "carpet",
+        title: "Gilam",
+        icon: "🧼",
+      },
+      {
+        key: "blanket",
+        title: "Adyol",
+        icon: "🛏",
+      },
+      {
+        key: "yakandoz",
+        title: "Yakandoz",
+        icon: "🧵",
+      },
+      {
+        key: "curtain",
+        title: "Parda",
+        icon: "🪟",
+      },
+    ],
   },
 
   {
@@ -41,7 +62,28 @@ const teamTypes = [
     title: "Tayyorlovchi",
     icon: "📦",
 
-    services: [],
+    services: [
+      {
+        key: "carpet",
+        title: "Gilam",
+        icon: "🧼",
+      },
+      {
+        key: "blanket",
+        title: "Adyol",
+        icon: "🛏",
+      },
+      {
+        key: "yakandoz",
+        title: "Yakandoz",
+        icon: "🧵",
+      },
+      {
+        key: "curtain",
+        title: "Parda",
+        icon: "🪟",
+      },
+    ],
   },
 ];
 
@@ -61,5 +103,5 @@ export const teamDefaultShares = {
 
   packing: {},
 };
-
+ 
 export default teamTypes;
