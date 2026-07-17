@@ -16,47 +16,73 @@ export default function TeamMemberCard({
   const services = teamTypeMap[team.type]?.services || [];
   const salaryField = `${team.type}Salary`;
 
+  const getDriverShare = (total, rank) => {
+
+    const activeLeader = members.some((m) => m.rank === "leader" && m.working);
+
+    const activeMember = members.some((m) => m.rank === "member" && m.working);
+
+    // Ikkalasi ham faol
+    if (activeLeader && activeMember) {
+      return rank === "leader"
+        ? Math.round(total * 0.55)
+        : Math.round(total * 0.45);
+    }
+
+    // Faqat leader faol
+    if (activeLeader) {
+      return rank === "leader" ? total : 0;
+    }
+
+    // Faqat member faol
+    if (activeMember) {
+      return rank === "member" ? total : 0;
+    }
+
+    return 0;
+  };
+
   const getServicePrice = (service) => {
 
-  if (team.type === "washer") {
-    return `${Number(member?.[service.key] || 0).toLocaleString()} so'm`;
-  }
+    if (team.type === "washer") {
+      return `${Number(member?.[service.key] || 0).toLocaleString()} so'm`;
+    }
 
-  if (team.type === "packing") {
+    if (team.type === "packing") {
 
-    const total = Number(packingPrices?.[service.key] || 0);
+      const total = Number(packingPrices?.[service.key] || 0);
+ 
+      const price =
+        workingCount > 0
+          ? Math.round(total / workingCount)
+          : 0;
 
-    const price =
-      workingCount > 0
-        ? Math.round(total / workingCount)
-        : 0;
+      return `${price.toLocaleString()} so'm`;
+    }
 
-    return `${price.toLocaleString()} so'm`;
-  }
+    if (team.type === "driver") {
 
-  if (team.type === "driver") {
+      const pickupTotal =
+        Number(driverPrices?.["pickup" + service.key.charAt(0).toUpperCase() + service.key.slice(1)] || 0);
 
-    const pickupTotal =
-      Number(driverPrices?.["pickup" + service.key.charAt(0).toUpperCase() + service.key.slice(1)] || 0);
+      const deliveryTotal =
+        Number(driverPrices?.["delivery" + service.key.charAt(0).toUpperCase() + service.key.slice(1)] || 0);
 
-    const deliveryTotal =
-      Number(driverPrices?.["delivery" + service.key.charAt(0).toUpperCase() + service.key.slice(1)] || 0);
+      const pickup = getDriverShare(
+        pickupTotal,
+        member.rank
+      );
 
-    const pickup =
-      member.rank === "leader"
-        ? Math.round(pickupTotal * 0.55)
-        : Math.round(pickupTotal * 0.45);
+      const delivery = getDriverShare(
+        deliveryTotal,
+        member.rank
+      );
 
-    const delivery =
-      member.rank === "leader"
-        ? Math.round(deliveryTotal * 0.55)
-        : Math.round(deliveryTotal * 0.45);
+      return `📥${pickup} | 📤${delivery}`;
+    }
 
-    return `📥${pickup} | 📤${delivery}`;
-  }
-
-  return "";
-};
+    return "";
+  };
 
   return(<>
 
