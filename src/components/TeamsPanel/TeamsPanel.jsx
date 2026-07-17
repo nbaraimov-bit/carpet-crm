@@ -29,6 +29,9 @@ export default function TeamsPanel({
   setPage,
   allowedRoles,
   teamEarnings,
+  driverPrices,
+  washerPrices,
+  packingPrices,
 
 }) {
 
@@ -259,6 +262,9 @@ export default function TeamsPanel({
         allowedRoles={allowedRoles}
         role={role}
         teamEarnings={teamEarnings}
+        driverPrices={driverPrices}
+        packingPrices={packingPrices}
+        washerPrices={washerPrices}
       />
     )}
 

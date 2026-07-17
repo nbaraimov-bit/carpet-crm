@@ -26,11 +26,13 @@ export default function ActiveTeamDetail({
     allowedRoles,
     role,
     teamEarnings,
+    driverPrices,
+    packingPrices,
+    washerPrices,
 
 }) {
 
   const [earnings, setEarnings] = useState({});
-  const [washerPrices, setWasherPrices] = useState(null);
   const [memberPrices, setMemberPrices] = useState({});
   const [showSaveModal, setShowSaveModal] = useState(false);
 
@@ -58,25 +60,6 @@ export default function ActiveTeamDetail({
     );
   }, [team]);
 
-  useEffect(() => {
-
-    const unsubscribe = onSnapshot(
-
-      doc(db, "settings", "washerPrices"),
-
-      (snapshot) => {
-
-        if (snapshot.exists()) {
-          setWasherPrices(snapshot.data());
-        }
-
-      }
-
-    );
-
-    return unsubscribe;
-
-  }, []);
 
   useEffect(() => {
 
@@ -319,6 +302,11 @@ const useLeaderPanel = team.type === "washer" && isLeader;
             member={member}
             currentWorker={currentWorker}
             earnings={earnings}
+            driverPrices={driverPrices}
+            packingPrices={packingPrices}
+            washerPrices={washerPrices}
+            toggleWorking={toggleWorking}
+            removeMember={removeMember}
           />
         ))
 

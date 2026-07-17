@@ -2563,6 +2563,10 @@ function App() {
         role={currentWorker?.role}
         allowedRoles={allowedRoles}
         teamEarnings={teamEarnings}
+        driverPrices={driverPrices}
+        packingPrices={packingPrices}
+        washerPrices={washerPrices}
+
       />
     )}
 
