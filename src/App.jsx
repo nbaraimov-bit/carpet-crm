@@ -43,7 +43,6 @@ function App() {
   const [price, setPrice] = useState("")
   const [workerName, setWorkerName] = useState("")
   const [workerPhone, setWorkerPhone] = useState("")
-  const [requestedRoles, setRequestedRoles,] = useState([])
   const [requestSent,setRequestSent,] = useState(false)
   const [workerRequests,setWorkerRequests,] = useState([])
   const [loginPhone, setLoginPhone] = useState("")
@@ -103,17 +102,12 @@ function App() {
         return
       }
 
-      if (requestedRoles.length === 0) {
-        alert("Kamida 1 ta lavozim tanlang")
-        return
-      }
-
       await addDoc(
         collection(db, "workerRequests"),
         { 
           name: workerName,
           phone: workerPhone,
-          requestedRoles,
+          role: "worker",
           telegramId,
           status: "pending",
           createdAt: serverTimestamp(),
@@ -124,7 +118,6 @@ function App() {
 
       setWorkerName("")
       setWorkerPhone("")
-      setRequestedRoles([])
   }
 
   const approveWorker =
@@ -136,12 +129,8 @@ function App() {
         name: request.name,
         phone: request.phone,
         telegramId: request.telegramId,
-        roles: request.requestedRoles,
-        primaryRole: request.requestedRoles?.[0] || null,
+        role: "worker",
         approved: true,
-        status: "nofaol",
-        working: false,
-        startedAt: null,
       }
     )
 
@@ -192,8 +181,6 @@ function App() {
     const workerDoc = snapshot.docs[0]
     const worker = {firebaseId: workerDoc.id, ...workerDoc.data()}
     const telegramId = tg?.initDataUnsafe?.user?.id
- 
-    let roles = worker.roles
 
     await updateDoc(
       doc(
@@ -206,12 +193,10 @@ function App() {
 
     const updatedWorker = {
       ...worker,
-     roles,
-    telegramId: tg?.initDataUnsafe?.user?.id || null
+      telegramId: tg?.initDataUnsafe?.user?.id || null
     }
 
     setCurrentWorker(updatedWorker)
-    setAllowedRoles(roles)
     setRole("")  
 
     localStorage.setItem(
@@ -227,10 +212,7 @@ function App() {
       "worker"
     )
 
-    setCurrentWorker(null)
-
-    setAllowedRoles([])
-
+    setCurrentWorker(null) 
     setRole("")
   }
 
@@ -504,9 +486,30 @@ function App() {
     team.members?.[currentPhone]
   );
 
-  const totalDailySalary =
-  dailyWasherSalary +
-  dailyHourlySalary
+  const packingTeam = teams.find(
+    (team) =>
+      team.type === "packing" &&
+      currentWorker &&
+      team.members?.[currentPhone]
+  );
+
+  const operatorTeam = teams.find(
+    (team) =>
+      team.type === "operator" &&
+      currentWorker &&
+      team.members?.[currentPhone]
+  );
+
+  const washerMember = washerTeam?.members?.[currentPhone];
+  const driverMember = driverTeam?.members?.[currentPhone];
+  const packingMember = packingTeam?.members?.[currentPhone];
+  const operatorMember = operatorTeam?.members?.[currentPhone];
+  const operatorEnabled = !!operatorTeam && operatorMember?.working;
+  const driverEnabled = !!driverTeam && driverMember?.working;
+  const washerEnabled = !!washerTeam && washerMember?.working;
+  const packingEnabled = !!packingTeam && packingMember?.working;
+
+  const totalDailySalary = dailyWasherSalary + dailyHourlySalary
 
 
   const addWorkerEarnings = async ({
@@ -1659,104 +1662,6 @@ function App() {
             setWorkerPhone(e.target.value)
           }
         />
-
-        <br /><br />
-   
-        <h3>Lavozim tanlang</h3>
-
-        <label>
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              if (e.target.checked) {
-                setRequestedRoles([
-                  ...requestedRoles,
-                  "operator",
-                ])
-              } else {
-                setRequestedRoles(
-                  requestedRoles.filter(
-                     (r) =>
-                      r !== "operator"
-                  )
-                )
-              }
-            }}
-          />
-          Operator
-        </label>  
-
-        <br />
-
-        <label>
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              if (e.target.checked) {
-                setRequestedRoles([
-                  ...requestedRoles,
-                  "driver",
-                ])
-              } else {
-                setRequestedRoles(
-                  requestedRoles.filter(
-                    (r) =>
-                      r !== "driver"
-                  )
-                )
-              }
-            }}
-          />
-          Driver
-        </label>
-
-        <br />
-
-        <label>
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              if (e.target.checked) {
-                setRequestedRoles([
-                  ...requestedRoles,
-                  "washer",
-                ])
-              } else {
-                setRequestedRoles(
-                 requestedRoles.filter(
-                    (r) =>
-                      r !== "washer"
-                  )
-                )
-              }
-            }}
-          />
-          Washer
-        </label>  
-
-        <br />
-
-        <label>
-          <input
-            type="checkbox"  
-            onChange={(e) => {
-              if (e.target.checked) {
-                setRequestedRoles([
-                  ...requestedRoles,
-                  "tayyorlovchi",
-                ])
-              } else {
-                setRequestedRoles(
-                  requestedRoles.filter(
-                    (r) =>
-                      r !== "tayyorlovchi"
-                  )    
-                )
-              }
-            }}
-          />
-          Tayyorlovchi
-        </label>
  
         <br /><br />
 
@@ -1953,10 +1858,6 @@ function App() {
 
         <div className="roles-grid">  
     
-        {(allowedRoles.includes("operator")
-          || allowedRoles.includes("admin")
-          || allowedRoles.includes("ega")
-        ) && (
           <div
             className="role-card"
             onClick={() => setRole("operator")}
@@ -1973,15 +1874,12 @@ function App() {
               Buyurtmalarni qabul qilish va boshqarish
             </div>
           </div>
-        )}
 
-        {(allowedRoles.includes("driver")
-          || allowedRoles.includes("admin")
-          || allowedRoles.includes("ega")
-        ) && (
           <div
-            className="role-card"
-            onClick={() => setRole("driver")}
+            className={`role-card ${driverEnabled ? "" : "role-disabled"}`}
+            onClick={() => {
+              if (driverEnabled) {setRole("driver");}
+            }}
           >
             <div style={{ fontSize: 42 }}>
               🚚
@@ -1995,15 +1893,12 @@ function App() {
               Buyurtmalarni yetkazish va statusni yangilash
             </div>
           </div>
-        )}
 
-        {(allowedRoles.includes("washer")
-          || allowedRoles.includes("admin")
-          || allowedRoles.includes("ega")
-        ) && (
           <div
-            className="role-card"
-            onClick={() => setRole("washer")}
+            className={`role-card ${washerEnabled ? "" : "role-disabled"}`}
+            onClick={() => {
+              if (washerEnabled) {setRole("washer");}
+            }}
           >
             <div style={{ fontSize: 42 }}>
               🧼
@@ -2017,15 +1912,12 @@ function App() {
               Gilamlarni yuvish va holatini belgilash
             </div>
           </div>
-        )}
 
-        {(allowedRoles.includes("tayyorlovchi")
-          || allowedRoles.includes("admin")
-          || allowedRoles.includes("ega")
-        ) && (
           <div
-            className="role-card"
-            onClick={() => setRole("tayyorlovchi")}
+            className={`role-card ${packingEnabled ? "" : "role-disabled"}`}
+            onClick={() => {
+              if (packingEnabled) {setRole("tayyorlovchi");}
+            }}
           >
             <div style={{ fontSize: 42 }}>
               📦
@@ -2039,7 +1931,6 @@ function App() {
               Gilamlarni tayyorlash va qadoqlash
             </div>
           </div>
-        )}
 
         {(allowedRoles.includes("admin")
           || allowedRoles.includes("ega")
