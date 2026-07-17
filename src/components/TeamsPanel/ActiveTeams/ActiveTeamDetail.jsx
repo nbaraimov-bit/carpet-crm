@@ -307,6 +307,7 @@ const useLeaderPanel = team.type === "washer" && isLeader;
             washerPrices={washerPrices}
             toggleWorking={toggleWorking}
             removeMember={removeMember}
+            isLeader={isLeader}
           />
         ))
 
