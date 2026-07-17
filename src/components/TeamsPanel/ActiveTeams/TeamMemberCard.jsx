@@ -133,14 +133,14 @@ export default function TeamMemberCard({
 
         <button 
           className="remove-member-btn"
-          onClick={removeMember}
+          onClick={() => removeMember(member)}
         >
           Chiqarib yuborish
         </button>
 
         <button
           className={`working-btn ${member.working ? "active" : "inactive"}`}
-          onClick={toggleWorking}
+          onClick={() => toggleWorking(member)}
         >
           {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
         </button>

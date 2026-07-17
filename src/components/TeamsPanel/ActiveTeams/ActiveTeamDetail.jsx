@@ -199,7 +199,7 @@ export default function ActiveTeamDetail({
 
   };
 
-  const toggleWorking = async () => {
+  const toggleWorking = async (member) => {
   
     const teamRef = doc(db, "teams", team.id);
   
@@ -210,7 +210,7 @@ export default function ActiveTeamDetail({
   };
   
   
-  const removeMember = async () => {
+  const removeMember = async (member) => {
   
     const ok = window.confirm(`${member.name} ni jamoadan chiqarilsinmi?`);
   
@@ -234,14 +234,14 @@ export default function ActiveTeamDetail({
   
   };
 
-const limits = calculateLimits();
+  const limits = calculateLimits();
 
-const isCarpetValid = limits.carpet.total === limits.carpet.limit;
-const isBlanketValid = limits.blanket.total === limits.blanket.limit;
-const isYakandozValid = limits.yakandoz.total === limits.yakandoz.limit;
-const isCurtainValid = limits.curtain.total === limits.curtain.limit;
-const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainValid;
-const useLeaderPanel = team.type === "washer" && isLeader;
+  const isCarpetValid = limits.carpet.total === limits.carpet.limit;
+  const isBlanketValid = limits.blanket.total === limits.blanket.limit;
+  const isYakandozValid = limits.yakandoz.total === limits.yakandoz.limit;
+  const isCurtainValid = limits.curtain.total === limits.curtain.limit;
+  const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainValid;
+  const useLeaderPanel = team.type === "washer" && isLeader;
 
   return (
 
