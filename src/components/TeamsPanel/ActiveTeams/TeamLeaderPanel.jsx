@@ -1,7 +1,10 @@
 import "./ActiveTeams.css"
 import { useEffect, useState } from "react";
 import { db } from "../../../firebase";
-import teamTypes, { teamTypeMap } from "../teamTypes";
+import { 
+  teamTypeMap,
+  teamDefaultShares,
+} from "../teamTypes";
 import {
   doc,
   updateDoc,
@@ -26,6 +29,8 @@ export default function TeamLeaderPanel({
   limits,
   canSave,
   earnings,
+  toggleWorking,
+  removeMember,
 }) {
 
   const [joinRequests, setJoinRequests] = useState([]);
@@ -64,42 +69,6 @@ export default function TeamLeaderPanel({
   }, [team]);
 
 
-  const toggleWorking = async () => {
-
-    const teamRef = doc(db, "teams", team.id);
-
-    await updateDoc(teamRef, {
-      [`members.${member.phone}.working`]: !member.working
-    });
-
-  };
-
-
-  const removeMember = async () => {
-
-    const ok = window.confirm(`${member.name} ni jamoadan chiqarilsinmi?`);
-
-    if (!ok) return;
-
-    try {
-
-      const teamRef = doc(db, "teams", team.id);
-
-      await updateDoc(teamRef, {
-        [`members.${member.phone}`]: deleteField(),
-      });
-
-    } catch (err) {
-
-      console.error(err);
-
-      alert("Xatolik yuz berdi");
-
-    }
-
-  };
-
-
   const approveJoinRequest = async (request) => {
 
     try {
@@ -115,10 +84,7 @@ export default function TeamLeaderPanel({
             name: request.name,
             phone: request.sender,
             rank: "member",
-            carpet: 0,
-            blanket: 0,
-            yakandoz: 0,
-            curtain: 0,
+            ...teamDefaultShares[team.type],
             working: true,
 
           },
@@ -280,7 +246,7 @@ export default function TeamLeaderPanel({
           <div className="member-salary">
 
             💰 Bugungi ish haqi
-
+ 
             <b>{(earnings?.[member.phone]?.salary ?? 0) .toLocaleString()} so'm </b>
 
           </div>
@@ -292,7 +258,7 @@ export default function TeamLeaderPanel({
                 className="remove-member-btn"
                 onClick={removeMember}
               >
-                🪓 Chopish
+                Chiqarib yuborish
               </button>
 
               <button

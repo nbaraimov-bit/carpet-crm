@@ -5,13 +5,60 @@ export default function TeamMemberCard({
   member,
   currentWorker,
   earnings,
+  toggleWorking,
+  removeMember,
+  isLeader,
+  driverPrices,
+  packingPrices,
+  workingCount,
 }) {
 
   const services = teamTypeMap[team.type]?.services || [];
+  const salaryField = `${team.type}Salary`;
+
+  const getServicePrice = (service) => {
+
+  if (team.type === "washer") {
+    return `${Number(member?.[service.key] || 0).toLocaleString()} so'm`;
+  }
+
+  if (team.type === "packing") {
+
+    const total = Number(packingPrices?.[service.key] || 0);
+
+    const price =
+      workingCount > 0
+        ? Math.round(total / workingCount)
+        : 0;
+
+    return `${price.toLocaleString()} so'm`;
+  }
+
+  if (team.type === "driver") {
+
+    const pickupTotal =
+      Number(driverPrices?.["pickup" + service.key.charAt(0).toUpperCase() + service.key.slice(1)] || 0);
+
+    const deliveryTotal =
+      Number(driverPrices?.["delivery" + service.key.charAt(0).toUpperCase() + service.key.slice(1)] || 0);
+
+    const pickup =
+      member.rank === "leader"
+        ? Math.round(pickupTotal * 0.55)
+        : Math.round(pickupTotal * 0.45);
+
+    const delivery =
+      member.rank === "leader"
+        ? Math.round(deliveryTotal * 0.55)
+        : Math.round(deliveryTotal * 0.45);
+
+    return `📥${pickup} | 📤${delivery}`;
+  }
+
+  return "";
+};
 
   return(<>
-
-    {team.type === "washer" &&(
 
       <div>
   
@@ -56,7 +103,7 @@ export default function TeamMemberCard({
                 </div>
 
                 <div className="member-price-value">
-                  {(member?.[service.key] ?? 0).toLocaleString()} so'm
+                  {getServicePrice(service)}
                 </div>
 
               </div>
@@ -72,7 +119,7 @@ export default function TeamMemberCard({
             </div>
 
             <div className="member-salary-value">
-              <b>{(earnings?.[member.phone]?.salary ?? 0) .toLocaleString()} so'm </b>
+              <b>{(earnings?.[member.phone]?.[salaryField] ?? 0).toLocaleString()} so'm</b>
             </div>
 
           </div>
@@ -81,6 +128,24 @@ export default function TeamMemberCard({
 
       </div>
 
+    {isLeader && (
+      <div className="member-actions">
+
+        <button 
+          className="remove-member-btn"
+          onClick={removeMember}
+        >
+          Chiqarib yuborish
+        </button>
+
+        <button
+          className={`working-btn ${member.working ? "active" : "inactive"}`}
+          onClick={toggleWorking}
+        >
+          {member.working ? "🟢 Faol" : "⚪️ Nofaol"}
+        </button>
+
+      </div>
     )}
   
   </>)

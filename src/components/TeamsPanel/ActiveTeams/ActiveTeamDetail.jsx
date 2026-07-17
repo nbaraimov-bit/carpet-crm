@@ -216,6 +216,41 @@ export default function ActiveTeamDetail({
 
   };
 
+  const toggleWorking = async () => {
+  
+    const teamRef = doc(db, "teams", team.id);
+  
+    await updateDoc(teamRef, {
+      [`members.${member.phone}.working`]: !member.working
+    });
+  
+  };
+  
+  
+  const removeMember = async () => {
+  
+    const ok = window.confirm(`${member.name} ni jamoadan chiqarilsinmi?`);
+  
+    if (!ok) return;
+  
+    try {
+  
+      const teamRef = doc(db, "teams", team.id);
+  
+      await updateDoc(teamRef, {
+        [`members.${member.phone}`]: deleteField(),
+      });
+  
+    } catch (err) {
+  
+      console.error(err);
+  
+      alert("Xatolik yuz berdi");
+  
+    }
+  
+  };
+
 const limits = calculateLimits();
 
 const isCarpetValid = limits.carpet.total === limits.carpet.limit;
@@ -223,6 +258,7 @@ const isBlanketValid = limits.blanket.total === limits.blanket.limit;
 const isYakandozValid = limits.yakandoz.total === limits.yakandoz.limit;
 const isCurtainValid = limits.curtain.total === limits.curtain.limit;
 const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainValid;
+const useLeaderPanel = team.type === "washer" && isLeader;
 
   return (
 
@@ -254,7 +290,7 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
 
       />}
 
-      {isLeader ? (
+      {useLeaderPanel ? (
 
         members.map((member) => (
           <TeamLeaderPanel
@@ -269,6 +305,8 @@ const canSave = isCarpetValid && isBlanketValid && isYakandozValid && isCurtainV
             limits={limits}
             canSave={canSave}
             earnings={earnings}
+            toggleWorking={toggleWorking}
+            removeMember={removeMember}
           />
         ))
 
