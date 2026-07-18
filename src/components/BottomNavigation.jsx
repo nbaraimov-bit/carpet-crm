@@ -1,47 +1,80 @@
+import "./BottomNavigation.css";
+
 export default function BottomNavigation({
   page,
   setPage,
+  currentWorker,
 }) {
+
+  const navItems = [
+    {
+      page: "home",
+      icon: "🏠",
+      title: "Bosh menu",
+    },
+    {
+      page: "teams",
+      icon: "👥",
+      title: "Teams",
+    },
+    {
+      page: "archive",
+      icon: "🗄",
+      title: "Arxiv",
+    },
+    {
+      page: "stats",
+      icon: "📊",
+      title: "Statistika",
+      adminOnly: true,
+    },
+    {
+      page: "profile",
+      icon: "👤",
+      title: "Profil",
+    },
+  ];
+
   return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
 
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
+    <div className="bottom-nav">
 
-        padding: "12px 0",
+      {navItems.map((item) => {
 
-        background: "#0b1538",
+        if (
+          item.adminOnly &&
+          currentWorker?.role !== "admin" &&
+          currentWorker?.role !== "ega"
+        ) {
+          return null;
+        }
 
-        borderTop: "1px solid rgba(255,255,255,0.08)",
+        return (
+  
+          <button
+            key={item.page}
+            className={`bottom-nav-item ${
+              page === item.page ? "active" : ""
+            }`} 
+            onClick={() => setPage(item.page)}
+          >
 
-        zIndex: 1000,
-      }}
-    >
-      <button onClick={() => setPage("home")}>
-        🏠<br />
-        Menu
-      </button>
+            <div className="bottom-nav-icon">
+              {item.icon}
+            </div>
 
-      <button onClick={() => setPage("teams")}>
-        👥<br />
-        Teams
-      </button>
+            <div className="bottom-nav-title">
+              {item.title}
+            </div>
 
-      <button onClick={() => setPage("report")}>
-        📊<br />
-        Hisobot
-      </button>
+          </button>
+  
+        );
 
-      <button onClick={() => setPage("profile")}>
-        👤<br />
-        Shaxsiy
-      </button>
+      })}
+
     </div>
+
   );
+
 }

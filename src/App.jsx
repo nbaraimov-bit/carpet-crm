@@ -2461,6 +2461,11 @@ function App() {
       />
     )}
 
+    <BottomNavigation
+      page={page}
+      setPage={setPage}
+      currentWorker={currentWorker}
+    />
   </div>
   )
 }

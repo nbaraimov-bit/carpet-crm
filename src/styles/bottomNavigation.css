@@ -1,0 +1,50 @@
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+
+    height:70px;
+
+    background:#111827;
+    border-top:1px solid #2b3347;
+
+    z-index:1000;
+}
+
+.bottom-nav-item{
+    flex:1;
+
+    background:none;
+    border:none;
+
+    color:#8b94a8;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    gap:3px;
+
+    height:100%;
+
+    cursor:pointer;
+}
+
+.bottom-nav-icon{
+    font-size:22px;
+}
+
+.bottom-nav-title{
+    font-size:11px;
+}
+
+.bottom-nav-item.active{
+    color:#4ade80;
+    border-top:3px solid #4ade80;
+}
