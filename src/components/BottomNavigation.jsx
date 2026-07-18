@@ -35,6 +35,10 @@ export default function BottomNavigation({
     },
   ];
 
+  const isAdmin =
+  currentWorker?.roles?.includes("admin") ||
+  currentWorker?.roles?.includes("ega");
+
   return (
 
     <div className="bottom-nav">
@@ -43,8 +47,7 @@ export default function BottomNavigation({
 
         if (
           item.adminOnly &&
-          currentWorker?.roles !== "admin" &&
-          currentWorker?.roles !== "ega"
+          !isAdmin
         ) {
           return null;
         }
