@@ -43,8 +43,8 @@ export default function BottomNavigation({
 
         if (
           item.adminOnly &&
-          currentWorker?.role !== "admin" &&
-          currentWorker?.role !== "ega"
+          currentWorker?.roles !== "admin" &&
+          currentWorker?.roles !== "ega"
         ) {
           return null;
         }
