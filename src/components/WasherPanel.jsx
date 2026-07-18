@@ -1,7 +1,6 @@
 export default function WasherPanel({
 
   orders,
-  allowedRoles,
   washerMode,
   setWasherMode,
   updateWashStatus,
@@ -95,9 +94,7 @@ export default function WasherPanel({
 
             <br /><br />
 
-            {allowedRoles.includes("washer") && 
-              !allowedRoles.includes("admin") &&
-              !allowedRoles.includes("ega") &&
+            {
               (
                 <>
                   <button

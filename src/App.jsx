@@ -29,7 +29,6 @@ import {
 function App() {
   const [orders, setOrders] = useState([])
   const [role, setRole] = useState("")
-  const [allowedRoles, setAllowedRoles] = useState([])
   const [driverMode, setDriverMode] = useState("") 
   const [washerMode, setWasherMode] = useState("")
   const [carpetCount, setCarpetCount] = useState("")
@@ -831,40 +830,11 @@ function App() {
 
     if (savedWorker) {
 
-      const worker =
-        JSON.parse(savedWorker)
+      const worker = JSON.parse(savedWorker)
 
       setCurrentWorker(worker)
-
-    if (worker.roles.includes("ega")) {
-      setAllowedRoles([
-        "operator",
-        "driver",
-        "washer",
-        "tayyorlovchi",
-        "admin",
-        "ega",
-      ])
-
       setRole("")
-    }
-    else if (
-      worker.roles.includes("admin")
-    ) {
-      setAllowedRoles([
-        "operator",
-        "driver",
-        "washer",
-        "tayyorlovchi",
-        "admin",
-      ])
-
-      setRole("")
-    }
-    else {
-      setAllowedRoles(worker.roles)
-      setRole("")
-    }
+    
     }
 
   }, [])
@@ -985,8 +955,6 @@ function App() {
         }
 
         if (!data) return
-
-        setAllowedRoles(data.roles || [])
 
         setCurrentWorker({
           ...currentWorker,
@@ -1588,10 +1556,7 @@ function App() {
   )
 
   {/* ===== kirish ===== */}
-  if (
-    allowedRoles.length === 0 &&
-    !requestSent
-  ) {
+  if (!currentWorker && !requestSent ) {
     return (
       <div style={{ padding: 20 }}>
         <h1>Kirish</h1>  
@@ -1627,7 +1592,7 @@ function App() {
     )
   }
 
-  if (allowedRoles.length === 0) {
+  if (!currentWorker) {
 
     if (requestSent === true) {
       return (
@@ -1932,8 +1897,8 @@ function App() {
             </div>
           </div>
 
-        {(allowedRoles.includes("admin")
-          || allowedRoles.includes("ega")
+        {(currentWorker?.roles?.includes("admin")
+          || currentWorker?.roles?.includes("ega")
         ) && (
           <div
             className="role-card"
@@ -1953,7 +1918,7 @@ function App() {
           </div>
         )}
 
-        {allowedRoles.includes("ega") && (
+        {currentWorker?.roles?.includes("ega") && (
           <div
             className="role-card"
             onClick={() => setRole("ega")}
@@ -1972,8 +1937,8 @@ function App() {
           </div>
         )}
 
-        {(allowedRoles.includes("admin") ||
-          allowedRoles.includes("ega")
+        {(currentWorker?.roles?.includes("admin") ||
+          currentWorker?.roles?.includes("ega")
         ) && (
           <div
             className="role-card"
@@ -1993,8 +1958,8 @@ function App() {
           </div>
         )}
 
-        {(allowedRoles.includes("admin") ||
-          allowedRoles.includes("ega")  
+        {(currentWorker?.roles?.includes("admin") ||
+          currentWorker?.roles?.includes("ega")  
         ) && (
           <div
             className="role-card"
@@ -2185,8 +2150,6 @@ function App() {
       <WasherPanel
 
         orders={orders}
-
-        allowedRoles={allowedRoles}
         washerMode={washerMode}
         setWasherMode={setWasherMode}  
         updateWashStatus={updateWashStatus}
@@ -2333,10 +2296,9 @@ function App() {
         setExpandedWorker={setExpandedWorker}
         orders={orders}
         setOrders={setOrders}
-        allowedRoles={allowedRoles}
-        setAllowedRoles={setAllowedRoles}
         getAttendanceSalary={getAttendanceSalary}
         workerEarnings={workerEarnings}
+        currentWorker={currentWorker}
 
       />
     )}
@@ -2452,7 +2414,6 @@ function App() {
         currentWorker={currentWorker}
         setPage={setPage}
         role={currentWorker?.role}
-        allowedRoles={allowedRoles}
         teamEarnings={teamEarnings}
         driverPrices={driverPrices}
         packingPrices={packingPrices}

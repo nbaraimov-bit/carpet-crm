@@ -27,7 +27,6 @@ export default function TeamsPanel({
   currentWorker,
   workers,
   setPage,
-  allowedRoles,
   teamEarnings,
   driverPrices,
   washerPrices,
@@ -42,8 +41,8 @@ export default function TeamsPanel({
   const [showJoinTeam, setShowJoinTeam] = useState(false);
   const [pendingJoinTeams, setPendingJoinTeams] = useState([]);
 
-  const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega")
-  const isWorker = allowedRoles.includes("worker")
+  const isAdmin = currentWorker?.roles?.includes("admin") || currentWorker?.roles?.includes("ega")
+  const isWorker = currentWorker?.roles?.includes("worker")
   
   const myTeams = isAdmin ? teams : teams.filter(team => team.members?.[currentWorker.phone]);
 
@@ -259,7 +258,6 @@ export default function TeamsPanel({
         team={selectedTeam}
         currentWorker={currentWorker}
         closeTeam={closeTeam}
-        allowedRoles={allowedRoles}
         role={role}
         teamEarnings={teamEarnings}
         driverPrices={driverPrices}

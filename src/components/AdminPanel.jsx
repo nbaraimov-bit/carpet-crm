@@ -39,8 +39,7 @@ export default function AdminPanel({
   setExpandedWorker,
   orders,
   setOrders,
-  allowedRoles,
-  setAllowedRoles,
+  currentWorker,
   getAttendanceSalary,
   workerEarnings,
 
@@ -261,7 +260,7 @@ export default function AdminPanel({
                   "driver",
                   "washer",
                   "tayyorlovchi",
-                  ...(allowedRoles.includes(
+                  ...(currentWorker?.roles?.includes("ega")(
                     "ega"
                   )
                     ? ["admin"]

@@ -23,7 +23,6 @@ export default function ActiveTeamDetail({
     currentWorker,
     closeTeam,
     openTeam,
-    allowedRoles,
     role,
     teamEarnings,
     driverPrices,
@@ -48,7 +47,7 @@ export default function ActiveTeamDetail({
   const activeMembers = members.filter(member => member.working);
   const isLeader = teamMember?.rank === "leader";
   const isMember = teamMember?.rank === "member";
-  const isAdmin = allowedRoles.includes("admin") || allowedRoles.includes("ega");
+  const isAdmin = currentWorker?.roles?.includes("admin") || currentWorker?.roles?.includes("ega")
   const teamType = teamTypeMap[team.type];
   const services = teamType?.services || [];
 
