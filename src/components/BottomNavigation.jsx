@@ -1,4 +1,4 @@
-import "src/styles/BottomNavigation.css";
+import "../styles/bottomNavigation.css";
 
 export default function BottomNavigation({
   page,
