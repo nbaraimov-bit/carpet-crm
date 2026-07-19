@@ -71,7 +71,6 @@ function App() {
   const [packingPrices, setPackingPrices] = useState({})
   const [tarif, setTarif] = useState("standart")
   const [driverComment, setDriverComment] = useState("")
-  const [showArchive, setShowArchive] = useState(false)
   const [archives, setArchives] = useState([])
   const [archiveSearch, setArchiveSearch] = useState("")
   const [workerEarnings, setWorkerEarnings] = useState({})
@@ -329,12 +328,6 @@ function App() {
       }
     )
 
-    //*setWorkers(
-    //  workers.map((w) =>
-      //  w.firebaseId === workerDoc.firebaseId
-        //? {...w, working: false} : w
-      //)
-    //)
   }
 
   const changeWorkerStatus =  async (
@@ -1639,133 +1632,6 @@ function App() {
     ) 
   }
 
-
-  {/* ===== arxiv ===== */}
-
-  const groupedArchives = {}
-
-  archives.forEach((order) => {
-
-    if (
-      !groupedArchives[order.customerId]
-    ) {
-      groupedArchives[order.customerId] = []
-    }
-
-    groupedArchives[order.customerId].push(order)
-
-  })
-
-  if (showArchive) {
-
-    return (
-      <div
-        style={{ padding: 20 }}
-      >
-        <button
-          onClick={() => setPage("home")}
-          style={{fontSize: 20}}
-        >
-          ⏪️
-        </button>
-
-        <h1>Arxiv</h1>
-
-        <br />
-
-        <input
-          placeholder="Qidirish"
-          value={archiveSearch}
-          onChange={(e) => setArchiveSearch(e.target.value)}
-        />
-
-        <br /><br />
-
-        {Object.entries(groupedArchives)
-          .filter(
-            ([customerId, orders]) => {
-
-              const text = archiveSearch.toLowerCase()
-
-              return (
-                customerId.toLowerCase().includes(text) ||
-                orders[0] .phone.includes(text) ||
-                orders.some((o) => String(o.id).includes(text))
-              )
-
-            }
-          )
-           
-          .sort(([a], [b]) =>
-            Number(a.replace("C", "")) -
-            Number(b.replace("C", ""))
-          ).map(
-
-          ([customerId, orders]) => (
-
-            <div
-              key={customerId}
-              style={{
-                border: "3px solid #ccc",
-                padding: 10,
-                marginBottom: 20,
-                borderRadius: 10,
-              }}
-            >
-
-              <p><b>Mijoz ID:</b>{" "}{customerId}</p>
-              <p><b>Telefon:</b>{" "}{orders[0].phone}</p>
-              <p><b>Buyurtma soni:</b>{" "}{orders.length}</p>
-            
-              <details>
-                <summary>Batafsil</summary>
-
-                {orders.map((order) => (
-                  <div
-                    key={order.firebaseId}
-                    style={{
-                      border: "1px solid #aaa",
-                      padding: 10,
-                      marginTop: 10,
-                      borderRadius: 10,
-                    }}
-                  >
-
-                    <p>
-  <b>Sana:</b>{" "}
-  {
-    order.createdAt?.toDate
-      ? order.createdAt
-          .toDate()
-          .toLocaleDateString("uz-UZ")
-      : "-"
-  }
-</p>
-                    <p><b>Buyurtma ID:</b>{" "}{order.id}</p>
-                    <p><b>Manzil:</b>{" "}{order.address}</p>
-                    {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
-                    {order.kvm && (<p><b>Kv.m:</b> {order.kvm}</p>)}
-                    {order.blanketCount && (<p><b>Adyol:</b> {order.blanketCount}</p>)}
-                    {order.yakandozCount && (<p><b>Yakandoz:</b> {order.yakandozCount}</p>)}
-                    {order.curtainCount && (<p><b>Parda:</b> {order.curtainCount}</p>)}
-                    {order.curtainMeter && (<p><b>Parda metri:</b> {order.curtainMeter}</p>)}
-                    {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}
-                    <p><b>Tarif:</b>{" "}{order.tarif}</p>
-                    {order.price && (<p><b>Jami narx:</b> {order.price}</p>)}
-                    <p><b>Status:</b>{" "}{order.status}</p>
-
-                  </div>
-                ))}
-              </details>
-
-            </div>
-
-          ))
-        }
-      </div>
-    )
-  }
-
   if (
     currentWorker &&
     workers.length === 0
@@ -1936,65 +1802,6 @@ function App() {
             </div>
           </div>
         )}
-
-        {(currentWorker?.roles?.includes("admin") ||
-          currentWorker?.roles?.includes("ega")
-        ) && (
-          <div
-            className="role-card"
-            onClick={() => setPage("archive")}
-          >
-            <div style={{ fontSize: 42 }}>
-              🗂️
-            </div>
-
-            <div className="role-title">
-              Arxiv
-            </div>
-
-            <div className="role-subtitle">
-              Arxivlangan buyurtmalar va ma'lumotlar
-            </div>
-          </div>
-        )}
-
-        {(currentWorker?.roles?.includes("admin") ||
-          currentWorker?.roles?.includes("ega")  
-        ) && (
-          <div
-            className="role-card"
-            onClick={() => setPage("report")}
-          >
-            <div style={{ fontSize: 42 }}>
-              📊
-            </div>
-
-            <div className="role-title">
-              Hisobot
-            </div>
-
-            <div className="role-subtitle">
-              Statistikalar va hisobotlar
-            </div>
-          </div>
-        )}
-
-        <div
-  className="role-card"
-  onClick={() => setPage("teams")}
->
-  <div style={{ fontSize: 42 }}>
-    👥
-  </div>
-
-  <div className="role-title">
-    Teams
-  </div>
-
-  <div className="role-subtitle">
-    Jamoalarni boshqarish
-  </div>
-</div>
 
         <br /><br />
 
@@ -2322,8 +2129,161 @@ function App() {
 
     )}
 
+    {/* ===== teams panel ===== */}
+    {page === "teams" && (
+      <TeamsPanel
+        teams={teams}
+        setTeams={setTeams}
+        workers={workers}
+        currentWorker={currentWorker}
+        setPage={setPage}
+        role={currentWorker?.role}
+        teamEarnings={teamEarnings}
+        driverPrices={driverPrices}
+        packingPrices={packingPrices}
+        washerPrices={washerPrices}
 
-    {/* ===== hisobot panel ===== */}
+      />
+    )}
+
+    <BottomNavigation
+      page={page}
+      setPage={setPage}
+      currentWorker={currentWorker}
+    />
+  </div>
+  )
+}
+
+export default App
+
+/*   { ===== arxiv ===== }
+
+  const groupedArchives = {}
+
+  archives.forEach((order) => {
+
+    if (
+      !groupedArchives[order.customerId]
+    ) {
+      groupedArchives[order.customerId] = []
+    }
+
+    groupedArchives[order.customerId].push(order)
+
+  })
+
+  if (showArchive) {
+
+    return (
+      <div
+        style={{ padding: 20 }}
+      >
+        <button
+          onClick={() => setPage("home")}
+          style={{fontSize: 20}}
+        >
+          ⏪️
+        </button>
+
+        <h1>Arxiv</h1>
+
+        <br />
+
+        <input
+          placeholder="Qidirish"
+          value={archiveSearch}
+          onChange={(e) => setArchiveSearch(e.target.value)}
+        />
+
+        <br /><br />
+
+        {Object.entries(groupedArchives)
+          .filter(
+            ([customerId, orders]) => {
+
+              const text = archiveSearch.toLowerCase()
+
+              return (
+                customerId.toLowerCase().includes(text) ||
+                orders[0] .phone.includes(text) ||
+                orders.some((o) => String(o.id).includes(text))
+              )
+
+            }
+          )
+           
+          .sort(([a], [b]) =>
+            Number(a.replace("C", "")) -
+            Number(b.replace("C", ""))
+          ).map(
+
+          ([customerId, orders]) => (
+
+            <div
+              key={customerId}
+              style={{
+                border: "3px solid #ccc",
+                padding: 10,
+                marginBottom: 20,
+                borderRadius: 10,
+              }}
+            >
+
+              <p><b>Mijoz ID:</b>{" "}{customerId}</p>
+              <p><b>Telefon:</b>{" "}{orders[0].phone}</p>
+              <p><b>Buyurtma soni:</b>{" "}{orders.length}</p>
+            
+              <details>
+                <summary>Batafsil</summary>
+
+                {orders.map((order) => (
+                  <div
+                    key={order.firebaseId}
+                    style={{
+                      border: "1px solid #aaa",
+                      padding: 10,
+                      marginTop: 10,
+                      borderRadius: 10,
+                    }}
+                  >
+
+                    <p>
+                      <b>Sana:</b>{" "}
+                      {
+                        order.createdAt?.toDate
+                        ? order.createdAt
+                        .toDate()
+                        .toLocaleDateString("uz-UZ")
+                        : "-"
+                      }
+                    </p>
+                    <p><b>Buyurtma ID:</b>{" "}{order.id}</p>
+                    <p><b>Manzil:</b>{" "}{order.address}</p>
+                    {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
+                    {order.kvm && (<p><b>Kv.m:</b> {order.kvm}</p>)}
+                    {order.blanketCount && (<p><b>Adyol:</b> {order.blanketCount}</p>)}
+                    {order.yakandozCount && (<p><b>Yakandoz:</b> {order.yakandozCount}</p>)}
+                    {order.curtainCount && (<p><b>Parda:</b> {order.curtainCount}</p>)}
+                    {order.curtainMeter && (<p><b>Parda metri:</b> {order.curtainMeter}</p>)}
+                    {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}
+                    <p><b>Tarif:</b>{" "}{order.tarif}</p>
+                    {order.price && (<p><b>Jami narx:</b> {order.price}</p>)}
+                    <p><b>Status:</b>{" "}{order.status}</p>
+
+                  </div>
+                ))}
+              </details>
+
+            </div>
+
+          ))
+        }
+      </div>
+    )
+  } 
+    
+       ===== hisobot panel ===== 
     {page === "report" && (
 
       <div
@@ -2403,32 +2363,4 @@ function App() {
 
       </div>
 
-    )}
-
-    {/* ===== teams panel ===== */}
-    {page === "teams" && (
-      <TeamsPanel
-        teams={teams}
-        setTeams={setTeams}
-        workers={workers}
-        currentWorker={currentWorker}
-        setPage={setPage}
-        role={currentWorker?.role}
-        teamEarnings={teamEarnings}
-        driverPrices={driverPrices}
-        packingPrices={packingPrices}
-        washerPrices={washerPrices}
-
-      />
-    )}
-
-    <BottomNavigation
-      page={page}
-      setPage={setPage}
-      currentWorker={currentWorker}
-    />
-  </div>
-  )
-}
-
-export default App
+    )} */
