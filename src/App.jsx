@@ -1043,6 +1043,32 @@ function App() {
     )
   }, [])
 
+
+  async function updateExpenseFund(order) {
+
+    const carpet =
+  Number(order.kvm || 0) * 3000;
+
+const blanket =
+  Number(order.blanketCount || 0) * 15000;
+
+const yakandoz =
+  Number(order.yakandozCount || 0) * 15000;
+
+const curtain =
+  Number(order.curtainMeter || 0) * 3000;
+
+const earnedToday =
+  carpet +
+  blanket +
+  yakandoz +
+  curtain;
+
+console.log("Expense Fund:", earnedToday);
+
+  }
+
+
   {/* ===== add order ===== */}
   const addOrder = async () => {
 
@@ -1218,9 +1244,11 @@ function App() {
           status: "Yetkazildi",
           archivedAt: serverTimestamp(),
         }
-      )
+      );
 
-      await deleteDoc(orderRef)
+      await updateExpenseFund(order);
+
+      await deleteDoc(orderRef);
 
       return
     }
@@ -2098,7 +2126,7 @@ function App() {
         packingPrices={packingPrices}
         setPackingPrices={setPackingPrices}
 
-      />
+      />  
 
     )}
 
@@ -2110,7 +2138,7 @@ function App() {
         workers={workers}
         currentWorker={currentWorker}
         setPage={setPage}
-        role={currentWorker?.role}
+        role={currentWorker?.role} 
         teamEarnings={teamEarnings}
         driverPrices={driverPrices}
         packingPrices={packingPrices}
