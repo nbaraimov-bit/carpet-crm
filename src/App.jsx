@@ -24,6 +24,7 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  increment,
 } from "firebase/firestore";
 
 function App() {
@@ -1046,25 +1047,33 @@ function App() {
 
   async function updateExpenseFund(order) {
 
-    const carpet =
-  Number(order.kvm || 0) * 3000;
+    const carpet = Number(order.kvm || 0) * 3000;
+    const blanket = Number(order.blanketCount || 0) * 15000;
+    const yakandoz = Number(order.yakandozCount || 0) * 15000;
+    const curtain = Number(order.curtainMeter || 0) * 3000;
+    const earnedToday = carpet + blanket + yakandoz + curtain;
+    const today = new Date().toISOString().split("T")[0];
+    const expenseRef = doc(db, "expenses", today);
+    const expenseSnap = await getDoc(expenseRef);
 
-const blanket =
-  Number(order.blanketCount || 0) * 15000;
+    if (!expenseSnap.exists()) {
+      await setDoc(expenseRef, {
+        openingFund: 0,
+        earnedToday: earnedToday,
+        spentToday: 0, 
+        currentFund: earnedToday,
+        remainingFund: earnedToday,
+        createdAt: serverTimestamp(),
+      });
 
-const yakandoz =
-  Number(order.yakandozCount || 0) * 15000;
+      return;
+    }
 
-const curtain =
-  Number(order.curtainMeter || 0) * 3000;
-
-const earnedToday =
-  carpet +
-  blanket +
-  yakandoz +
-  curtain;
-
-console.log("Expense Fund:", earnedToday);
+    await updateDoc(expenseRef, {
+      earnedToday: increment(earnedToday),
+      currentFund: increment(earnedToday),
+      remainingFund: increment(earnedToday),
+    });
 
   }
 
