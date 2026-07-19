@@ -1655,15 +1655,13 @@ function App() {
     )
   }
 
-  {/* ===== rolelar ===== */}
-  if (!role && page === "home") {
-    return (
-      workers.find(
-        (w) => w.phone === currentWorker?.phone
-      )?.working ||
-      currentWorker?.roles?.includes("admin") ||
-      currentWorker?.roles?.includes("ega")
-      ?(
+  return (
+
+  <div style={{ padding: 20 }}>
+
+      {/* ===== rolelar ===== */}
+    {!role && page === "home" && (
+      
       <div className="app-container">
         <div className="welcome-card">
 
@@ -1851,33 +1849,8 @@ function App() {
         )}
         </div>
       </div>
-    ) : (
-      <div
-        style={{padding: 20}}
-      >
-
-        <h3>Sizda ruxsat yo‘q</h3>
-        <p>Admin tasdiqlashini kuting</p>
-
-        {currentWorker?.roles?.includes("admin") && (
-
-          <button
-            onClick={() => {
-            setRole("washer")
-            setWasherMode("cabinet")
-            }}
-          >
-            Shaxsiy kabinet
-          </button>
-        )}
-
-      </div>
-    ))
-  }
-
-  return (
-
-  <div style={{ padding: 20 }}>
+      )
+    }
 
     {/* ===== operator panel ===== */}
     {role === "operator" && (
