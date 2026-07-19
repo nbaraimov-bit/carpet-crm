@@ -1853,7 +1853,7 @@ function App() {
     }
 
     {/* ===== operator panel ===== */}
-    {role === "operator" && (
+    {page === "home" && role === "operator" && (
 
       <OperatorPanel
 
@@ -1889,7 +1889,7 @@ function App() {
 
 
     {/* ===== driver panel ===== */}
-    {role === "driver" && (
+    {page === "home" && role === "driver" && (
       <DriverPanel
 
         orders={orders}
@@ -1926,7 +1926,7 @@ function App() {
 
 
     {/* ===== washer panel ===== */}
-    {role === "washer" && (
+    {page === "home" && role === "washer" && (
       <WasherPanel
 
         orders={orders}
@@ -1961,7 +1961,7 @@ function App() {
 
 
     {/* ===== tayyorlovchi panel ===== */}
-    {role === "tayyorlovchi" && (
+    {page === "home" && role === "tayyorlovchi" && (
     <div>
       <h1>Tayyorlovchi panel</h1>
 
@@ -2037,7 +2037,7 @@ function App() {
 
 
     {/* ===== admin panel ===== */}
-    {role === "admin" && (
+    {page === "home" && role === "admin" && (
     
       <AdminPanel
 
@@ -2084,7 +2084,7 @@ function App() {
     )}
 
     {/* ===== ega panel ===== */}
-    {role === "ega"  && (
+    {page === "home" && role === "ega"  && (
     
       <EgaPanel
         setRole={setRole}
