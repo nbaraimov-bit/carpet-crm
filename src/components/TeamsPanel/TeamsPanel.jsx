@@ -171,7 +171,7 @@ export default function TeamsPanel({
   return (<>
 
     {teamMode === "list" && (
-      <div>
+      <div className="teamsPanel">
      
         <button onClick={() => setPage("home")}>
           ⏪
