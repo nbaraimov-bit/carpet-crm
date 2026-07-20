@@ -1844,10 +1844,29 @@ function App() {
 
     }
 
+    const expenseRef = doc(db, "expenses", today);
+
+    const expenseSnap = await getDoc(expenseRef);
+
+    let expenseFund = 0;
+    let earnedToday = 0;
+
+    if (expenseSnap.exists()) {
+
+      const expense = expenseSnap.data();
+      expenseFund = Number(expense.remainingFund || 0);
+      earnedToday = Number(expense.earnedToday || 0);
+
+    }
+
+    const profit = income - salary - earnedToday;
+
     setStats(prev => ({
       ...prev,
       income,
       salary,
+      expenseFund,
+      profit,
     }));
 
   }
