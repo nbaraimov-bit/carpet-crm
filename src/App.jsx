@@ -1160,6 +1160,46 @@ function App() {
   }
 
 
+  function calculateTotalSalary(
+    order,
+    washerPrices,
+    driverPrices,
+    packingPrices
+  ) {
+    let total = 0;
+
+    total += (
+      Number(washerPrices.carpet || 0) +
+      Number(driverPrices.pickupCarpet || 0) +
+      Number(driverPrices.deliveryCarpet || 0) +
+      Number(packingPrices.carpet || 0)
+    ) * Number(order.kvm || 0);
+
+    total += (
+      Number(washerPrices.blanket || 0) +
+      Number(driverPrices.pickupBlanket || 0) +
+      Number(driverPrices.deliveryBlanket || 0) +
+      Number(packingPrices.blanket || 0)
+    ) * Number(order.blanketCount || 0);
+
+    total += (
+      Number(washerPrices.yakandoz || 0) +
+      Number(driverPrices.pickupYakandoz || 0) +
+      Number(driverPrices.deliveryYakandoz || 0) +
+      Number(packingPrices.yakandoz || 0)
+    ) * Number(order.yakandozCount || 0);
+
+    total += (
+      Number(washerPrices.curtain || 0) +
+      Number(driverPrices.pickupCurtain || 0) +
+      Number(driverPrices.deliveryCurtain || 0) +
+      Number(packingPrices.curtain || 0)
+    ) * Number(order.curtainMeter || 0);
+
+    return total;
+  }
+
+
   {/* ===== add order ===== */}
   const addOrder = async () => {
 
@@ -1325,6 +1365,13 @@ function App() {
         }
       }
 
+      const totalSalary = calculateTotalSalary(
+        order,
+        washerPrices,
+        driverPrices,
+        packingPrices
+      );
+
       await setDoc(
         doc(
           db, "archives", order.id
@@ -1332,7 +1379,8 @@ function App() {
           ...order,
           status: "Yetkazildi",
           archivedAt: serverTimestamp(),
-          archiveDate: dateId
+          archiveDate: dateId,
+          totalSalary,
         }
       );
 
@@ -1816,34 +1864,16 @@ function App() {
     const archiveSnap = await getDocs(archiveQuery);
 
     let income = 0;
+    let salary = 0;
 
     archiveSnap.forEach((doc) => {
 
       const order = doc.data();
 
       income += Number(order.price || 0);
+      salary += Number(order.totalSalary || 0);
 
     });
-
-    const workerRef = doc(db, "workerEarnings", today);
-
-    const workerSnap = await getDoc(workerRef);
-
-    let salary = 0;
-
-    if (workerSnap.exists()) {
-
-      const workers = workerSnap.data();
-
-      Object.values(workers).forEach((worker) => {
-
-        salary += Number(worker.driverSalary || 0);
-        salary += Number(worker.washerSalary || 0);
-        salary += Number(worker.packingSalary || 0);
-
-      });
-
-    }
 
     const expenseRef = doc(db, "expenses", today);
 
