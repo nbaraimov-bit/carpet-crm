@@ -25,6 +25,9 @@ import {
   getDocs,
   setDoc,
   increment,
+  limit,
+  documentId,
+  orderBy,
 } from "firebase/firestore";
 
 function App() {
@@ -1045,6 +1048,52 @@ function App() {
   }, [])
 
 
+  async function ensureExpenseDocument() {
+
+    const now = new Date();
+
+    const today = `${now.getFullYear()}-${
+      String(now.getMonth() + 1).padStart(2, "0")
+    }-${
+      String(now.getDate()).padStart(2, "0")
+    }`;
+
+    const expenseRef = doc(db, "expenses", today);
+ 
+    const expenseSnap = await getDoc(expenseRef);
+
+    if (expenseSnap.exists()) {
+      return expenseRef;
+    }
+
+    let openingFund = 0;
+
+    const lastExpenseQuery = query(
+      collection(db, "expenses"),
+      orderBy(documentId(), "desc"),
+      limit(1)
+    );
+
+    const lastExpenseSnap = await getDocs(lastExpenseQuery);
+
+    if (!lastExpenseSnap.empty) {
+      openingFund = Number(lastExpenseSnap.docs[0].data().remainingFund || 0);
+    }
+
+    await setDoc(expenseRef, {
+      openingFund,
+      earnedToday: 0,
+      spentToday: 0,
+      currentFund: openingFund,
+      remainingFund: openingFund,
+      createdAt: serverTimestamp(),
+    });
+
+    return expenseRef;
+
+  }
+
+
   async function updateExpenseFund(order) {
 
     const carpet = Number(order.kvm || 0) * 3000;
@@ -1052,27 +1101,40 @@ function App() {
     const yakandoz = Number(order.yakandozCount || 0) * 15000;
     const curtain = Number(order.curtainMeter || 0) * 3000;
     const earnedToday = carpet + blanket + yakandoz + curtain;
-    const today = new Date().toISOString().split("T")[0];
-    const expenseRef = doc(db, "expenses", today);
-    const expenseSnap = await getDoc(expenseRef);
 
-    if (!expenseSnap.exists()) {
-      await setDoc(expenseRef, {
-        openingFund: 0,
-        earnedToday: earnedToday,
-        spentToday: 0, 
-        currentFund: earnedToday,
-        remainingFund: earnedToday,
-        createdAt: serverTimestamp(),
-      });
-
-      return;
-    }
+    const expenseRef = await ensureExpenseDocument()
 
     await updateDoc(expenseRef, {
       earnedToday: increment(earnedToday),
       currentFund: increment(earnedToday),
       remainingFund: increment(earnedToday),
+    });
+
+  }
+
+
+  async function addExpense({
+    category,
+    amount,
+    note,
+  }) {
+
+    const expenseRef = ensureExpenseDocument()
+
+    await addDoc(
+      collection(expenseRef,"items"),
+      {
+        category,
+        amount:Number(amount),
+        note,
+        createdAt:serverTimestamp(),
+        worker:currentWorker.phone
+      }
+    );
+
+    await updateDoc(expenseRef,{
+      spentToday:increment(Number(amount)),
+      remainingFund:increment(-Number(amount))
     });
 
   }
@@ -1692,6 +1754,36 @@ function App() {
     )
   }
 
+
+  {/* ===== statistikaga tegishli ===== */}
+  function InfoCard({
+    icon,
+    title,
+    value,
+    suffix = "",
+  }) {
+    return (
+      <div className="info-card">
+        <div className="info-card-icon">{icon}</div>
+
+        <div className="info-card-title">
+          {title}
+        </div>
+
+        <div className="info-card-value">
+          {value}
+          {suffix && (
+            <span className="info-card-suffix">
+              {" "}
+              {suffix}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+
   return (
 
   <div style={{ padding: 20 }}>
@@ -1888,6 +1980,45 @@ function App() {
       </div>
       )
     }
+
+
+    {/* ===== statistika =====  */}
+    {page === "stats" && (
+
+      <div className="stats-cards">
+
+        <InfoCard
+          icon="💰"
+          title="Jami tushum"
+          value={0}
+          suffix="so'm"
+        />
+
+        <InfoCard
+          icon="👷"
+          title="Jami ish haqi"
+          value={0}
+          suffix="so'm"
+        />
+
+        <InfoCard
+          icon="💸"
+          title="Chiqim fondi"
+          value={0}
+          suffix="so'm"
+        />
+
+        <InfoCard
+          icon="💵"
+          title="Sof foyda"
+          value={0}
+          suffix="so'm"
+        />
+
+      </div>
+
+    )}
+
 
     {/* ===== operator panel ===== */}
     {page === "home" && role === "operator" && (
