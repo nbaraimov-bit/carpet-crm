@@ -53,6 +53,7 @@ body {
 .app-container {
   min-height: 100vh;
   box-sizing: border-box;
+  margin-bottom: 80px;
 }
 
 .welcome-card {
