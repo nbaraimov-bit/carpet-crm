@@ -131,13 +131,6 @@ body {
   line-height: 1.4;
 }
 
-app-container{
-  min-height: 100vh;
-  background: #050b23;
-  color: white;
-  padding: 16px;
-}
-
 .welcome-card{
   background: linear-gradient(
     135deg,

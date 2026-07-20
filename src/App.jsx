@@ -1787,7 +1787,7 @@ function App() {
 
   return (
 
-  <div style={{ padding: 20 }}>
+  <div>
 
       {/* ===== rolelar ===== */}
     {!role && page === "home" && (
