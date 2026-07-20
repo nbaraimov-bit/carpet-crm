@@ -1824,9 +1824,30 @@ function App() {
 
     });
 
+    const workerRef = doc(db, "workerEarnings", today);
+
+    const workerSnap = await getDoc(workerRef);
+
+    let salary = 0;
+
+    if (workerSnap.exists()) {
+
+      const workers = workerSnap.data();
+
+      Object.values(workers).forEach((worker) => {
+
+        salary += Number(worker.driverSalary || 0);
+        salary += Number(worker.washerSalary || 0);
+        salary += Number(worker.packingSalary || 0);
+
+      });
+
+    }
+
     setStats(prev => ({
       ...prev,
       income,
+      salary,
     }));
 
   }
