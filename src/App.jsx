@@ -82,6 +82,7 @@ function App() {
   const [teams, setTeams] = useState([])
   const [teamEarnings, setTeamEarnings] = useState({})
   const [page, setPage] = useState("home");
+  const [statsTab, setStatsTab] = useState("stats");
   const [stats, setStats] = useState({
     income: 0,
     salary: 0,
@@ -2076,41 +2077,73 @@ function App() {
 
 
     {/* ===== statistika =====  */}
-    {page === "stats" && (
+    {page === "stats" && (<>
 
-      <div className="stats-cards">
+      <div className="stats-tabs">
 
-        <InfoCard
-          icon="💰"
-          title="Jami tushum"
-          value={formatMoney(stats.income)}
-          suffix="so'm"
-        />
+        <button
+          className={statsTab === "stats"
+            ? "stats-tab active"
+            : "stats-tab"}
+          onClick={() => setStatsTab("stats")}
+        >
+          📊 Statistika
+        </button>
 
-        <InfoCard
-          icon="👷"
-          title="Jami ish haqi"
-          value={formatMoney(stats.salary)}
-          suffix="so'm"
-        />
-
-        <InfoCard
-          icon="💸"
-          title="Chiqim fondi"
-          value={formatMoney(stats.expenseFund)}
-          suffix="so'm"
-        />
-
-        <InfoCard
-          icon="💵"
-          title="Sof foyda"
-          value={formatMoney(stats.profit)}
-          suffix="so'm"
-        />
+        <button
+          className={statsTab === "expense"
+            ? "stats-tab active"
+            : "stats-tab"}
+          onClick={() => setStatsTab("expense")}
+        >
+          💸 Chiqim fondi
+        </button>
 
       </div>
 
-    )}
+      {statsTab === "stats" && (
+
+        <div className="stats-cards">
+
+          <InfoCard
+            icon="💰"
+            title="Jami tushum"
+            value={formatMoney(stats.income)}
+            suffix="so'm"
+          />
+
+          <InfoCard
+            icon="👷"
+            title="Jami ish haqi"
+            value={formatMoney(stats.salary)}
+            suffix="so'm"
+          />
+
+          <InfoCard
+            icon="💸"
+            title="Chiqim fondi"
+            value={formatMoney(stats.expenseFund)}
+            suffix="so'm"
+          />
+
+          <InfoCard
+            icon="💵"
+            title="Sof foyda"
+            value={formatMoney(stats.profit)}
+            suffix="so'm"
+          />
+
+        </div>
+
+      )}
+
+      {statsTab === "expense" && (
+        <div>
+
+        </div>
+      )}
+
+    </>)}
 
 
     {/* ===== operator panel ===== */}
