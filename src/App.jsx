@@ -1855,11 +1855,11 @@ function App() {
     if (expenseSnap.exists()) {
 
       const expense = expenseSnap.data();
-      earnedToday = Number(expense.earnedToday || 0);
+      expenseFund = Number(expense.earnedToday || 0);
 
     }
 
-    const profit = income - salary - earnedToday;
+    const profit = income - salary - expenseFund;
 
     setStats(prev => ({
       ...prev,
