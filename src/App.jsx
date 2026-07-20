@@ -82,7 +82,12 @@ function App() {
   const [teams, setTeams] = useState([])
   const [teamEarnings, setTeamEarnings] = useState({})
   const [page, setPage] = useState("home");
-  //const [telegramId, setTelegramId] = useState("")
+  const [stats, setStats] = useState({
+    income: 0,
+    salary: 0,
+    expenseFund: 0,
+    profit: 0,
+  });
 
   const tg = window.Telegram?.WebApp
   const currentPhone = currentWorker?.phone;
@@ -1049,6 +1054,14 @@ function App() {
   }, [])
 
 
+  {/* ===== statistikaga tegishli ===== */}
+  useEffect(() => {
+    if (page === "stats") {
+      loadTodayStats();
+    }
+  }, [page]);
+
+
   async function ensureExpenseDocument() {
 
     const now = new Date();
@@ -1175,10 +1188,9 @@ function App() {
         nextCustomerNumber
       ).padStart(4, "0")}`
 
-      await addDoc(
-        collection(
-          db,
-          "customers"
+      await setDoc(
+        doc(
+          db, "customers", customerId
         ), {
           customerId,
           phone,
@@ -1221,8 +1233,8 @@ function App() {
       createdAt: serverTimestamp()
     }
 
-    await addDoc(
-      collection(db, "orders"),
+    await setDoc(
+      doc(db, "orders", orderId),
       newOrder
     )
     setPhone("")
@@ -1307,14 +1319,14 @@ function App() {
         }
       }
 
-      await addDoc(
-        collection(
-          db,
-          "archives"
+      await setDoc(
+        doc(
+          db, "archives", order.id
         ),{
           ...order,
           status: "Yetkazildi",
           archivedAt: serverTimestamp(),
+          archiveDate: today
         }
       );
 
@@ -1785,6 +1797,14 @@ function App() {
   }
 
 
+  {/* ===== statistikaga tegishli ===== */}
+  async function loadTodayStats() {
+
+    
+
+  }
+
+
   return (
 
   <div style={{ padding: 17 }}>
@@ -1991,28 +2011,28 @@ function App() {
         <InfoCard
           icon="💰"
           title="Jami tushum"
-          value={0}
+          value={stats.income}
           suffix="so'm"
         />
 
         <InfoCard
           icon="👷"
           title="Jami ish haqi"
-          value={0}
+          value={stats.salary}
           suffix="so'm"
         />
 
         <InfoCard
           icon="💸"
           title="Chiqim fondi"
-          value={0}
+          value={stats.expenseFund}
           suffix="so'm"
         />
 
         <InfoCard
           icon="💵"
           title="Sof foyda"
-          value={0}
+          value={stats.profit}
           suffix="so'm"
         />
 
