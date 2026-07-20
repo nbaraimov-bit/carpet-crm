@@ -1855,7 +1855,6 @@ function App() {
     if (expenseSnap.exists()) {
 
       const expense = expenseSnap.data();
-      expenseFund = Number(expense.remainingFund || 0);
       earnedToday = Number(expense.earnedToday || 0);
 
     }
