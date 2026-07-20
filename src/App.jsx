@@ -93,6 +93,17 @@ function App() {
   const currentPhone = currentWorker?.phone;
 
 
+  function getTodayString() {
+    const now = new Date();
+
+    return `${now.getFullYear()}-${
+      String(now.getMonth() + 1).padStart(2, "0")
+    }-${
+      String(now.getDate()).padStart(2, "0")
+    }`;
+  }
+
+
   const sendWorkerRequest =
     async () => {
 
@@ -1064,13 +1075,7 @@ function App() {
 
   async function ensureExpenseDocument() {
 
-    const now = new Date();
-
-    const today = `${now.getFullYear()}-${
-      String(now.getMonth() + 1).padStart(2, "0")
-    }-${
-      String(now.getDate()).padStart(2, "0")
-    }`;
+    const today = getTodayString()
 
     const expenseRef = doc(db, "expenses", today);
  
@@ -1275,7 +1280,7 @@ function App() {
         (team) => team.id === order.deliveryDriverTeamId
       );
 
-      const dateId = new Date().toISOString().slice(0, 10);
+      const dateId = getTodayString()
 
       if (deliveryTeam) {
 
@@ -1326,7 +1331,7 @@ function App() {
           ...order,
           status: "Yetkazildi",
           archivedAt: serverTimestamp(),
-          archiveDate: today
+          archiveDate: dateId
         }
       );
 
@@ -1800,13 +1805,7 @@ function App() {
   {/* ===== statistikaga tegishli ===== */}
   async function loadTodayStats() {
 
-    const now = new Date();
-
-    const today = `${now.getFullYear()}-${
-      String(now.getMonth()+1).padStart(2,"0")
-    }-${
-      String(now.getDate()).padStart(2,"0")
-    }`;
+    const today = getTodayString()
 
     const archiveQuery = query(
       collection(db, "archives"),
@@ -1830,6 +1829,11 @@ function App() {
       income,
     }));
 
+  }
+
+
+  function formatMoney(value) {
+    return Number(value || 0).toLocaleString("uz-UZ");
   }
 
 
@@ -2039,28 +2043,28 @@ function App() {
         <InfoCard
           icon="💰"
           title="Jami tushum"
-          value={stats.income}
+          value={formatMoney(stats.income)}
           suffix="so'm"
         />
 
         <InfoCard
           icon="👷"
           title="Jami ish haqi"
-          value={stats.salary}
+          value={formatMoney(stats.salary)}
           suffix="so'm"
         />
 
         <InfoCard
           icon="💸"
           title="Chiqim fondi"
-          value={stats.expenseFund}
+          value={formatMoney(stats.expenseFund)}
           suffix="so'm"
         />
 
         <InfoCard
           icon="💵"
           title="Sof foyda"
-          value={stats.profit}
+          value={formatMoney(stats.profit)}
           suffix="so'm"
         />
 
