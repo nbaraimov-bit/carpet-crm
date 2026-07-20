@@ -1800,7 +1800,35 @@ function App() {
   {/* ===== statistikaga tegishli ===== */}
   async function loadTodayStats() {
 
-    
+    const now = new Date();
+
+    const today = `${now.getFullYear()}-${
+      String(now.getMonth()+1).padStart(2,"0")
+    }-${
+      String(now.getDate()).padStart(2,"0")
+    }`;
+
+    const archiveQuery = query(
+      collection(db, "archives"),
+      where("archiveDate", "==", today)
+    );
+
+    const archiveSnap = await getDocs(archiveQuery);
+
+    let income = 0;
+
+    archiveSnap.forEach((doc) => {
+
+      const order = doc.data();
+
+      income += Number(order.price || 0);
+
+    });
+
+    setStats(prev => ({
+      ...prev,
+      income,
+    }));
 
   }
 
