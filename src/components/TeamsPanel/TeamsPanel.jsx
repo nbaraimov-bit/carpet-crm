@@ -171,7 +171,7 @@ export default function TeamsPanel({
   return (<>
 
     {teamMode === "list" && (
-      <div style={{ padding: 20 }}>
+      <div>
      
         <button onClick={() => setPage("home")}>
           ⏪
