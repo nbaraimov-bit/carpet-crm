@@ -31,8 +31,6 @@ export default function DriverPanel({
 
 }) {
 
-  console.log(driverTeam)
-
   return (
 
       <div>

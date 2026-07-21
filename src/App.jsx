@@ -1088,17 +1088,23 @@ function App() {
 
     let openingFund = 0;
 
-    /*const lastExpenseQuery = query(
-      collection(db, "expenses"),
-      orderBy(documentId(), "desc"),
-      limit(1)
-    );
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
 
-    const lastExpenseSnap = await getDocs(lastExpenseQuery);
+    const yesterdayId = `${yesterday.getFullYear()}-${
+      String(yesterday.getMonth() + 1).padStart(2, "0")
+    }-${
+      String(yesterday.getDate()).padStart(2, "0")
+    }`;
 
-    if (!lastExpenseSnap.empty) {
-      openingFund = Number(lastExpenseSnap.docs[0].data().remainingFund || 0);
-    }*/
+    const yesterdayRef = doc(db, "expenses", yesterdayId);
+    const yesterdaySnap = await getDoc(yesterdayRef);
+
+    if (yesterdaySnap.exists()) {
+      openingFund = Number(
+        yesterdaySnap.data().remainingFund || 0
+      );
+    }
 
     await setDoc(expenseRef, {
       openingFund,
