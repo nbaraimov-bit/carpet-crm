@@ -28,6 +28,8 @@ export default function DriverPanel({
   setDriverComment,
   currentWorker,
   driverTeam,
+  loading,
+  runAction,
 
 }) {
 
@@ -244,16 +246,18 @@ export default function DriverPanel({
                   <br /><br />
 
                   <button
-                    onClick={async () => {
-                      await saveDetails(order.firebaseId)
-
-                      await updateStatus(
-                        order.firebaseId,
-                        "Olindi"
-                      )
-                    }}
+                    disabled={loading[`pickup-${order.firebaseId}`]}
+                    onClick={() => runAction(
+                      `pickup-${order.firebaseId}`,
+                       async () => {
+                        await saveDetails(order.firebaseId);
+                        await updateStatus(order.firebaseId, "Olindi");
+                      }
+                    )}
                   >
-                    Olindi
+                    {loading[`pickup-${order.firebaseId}`]
+                      ? "⏳ Kuting..." : "Olindi"
+                    }
                   </button>
 
                 </div>

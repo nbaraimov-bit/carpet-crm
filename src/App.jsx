@@ -86,6 +86,7 @@ function App() {
   const [expenseItems, setExpenseItems] = useState([]);
   const [statsTab, setStatsTab] = useState("stats");
   const [todayWorkers, setTodayWorkers] = useState([]);
+  const [loading, setLoading] = useState({});
   const [stats, setStats] = useState({
     income: 0,
     salary: 0,
@@ -103,10 +104,31 @@ function App() {
     spentToday: 0,
     remainingFund: 0,
   });
+  
 
 
   const tg = window.Telegram?.WebApp
   const currentPhone = currentWorker?.phone;
+
+
+  async function runAction(actionId, callback) {
+
+    if (loading[actionId]) return;
+
+    setLoading(prev => ({
+        ...prev,
+        [actionId]: true
+    }));
+
+    try {
+        await callback();
+    } finally {
+        setLoading(prev => ({
+            ...prev,
+            [actionId]: false
+        }));
+    }
+  }
 
 
   function getTodayString() {
@@ -1329,7 +1351,7 @@ function App() {
 
     const updates = {
       status: status,
-    }
+    } 
 
     if (status === "Yetkazilmoqda") {
       updates.deliveryDriverTeamId = driverTeam?.id;
@@ -2554,6 +2576,8 @@ function App() {
         setDriverComment={setDriverComment}
         currentWorker={currentWorker}
         driverTeam={driverTeam}
+        loading={loading}
+        runAction={runAction}
 
       />
     )}
