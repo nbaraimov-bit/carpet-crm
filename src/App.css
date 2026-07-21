@@ -185,6 +185,43 @@
 
 
 /* ===== ⬇️statistikaniki⬇️ ===== */
+.stats-tabs{
+    display:flex;
+    margin:20px 0;
+    border-bottom:1px solid #2b3246;
+}
+
+.stats-tab{
+    flex:1;
+    background:transparent;
+    border:none;
+    color:#9ca3af;
+    font-size:17px;
+    font-weight:600;
+    padding:14px 0;
+    position:relative;
+    transition:.2s;
+}
+
+.stats-tab.active{
+    color:#fff;
+}
+
+.stats-tab.active::after{
+    content:"";
+    position:absolute;
+    left:15%;
+    right:15%;
+    bottom:-1px;
+    height:3px;
+    background: #E74C5B;
+    border-radius:3px 3px 0 0;
+}
+
+.stats-tab:hover{
+    color:#fff;
+}
+
 .stats-cards{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -251,7 +288,10 @@
 .add-expense-btn:active {
   transform: scale(0.98);
 }
+/* ===== ⬆️chiqim fondi⬆️ ===== */
 
+
+/* ===== ⬇️xarajat qo'shish modaliniki⬇️ ===== */
 /* Overlay */
 .expense-modal-overlay {
   position: fixed;
@@ -327,4 +367,4 @@
   background: #3a445d;
   color: white;
 }
-/* ===== ⬆️chiqim fondi⬆️ ===== */
+/* ===== ⬆️xarajat qo'shish modaliniki⬆️ ===== */

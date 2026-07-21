@@ -2201,66 +2201,6 @@ function App() {
             ➕ Xarajat qo'shish
           </button>
 
-          {showExpenseModal && (
-
-            <div
-              className="expense-modal-overlay"
-              onClick={() => setShowExpenseModal(false)}
-            >
-
-              <div 
-                className="expense-modal"
-                onClick={(e) => e.stopPropagation()}
-              >
-
-                <h2>📋 Xarajat qo'shish</h2>
-                <select
-                  value={expenseForm.category}
-                  onChange={(e)=>setExpenseForm({
-                    ...expenseForm,
-                    category:e.target.value
-                  })}
-                >
-
-                  <option value="">Kategoriya tanlang</option>
-
-                  {expenseCategories.map(item=>(
-                    <option key={item}>
-                      {item}
-                    </option>
-                  ))}
-
-                </select>
-
-                {expenseForm.category==="📝 Boshqa..." && (
-                  <input placeholder="Kategoriya nomi"/>
-                )}
-
-                <input
-                  type="number"
-                  placeholder="Summa"
-                />
-
-                <input
-                  placeholder="Izoh"
-                />
-
-                <div className="expense-modal-buttons">
-                  <button className="expense-cancel-btn">
-                    Bekor qilish
-                  </button>
-
-                  <button className="expense-save-btn">
-                    Saqlash
-                  </button>
-                </div>
-
-              </div>
-
-            </div>
-
-          )}
-
         </div>
       )}
 
@@ -2539,6 +2479,66 @@ function App() {
       setPage={setPage}
       currentWorker={currentWorker}
     />
+
+    {showExpenseModal && (
+
+            <div
+              className="expense-modal-overlay"
+              onClick={() => setShowExpenseModal(false)}
+            >
+
+              <div 
+                className="expense-modal"
+                onClick={(e) => e.stopPropagation()}
+              >
+
+                <h2>📋 Xarajat qo'shish</h2>
+                <select
+                  value={expenseForm.category}
+                  onChange={(e)=>setExpenseForm({
+                    ...expenseForm,
+                    category:e.target.value
+                  })}
+                >
+
+                  <option value="">Kategoriya tanlang</option>
+
+                  {expenseCategories.map(item=>(
+                    <option key={item}>
+                      {item}
+                    </option>
+                  ))}
+
+                </select>
+
+                {expenseForm.category==="📝 Boshqa..." && (
+                  <input placeholder="Kategoriya nomi"/>
+                )}
+
+                <input
+                  type="number"
+                  placeholder="Summa"
+                />
+
+                <input
+                  placeholder="Izoh"
+                />
+
+                <div className="expense-modal-buttons">
+                  <button className="expense-cancel-btn">
+                    Bekor qilish
+                  </button>
+
+                  <button className="expense-save-btn">
+                    Saqlash
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
+          )}
   </div>
   )
 }
