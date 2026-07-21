@@ -83,6 +83,7 @@ function App() {
   const [teamEarnings, setTeamEarnings] = useState({})
   const [page, setPage] = useState("home");
   const [showExpenseModal, setShowExpenseModal] = useState(false);
+  const [expenseItems, setExpenseItems] = useState([]);
   const [statsTab, setStatsTab] = useState("stats");
   const [stats, setStats] = useState({
     income: 0,
@@ -1077,8 +1078,12 @@ function App() {
   useEffect(() => {
     if (page === "stats") {
       loadTodayStats();
+
+      if (statsTab === "expense") {
+        loadExpenseFund();
+      }
     }
-  }, [page]);
+  }, [page, statsTab]);
 
 
   async function ensureExpenseDocument() {
@@ -1108,7 +1113,7 @@ function App() {
         lastExpenseSnap.docs[0].data().remainingFund || 0
       );
     }
-    
+
     await setDoc(expenseRef, {
       openingFund,
       earnedToday: 0,
@@ -1929,6 +1934,33 @@ function App() {
   ];
 
 
+  async function loadExpenseFund() {
+    const today = getTodayString();
+
+    const expenseRef = doc(db, "expenses", today);
+    const expenseSnap = await getDoc(expenseRef);
+
+    if (!expenseSnap.exists()) {
+      setExpenseItems([]);
+      return;
+    }
+ 
+    const itemsQuery = query(
+      collection(expenseRef, "items"),
+      orderBy("createdAt", "desc")
+    );
+
+    const itemsSnap = await getDocs(itemsQuery);
+
+    const list = itemsSnap.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    setExpenseItems(list);
+  }
+
+
   const saveExpense = async () => {
     if (!expenseForm.category) {
       alert("Kategoriyani tanlang");
@@ -1954,7 +1986,7 @@ function App() {
 
     setShowExpenseModal(false);
 
-    //loadExpenseFund();
+    loadExpenseFund();
   };
 
 
@@ -2226,6 +2258,56 @@ function App() {
           >
             ➕ Xarajat qo'shish
           </button>
+
+          <div className="expense-history-card">
+
+  <div className="expense-history-header">
+    💸 Bugungi xarajatlar
+  </div>
+
+  {expenseItems.length === 0 ? (
+    <div className="expense-empty">
+      Bugun hali xarajat qo'shilmagan
+    </div>
+  ) : (
+    expenseItems.map(item => (
+      <div className="expense-item-card" key={item.id}>
+
+        <div className="expense-item-top">
+          <span className="expense-category">
+            {item.category}
+          </span>
+
+          <span className="expense-amount">
+            {formatMoney(item.amount)} so'm
+          </span>
+        </div>
+
+        {item.note && (
+          <div className="expense-note">
+            {item.note}
+          </div>
+        )}
+
+        <div className="expense-footer">
+          <span>{item.worker}</span>
+
+          <span>
+            {item.createdAt?.toDate?.().toLocaleTimeString(
+              "uz-UZ",
+              {
+                hour: "2-digit",
+                minute: "2-digit"
+              }
+            )}
+          </span>
+        </div>
+
+      </div>
+    ))
+  )}
+
+</div>
 
         </div>
       )}
