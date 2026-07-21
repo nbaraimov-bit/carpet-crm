@@ -1,4 +1,4 @@
-import WashrPanel from "./components/WasherPanel"
+import WasherPanel from "./components/WasherPanel"
 import DriverPanel from "./components/DriverPanel"
 import OperatorPanel from "./components/OperatorPanel"
 import AdminPanel from "./components/AdminPanel"
