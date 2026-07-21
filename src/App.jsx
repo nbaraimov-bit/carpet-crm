@@ -1160,7 +1160,7 @@ function App() {
   }
 
 
-  function calculateTotalSalary(
+  /*function calculateTotalSalary(
     order,
     washerPrices,
     driverPrices,
@@ -1197,7 +1197,7 @@ function App() {
     ) * Number(order.curtainMeter || 0);
 
     return total;
-  }
+  }*/
 
 
   {/* ===== add order ===== */}
@@ -1365,12 +1365,12 @@ function App() {
         }
       }
 
-      const totalSalary = calculateTotalSalary(
+      /*const totalSalary = calculateTotalSalary(
         order,
         washerPrices,
         driverPrices,
         packingPrices
-      );
+      );*/
 
       await setDoc(
         doc(
@@ -1380,7 +1380,7 @@ function App() {
           status: "Yetkazildi",
           archivedAt: serverTimestamp(),
           archiveDate: dateId,
-          totalSalary,
+          //totalSalary,
         }
       );
 
