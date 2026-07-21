@@ -116,17 +116,27 @@ function App() {
     if (loading[actionId]) return;
 
     setLoading(prev => ({
-        ...prev,
-        [actionId]: true
+      ...prev,
+      [actionId]: true,
     }));
 
-    try {
-        await callback();
+    try {  
+
+      await callback();
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+    } catch (err) {
+ 
+      console.error(err);  
+      alert("Xatolik yuz berdi!");
+
     } finally {
-        setLoading(prev => ({
-            ...prev,
-            [actionId]: false
-        }));
+
+      setLoading(prev => ({
+        ...prev,
+        [actionId]: false,
+      }));
+
     }
   }
 

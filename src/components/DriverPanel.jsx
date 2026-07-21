@@ -318,21 +318,17 @@ export default function DriverPanel({
                 </details>
  
                 <button
-                  onClick={() =>
-                    updateStatus(
-                      order.firebaseId,
-                      "Yetkazildi"
-                    )
-                  }
-                  style={{
-                    padding: 3,
-                    marginRight: 10,
-                    marginTop: 20,
-                    background: "green",
-                    color: "white",
-                  }}
+                  disabled={loading[`deliver-${order.firebaseId}`]}
+                  onClick={() => runAction(
+                    `deliver-${order.firebaseId}`,
+                    async () => {
+                      await updateStatus(order.firebaseId, "Yetkazildi");
+                    }
+                  )}
                 >
-                  Yetkazildi
+                  {loading[`deliver-${order.firebaseId}`]
+                    ? "⏳ Kuting..." : "Yetkazildi"
+                  }
                 </button>
               </div>
             ))
