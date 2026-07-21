@@ -96,6 +96,12 @@ function App() {
     amount: "",
     note: "",
   });
+  const [expenseStats, setExpenseStats] = useState({
+    openingFund: 0,
+    earnedToday: 0,
+    spentToday: 0,
+    remainingFund: 0,
+  });
 
 
   const tg = window.Telegram?.WebApp
@@ -1942,8 +1948,25 @@ function App() {
 
     if (!expenseSnap.exists()) {
       setExpenseItems([]);
+
+      setExpenseStats({
+        openingFund: 0,
+        earnedToday: 0,
+        spentToday: 0,
+        remainingFund: 0,
+      });
+
       return;
     }
+
+    const expense = expenseSnap.data();
+
+    setExpenseStats({
+      openingFund: Number(expense.openingFund || 0),
+      earnedToday: Number(expense.earnedToday || 0),
+      spentToday: Number(expense.spentToday || 0),
+      remainingFund: Number(expense.remainingFund || 0),
+    });
  
     const itemsQuery = query(
       collection(expenseRef, "items"),
@@ -2252,6 +2275,38 @@ function App() {
       {statsTab === "expense" && (
         <div>
 
+          <div className="stats-cards">
+
+            <InfoCard
+              icon="🏦"
+              title="Boshlang'ich"
+              value={formatMoney(expenseStats.openingFund)}
+              suffix="so'm"
+            />
+
+            <InfoCard
+              icon="📈"
+              title="Qo'shildi"
+              value={formatMoney(expenseStats.earnedToday)}
+              suffix="so'm"
+            />
+
+            <InfoCard
+              icon="💸"
+              title="Ishlatildi"
+              value={formatMoney(expenseStats.spentToday)}
+              suffix="so'm"
+            />
+
+            <InfoCard
+              icon="💰"
+              title="Mavjud"
+              value={formatMoney(expenseStats.remainingFund)}
+              suffix="so'm"
+            />
+
+          </div>
+
           <button
             className="add-expense-btn"
             onClick={() => setShowExpenseModal(true)}
@@ -2261,53 +2316,53 @@ function App() {
 
           <div className="expense-history-card">
 
-  <div className="expense-history-header">
-    💸 Bugungi xarajatlar
-  </div>
+            <div className="expense-history-header">
+              💸 Bugungi xarajatlar
+            </div>
 
-  {expenseItems.length === 0 ? (
-    <div className="expense-empty">
-      Bugun hali xarajat qo'shilmagan
-    </div>
-  ) : (
-    expenseItems.map(item => (
-      <div className="expense-item-card" key={item.id}>
+            {expenseItems.length === 0 ? (
+              <div className="expense-empty">
+                Bugun hali xarajat qo'shilmagan
+              </div>
+            ) : (
+              expenseItems.map(item => (
+                <div className="expense-item-card" key={item.id}>
+   
+                  <div className="expense-item-top">
+                    <span className="expense-category">
+                      {item.category}
+                    </span>
 
-        <div className="expense-item-top">
-          <span className="expense-category">
-            {item.category}
-          </span>
+                    <span className="expense-amount">
+                      {formatMoney(item.amount)} so'm
+                    </span>
+                  </div>
 
-          <span className="expense-amount">
-            {formatMoney(item.amount)} so'm
-          </span>
-        </div>
+                  {item.note && (
+                    <div className="expense-note">
+                      {item.note}
+                    </div>   
+                  )}
+  
+                  <div className="expense-footer">
+                    <span>{item.worker}</span>
+  
+                    <span>
+                      {item.createdAt?.toDate?.().toLocaleTimeString(
+                        "uz-UZ",
+                        {
+                          hour: "2-digit",
+                          minute: "2-digit"
+                        }
+                      )}
+                    </span>
+                  </div>
 
-        {item.note && (
-          <div className="expense-note">
-            {item.note}
-          </div>
-        )}
-
-        <div className="expense-footer">
-          <span>{item.worker}</span>
-
-          <span>
-            {item.createdAt?.toDate?.().toLocaleTimeString(
-              "uz-UZ",
-              {
-                hour: "2-digit",
-                minute: "2-digit"
-              }
+                </div>
+              ))
             )}
-          </span>
-        </div>
 
-      </div>
-    ))
-  )}
-
-</div>
+          </div>
 
         </div>
       )}
