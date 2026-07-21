@@ -1088,7 +1088,7 @@ function App() {
 
     let openingFund = 0;
 
-    const lastExpenseQuery = query(
+    /*const lastExpenseQuery = query(
       collection(db, "expenses"),
       orderBy(documentId(), "desc"),
       limit(1)
@@ -1098,7 +1098,7 @@ function App() {
 
     if (!lastExpenseSnap.empty) {
       openingFund = Number(lastExpenseSnap.docs[0].data().remainingFund || 0);
-    }
+    }*/
 
     await setDoc(expenseRef, {
       openingFund,
@@ -1160,7 +1160,7 @@ function App() {
   }
 
 
-  /*function calculateTotalSalary(
+  function calculateTotalSalary(
     order,
     washerPrices,
     driverPrices,
@@ -1197,7 +1197,7 @@ function App() {
     ) * Number(order.curtainMeter || 0);
 
     return total;
-  }*/
+  }
 
 
   {/* ===== add order ===== */}
@@ -1365,12 +1365,12 @@ function App() {
         }
       }
 
-      /*const totalSalary = calculateTotalSalary(
+      const totalSalary = calculateTotalSalary(
         order,
         washerPrices,
         driverPrices,
         packingPrices
-      );*/
+      );
 
       await setDoc(
         doc(
@@ -1380,7 +1380,7 @@ function App() {
           status: "Yetkazildi",
           archivedAt: serverTimestamp(),
           archiveDate: dateId,
-          //totalSalary,
+          totalSalary,
         }
       );
 
