@@ -2195,6 +2195,7 @@ function App() {
         <div>
 
           <button
+            className="add-expense-btn"
             onClick={() => setShowExpenseModal(true)}
           >
             ➕ Xarajat qo'shish
@@ -2202,56 +2203,63 @@ function App() {
 
           {showExpenseModal && (
 
-<div className="modal">
+            <div
+              className="expense-modal-overlay"
+              onClick={() => setShowExpenseModal(false)}
+            >
 
-<h2>Xarajat qo'shish</h2>
+              <div 
+                className="expense-modal"
+                onClick={(e) => e.stopPropagation()}
+              >
 
-<select
-value={expenseForm.category}
-onChange={(e)=>setExpenseForm({
-...expenseForm,
-category:e.target.value
-})}
->
+                <h2>📋 Xarajat qo'shish</h2>
+                <select
+                  value={expenseForm.category}
+                  onChange={(e)=>setExpenseForm({
+                    ...expenseForm,
+                    category:e.target.value
+                  })}
+                >
 
-<option value="">Kategoriya tanlang</option>
+                  <option value="">Kategoriya tanlang</option>
 
-{expenseCategories.map(item=>(
-<option key={item}>
-{item}
-</option>
-))}
+                  {expenseCategories.map(item=>(
+                    <option key={item}>
+                      {item}
+                    </option>
+                  ))}
 
-</select>
+                </select>
 
-{expenseForm.category==="📝 Boshqa..." && (
+                {expenseForm.category==="📝 Boshqa..." && (
+                  <input placeholder="Kategoriya nomi"/>
+                )}
 
-<input
-placeholder="Kategoriya nomi"
-/>
+                <input
+                  type="number"
+                  placeholder="Summa"
+                />
 
-)}
+                <input
+                  placeholder="Izoh"
+                />
 
-<input
-type="number"
-placeholder="Summa"
-/>
+                <div className="expense-modal-buttons">
+                  <button className="expense-cancel-btn">
+                    Bekor qilish
+                  </button>
 
-<input
-placeholder="Izoh"
-/>
+                  <button className="expense-save-btn">
+                    Saqlash
+                  </button>
+                </div>
 
-<button>Saqlash</button>
+              </div>
 
-<button
-onClick={()=>setShowExpenseModal(false)}
->
-Bekor qilish
-</button>
+            </div>
 
-</div>
-
-)}
+          )}
 
         </div>
       )}
