@@ -2376,7 +2376,7 @@ function App() {
 
 
     {/* ===== profil ===== */}
-    {page === "profil" && (
+    {page === "profile" && (
       <div>
 
         <button
