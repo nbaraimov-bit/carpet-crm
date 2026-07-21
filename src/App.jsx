@@ -1,4 +1,4 @@
-import WasherPanel from "./components/WasherPanel"
+import WashrPanel from "./components/WasherPanel"
 import DriverPanel from "./components/DriverPanel"
 import OperatorPanel from "./components/OperatorPanel"
 import AdminPanel from "./components/AdminPanel"
@@ -85,6 +85,7 @@ function App() {
   const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [expenseItems, setExpenseItems] = useState([]);
   const [statsTab, setStatsTab] = useState("stats");
+  const [todayWorkers, setTodayWorkers] = useState([]);
   const [stats, setStats] = useState({
     income: 0,
     salary: 0,
@@ -1084,6 +1085,7 @@ function App() {
   useEffect(() => {
     if (page === "stats") {
       loadTodayStats();
+      loadTodayWorkers();
 
       if (statsTab === "expense") {
         loadExpenseFund();
@@ -2013,6 +2015,65 @@ function App() {
   };
 
 
+  async function getWorkerEarnings(startDate, endDate) {
+
+    const workersMap = {};
+    let totalSalary = 0;
+
+    // Hozircha faqat bitta kun
+    const workerRef = doc(db, "workerEarnings", startDate);
+    const workerSnap = await getDoc(workerRef);
+
+    if (!workerSnap.exists()) {
+      return {
+        totalSalary: 0,
+        workers: [],
+      };
+    }
+
+    Object.entries(workerSnap.data()).forEach(([phone, worker]) => {
+
+      const driverSalary = Number(worker.driverSalary || 0);
+      const washerSalary = Number(worker.washerSalary || 0);
+      const packingSalary = Number(worker.packingSalary || 0);
+
+      const workerTotal = driverSalary + washerSalary + packingSalary;
+
+      totalSalary += workerTotal;
+
+      workersMap[phone] = {
+        phone,
+        name: worker.name,
+        driverSalary,
+        washerSalary,
+        packingSalary,
+        totalSalary: workerTotal,
+      };
+
+    });
+
+    const workers = Object.values(workersMap);
+
+    workers.sort(
+      (a, b) => b.totalSalary - a.totalSalary
+    );
+
+    return {
+      totalSalary,
+      workers,
+    };
+  }
+
+
+  async function loadTodayWorkers() {
+    const today = getTodayString();
+
+    const result = await getWorkerEarnings(today, today);
+
+    setTodayWorkers(result.workers);
+  }
+
+
   return (
 
   <div 
@@ -2241,7 +2302,7 @@ function App() {
 
       </div>
 
-      {statsTab === "stats" && (
+      {statsTab === "stats" && (<>
 
         <div className="stats-cards">
 
@@ -2275,7 +2336,42 @@ function App() {
 
         </div>
 
-      )}
+        <div className="today-workers-card">
+
+          <h3>👷 Bugungi ishchilar</h3>
+
+          {todayWorkers.length === 0 ? (
+
+            <div className="empty-workers">
+              Bugun hali ish haqi hisoblanmagan
+            </div>
+
+          ) : (
+
+            todayWorkers.map(worker => (
+
+              <div
+                key={worker.phone}
+                className="today-worker-item"
+              >
+
+                <span>
+                  {worker.name}
+                </span>
+
+                <strong>
+                  {formatMoney(worker.totalSalary)} so'm
+                </strong>
+
+              </div>
+
+            ))
+
+          )}
+
+        </div>
+
+      </>)}
 
       {statsTab === "expense" && (
         <div marginBottom>
