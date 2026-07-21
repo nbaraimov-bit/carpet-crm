@@ -1152,7 +1152,7 @@ function App() {
     note,
   }) {
 
-    const expenseRef = ensureExpenseDocument()
+    const expenseRef = await ensureExpenseDocument()
 
     await addDoc(
       collection(expenseRef,"items"),
@@ -1167,6 +1167,7 @@ function App() {
 
     await updateDoc(expenseRef,{
       spentToday:increment(Number(amount)),
+      currentFund:increment(-Number(amount)),
       remainingFund:increment(-Number(amount))
     });
 
@@ -1932,6 +1933,35 @@ function App() {
   ];
 
 
+  const saveExpense = async () => {
+    if (!expenseForm.category) {
+      alert("Kategoriyani tanlang");
+      return;
+    }
+
+    if (!expenseForm.amount) {
+      alert("Summani kiriting");
+      return;
+    }
+
+    await addExpense({
+      category: expenseForm.category,
+      amount: expenseForm.amount,
+      note: expenseForm.note
+    });
+
+    setExpenseForm({
+      category: "",
+      amount: "",
+      note: ""
+    });
+
+    setShowExpenseModal(false);
+
+    //loadExpenseFund();
+  };
+
+
   return (
 
   <div style={{ padding: 17 }}>
@@ -2482,63 +2512,79 @@ function App() {
 
     {showExpenseModal && (
 
-            <div
-              className="expense-modal-overlay"
+      <div
+        className="expense-modal-overlay"
+        onClick={() => setShowExpenseModal(false)}
+      >
+
+        <div 
+          className="expense-modal"
+          onClick={(e) => e.stopPropagation()}
+        >
+
+          <h2>📋 Xarajat qo'shish</h2>
+          <select
+            value={expenseForm.category}
+            onChange={(e)=>setExpenseForm({
+              ...expenseForm,
+              category:e.target.value
+            })}
+          >
+
+            <option value="">Kategoriya tanlang</option>
+
+            {expenseCategories.map(item=>(
+              <option key={item}>
+                {item}
+              </option>
+            ))}
+
+          </select>
+
+          {expenseForm.category==="📝 Boshqa..." && (
+            <input placeholder="Kategoriya nomi"/>
+          )}
+
+          <input
+            type="number"
+            placeholder="Summa"
+            value={expenseForm.amount}
+            onChange={(e) => setExpenseForm({
+              ...expenseForm,
+              amount: e.target.value
+            })}
+          />
+
+          <input
+            placeholder="Izoh"
+            value={expenseForm.note}
+            onChange={(e) => setExpenseForm({
+              ...expenseForm,
+              note: e.target.value
+            })}
+          />
+
+          <div className="expense-modal-buttons">
+            <button 
+              className="expense-cancel-btn"
               onClick={() => setShowExpenseModal(false)}
             >
+              Bekor qilish
+            </button>
 
-              <div 
-                className="expense-modal"
-                onClick={(e) => e.stopPropagation()}
-              >
+            <button 
+              className="expense-save-btn"
+              onClick={saveExpense}
+            >
+              Saqlash
+            </button>
+          </div>
 
-                <h2>📋 Xarajat qo'shish</h2>
-                <select
-                  value={expenseForm.category}
-                  onChange={(e)=>setExpenseForm({
-                    ...expenseForm,
-                    category:e.target.value
-                  })}
-                >
+        </div>
 
-                  <option value="">Kategoriya tanlang</option>
+      </div>
 
-                  {expenseCategories.map(item=>(
-                    <option key={item}>
-                      {item}
-                    </option>
-                  ))}
-
-                </select>
-
-                {expenseForm.category==="📝 Boshqa..." && (
-                  <input placeholder="Kategoriya nomi"/>
-                )}
-
-                <input
-                  type="number"
-                  placeholder="Summa"
-                />
-
-                <input
-                  placeholder="Izoh"
-                />
-
-                <div className="expense-modal-buttons">
-                  <button className="expense-cancel-btn">
-                    Bekor qilish
-                  </button>
-
-                  <button className="expense-save-btn">
-                    Saqlash
-                  </button>
-                </div>
-
-              </div>
-
-            </div>
-
-          )}
+    )}
   </div>
   )
 }
