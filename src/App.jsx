@@ -2375,6 +2375,21 @@ function App() {
     </>)}
 
 
+    {/* ===== profil ===== */}
+    {page === "profil" && (
+      <div>
+
+        <button
+            className="add-expense-btn"
+            onClick={() => setShowExpenseModal(true)}
+          >
+            ➕ Xarajat qo'shish
+          </button>
+
+      </div>
+    )}
+
+
     {/* ===== operator panel ===== */}
     {page === "home" && role === "operator" && (
 
