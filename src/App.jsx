@@ -2212,7 +2212,10 @@ function App() {
 
 
     {/* ===== statistika =====  */}
-    {page === "stats" && (<>
+    {page === "stats" && (
+    <div
+      style={{marginBottom: 80}}
+    >
 
       <div className="stats-tabs">
 
@@ -2273,7 +2276,7 @@ function App() {
       )}
 
       {statsTab === "expense" && (
-        <div>
+        <div marginBottom>
 
           <div className="stats-cards">
 
@@ -2367,7 +2370,7 @@ function App() {
         </div>
       )}
 
-    </>)}
+    </div>)}
 
 
     {/* ===== operator panel ===== */}
