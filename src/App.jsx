@@ -2015,7 +2015,12 @@ function App() {
 
   return (
 
-  <div style={{ padding: 17 }}>
+  <div 
+    style={{ 
+      padding: 17,
+      marginBottom: 80,
+    }}
+  >
 
       {/* ===== rolelar ===== */}
     {!role && page === "home" && (
@@ -2212,10 +2217,7 @@ function App() {
 
 
     {/* ===== statistika =====  */}
-    {page === "stats" && (
-    <div
-      style={{marginBottom: 80}}
-    >
+    {page === "stats" && (<>
 
       <div className="stats-tabs">
 
@@ -2370,7 +2372,7 @@ function App() {
         </div>
       )}
 
-    </div>)}
+    </>)}
 
 
     {/* ===== operator panel ===== */}
