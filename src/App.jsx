@@ -82,6 +82,7 @@ function App() {
   const [teams, setTeams] = useState([])
   const [teamEarnings, setTeamEarnings] = useState({})
   const [page, setPage] = useState("home");
+  const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [statsTab, setStatsTab] = useState("stats");
   const [stats, setStats] = useState({
     income: 0,
@@ -89,6 +90,12 @@ function App() {
     expenseFund: 0,
     profit: 0,
   });
+  const [expenseForm, setExpenseForm] = useState({
+    category: "",
+    amount: "",
+    note: "",
+  });
+
 
   const tg = window.Telegram?.WebApp
   const currentPhone = currentWorker?.phone;
@@ -1912,6 +1919,18 @@ function App() {
     return Number(value || 0).toLocaleString("uz-UZ");
   }
 
+  /* ===== chiqim fondiniki ===== */
+  const expenseCategories = [
+    "⛽️ Yoqilg'i",
+    "🧴 Shampun",
+    "🧪 Oqartirgich",
+    "🫧 Dog' ketkazuvchi",
+    "🧤 Qo'lqop",
+    "📦 Paket",
+    "🔧 Ta'mirlash",
+    "📝 Boshqa..."
+  ];
+
 
   return (
 
@@ -2174,6 +2193,65 @@ function App() {
 
       {statsTab === "expense" && (
         <div>
+
+          <button
+            onClick={() => setShowExpenseModal(true)}
+          >
+            ➕ Xarajat qo'shish
+          </button>
+
+          {showExpenseModal && (
+
+<div className="modal">
+
+<h2>Xarajat qo'shish</h2>
+
+<select
+value={expenseForm.category}
+onChange={(e)=>setExpenseForm({
+...expenseForm,
+category:e.target.value
+})}
+>
+
+<option value="">Kategoriya tanlang</option>
+
+{expenseCategories.map(item=>(
+<option key={item}>
+{item}
+</option>
+))}
+
+</select>
+
+{expenseForm.category==="📝 Boshqa..." && (
+
+<input
+placeholder="Kategoriya nomi"
+/>
+
+)}
+
+<input
+type="number"
+placeholder="Summa"
+/>
+
+<input
+placeholder="Izoh"
+/>
+
+<button>Saqlash</button>
+
+<button
+onClick={()=>setShowExpenseModal(false)}
+>
+Bekor qilish
+</button>
+
+</div>
+
+)}
 
         </div>
       )}
