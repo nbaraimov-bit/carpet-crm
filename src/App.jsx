@@ -297,7 +297,7 @@ function App() {
     await updateDoc(
       workerRef,
       {
-        roles: [role],
+        role: role,
       }
     )
 
@@ -1003,11 +1003,10 @@ function App() {
         const data = snapshot.data()
          
         if (
-          !currentWorker?.roles?.includes("admin") &&
-          !currentWorker?.roles?.includes("ega") &&
-          JSON.stringify(data.roles || []) !==
-          JSON.stringify(currentWorker.roles || [])
-          ) {
+          currentWorker?.role !== "admin" &&
+          currentWorker?.role !== "ega" &&
+          data.role !== currentWorker.role
+        ) {
 
           localStorage.removeItem("worker")
 
@@ -2218,8 +2217,8 @@ function App() {
             </div>
           </div>
 
-        {(currentWorker?.roles?.includes("admin")
-          || currentWorker?.roles?.includes("ega")
+        {(currentWorker?.role !== "admin"
+          || currentWorker?.role !== "ega"
         ) && (
           <div
             className="role-card"
@@ -2239,7 +2238,7 @@ function App() {
           </div>
         )}
 
-        {currentWorker?.roles?.includes("ega") && (
+        {currentWorker?.role !== "ega" && (
           <div
             className="role-card"
             onClick={() => setRole("ega")}
@@ -2281,8 +2280,8 @@ function App() {
        
         <hr />
 
-        {!currentWorker?.roles?.includes("admin") &&
-          !currentWorker?.roles?.includes("ega") && (
+        {!currentWorker?.role !== "admin" &&
+          !currentWorker?.role !== "ega" && (
       
           workers.find(
             (w) => w.phone === currentWorker?.phone

@@ -85,7 +85,7 @@ export default function AdminPanel({
     
                 <p>
                   <b>Lavozimlar:</b>{" "}
-                  {request.requestedRoles?.join(
+                  {request.requestedRole?.join(
                     ", "
                   )}
                 </p>
@@ -122,7 +122,7 @@ export default function AdminPanel({
     
           {workers
             .filter(
-              (worker) => !worker.roles?.includes("ega")
+              (worker) => worker.role !== "ega"
             )
             .map((worker) => (
           <div
@@ -230,7 +230,7 @@ export default function AdminPanel({
             <br />
     
             <b>Rolelar:</b>{" "}
-              {worker.roles?.join(", ")}
+              {worker.role.join(", ")}
     
               <button
                 style={{marginLeft:3}}
@@ -260,7 +260,7 @@ export default function AdminPanel({
                   "driver",
                   "washer",
                   "tayyorlovchi",
-                  ...(currentWorker?.roles?.includes("ega")(
+                  ...(currentWorker?.role !== "ega" (
                     "ega"
                   )
                     ? ["admin"]
@@ -278,29 +278,29 @@ export default function AdminPanel({
                     type="checkbox" 
     
                     checked={
-                      worker.roles?.includes(
+                      worker.role !== (
                         role
                       )
                     }
     
                     onChange={async (e) => {
     
-                      let updatedRoles =
-                        worker.roles || []
+                      let updatedRole =
+                        worker.role || []
     
                       if (
                         e.target.checked
                       ) {
     
-                        updatedRoles = [
-                          ...updatedRoles,
+                        updatedRole = [
+                          ...updatedRole,
                           role,
                         ]
         
                       } else {
     
-                        updatedRoles =
-                          updatedRoles.filter(
+                        updatedRole =
+                          updatedRole.filter(
                             (r) =>
                               r !== role
                           )
@@ -315,7 +315,7 @@ export default function AdminPanel({
                       await updateDoc(
                         workerRef,
                         {
-                          roles: updatedRoles,
+                          role: updatedRole,
                         }
                       )
     
@@ -333,7 +333,7 @@ export default function AdminPanel({
             <select
               value={
                 worker.primaryRole ||
-                worker.roles?.[0] ||
+                worker.role?.[0] ||
                 ""
               }
 
@@ -353,7 +353,7 @@ export default function AdminPanel({
               }}
             >
 
-              {worker.roles?.map((role) => (
+              {worker.role?.map((role) => (
 
                 <option
                   key={role}
@@ -495,9 +495,8 @@ export default function AdminPanel({
                 )}
     
                 {/* ===== washer statistic ===== */}
-                {worker.roles?.includes(
-                  "washer"
-                ) && (
+                {worker.role !== "washer"
+                 && (
                 <div>
     
                   <p>
