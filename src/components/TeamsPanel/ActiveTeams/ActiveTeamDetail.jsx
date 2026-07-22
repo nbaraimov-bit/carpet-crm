@@ -47,7 +47,7 @@ export default function ActiveTeamDetail({
   const activeMembers = members.filter(member => member.working);
   const isLeader = teamMember?.rank === "leader";
   const isMember = teamMember?.rank === "member";
-  const isAdmin = currentWorker?.roles?.includes("admin") || currentWorker?.roles?.includes("ega")
+  const isAdmin = currentWorker?.role !== "admin" || currentWorker?.role !== "ega"
   const teamType = teamTypeMap[team.type];
   const services = teamType?.services || [];
 
