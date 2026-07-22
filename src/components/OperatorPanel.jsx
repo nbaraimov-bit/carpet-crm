@@ -147,14 +147,6 @@ export default function OperatorPanel({
             }}
     
           <button
-            style={{
-              width: "100%",
-              padding: 10,
-              borderRadius: 10,
-              border: "none",
-              background: "blue",
-              color: "white"
-            }}
             disabled={loading["addOrder"]}
             onClick={() =>
               runAction("addOrder", async () => {
