@@ -1965,11 +1965,12 @@ function App() {
   const expenseCategories = [
     "⛽️ Yoqilg'i",
     "🧴 Shampun",
-    "🧪 Oqartirgich",
-    "🫧 Dog' ketkazuvchi",
-    "🧤 Qo'lqop",
-    "📦 Paket",
-    "🔧 Ta'mirlash",
+    "🧸 Yumos",
+    "⚡️ kommunal to'lov",
+    "📦 Rulon paket",
+    "📦 Adyol upakovka",
+    "🖨 Reklama",
+    "🍲 abet",
     "📝 Boshqa..."
   ];
 
