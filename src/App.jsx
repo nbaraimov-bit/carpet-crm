@@ -2548,6 +2548,8 @@ function App() {
         updateStatus={updateStatus}
         setRole={setRole}
         role={role}
+        loading={loading}
+        runAction={runAction}
 
       />
       

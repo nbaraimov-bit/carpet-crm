@@ -155,14 +155,14 @@ export default function OperatorPanel({
               background: "blue",
               color: "white"
             }}
-            disabled={loading["addOrder"]}
+            disabled={loading[`addOrder`]}
             onClick={() =>
-              runAction("addOrder", async () => {
+              runAction(`addOrder`, async () => {
                 await addOrder();
               })
             }
           >
-            {loading["addOrder"]
+            {loading[`addOrder`]
               ? "⏳ Saqlanmoqda..." : "Buyurtma qabul qilish"}
           </button>
       
