@@ -41,8 +41,8 @@ export default function TeamsPanel({
   const [showJoinTeam, setShowJoinTeam] = useState(false);
   const [pendingJoinTeams, setPendingJoinTeams] = useState([]);
 
-  const isAdmin = currentWorker?.role !== "admin" || currentWorker?.role !== "ega"
-  const isWorker = currentWorker?.role !== "worker"
+  const isAdmin = currentWorker?.role === "admin" || currentWorker?.role === "ega"
+  const isWorker = currentWorker?.role === "worker"
   
   const myTeams = isAdmin ? teams : teams.filter(team => team.members?.[currentWorker.phone]);
 

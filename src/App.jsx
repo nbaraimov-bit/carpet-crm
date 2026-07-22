@@ -2217,8 +2217,8 @@ function App() {
             </div>
           </div>
 
-        {(currentWorker?.role !== "admin"
-          || currentWorker?.role !== "ega"
+        {(currentWorker?.role === "admin"
+          || currentWorker?.role === "ega"
         ) && (
           <div
             className="role-card"
@@ -2238,7 +2238,7 @@ function App() {
           </div>
         )}
 
-        {currentWorker?.role !== "ega" && (
+        {currentWorker?.role === "ega" && (
           <div
             className="role-card"
             onClick={() => setRole("ega")}
@@ -2260,9 +2260,6 @@ function App() {
         <br /><br />
 
         <hr />
-        <hr />
-        <hr />
-
         
         <div
           style={{
@@ -2277,32 +2274,7 @@ function App() {
             Chiqish
           </button>
         </div>
-       
-        <hr />
 
-        {!currentWorker?.role !== "admin" &&
-          !currentWorker?.role !== "ega" && (
-      
-          workers.find(
-            (w) => w.phone === currentWorker?.phone
-          )?.working ? (
-
-            <button
-              onClick={() => stopWork()}
-            >
-              Ishni tugatish
-            </button>
-
-          ) : ( 
- 
-            <button
-              onClick={startWork}
-            >
-              Ishni boshlash
-            </button>
-
-          )
-        )}
         </div>
       </div>
       )

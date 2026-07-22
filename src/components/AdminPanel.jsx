@@ -230,7 +230,7 @@ export default function AdminPanel({
             <br />
     
             <b>Rolelar:</b>{" "}
-              {worker.role.join(", ")}
+              {worker.roles.join(", ")}
     
               <button
                 style={{marginLeft:3}}
@@ -260,7 +260,7 @@ export default function AdminPanel({
                   "driver",
                   "washer",
                   "tayyorlovchi",
-                  ...(currentWorker?.role !== "ega" (
+                  ...(currentWorker?.role === "ega" (
                     "ega"
                   )
                     ? ["admin"]
@@ -278,7 +278,7 @@ export default function AdminPanel({
                     type="checkbox" 
     
                     checked={
-                      worker.role !== (
+                      worker.role === (
                         role
                       )
                     }
@@ -333,7 +333,7 @@ export default function AdminPanel({
             <select
               value={
                 worker.primaryRole ||
-                worker.role?.[0] ||
+                worker.roles?.[0] ||
                 ""
               }
 
@@ -353,7 +353,7 @@ export default function AdminPanel({
               }}
             >
 
-              {worker.role?.map((role) => (
+              {worker.roles?.map((role) => (
 
                 <option
                   key={role}
@@ -495,7 +495,7 @@ export default function AdminPanel({
                 )}
     
                 {/* ===== washer statistic ===== */}
-                {worker.role !== "washer"
+                {worker.role === "washer"
                  && (
                 <div>
     
