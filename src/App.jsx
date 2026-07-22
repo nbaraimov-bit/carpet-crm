@@ -2623,6 +2623,8 @@ function App() {
         attendance={attendance}
         teams={teams}
         washerTeam={washerTeam}
+        loading={loading}
+        runAction={runAction}
   
       />
     )}
@@ -2681,21 +2683,16 @@ function App() {
             </details>
 
             <button
-              onClick={() =>
-                updateStatus(
-                  order.firebaseId,
-                  "Tayyor"
-                )
-              }
-               style={{
-                    padding: 3,
-                    marginRight: 10,
-                    marginTop: 20,
-                    background: "yellow",
-                    color: "black",
-                  }}
+              disabled={loading[`tayyor-${order.firebaseId}`]}
+              onClick={() => runAction(
+                `tayyor-${order.firebaseId}`,
+                async () => {
+                  await updateStatus(order.firebaseId, "Tayyor");
+                }
+              )}
             >
-              Tayyor
+              {loading[`tayyor-${order.firebaseId}`]
+                ? "⏳ Kuting..." : "Tayyor"}
             </button>
           </div>
         ))

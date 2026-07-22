@@ -33,6 +33,8 @@ export default function OperatorPanel({
   updateStatus,
   setRole,
   role,
+  loading,
+  runAction,
 
 }) {
 
@@ -135,9 +137,16 @@ export default function OperatorPanel({
               Tezkor
             </option>
           </select>
+          style={{
+              width: "100%",
+              padding: 10,
+              borderRadius: 10,
+              border: "none",
+              background: "blue",
+              color: "white"
+            }}
     
           <button
-            onClick={addOrder}
             style={{
               width: "100%",
               padding: 10,
@@ -146,8 +155,15 @@ export default function OperatorPanel({
               background: "blue",
               color: "white"
             }}
+            disabled={loading["addOrder"]}
+            onClick={() =>
+              runAction("addOrder", async () => {
+                await addOrder();
+              })
+            }
           >
-            Buyurtma qabul qilish
+            {loading["addOrder"]
+              ? "⏳ Saqlanmoqda..." : "Buyurtma qabul qilish"}
           </button>
       
         </details>
