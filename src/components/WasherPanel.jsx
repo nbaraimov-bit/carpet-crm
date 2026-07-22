@@ -25,7 +25,9 @@ export default function WasherPanel({
   attendance,
   workerEarnings,
   teams,
-  washerTeam, 
+  washerTeam,
+  loading,
+  runAction,
 
 }) {  
 
@@ -189,15 +191,20 @@ export default function WasherPanel({
               </p>
  
               <button
-                onClick={() =>
-                  updateWashStatus(
-                    order.firebaseId,
-                    "carpetStatus",
-                    "Yuvildi"
-                  )
-                }
+                disabled={loading[`wash-carpet-${order.firebaseId}`]}
+                onClick={() => runAction(
+                  `wash-carpet-${order.firebaseId}`,
+                  async () => {
+                    await updateWashStatus(
+                      order.firebaseId,
+                      "carpetStatus",
+                      "Yuvildi"
+                    );
+                  }
+                )}
               >
-                Yuvildi
+                {loading[`wash-carpet-${order.firebaseId}`]
+                  ? "⏳ Kuting..." : "Yuvildi"}
               </button>
             </div>
           ))
@@ -281,15 +288,20 @@ export default function WasherPanel({
               </p>
  
               <button
-                onClick={() =>
-                  updateWashStatus(
-                    order.firebaseId,
-                    "blanketStatus",
-                    "Yuvildi"
-                  )
-                }
+                disabled={loading[`wash-blanket-${order.firebaseId}`]}
+                onClick={() => runAction(
+                  `wash-blanket-${order.firebaseId}`,
+                  async () => {
+                    await updateWashStatus(
+                      order.firebaseId,
+                      "blanketStatus",
+                      "Yuvildi"
+                    );
+                  }
+                )}
               >
-                Yuvildi
+                {loading[`wash-blanket-${order.firebaseId}`]
+                  ? "⏳ Kuting..." : "Yuvildi"}
               </button>
             </div>
           ))
@@ -375,15 +387,20 @@ export default function WasherPanel({
               </p>   
  
               <button
-                onClick={() =>
-                  updateWashStatus(
-                   order.firebaseId,
-                    "yakandozStatus",
-                    "Yuvildi"
-                  )
-                }
+                disabled={loading[`wash-yakandoz-${order.firebaseId}`]}
+                onClick={() => runAction(
+                  `wash-yakandoz-${order.firebaseId}`,
+                  async () => {
+                    await updateWashStatus(
+                      order.firebaseId,
+                      "yakandozStatus",
+                      "Yuvildi"
+                    );
+                  }
+                )}
               >
-                Yuvildi
+                {loading[`wash-yakandoz-${order.firebaseId}`]
+                  ? "⏳ Kuting..." : "Yuvildi"}
               </button>
             </div>
           ))
@@ -475,15 +492,20 @@ export default function WasherPanel({
               </p>
 
               <button
-                onClick={() =>
-                  updateWashStatus(
-                    order.firebaseId,
-                    "curtainStatus",
-                    "Yuvildi"
-                  )
-                }
+                disabled={loading[`wash-curtain-${order.firebaseId}`]}
+                onClick={() => runAction(
+                  `wash-curtain-${order.firebaseId}`,
+                  async () => {
+                    await updateWashStatus(
+                      order.firebaseId,
+                      "curtainStatus",
+                      "Yuvildi"
+                    );
+                  }
+                )}
               >
-                Yuvildi
+                {loading[`wash-curtain-${order.firebaseId}`]
+                  ? "⏳ Kuting..." : "Yuvildi"}
               </button>
             </div>
           ))
