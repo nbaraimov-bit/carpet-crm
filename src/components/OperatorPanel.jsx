@@ -137,7 +137,9 @@ export default function OperatorPanel({
               Tezkor
             </option>
           </select>
-          style={{
+    
+          <button
+            style={{
               width: "100%",
               padding: 10,
               borderRadius: 10,
@@ -145,8 +147,6 @@ export default function OperatorPanel({
               background: "blue",
               color: "white"
             }}
-    
-          <button
             disabled={loading["addOrder"]}
             onClick={() =>
               runAction("addOrder", async () => {
