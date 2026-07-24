@@ -36,8 +36,8 @@ export default function BottomNavigation({
   ];
 
   const isAdmin =
-  currentWorker?.roles?.includes("admin") ||
-  currentWorker?.roles?.includes("ega");
+  currentWorker?.role === "admin" ||
+  currentWorker?.role === "ega";
 
   return (
 
