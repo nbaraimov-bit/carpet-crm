@@ -251,7 +251,7 @@ export default function TeamLeaderPanel({
 
           </div>
 
-          {member.rank !== "leader" && (
+          
             <div className="member-actions">
 
               <button 
@@ -269,7 +269,7 @@ export default function TeamLeaderPanel({
               </button>
 
             </div>
-          )}
+          
 
         </div>
 
