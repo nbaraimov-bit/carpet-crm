@@ -2479,6 +2479,13 @@ function App() {
     {page === "profile" && (
       <div>
 
+        <InfoCard
+          icon="💰"
+          title="Mavjud"
+          value={formatMoney(expenseStats.remainingFund)}
+          suffix="so'm"
+        />
+
         <button
             className="add-expense-btn"
             onClick={() => setShowExpenseModal(true)}
