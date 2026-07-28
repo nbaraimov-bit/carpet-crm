@@ -265,8 +265,6 @@ export default function ActiveTeamDetail({
 
         members.map((member) => (
           <TeamLeaderPanel
-            mode={"joinRequests"}
-            mode={"memberPrices"}
             team={team}
             currentWorker={currentWorker}
             member={member}

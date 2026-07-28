@@ -20,7 +20,6 @@ import {
 export default function TeamLeaderPanel({
   team,
   currentWorker,
-  mode,
   member,
   washerPrices,
   memberPrices,
