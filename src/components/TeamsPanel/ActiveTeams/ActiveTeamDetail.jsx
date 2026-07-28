@@ -224,8 +224,7 @@ export default function ActiveTeamDetail({
       });
   
     } catch (err) {
-  
-      console.error(err);
+
   
       alert("Xatolik yuz berdi");
   
