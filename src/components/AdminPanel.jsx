@@ -229,8 +229,7 @@ export default function AdminPanel({
     
             <br />
     
-            <b>Rolelar:</b>{" "}
-              {worker.roles.join(", ")}
+            <b>Lavozim:</b>{" "}
     
               <button
                 style={{marginLeft:3}}
@@ -256,10 +255,6 @@ export default function AdminPanel({
               >
     
                 {[
-                  "operator",
-                  "driver",
-                  "washer",
-                  "tayyorlovchi",
                   ...(currentWorker?.role === "ega" (
                     "ega"
                   )
