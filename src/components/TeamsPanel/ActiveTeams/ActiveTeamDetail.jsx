@@ -224,7 +224,8 @@ export default function ActiveTeamDetail({
       });
   
     } catch (err) {
-
+  
+      console.error(err);
   
       alert("Xatolik yuz berdi");
   
@@ -262,11 +263,13 @@ export default function ActiveTeamDetail({
 
       {isLeader && <TeamLeaderPanel
         
-        mode="joinRequests"
+        mode={"joinRequests"}
         team={team}
         currentWorker={currentWorker}
         memberPrices={memberPrices}
         setMemberPrices={setMemberPrices}
+        toggleWorking={toggleWorking}
+        removeMember={removeMember}
 
 
       />}
