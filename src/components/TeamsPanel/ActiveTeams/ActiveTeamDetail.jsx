@@ -261,10 +261,22 @@ export default function ActiveTeamDetail({
 
       </div>
 
+      {isLeader && <TeamLeaderPanel
+        
+        mode="joinRequests"
+        team={team}
+        currentWorker={currentWorker}
+        memberPrices={memberPrices}
+        setMemberPrices={setMemberPrices}
+
+
+      />}
+
       {useLeaderPanel ? (
 
         members.map((member) => (
           <TeamLeaderPanel
+            mode="memberPrices"
             team={team}
             currentWorker={currentWorker}
             member={member}
