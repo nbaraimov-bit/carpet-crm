@@ -1,3 +1,4 @@
+import HomePage from "./HomePage/HomePage"
 import WasherPanel from "./components/WasherPanel"
 import DriverPanel from "./components/DriverPanel"
 import OperatorPanel from "./components/OperatorPanel"
@@ -2116,168 +2117,19 @@ function App() {
 
       {/* ===== rolelar ===== */}
     {!role && page === "home" && (
-      
-      <div className="app-container">
-        <div className="welcome-card">
 
-          <div className="welcome-title">
-            Xush kelibsiz! 👋
-          </div>
-
-          <div className="welcome-name">
-            {currentWorker?.name}
-          </div>
-
-          <div
-            style={{
-              marginTop: 14,
-              color: "#cfd8ff",
-              fontSize: 15,
-            }}
-          >
-            O'z ish joyingizni tanlang
-          </div>
-
-        </div>
-
-        <div className="roles-grid">  
-    
-          <div
-            className="role-card"
-            onClick={() => setRole("operator")}
-          >
-            <div style={{ fontSize: 42 }}>
-              🎧
-            </div>
-
-            <div className="role-title">
-              Operator
-            </div>
-
-            <div className="role-subtitle">
-              Buyurtmalarni qabul qilish va boshqarish
-            </div>
-          </div>
-
-          <div
-            className={`role-card ${driverEnabled ? "" : "role-disabled"}`}
-            onClick={() => {
-              if (driverEnabled) {setRole("driver");}
-            }}
-          >
-            <div style={{ fontSize: 42 }}>
-              🚚
-            </div>
-
-            <div className="role-title">
-              Driver
-            </div>
-
-            <div className="role-subtitle">
-              Buyurtmalarni yetkazish va statusni yangilash
-            </div>
-          </div>
-
-          <div
-            className={`role-card ${washerEnabled ? "" : "role-disabled"}`}
-            onClick={() => {
-              if (washerEnabled) {setRole("washer");}
-            }}
-          >
-            <div style={{ fontSize: 42 }}>
-              🧼
-            </div>
-
-            <div className="role-title">
-              Washer
-            </div>
-
-            <div className="role-subtitle">
-              Gilamlarni yuvish va holatini belgilash
-            </div>
-          </div>
-
-          <div
-            className={`role-card ${packingEnabled ? "" : "role-disabled"}`}
-            onClick={() => {
-              if (packingEnabled) {setRole("tayyorlovchi");}
-            }}
-          >
-            <div style={{ fontSize: 42 }}>
-              📦
-            </div>
-
-            <div className="role-title">
-              Tayyorlovchi
-            </div>
-
-            <div className="role-subtitle">
-              Gilamlarni tayyorlash va qadoqlash
-            </div>
-          </div>
-
-        {(currentWorker?.role === "admin"
-          || currentWorker?.role === "ega"
-        ) && (
-          <div
-            className="role-card"
-            onClick={() => setRole("admin")}
-          >
-            <div style={{ fontSize: 42 }}>
-              🛡️
-            </div>
-
-            <div className="role-title">
-              Admin
-            </div>
-
-            <div className="role-subtitle">
-              Tizimni boshqarish va nazorat qilish
-            </div>
-          </div>
-        )}
-
-        {currentWorker?.role === "ega" && (
-          <div
-            className="role-card"
-            onClick={() => setRole("ega")}
-          >
-            <div style={{ fontSize: 42 }}>
-              👑
-            </div>
-
-            <div className="role-title">
-              Ega
-            </div>
-
-            <div className="role-subtitle">
-              Umumiy nazorat va tahlillar
-            </div>
-          </div>
-        )}
-
-        <br /><br />
-
-        <hr />
-        
-        <div
-          style={{
-            marginTop: 10,
-            padding: 10,
-            borderRadius: 5,
-            border: "3px solid #ff0000",
-
-           }}
-        >
-          <button onClick={logout}>
-            Chiqish
-          </button>
-        </div>
-
-        </div>
-      </div>
-      )
-    }
+      <HomePage
+        currentWorker={currentWorker}
+        setRole={setRole}
+        currentPhone={currentPhone}
+        washerTeam={washerTeam}
+        driverTeam={driverTeam}
+        packingTeam={packingTeam}
+        operatorTeam={operatorTeam}
+        logout={logout}
+      />
+   
+    )}
 
 
     {/* ===== statistika =====  */}
