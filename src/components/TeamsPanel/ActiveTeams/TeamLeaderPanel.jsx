@@ -258,7 +258,7 @@ export default function TeamLeaderPanel({
                 className="remove-member-btn"
                 onClick={() => removeMember(member)}
               >
-                Chiqarib yuborish
+                🪓 Chopish
               </button>
 
               <button
