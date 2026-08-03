@@ -137,8 +137,8 @@ export default function WasherPanel({
               }} 
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
-              <p><b>Telefon:</b> {order.phone}</p>
               <p><b>Manzil:</b> {order.address}</p>
+              <p><b>Telefon:</b> {order.phone}</p>
               <p><b>Gilam:</b> {order.carpetCount}</p>
               <p><b>Kv.m:</b> {order.kvm}</p>
               <p><b>Tarif:</b>{" "}{order.tarif}</p>
@@ -178,6 +178,7 @@ export default function WasherPanel({
               }}
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
+              <p><b>Manzil:</b> {order.address}</p>
               <p><b>Telefon:</b> {order.phone}</p>
               <p><b>Gilam:</b> {order.carpetCount}</p>
               <p><b>Kv.m:</b> {order.kvm}</p>
@@ -238,6 +239,7 @@ export default function WasherPanel({
               }}
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
+              <p><b>Manzil:</b> {order.address}</p>
               <p><b>Telefon:</b> {order.phone}</p>
               <p><b>Adyol:</b> {order.blanketCount}</p>
               <p><b>Tarif:</b>{" "}{order.tarif}</p>
@@ -276,6 +278,7 @@ export default function WasherPanel({
               }}
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
+              <p><b>Manzil:</b> {order.address}</p>
               <p><b>Telefon:</b> {order.phone}</p>
               <p><b>Adyol:</b> {order.blanketCount}</p>
               <p><b>Tarif:</b>{" "}{order.tarif}</p>
@@ -334,6 +337,7 @@ export default function WasherPanel({
               }}
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
+              <p><b>Manzil:</b> {order.address}</p>
               <p><b>Telefon:</b> {order.phone}</p>
               {order.yakandozCount && (<p><b>Yakandoz:</b>{" "}{order.yakandozCount}</p>)}
               {order.other && (<p><b>Boshqa:</b> {order.other}</p>)} 
@@ -374,6 +378,7 @@ export default function WasherPanel({
               }}
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
+              <p><b>Manzil:</b> {order.address}</p>
               <p><b>Telefon:</b> {order.phone}</p>
               {order.yakandozCount && (<p><b>Yakandoz:</b>{" "}{order.yakandozCount}</p>)}
               {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}
@@ -433,6 +438,7 @@ export default function WasherPanel({
               }}
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
+              <p><b>Manzil:</b> {order.address}</p>
               <p><b>Telefon:</b> {order.phone}</p>
               <p><b>Parda metri:</b>{" "}{order.curtainMeter}</p>
               <p><b>Tarif:</b>{" "}{order.tarif}</p>
@@ -476,6 +482,7 @@ export default function WasherPanel({
               }}
             >
               <p><b>Buyurtma ID:</b> {order.id}</p>
+              <p><b>Manzil:</b> {order.address}</p>
               <p><b>Telefon:</b> {order.phone}</p>
               <p><b>Parda metri:</b>{" "}{order.curtainMeter}</p>
               <p><b>Tarif:</b>{" "}{order.tarif}</p>
