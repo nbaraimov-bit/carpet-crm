@@ -48,14 +48,14 @@
 }
 
 .home-title{
-  font-size:26px;
+  font-size:22px;
   font-weight:700;
 }
 
 .home-version{
   margin-top:3px;
   color:#9fb3ff;
-  font-size:14px;
+  font-size:13px;
 }
 
 .home-banner{
@@ -89,8 +89,8 @@
 }
 
 .home-image{
-  width:120px;
-  height:120px;
+  width:90px;
+  height:90px;
   display:flex;
   justify-content:center;
   align-items:center;
