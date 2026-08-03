@@ -41,11 +41,11 @@ export default function HomePanel({
               <div>
 
                 <div className="home-title">
-                  Gilam CRM
+                  SAKURA
                 </div>
 
                 <div className="home-version">
-                  Sakura Cleaning
+                  Cleaning
                 </div>
 
               </div>
