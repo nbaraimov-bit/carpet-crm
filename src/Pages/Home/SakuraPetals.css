@@ -1,0 +1,46 @@
+.petals-container{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.petal{
+    position:absolute;
+    top:-60px;
+
+    font-size:24px;
+
+    animation-name:fall;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+}
+
+@keyframes fall{
+
+    0%{
+        transform:translateY(-50px) rotate(0deg);
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    50%{
+        transform:
+            translateY(200px)
+            translateX(30px)
+            rotate(180deg);
+    }
+
+    100%{
+        transform:
+            translateY(600px)
+            translateX(-40px)
+            rotate(360deg);
+
+        opacity:0;
+    }
+
+}

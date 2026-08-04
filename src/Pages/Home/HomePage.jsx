@@ -1,4 +1,5 @@
 import "./HomePage.css"
+import SakuraPetals from "./SakuraPetals";
 
 export default function HomePanel({
 
@@ -25,6 +26,8 @@ export default function HomePanel({
   return (
       
       <div className="app-container">
+
+        <SakuraPetals />
         
         <div className="home-header">
 
@@ -33,7 +36,7 @@ export default function HomePanel({
             <div className="home-brand">
 
               <img
-                src="/logo.png"
+                src="/logo.png" 
                 className="home-logo"
                 alt="logo"
               />
