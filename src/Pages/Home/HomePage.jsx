@@ -1,7 +1,7 @@
 import "./HomePage.css"
 import SakuraPetals from "./SakuraPetals";
 
-export default function HomePanel({
+export default function HomePage({
 
   currentWorker,
   setRole,
