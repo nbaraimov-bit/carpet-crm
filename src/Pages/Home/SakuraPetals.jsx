@@ -17,7 +17,11 @@ export default function SakuraPetals() {
             transform: `scale(${0.8 + Math.random() * 0.6})`,
           }}
         >
-          🌸
+          <img
+            src="/sakura-petal.svg"
+            className="petal-img"
+            alt=""
+          />
         </span>
       ))}
     </div>

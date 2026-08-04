@@ -44,3 +44,15 @@
     }
 
 }
+
+
+.petal-img{
+
+    width:26px;
+    height:26px;
+
+    filter:
+        drop-shadow(0 0 8px rgba(255,160,220,.45));
+
+    user-select:none;
+}
