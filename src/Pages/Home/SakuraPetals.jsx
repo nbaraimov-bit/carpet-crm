@@ -1,5 +1,5 @@
 import "./SakuraPetals.css";
-import petal from"./assets/sakura-petal.svg";
+import petal from "./assets/sakura-petal.svg";
 
 export default function SakuraPetals() {
 
@@ -19,7 +19,7 @@ export default function SakuraPetals() {
           }}
         >
           <img
-            src="/sakura-petal.svg"
+            src={petal}
             className="petal-img"
             alt=""
           />
