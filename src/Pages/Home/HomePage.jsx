@@ -1,5 +1,6 @@
 import "./HomePage.css"
 import SakuraPetals from "./SakuraPetals";
+import AnimatedCarpet from "./AnimatedCarpet";
 
 export default function HomePage({
 
@@ -77,11 +78,7 @@ export default function HomePage({
 
             </div>
 
-            <img
-              src="/carpet.png"
-              className="home-image"
-              alt="carpet"
-            />
+            <AnimatedCarpet/>
 
           </div>
 
