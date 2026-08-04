@@ -24,10 +24,12 @@ export default function HomePanel({
   const packingEnabled = !!packingTeam && packingMember?.working;
 
   return (
+
+    <>
+
+      <SakuraPetals />
       
       <div className="app-container">
-
-        <SakuraPetals />
         
         <div className="home-header">
 
@@ -221,6 +223,8 @@ export default function HomePanel({
 
         </div>
       </div>
+
+    </>
 
   )
       
