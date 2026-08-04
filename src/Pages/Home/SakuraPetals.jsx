@@ -1,4 +1,5 @@
 import "./SakuraPetals.css";
+import petal from"./assets/sakura-petal.svg";
 
 export default function SakuraPetals() {
 
