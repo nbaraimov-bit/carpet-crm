@@ -32,14 +32,14 @@ export default function HomePage({
       
       <div className="app-container">
         
-        <div className="home-header">
+        <div className="home-hero">
 
           <div className="home-top">
 
             <div className="home-brand">
 
               <img
-                src="/logo.png" 
+                src="/logo.png"
                 className="home-logo"
                 alt="logo"
               />
@@ -60,9 +60,9 @@ export default function HomePage({
 
           </div>
 
-          <div className="home-banner">
+          <div className="hero-content">
 
-            <div className="home-text">
+            <div className="hero-text">
 
               <div className="home-greeting">
                 Xush kelibsiz! 👋
@@ -78,7 +78,8 @@ export default function HomePage({
 
             </div>
 
-            <AnimatedCarpet/>
+            {/* Keyingi bosqich */}
+            {/* <AnimatedCarpet /> */}   
 
           </div>
 

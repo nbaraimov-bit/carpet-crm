@@ -4,29 +4,6 @@
 }
 
 /* ===== ⬇️welcome card⬇️ ===== */
-.home-header{
-  background: linear-gradient(135deg,#111c48,#09122f);
-  border-radius:24px;
-  padding:18px;
-  margin-bottom:22px;
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:0 10px 35px rgba(0,0,0,.35);
-  overflow:hidden;
-  position:relative;
-}
-
-.home-header::before{
-  content:"";
-  position:absolute;
-  width:220px;
-  height:220px;
-  right:-70px;
-  top:-70px;
-  background:rgba(115,88,255,.18);
-  border-radius:50%;
-  filter:blur(40px);
-}
-
 .home-top{
   display:flex;
   justify-content:space-between;
@@ -95,5 +72,30 @@
   justify-content:center;
   align-items:center;
   font-size:70px;
+}
+
+.home-hero{
+
+    position:relative;
+    padding:8px 6px 26px;
+    margin-bottom:18px;
+
+}
+
+.hero-content{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-top:24px;
+
+}
+
+.hero-text{
+
+    flex:1;
+    z-index:2;
+
 }
 /* ===== ⬆️welcome card⬆️ ===== */
