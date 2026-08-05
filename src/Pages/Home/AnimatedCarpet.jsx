@@ -15,6 +15,8 @@ export default function AnimatedCarpet(){
                 className="carpet-image"
             />
 
+            <div className="carpet-shine"></div>
+
             <div className="carpet-shadow"></div>
 
         </div>
