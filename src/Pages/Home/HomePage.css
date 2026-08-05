@@ -36,14 +36,16 @@
 }
 
 .home-banner{
+  position: relative;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:18px;
+  min-height: 230px;
 }
 
 .home-text{
-  flex:1;
+  width: 55%;
+  z-index: 5;
 }
 
 .home-greeting{
