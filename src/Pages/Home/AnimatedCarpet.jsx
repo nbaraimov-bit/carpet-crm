@@ -1,24 +1,24 @@
 import "./AnimatedCarpet.css";
+import carpet from "./assets/carpet.png";
 
-export default function AnimatedCarpet() {
-  return (
-    <div className="carpet-container">
+export default function AnimatedCarpet(){
 
-      <div className="carpet-glow"></div>
+    return(
 
-      <div className="carpet-shadow"></div>
+        <div className="carpet-wrapper">
 
-      <div className="carpet">
+            <div className="carpet-glow"></div>
 
-        {/* Hozircha vaqtinchalik */}
-        <img
-          src="/carpet.png"
-          alt="carpet"
-          className="carpet-image"
-        />
+            <img
+                src={carpet}
+                alt="carpet"
+                className="carpet-image"
+            />
 
-      </div>
+            <div className="carpet-shadow"></div>
 
-    </div>
-  );
+        </div>
+
+    );
+
 }
