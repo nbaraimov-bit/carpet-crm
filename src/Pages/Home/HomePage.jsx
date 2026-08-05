@@ -78,9 +78,9 @@ export default function HomePage({
 
             </div>
 
-            <AnimatedCarpet/>  
-
           </div>
+
+          <AnimatedCarpet/>
 
         </div>
 
