@@ -1,5 +1,5 @@
 import "./AnimatedCarpet.css";
-import carpet from "./assets/carpet.png";
+import carpet from "./Assets/carpet.png";
 
 export default function AnimatedCarpet(){
 
