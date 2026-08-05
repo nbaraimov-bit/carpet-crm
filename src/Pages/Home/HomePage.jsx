@@ -78,8 +78,7 @@ export default function HomePage({
 
             </div>
 
-            {/* Keyingi bosqich */}
-            {/* <AnimatedCarpet /> */}   
+            <AnimatedCarpet/>  
 
           </div>
 
