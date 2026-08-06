@@ -103,12 +103,22 @@
 
 @keyframes carpetFloat{
 
-    0%,100%{
-        transform:translateY(0);
+    0%{
+        transform:
+            translateY(0px)
+            rotate(-1deg);
     }
 
     50%{
-        transform:translateY(-6px);
+        transform:
+            translateY(-8px)
+            rotate(.6deg);
+    }
+
+    100%{
+        transform:
+            translateY(0px)
+            rotate(-1deg);
     }
 
 }
