@@ -2110,7 +2110,6 @@ function App() {
 
   <div 
     style={{ 
-      padding: 17,
       marginBottom: 80,
     }}
   >
@@ -2133,7 +2132,7 @@ function App() {
 
 
     {/* ===== statistika =====  */}
-    {page === "stats" && (<>
+    {page === "stats" && (<div style={{padding: 15 }}>
 
       <div className="stats-tabs">
 
@@ -2323,7 +2322,7 @@ function App() {
         </div>
       )}
 
-    </>)}
+    </div>)}
 
 
     {/* ===== profil ===== */}
