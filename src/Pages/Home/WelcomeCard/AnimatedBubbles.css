@@ -4,6 +4,7 @@
     pointer-events:none;
     overflow:hidden;
     z-index:5;
+    padding-top: 30px;
 }
 
 .bubble{
