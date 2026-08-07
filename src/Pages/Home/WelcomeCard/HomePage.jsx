@@ -30,7 +30,7 @@ export default function HomePage({
 
       <SakuraPetals />
       
-      <div className="app-container">
+      
         
         <div className="home-hero">
 
@@ -83,6 +83,8 @@ export default function HomePage({
           <AnimatedCarpet/>
 
         </div>
+
+      <div className="app-container">
 
         <div className="roles-grid">  
     
