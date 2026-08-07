@@ -1,6 +1,6 @@
 import "./AnimatedCarpet.css";
 import AnimatedBubbles from "./AnimatedBubbles";
-import carpet from "./Assets/carpet.png";
+import carpet from "../Assets/carpet.png";
 
 export default function AnimatedCarpet(){
 
