@@ -1,4 +1,5 @@
 import "./AnimatedCarpet.css";
+import AnimatedBubbles from "./AnimatedBubbles";
 import carpet from "./Assets/carpet.png";
 
 export default function AnimatedCarpet(){
@@ -14,6 +15,8 @@ export default function AnimatedCarpet(){
                 alt="carpet"
                 className="carpet-image"
             />
+
+            <AnimatedBubbles/>
 
            {/* <div className="carpet-shine"></div> */}
 
