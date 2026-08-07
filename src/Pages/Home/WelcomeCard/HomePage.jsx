@@ -1,5 +1,5 @@
 import "./HomePage.css"
-import SakuraPetals from "../SakuraPetals";
+import SakuraPetals from "./SakuraPetals";
 import AnimatedCarpet from "./AnimatedCarpet";
 
 export default function HomePage({
