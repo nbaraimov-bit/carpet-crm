@@ -3,7 +3,7 @@
     inset:0;
     pointer-events:none;
     overflow:hidden;
-    z-index:2;
+    z-index:5;
 }
 
 .bubble{
@@ -17,10 +17,14 @@
     border:1px solid rgba(255,255,255,.35);
 
     box-shadow:
-        0 0 12px rgba(180,120,255,.35),
-        inset 0 0 10px rgba(255,255,255,.35);
+        0 0 12px rgba(255,255,255,.25),
+        0 0 30px rgba(180,90,255,.55),
+        0 0 55px rgba(170,80,255,.35),
+        inset 0 0 18px rgba(255,255,255,.45);
 
-    animation:bubbleFloat 8s ease-in-out infinite;
+    animation:
+        bubbleFloat 8s ease-in-out infinite,
+        bubblePulse 3s ease-in-out infinite;
 }
 
 .bubble::before{
@@ -51,4 +55,16 @@
         transform:translateY(0) scale(1);
         opacity:.45;
     }
+}
+
+@keyframes bubblePulse {
+
+    0%,100%{
+        filter:brightness(1);
+    }
+
+    50%{
+        filter:brightness(1.35);
+    }
+
 }
