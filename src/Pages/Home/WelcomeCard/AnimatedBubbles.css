@@ -9,22 +9,32 @@
 .bubble{
     position:absolute;
     border-radius:50%;
-    background:radial-gradient(circle at 30% 30%,
-        rgba(255,255,255,.9),
-        rgba(255,255,255,.15) 35%,
-        rgba(170,120,255,.18) 70%,
-        transparent 100%);
-    border:1px solid rgba(255,255,255,.35);
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(255,255,255,.95) 0%,
+            rgba(255,255,255,.45) 8%,
+            rgba(220,190,255,.22) 22%,
+            rgba(150,90,255,.16) 48%,
+            rgba(80,40,180,.10) 70%,
+            rgba(255,255,255,.04) 100%
+        );
+
+    border:1px solid rgba(255,255,255,.42);
 
     box-shadow:
-        0 0 12px rgba(255,255,255,.25),
-        0 0 30px rgba(180,90,255,.55),
-        0 0 55px rgba(170,80,255,.35),
-        inset 0 0 18px rgba(255,255,255,.45);
+        inset 7px 7px 12px rgba(255,255,255,.30),
+        inset -10px -12px 18px rgba(80,40,200,.28),
+        inset 2px -3px 8px rgba(255,120,255,.20),
+        0 0 12px rgba(190,100,255,.30),
+        0 0 28px rgba(150,70,255,.16);
+
+    backdrop-filter:blur(1px);
 
     animation:
-        bubbleFloat 8s ease-in-out infinite,
-        bubblePulse 3s ease-in-out infinite;
+        bubbleFloat 10s ease-in-out infinite,
+        bubblePulse 4s ease-in-out infinite;
 }
 
 .bubble::before{
@@ -47,7 +57,7 @@
     }
 
     50%{
-        transform:translateY(-18px) scale(1.06);
+        transform:translateY(-10px) scale(1.06);
         opacity:.9;
     }
 
