@@ -2,13 +2,13 @@ import "./AnimatedBubbles.css";
 
 export default function AnimatedBubbles() {
   const bubbles = [
-    { size: 58, top: "28%", left: "82%", delay: "0s" },
-    { size: 42, top: "34%", left: "78%", delay: "1s" },
-    { size: 34, top: "40%", left: "84%", delay: "2s" },
-    { size: 22, top: "46%", left: "80%", delay: "3s" },
-    { size: 16, top: "50%", left: "86%", delay: "4s" },
-    { size: 12, top: "44%", left: "76%", delay: "5s" }
-  ];
+  { size: 52, top: "38%", left: "78%", delay: "0s" },
+  { size: 38, top: "43%", left: "84%", delay: "1.2s" },
+  { size: 28, top: "48%", left: "74%", delay: "2.4s" },
+  { size: 21, top: "52%", left: "88%", delay: "3.5s" },
+  { size: 16, top: "55%", left: "80%", delay: "4.5s" },
+  { size: 11, top: "50%", left: "70%", delay: "5.5s" }
+];
 
   return (
     <div className="bubble-layer">
