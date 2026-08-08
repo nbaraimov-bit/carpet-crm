@@ -6,7 +6,13 @@ export default function AnimatedBubbles() {
   { size: 32, top: "11%", left: "68%", delay: "1.2s" },
   { size: 20, top: "33%", left: "85%", delay: "0.5s" },
   { size: 15, top: "30%", left: "75%", delay: "1.2s" },
-  { size: 22, top: "38%", left: "76%", delay: "0.5s" },
+  { size: 22, top: "41%", left: "76%", delay: "0.5s" },
+  { size: 21, top: "48%", left: "70%", delay: "0.7s" },
+
+  { size: 21, top: "44%", left: "70%", delay: "0.7s" },
+  { size: 21, top: "44%", left: "70%", delay: "0.7s" },
+  { size: 21, top: "44%", left: "70%", delay: "0.7s" },
+  { size: 21, top: "44%", left: "70%", delay: "0.7s" },
   { size: 21, top: "44%", left: "70%", delay: "0.7s" },
 ];
 
