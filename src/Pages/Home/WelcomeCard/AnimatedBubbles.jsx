@@ -9,11 +9,11 @@ export default function AnimatedBubbles() {
   { size: 22, top: "41%", left: "76%", delay: "0.5s" },
   { size: 21, top: "48%", left: "70%", delay: "0.7s" },
 
-  { size: 21, top: "44%", left: "70%", delay: "0.7s" },
-  { size: 21, top: "44%", left: "70%", delay: "0.7s" },
-  { size: 21, top: "44%", left: "70%", delay: "0.7s" },
-  { size: 21, top: "44%", left: "70%", delay: "0.7s" },
-  { size: 21, top: "44%", left: "70%", delay: "0.7s" },
+  { size: 15, top: "35%", left: "40%", delay: "0.7s" },
+  { size: 17, top: "40%", left: "35%", delay: "0.6s" },
+  { size: 7, top: "32%", left: "32%", delay: "0.5s" },
+  { size: 5, top: "45%", left: "26%", delay: "0.3s" },
+  { size: 2, top: "37%", left: "37%", delay: "0.4s" },
 ];
 
   return (
