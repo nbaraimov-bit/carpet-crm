@@ -10,56 +10,67 @@
 .bubble{
     position:absolute;
     border-radius:50%;
+    overflow:hidden;
 
     background:
-        /* yuqoridagi kuchli oq highlight */
+
+        /* oq asosiy highlight */
         radial-gradient(
-            circle at 30% 22%,
+            ellipse at 28% 20%,
             rgba(255,255,255,.95) 0%,
             rgba(255,255,255,.55) 5%,
-            transparent 16%
+            rgba(255,255,255,.12) 13%,
+            transparent 23%
         ),
 
-        /* pushti aks */
+        /* pushti / magenta aks */
         radial-gradient(
-            circle at 72% 30%,
-            rgba(255,120,220,.65) 0%,
-            rgba(255,120,220,.20) 18%,
-            transparent 38%
+            ellipse at 76% 30%,
+            rgba(255,100,220,.65) 0%,
+            rgba(220,60,255,.38) 18%,
+            transparent 42%
         ),
 
         /* ko'k aks */
         radial-gradient(
-            circle at 28% 72%,
-            rgba(70,190,255,.65) 0%,
-            rgba(70,190,255,.20) 20%,
-            transparent 42%
+            ellipse at 30% 72%,
+            rgba(50,190,255,.65) 0%,
+            rgba(50,120,255,.30) 22%,
+            transparent 45%
         ),
 
-        /* binafsha ichki rang */
+        /* binafsha aks */
         radial-gradient(
-            circle at 55% 55%,
-            rgba(145,70,255,.38) 0%,
-            rgba(100,50,220,.18) 42%,
-            transparent 72%
+            ellipse at 70% 75%,
+            rgba(150,70,255,.55) 0%,
+            transparent 45%
         ),
 
-        /* umumiy shaffoflik */
+        /* yashil/turkuaz kichik aks */
+        radial-gradient(
+            ellipse at 55% 35%,
+            rgba(90,255,220,.28) 0%,
+            transparent 25%
+        ),
+
+        /* bubble tanasi */
         radial-gradient(
             circle at 50% 50%,
-            rgba(255,255,255,.12) 0%,
-            rgba(180,120,255,.12) 45%,
-            rgba(40,20,100,.08) 75%,
-            transparent 100%
+            rgba(255,255,255,.14) 0%,
+            rgba(150,90,255,.16) 42%,
+            rgba(60,20,120,.16) 70%,
+            rgba(20,10,60,.10) 100%
         );
 
-    border:1px solid rgba(255,255,255,.55);
+    border:1px solid rgba(255,255,255,.60);
 
     box-shadow:
-        inset 4px 5px 10px rgba(255,255,255,.35),
-        inset -8px -10px 16px rgba(80,20,180,.35),
-        0 0 10px rgba(255,255,255,.18),
-        0 0 25px rgba(170,70,255,.45);
+        inset 3px 4px 8px rgba(255,255,255,.42),
+        inset -5px -7px 12px rgba(70,20,160,.38),
+
+        0 0 7px rgba(255,255,255,.25),
+        0 0 18px rgba(120,80,255,.40),
+        0 0 30px rgba(220,80,255,.20);
 
     animation:
         bubbleFloat 8s ease-in-out infinite,
@@ -71,23 +82,30 @@
     content:"";
     position:absolute;
 
-    width:32%;
-    height:18%;
+    width:28%;
+    height:12%;
 
     top:15%;
     left:20%;
 
     border-radius:50%;
 
-    background:rgba(255,255,255,.85);
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.95),
+            rgba(255,255,255,.45),
+            transparent
+        );
 
-    filter:blur(2px);
+    filter:blur(1.5px);
 
-    transform:rotate(-25deg);
+    transform:rotate(-28deg);
 
     box-shadow:
-        0 0 8px rgba(255,255,255,.8),
-        0 0 16px rgba(255,255,255,.35);
+        0 0 7px rgba(255,255,255,.8),
+        0 0 14px rgba(255,255,255,.3);
 }
 
 
@@ -95,26 +113,34 @@
     content:"";
     position:absolute;
 
-    width:45%;
-    height:35%;
+    width:48%;
+    height:32%;
 
-    right:10%;
+    right:8%;
     bottom:12%;
 
     border-radius:50%;
 
     background:
         radial-gradient(
+            ellipse at 35% 35%,
+            rgba(100,220,255,.75),
+            transparent 45%
+        ),
+        radial-gradient(
+            ellipse at 70% 55%,
+            rgba(255,90,220,.65),
+            transparent 48%
+        ),
+        radial-gradient(
             ellipse,
-            rgba(90,210,255,.55) 0%,
-            rgba(150,70,255,.35) 35%,
-            rgba(255,80,210,.18) 55%,
-            transparent 75%
+            rgba(130,70,255,.30),
+            transparent 70%
         );
 
-    filter:blur(4px);
+    filter:blur(3px);
 
-    transform:rotate(-20deg);
+    transform:rotate(-25deg);
 }
 
 
