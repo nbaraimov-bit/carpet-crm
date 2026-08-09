@@ -1,4 +1,4 @@
-.bubble-layer{
+/*}.bubble-layer{
     position:absolute;
     inset:0;
     pointer-events:none;
@@ -14,7 +14,7 @@
 
     background:
 
-        /* oq asosiy highlight */
+        /* oq asosiy highlight 
         radial-gradient(
             ellipse at 28% 20%,
             rgba(255,255,255,.95) 0%,
@@ -23,7 +23,7 @@
             transparent 23%
         ),
 
-        /* pushti / magenta aks */
+        /* pushti / magenta aks 
         radial-gradient(
             ellipse at 76% 30%,
             rgba(255,100,220,.65) 0%,
@@ -31,7 +31,7 @@
             transparent 42%
         ),
 
-        /* ko'k aks */
+        /* ko'k aks 
         radial-gradient(
             ellipse at 30% 72%,
             rgba(50,190,255,.65) 0%,
@@ -39,21 +39,21 @@
             transparent 45%
         ),
 
-        /* binafsha aks */
+        /* binafsha aks 
         radial-gradient(
             ellipse at 70% 75%,
             rgba(150,70,255,.55) 0%,
             transparent 45%
         ),
 
-        /* yashil/turkuaz kichik aks */
+        /* yashil/turkuaz kichik aks 
         radial-gradient(
             ellipse at 55% 35%,
             rgba(90,255,220,.28) 0%,
             transparent 25%
         ),
 
-        /* bubble tanasi */
+        /* bubble tanasi 
         radial-gradient(
             circle at 50% 50%,
             rgba(255,255,255,.14) 0%,
@@ -168,4 +168,38 @@
         filter:brightness(1.35);
     }
 
+}*/
+
+/* Pufakchalar joylashadigan asosiy qatlam */
+.bubble-layer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Har bir pufakchaning umumiy ko'rinishi */
+.magic-bubble {
+  position: absolute;
+  border-radius: 50%;
+  backdrop-filter: blur(0.5px);
+  
+  /* Rasmda ko'ringan kuchli binafsha rangli neon nuri (Glow) */
+  filter: drop-shadow(0 0 4px rgba(186, 85, 211, 0.8)) 
+          drop-shadow(0 0 12px rgba(141, 43, 255, 0.5));
+          
+  /* Haqiqiy pufakchalardek yengil tebranish harakati */
+  animation: floatAndPulse 5s ease-in-out infinite alternate;
+}
+
+/* Pulsatsiya va yuqoriga-pastga tebranish animatsiyasi */
+@keyframes floatAndPulse {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.05) rotate(3deg);
+  }
+  100% {
+    transform: translateY(4px) scale(0.95) rotate(-3deg);
+  }
 }
