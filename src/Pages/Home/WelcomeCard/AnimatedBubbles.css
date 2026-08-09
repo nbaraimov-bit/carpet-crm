@@ -116,17 +116,14 @@
 @keyframes bubbleFloat{
     0%{
         transform:translateY(0) scale(1);
-        opacity:.45;
     }
 
     50%{
         transform:translateY(-10px) scale(1.06);
-        opacity:.9;
     }
 
     100%{
         transform:translateY(0) scale(1);
-        opacity:.45;
     }
 }
 
