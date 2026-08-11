@@ -20,7 +20,7 @@ export default function AnimatedBubbles() {
     <div className="bubble-layer">
       {bubbles.map((bubble, i) => (
         <img
-          src="../Assets/bubble.svg"
+          src="/Assets/bubble.svg"
           className="bubble"
           style={{
             width: bubble.size,
