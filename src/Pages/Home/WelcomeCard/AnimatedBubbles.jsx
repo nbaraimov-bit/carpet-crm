@@ -1,5 +1,5 @@
 import "./AnimatedBubbles.css";
-import bubble from  "../Assets/bubble.svg"
+import bubbler from  "../Assets/bubble.svg"
 
 export default function AnimatedBubbles() {
   const bubbles = [
@@ -21,14 +21,14 @@ export default function AnimatedBubbles() {
     <div className="bubble-layer">
       {bubbles.map((bubble, i) => (
         <img
-          src={bubble}
+          src={bubbler}
           className="bubble"
           style={{
             width: bubble.size,
             height: bubble.size,
             top: bubble.top,
             left: bubble.left,
-            animationDelay: bubble.delay
+            animationDelay: bubble.delay,
           }}
         />
       ))}
