@@ -1,4 +1,5 @@
 import "./AnimatedBubbles.css";
+import "../Assets/bubble.svg"
 
 export default function AnimatedBubbles() {
   const bubbles = [
