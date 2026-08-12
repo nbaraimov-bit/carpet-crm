@@ -22,9 +22,15 @@
 }
 
 .home-logo{
-  width:52px;
-  height:52px;
-  border-radius:50%;
+  width:58px;
+  height:58px;
+  object-fit:contain;
+  display:block;
+  flex-shrink:0;
+
+  filter:
+    drop-shadow(0 0 4px rgba(210,90,255,.75))
+    drop-shadow(0 0 10px rgba(170,60,255,.45));
 }
 
 .home-title{
