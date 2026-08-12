@@ -40,7 +40,7 @@ export default function HomePage({
             <div className="home-brand">
 
               <img
-                src="logo"
+                src={logo}
                 className="home-logo"
                 alt="logo"
               />
