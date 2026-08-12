@@ -1,6 +1,7 @@
 import "./HomePage.css"
 import SakuraPetals from "./SakuraPetals";
 import AnimatedCarpet from "./AnimatedCarpet";
+import logo from "../Assets/logo.png"
 
 export default function HomePage({
 
@@ -39,7 +40,7 @@ export default function HomePage({
             <div className="home-brand">
 
               <img
-                src="/logo.png"
+                src="logo"
                 className="home-logo"
                 alt="logo"
               />
