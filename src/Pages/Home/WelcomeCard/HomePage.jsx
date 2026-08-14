@@ -2,6 +2,7 @@ import "./HomePage.css"
 import SakuraPetals from "./SakuraPetals";
 import AnimatedCarpet from "./AnimatedCarpet";
 import logo from "../Assets/logo.png"
+import OperatorIcon from "../Assets/operatorIcon.png"
 
 export default function HomePage({
 
@@ -94,39 +95,12 @@ export default function HomePage({
       className="role-card"
       onClick={() => setRole("operator")}
     >
-      <div className="role-icon operator-icon">
-        <svg viewBox="0 0 64 64" fill="none">
-          <path
-            d="M20 31V25C20 16.7 26.7 10 35 10C43.3 10 50 16.7 50 25V31"
-            stroke="currentColor"
-            strokeWidth="4"
-            strokeLinecap="round"
-          />
-          <rect
-            x="8"
-            y="27"
-            width="15"
-            height="20"
-            rx="7"
-            fill="currentColor"
-            opacity=".9"
-          />
-          <rect
-            x="41"
-            y="27"
-            width="15"
-            height="20"
-            rx="7"
-            fill="currentColor"
-            opacity=".9"
-          />
-          <path
-            d="M23 37C25 48 31 53 38 53"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-        </svg>
+      <div className="role-icon-wrap">
+        <img
+          src={OperatorIcon}
+          className="role-icon"
+          alt="Operator"
+        />
       </div>
 
       <div className="role-content">
