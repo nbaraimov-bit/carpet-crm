@@ -136,20 +136,20 @@
 .role-card {
   position: relative;
 
-  min-height: 145px;
-  padding: 20px;
+  min-height: 75px;
+  padding: 7px;
 
   display: flex;
   align-items: center;
   gap: 16px;
 
-  border-radius: 24px;
+  border-radius: 20px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(30, 42, 91, 0.88),
-      rgba(10, 18, 48, 0.94)
+      rgba(26, 4, 49, 0.65),
+      rgba(70, 51, 91, 0.65)
     );
 
   border: 1px solid rgba(150, 120, 255, 0.22);
@@ -210,8 +210,8 @@
 
 
 .role-icon-wrap {
-  width: 92px;
-  height: 92px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
 
   display: flex;
@@ -226,7 +226,7 @@
       rgba(5, 4, 25, 0.9)
     );
 
-  border: 1px solid rgba(170, 100, 255, 0.55);
+  border: 1px solid rgba(129, 33, 247, 0.55);
 
   box-shadow:
     0 0 10px rgba(150, 70, 255, 0.35),
@@ -236,12 +236,12 @@
 }
 
 .role-icon {
-  width: 82px;
-  height: 82px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
 
   filter:
-    drop-shadow(0 0 7px rgba(160, 70, 255, 0.65));
+    drop-shadow(0 0 7px rgba(140, 41, 247, 0.65));
 }
 
 
@@ -265,20 +265,20 @@
 
   color: #ffffff;
 
-  font-size: 25px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 400;
 
   line-height: 1.1;
 
-  letter-spacing: -0.4px;
+  letter-spacing: -0.3px;
 }
 
 
 .role-subtitle {
   color: rgba(235, 235, 255, 0.68);
 
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 10px;
+  font-weight: 200;
 
   line-height: 1.45;
 }
