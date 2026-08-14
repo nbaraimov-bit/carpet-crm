@@ -136,7 +136,7 @@
 .role-card {
   position: relative;
 
-  min-height: 75px;
+  max-height: 80px;
   padding: 7px;
 
   display: flex;
@@ -210,8 +210,8 @@
 
 
 .role-icon-wrap {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
 
   display: flex;
