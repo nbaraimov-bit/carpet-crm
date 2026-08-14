@@ -20,10 +20,10 @@ export default function HomePage({
   const driverMember = driverTeam?.members?.[currentPhone];
   const packingMember = packingTeam?.members?.[currentPhone];
   const operatorMember = operatorTeam?.members?.[currentPhone];
-  const operatorEnabled = !!operatorTeam && operatorMember?.working;
-  const driverEnabled = !!driverTeam && driverMember?.working;
-  const washerEnabled = !!washerTeam && washerMember?.working;
-  const packingEnabled = !!packingTeam && packingMember?.working;
+  const operatorEnabled = !!operatorTeam
+  const driverEnabled = !!driverTeam
+  const washerEnabled = !!washerTeam
+  const packingEnabled = !!packingTeam
 
   return (
 
@@ -87,121 +87,332 @@ export default function HomePage({
 
       <div className="app-container">
 
-        <div className="roles-grid">  
-    
-          <div
-            className="role-card"
-            onClick={() => setRole("operator")}
-          >
-            <div style={{ fontSize: 42 }}>
-              🎧
-            </div>
+  <div className="roles-grid">
 
-            <div className="role-title">
-              Operator
-            </div>
+    {/* OPERATOR */}
+    <div
+      className="role-card"
+      onClick={() => setRole("operator")}
+    >
+      <div className="role-icon operator-icon">
+        <svg viewBox="0 0 64 64" fill="none">
+          <path
+            d="M20 31V25C20 16.7 26.7 10 35 10C43.3 10 50 16.7 50 25V31"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+          <rect
+            x="8"
+            y="27"
+            width="15"
+            height="20"
+            rx="7"
+            fill="currentColor"
+            opacity=".9"
+          />
+          <rect
+            x="41"
+            y="27"
+            width="15"
+            height="20"
+            rx="7"
+            fill="currentColor"
+            opacity=".9"
+          />
+          <path
+            d="M23 37C25 48 31 53 38 53"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
 
-            <div className="role-subtitle">
-              Buyurtmalarni qabul qilish va boshqarish
-            </div>
+      <div className="role-content">
+        <div className="role-title">
+          Operator
+        </div>
+
+        <div className="role-subtitle">
+          Buyurtmalarni qabul qilish va boshqarish
+        </div>
+      </div>
+
+      <div className="role-arrow">›</div>
+    </div>
+
+
+    {/* DRIVER */}
+    <div
+      className={`role-card ${driverEnabled ? "" : "role-disabled"}`}
+      onClick={() => {
+        if (driverEnabled) {
+          setRole("driver");
+        }
+      }}
+    >
+      <div className="role-icon driver-icon">
+        <svg viewBox="0 0 64 64" fill="none">
+          <path
+            d="M7 38V27C7 24.8 8.8 23 11 23H42L50 31H55C56.7 31 58 32.3 58 34V44H7V38Z"
+            fill="currentColor"
+            opacity=".9"
+          />
+
+          <path
+            d="M42 23V31H50"
+            stroke="white"
+            strokeWidth="2"
+            opacity=".7"
+          />
+
+          <circle
+            cx="18"
+            cy="45"
+            r="6"
+            fill="#10162f"
+            stroke="currentColor"
+            strokeWidth="3"
+          />
+
+          <circle
+            cx="48"
+            cy="45"
+            r="6"
+            fill="#10162f"
+            stroke="currentColor"
+            strokeWidth="3"
+          />
+
+          <path
+            d="M11 35H37"
+            stroke="white"
+            strokeWidth="2"
+            opacity=".5"
+          />
+        </svg>
+      </div>
+
+      <div className="role-content">
+        <div className="role-title">
+          Driver
+        </div>
+
+        <div className="role-subtitle">
+          Buyurtmalarni yetkazish va statusni yangilash
+        </div>
+      </div>
+
+      <div className="role-arrow">›</div>
+    </div>
+
+
+    {/* WASHER */}
+    <div
+      className={`role-card ${washerEnabled ? "" : "role-disabled"}`}
+      onClick={() => {
+        if (washerEnabled) {
+          setRole("washer");
+        }
+      }}
+    >
+      <div className="role-icon washer-icon">
+        <svg viewBox="0 0 64 64" fill="none">
+          <path
+            d="M12 35C12 28 17 23 24 23H48C52 23 55 26 55 30V39C55 44 51 48 46 48H20C15 48 12 43 12 35Z"
+            fill="currentColor"
+            opacity=".9"
+          />
+
+          <path
+            d="M18 27C20 22 24 19 29 19"
+            stroke="white"
+            strokeWidth="3"
+            strokeLinecap="round"
+            opacity=".7"
+          />
+
+          <circle
+            cx="42"
+            cy="17"
+            r="5"
+            fill="currentColor"
+            opacity=".7"
+          />
+
+          <circle
+            cx="51"
+            cy="11"
+            r="3"
+            fill="currentColor"
+            opacity=".5"
+          />
+
+          <path
+            d="M19 39C24 42 31 43 39 42"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            opacity=".5"
+          />
+        </svg>
+      </div>
+
+      <div className="role-content">
+        <div className="role-title">
+          Washer
+        </div>
+
+        <div className="role-subtitle">
+          Gilamlarni yuvish va holatini belgilash
+        </div>
+      </div>
+
+      <div className="role-arrow">›</div>
+    </div>
+
+
+    {/* TAYYORLOVCHI */}
+    <div
+      className={`role-card ${packingEnabled ? "" : "role-disabled"}`}
+      onClick={() => {
+        if (packingEnabled) {
+          setRole("tayyorlovchi");
+        }
+      }}
+    >
+      <div className="role-icon packing-icon">
+        <svg viewBox="0 0 64 64" fill="none">
+          <path
+            d="M10 20L32 10L54 20L32 30L10 20Z"
+            fill="currentColor"
+            opacity=".95"
+          />
+
+          <path
+            d="M10 20V45L32 55V30L10 20Z"
+            fill="currentColor"
+            opacity=".7"
+          />
+
+          <path
+            d="M54 20V45L32 55V30L54 20Z"
+            fill="currentColor"
+            opacity=".5"
+          />
+
+          <path
+            d="M32 10V30"
+            stroke="white"
+            strokeWidth="2"
+            opacity=".7"
+          />
+
+          <path
+            d="M22 15L44 25"
+            stroke="white"
+            strokeWidth="2"
+            opacity=".4"
+          />
+        </svg>
+      </div>
+
+      <div className="role-content">
+        <div className="role-title">
+          Tayyorlovchi
+        </div>
+
+        <div className="role-subtitle">
+          Gilamlarni tayyorlash va qadoqlash
+        </div>
+      </div>
+
+      <div className="role-arrow">›</div>
+    </div>
+
+
+    {/* ADMIN */}
+    {(currentWorker?.role === "admin" ||
+      currentWorker?.role === "ega") && (
+      <div
+        className="role-card"
+        onClick={() => setRole("admin")}
+      >
+        <div className="role-icon admin-icon">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path
+              d="M32 8L52 16V30C52 43 43 52 32 56C21 52 12 43 12 30V16L32 8Z"
+              fill="currentColor"
+              opacity=".85"
+            />
+
+            <path
+              d="M23 32L29 38L42 24"
+              stroke="white"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+
+        <div className="role-content">
+          <div className="role-title">
+            Admin
           </div>
 
-          <div
-            className={`role-card ${driverEnabled ? "" : "role-disabled"}`}
-            onClick={() => {
-              if (driverEnabled) {setRole("driver");}
-            }}
-          >
-            <div style={{ fontSize: 42 }}>
-              🚚
-            </div>
+          <div className="role-subtitle">
+            Tizimni boshqarish va nazorat qilish
+          </div>
+        </div>
 
-            <div className="role-title">
-              Driver
-            </div>
+        <div className="role-arrow">›</div>
+      </div>
+    )}
 
-            <div className="role-subtitle">
-              Buyurtmalarni yetkazish va statusni yangilash
-            </div>
+
+    {/* EGA */}
+    {currentWorker?.role === "ega" && (
+      <div
+        className="role-card"
+        onClick={() => setRole("ega")}
+      >
+        <div className="role-icon owner-icon">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path
+              d="M10 46L15 24L25 34L32 16L39 34L49 24L54 46H10Z"
+              fill="currentColor"
+              opacity=".9"
+            />
+
+            <path
+              d="M10 49H54"
+              stroke="currentColor"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+
+            <circle cx="32" cy="12" r="3" fill="white" />
+          </svg>
+        </div>
+
+        <div className="role-content">
+          <div className="role-title">
+            Ega
           </div>
 
-          <div
-            className={`role-card ${washerEnabled ? "" : "role-disabled"}`}
-            onClick={() => {
-              if (washerEnabled) {setRole("washer");}
-            }}
-          >
-            <div style={{ fontSize: 42 }}>
-              🧼
-            </div>
-
-            <div className="role-title">
-              Washer
-            </div>
-
-            <div className="role-subtitle">
-              Gilamlarni yuvish va holatini belgilash
-            </div>
+          <div className="role-subtitle">
+            Umumiy nazorat va tahlillar
           </div>
+        </div>
 
-          <div
-            className={`role-card ${packingEnabled ? "" : "role-disabled"}`}
-            onClick={() => {
-              if (packingEnabled) {setRole("tayyorlovchi");}
-            }}
-          >
-            <div style={{ fontSize: 42 }}>
-              📦
-            </div>
+        <div className="role-arrow">›</div>
+      </div>
+    )}
 
-            <div className="role-title">
-              Tayyorlovchi
-            </div>
-
-            <div className="role-subtitle">
-              Gilamlarni tayyorlash va qadoqlash
-            </div>
-          </div>
-
-        {(currentWorker?.role === "admin"
-          || currentWorker?.role === "ega"
-        ) && (
-          <div
-            className="role-card"
-            onClick={() => setRole("admin")}
-          >
-            <div style={{ fontSize: 42 }}>
-              🛡️
-            </div>
-
-            <div className="role-title">
-              Admin
-            </div>
-
-            <div className="role-subtitle">
-              Tizimni boshqarish va nazorat qilish
-            </div>
-          </div>
-        )}
-
-        {currentWorker?.role === "ega" && (
-          <div
-            className="role-card"
-            onClick={() => setRole("ega")}
-          >
-            <div style={{ fontSize: 42 }}>
-              👑
-            </div>
-
-            <div className="role-title">
-              Ega
-            </div>
-
-            <div className="role-subtitle">
-              Umumiy nazorat va tahlillar
-            </div>
-          </div>
-        )}
+  </div>
+</div>
 
         <br /><br />
 
@@ -220,9 +431,6 @@ export default function HomePage({
             Chiqish
           </button>
         </div> 
-
-        </div>
-      </div>
 
     </>
 

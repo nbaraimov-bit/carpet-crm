@@ -114,3 +114,395 @@
 }
 /* ===== ⬆️welcome card⬆️ ===== */
 
+
+/* ================================
+   ROLES
+================================ */
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+
+/* ================================
+   CARD
+================================ */
+
+.role-card {
+  position: relative;
+
+  min-height: 145px;
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(30, 42, 91, 0.88),
+      rgba(10, 18, 48, 0.94)
+    );
+
+  border: 1px solid rgba(150, 120, 255, 0.22);
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* yuqoridagi juda yengil nur */
+
+.role-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 20% 0%,
+      rgba(180, 100, 255, 0.13),
+      transparent 45%
+    );
+
+  pointer-events: none;
+}
+
+
+/* hover */
+
+.role-card:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(190, 120, 255, 0.5);
+
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.35),
+    0 0 25px rgba(150, 70, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+
+/* bosilganda */
+
+.role-card:active {
+  transform: scale(0.98);
+}
+
+
+/* ================================
+   ICON
+================================ */
+
+.role-icon {
+  position: relative;
+
+  flex: 0 0 66px;
+
+  width: 66px;
+  height: 66px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.10),
+      rgba(120, 70, 200, 0.08)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+
+  z-index: 1;
+}
+
+
+/* iconning o‘zi */
+
+.role-icon svg {
+  width: 46px;
+  height: 46px;
+
+  filter:
+    drop-shadow(0 0 7px currentColor)
+    drop-shadow(0 0 15px currentColor);
+
+  transition: transform 0.25s ease;
+}
+
+
+.role-card:hover .role-icon svg {
+  transform: scale(1.08);
+}
+
+
+/* ================================
+   ICON COLORS
+================================ */
+
+.operator-icon {
+  color: #c77dff;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(200, 100, 255, 0.18),
+      rgba(100, 50, 180, 0.05)
+    );
+}
+
+
+.driver-icon {
+  color: #65d8ff;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(50, 210, 255, 0.16),
+      rgba(30, 80, 160, 0.05)
+    );
+}
+
+
+.washer-icon {
+  color: #65f0cf;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(70, 240, 200, 0.16),
+      rgba(30, 130, 120, 0.05)
+    );
+}
+
+
+.packing-icon {
+  color: #ffbd66;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 180, 80, 0.16),
+      rgba(180, 90, 30, 0.05)
+    );
+}
+
+
+.admin-icon {
+  color: #ff668f;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 80, 130, 0.16),
+      rgba(180, 40, 80, 0.05)
+    );
+}
+
+
+.owner-icon {
+  color: #ffd45c;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 200, 60, 0.18),
+      rgba(180, 120, 20, 0.05)
+    );
+}
+
+
+/* ================================
+   CONTENT
+================================ */
+
+.role-content {
+  position: relative;
+
+  flex: 1;
+
+  min-width: 0;
+
+  z-index: 1;
+}
+
+
+.role-title {
+  margin-bottom: 6px;
+
+  color: #ffffff;
+
+  font-size: 25px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.4px;
+}
+
+
+.role-subtitle {
+  color: rgba(235, 235, 255, 0.68);
+
+  font-size: 14px;
+  font-weight: 400;
+
+  line-height: 1.45;
+}
+
+
+/* ================================
+   ARROW
+================================ */
+
+.role-arrow {
+  position: absolute;
+
+  right: 14px;
+  bottom: 12px;
+
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: rgba(255, 255, 255, 0.6);
+
+  background: rgba(255, 255, 255, 0.06);
+
+  font-size: 21px;
+  line-height: 1;
+
+  opacity: 0.7;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+
+.role-card:hover .role-arrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+
+/* ================================
+   DISABLED
+================================ */
+
+.role-disabled {
+  cursor: not-allowed;
+
+  opacity: 0.42;
+
+  filter: saturate(0.55);
+
+  transform: none !important;
+
+  border-color: rgba(150, 150, 180, 0.12);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.18);
+}
+
+
+.role-disabled:hover {
+  transform: none;
+  border-color: rgba(150, 150, 180, 0.12);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.18);
+}
+
+
+.role-disabled .role-arrow {
+  opacity: 0.25;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  .roles-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .role-card {
+    min-height: 128px;
+
+    padding: 14px;
+
+    gap: 11px;
+
+    border-radius: 20px;
+  }
+
+  .role-icon {
+    flex: 0 0 50px;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 15px;
+  }
+
+  .role-icon svg {
+    width: 35px;
+    height: 35px;
+  }
+
+  .role-title {
+    font-size: 20px;
+
+    margin-bottom: 5px;
+  }
+
+  .role-subtitle {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .role-arrow {
+    right: 9px;
+    bottom: 8px;
+
+    width: 21px;
+    height: 21px;
+
+    font-size: 18px;
+  }
+}

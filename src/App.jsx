@@ -533,43 +533,29 @@ function App() {
     0
   )
 
-  const washerTeam = teams.find(
-    (team) =>
-    team.type === "washer" &&
-    currentWorker &&
-    team.members?.[currentPhone]
-  );
-
-
   const driverTeam = teams.find(
     (team) =>
-    team.type === "driver" &&
-    currentWorker &&
-    team.members?.[currentPhone]
+      team.type === "driver" &&
+      team.members?.[currentPhone]?.working === true
+  );
+
+  const washerTeam = teams.find(
+    (team) =>
+      team.type === "washer" &&
+      team.members?.[currentPhone]?.working === true
   );
 
   const packingTeam = teams.find(
     (team) =>
       team.type === "packing" &&
-      currentWorker &&
-      team.members?.[currentPhone]
+      team.members?.[currentPhone]?.working === true
   );
 
   const operatorTeam = teams.find(
     (team) =>
       team.type === "operator" &&
-      currentWorker &&
-      team.members?.[currentPhone]
+      team.members?.[currentPhone]?.working === true
   );
-
-  const washerMember = washerTeam?.members?.[currentPhone];
-  const driverMember = driverTeam?.members?.[currentPhone];
-  const packingMember = packingTeam?.members?.[currentPhone];
-  const operatorMember = operatorTeam?.members?.[currentPhone];
-  const operatorEnabled = !!operatorTeam && operatorMember?.working;
-  const driverEnabled = !!driverTeam && driverMember?.working;
-  const washerEnabled = !!washerTeam && washerMember?.working;
-  const packingEnabled = !!packingTeam && packingMember?.working;
 
   const totalDailySalary = dailyWasherSalary + dailyHourlySalary
 
@@ -2132,7 +2118,7 @@ function App() {
 
 
     {/* ===== statistika =====  */}
-    {page === "stats" && (<div style={{padding: 15 }}>
+    {page === "stats" && (<div style={{padding: 15,}}>
 
       <div className="stats-tabs">
 
