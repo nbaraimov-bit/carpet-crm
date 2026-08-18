@@ -137,7 +137,7 @@
 
   border-radius: 20px;
 
-  border: 1px solid rgba(150, 120, 255, 0.22);
+  border: 2px solid rgba(150, 80, 255, 0.45);
 
   background: rgba(18, 22, 55, 0.72);
 
@@ -193,6 +193,8 @@
 
 .role-card:active {
   transform: scale(0.98);
+  background: rgba(30, 20, 65, 0.78);
+  
 }
 
 
@@ -261,7 +263,7 @@
 
 
 .role-subtitle {
-  color: rgba(235, 235, 255, 0.68);
+  color: rgba(220, 215, 255, 0.72);
 
   font-size: 9px;
 
