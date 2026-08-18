@@ -359,20 +359,19 @@
   }
 
   .role-card {
-    min-height: 128px;
 
-    padding: 10px;
+    padding: 5px;
 
     gap: 8px;
 
-    border-radius: 20px;
+    border-radius: 16px;
   }
 
   .role-icon {
     flex: 0 0 50px;
 
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
 
     border-radius: 15px;
   }
