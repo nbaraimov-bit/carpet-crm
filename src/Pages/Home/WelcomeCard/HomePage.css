@@ -137,9 +137,25 @@
 
   border-radius: 20px;
 
-  border: 2px solid rgba(150, 80, 255, 0.45);
+  border: 1px solid transparent;
 
-  background: rgba(18, 22, 55, 0.72);
+  background:
+    linear-gradient(#121637, #121637) padding-box,
+    linear-gradient(
+      120deg,
+      #6330b8,
+      #d98cff,
+      #6330b8,
+      #8d45ff,
+      #6330b8
+    ) border-box;
+
+  background-size: 100% 100%, 300% 100%;
+  animation: borderShine 4s linear infinite;
+
+  /*border: 2px solid rgba(150, 80, 255, 0.45);
+
+  background: rgba(18, 22, 55, 0.72);*/
 
   box-shadow:
     0 12px 35px rgba(0, 0, 0, 0.28),
@@ -401,5 +417,16 @@
     height: 21px;
 
     font-size: 18px;
+  }
+}
+
+
+@keyframes borderShine {
+  0% {
+    background-position: 0 0, 0% 50%;
+  }
+
+  100% {
+    background-position: 0 0, 300% 50%;
   }
 }
