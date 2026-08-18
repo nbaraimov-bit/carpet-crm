@@ -263,8 +263,7 @@
 
   color: #ffffff;
 
-  font-size: 10px;
-  font-weight: 200;
+  font-size: 8px;
 
   line-height: 1.1;
 
@@ -275,8 +274,7 @@
 .role-subtitle {
   color: rgba(235, 235, 255, 0.68);
 
-  font-size: 7px;
-  font-weight: 100;
+  font-size: 5px;
 
   line-height: 1.45;
 }
