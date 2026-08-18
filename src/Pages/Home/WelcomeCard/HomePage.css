@@ -128,7 +128,7 @@
 
   border-radius: 20px;
 
-  border: 1.5px solid transparent;
+  border: 1.2px solid transparent;
 
   background:
     linear-gradient(#121637, #121637) padding-box,
@@ -293,8 +293,7 @@
 
   width: 25px;
   height: 25px;
-
-  display: flex;
+  
   align-items: center;
   justify-content: center;
 
