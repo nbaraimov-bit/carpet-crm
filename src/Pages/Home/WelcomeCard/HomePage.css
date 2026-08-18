@@ -234,8 +234,8 @@
 }
 
 .role-icon {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
 
   filter:
@@ -264,7 +264,7 @@
   color: #ffffff;
 
   font-size: 10px;
-  font-weight: 300;
+  font-weight: 200;
 
   line-height: 1.1;
 
@@ -276,7 +276,7 @@
   color: rgba(235, 235, 255, 0.68);
 
   font-size: 7px;
-  font-weight: 200;
+  font-weight: 100;
 
   line-height: 1.45;
 }
