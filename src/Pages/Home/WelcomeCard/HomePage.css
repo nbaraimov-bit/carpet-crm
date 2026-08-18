@@ -126,7 +126,7 @@
   display: flex;
   align-items: center;
 
-  border-radius: 20px;
+  border-radius: 15px;
 
   border: 1.2px solid transparent;
 
@@ -145,7 +145,7 @@
   animation: borderShine 8s linear infinite;
 
   box-shadow:
-    0 12px 20px rgba(209, 118, 229, 0.28),
+    0 7px 12px rgba(209, 118, 229, 0.28),
     inset 0 0 25px rgba(150, 60, 255, 0.25),
     inset 0 0 8px rgba(210, 110, 255, 0.18);
 
@@ -293,7 +293,8 @@
 
   width: 25px;
   height: 25px;
-  
+
+  display: flex;
   align-items: center;
   justify-content: center;
 
