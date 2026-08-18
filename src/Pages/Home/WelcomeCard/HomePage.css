@@ -151,11 +151,7 @@
     ) border-box;
 
   background-size: 100% 100%, 300% 100%;
-  animation: borderShine 4s linear infinite;
-
-  /*border: 2px solid rgba(150, 80, 255, 0.45);
-
-  background: rgba(18, 22, 55, 0.72);*/
+  animation: borderShine 8s linear infinite;
 
   box-shadow:
     0 12px 35px rgba(0, 0, 0, 0.28),
@@ -223,15 +219,21 @@
   align-items: center;
   justify-content: center;
 
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      rgba(160, 90, 255, 0.28),
-      rgba(30, 12, 70, 0.55) 55%,
-      rgba(5, 4, 25, 0.9)
-    );
+  border: 1px solid transparent;
 
-  border: 1px solid rgba(129, 33, 247, 0.55);
+  background:
+    linear-gradient(#121637, #121637) padding-box,
+    linear-gradient(
+      120deg,
+      #6330b8,
+      #d98cff,
+      #6330b8,
+      #8d45ff,
+      #6330b8
+    ) border-box;
+
+  background-size: 100% 100%, 300% 100%;
+  animation: borderShine 8s linear infinite;
 
   box-shadow:
     0 0 10px rgba(150, 70, 255, 0.35),
