@@ -88,6 +88,7 @@ function App() {
   const [statsTab, setStatsTab] = useState("stats");
   const [todayWorkers, setTodayWorkers] = useState([]);
   const [loading, setLoading] = useState({});
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [stats, setStats] = useState({
     income: 0,
     salary: 0,
@@ -807,6 +808,35 @@ function App() {
 
 
   {/* ===== use effectlar ===== */}
+  useEffect(() => {
+    const images = [
+      "/Assets/logo.png",
+      "/Assets/carpet.png",
+      "/Assets/operatorIcon.png",
+      "/Assets/driverIcon.png",
+      "/Assets/washerIcon.png",
+      "/Assets/packingIcon.png",
+      "/Assets/adminIcon.png",
+      "/Assets/egaIcon.png",
+    ];
+
+    const promises = images.map((src) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+    
+        img.onload = resolve;
+        img.onerror = resolve;
+
+        img.src = src;
+      });
+    });
+
+    Promise.all(promises).then(() => {
+      setAssetsLoaded(true);
+    });
+  }, []);
+
+
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "orders"),
@@ -1839,8 +1869,8 @@ function App() {
   }
 
   if (
-    currentWorker &&
-    workers.length === 0
+    !assetsLoaded || (currentWorker &&
+    workers.length === 0)
   ) {
     return (
       <div
@@ -2329,6 +2359,20 @@ function App() {
             ➕ Xarajat qo'shish
           </button>
 
+        <div
+          style={{
+            marginTop: 10,
+            padding: 10,
+            borderRadius: 5,
+            border: "3px solid #ff0000",
+
+           }}
+        >
+          <button onClick={logout}>
+            Chiqish
+          </button>
+        </div> 
+
       </div>
     )}
 
@@ -2614,7 +2658,7 @@ function App() {
         onClick={() => setShowExpenseModal(false)}
       >
 
-        <div 
+        <div
           className="expense-modal"
           onClick={(e) => e.stopPropagation()}
         >

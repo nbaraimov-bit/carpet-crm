@@ -295,24 +295,6 @@ export default function HomePage({
   </div>
 </div>
 
-        <br /><br />
-
-        <hr />
-        
-        <div
-          style={{
-            marginTop: 10,
-            padding: 10,
-            borderRadius: 5,
-            border: "3px solid #ff0000",
-
-           }}
-        >
-          <button onClick={logout}>
-            Chiqish
-          </button>
-        </div> 
-
     </>
 
   )
