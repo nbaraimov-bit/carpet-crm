@@ -191,7 +191,7 @@ export default function HomePage({
               }
             }}
           >
-            <div className="role-icon packing-icon">
+            <div className="role-icon-wrap">
               <img
                 src={PackingIcon}
                 className="role-icon"
