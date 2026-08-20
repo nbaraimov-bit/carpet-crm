@@ -3,6 +3,11 @@ import SakuraPetals from "./SakuraPetals";
 import AnimatedCarpet from "./AnimatedCarpet";
 import logo from "../Assets/logo.png"
 import OperatorIcon from "../Assets/operatorIcon.png"
+import DriverIcon from "../Assets/driverIcon.png"
+import WasherIcon from "../Assets/washerIcon.png"
+import PackingIcon from "../Assets/packingIcon.png"
+import AdminIcon from "../Assets/adminIcon.png"
+import EgaIcon from "../Assets/egaIcon"
 
 export default function HomePage({
 
@@ -31,279 +36,181 @@ export default function HomePage({
     <>
 
       <SakuraPetals />
-      
-      
         
-        <div className="home-hero">
+      <div className="home-hero">
 
-          <div className="home-top">
+        <div className="home-top">
 
-            <div className="home-brand">
+          <div className="home-brand">
 
-              <img
-                src={logo}
-                className="home-logo"
-                alt="logo"
-              />
+            <img
+              src={logo}
+              className="home-logo"
+              alt="logo"
+            />
 
-              <div>
+            <div>
 
-                <div className="home-title">
-                  SAKURA
-                </div>
+              <div className="home-title">
+                SAKURA
+              </div>
 
-                <div className="home-version">
-                  Cleaning
-                </div>
-
+              <div className="home-version">
+                Cleaning
               </div>
 
             </div>
 
           </div>
-
-          <div className="hero-content">
-
-            <div className="hero-text">
-
-              <div className="home-greeting">
-                Xush kelibsiz! 👋
-              </div>
-
-              <div className="home-worker">
-                {currentWorker?.name}
-              </div>
-
-              <div className="home-subtitle">
-                O'z ish joyingizni tanlang
-              </div>
-
-            </div>
-
-          </div>
-
-          <AnimatedCarpet/>
 
         </div>
+
+        <div className="hero-content">
+
+          <div className="hero-text">
+
+            <div className="home-greeting">
+              Xush kelibsiz! 👋
+            </div>
+
+            <div className="home-worker">
+              {currentWorker?.name}
+            </div>
+
+            <div className="home-subtitle">
+              O'z ish joyingizni tanlang
+            </div>
+
+          </div>
+
+        </div>
+
+        <AnimatedCarpet/>
+
+      </div>
 
       <div className="app-container">
 
-  <div className="roles-grid">
+        <div className="roles-grid">
 
-    {/* OPERATOR */}
-    <div
-      className="role-card"
-      onClick={() => setRole("operator")}
-    >
-      <div className="role-icon-wrap">
-        <img
-          src={OperatorIcon}
-          className="role-icon"
-          alt="Operator"
-        />
-      </div>
+          {/* OPERATOR */}
+          <div
+            className="role-card"
+            onClick={() => setRole("operator")}
+          >
+            <div className="role-icon-wrap">
+              <img
+                src={OperatorIcon}
+                className="role-icon"
+                alt="Operator"
+              />
+            </div>
 
-      <div className="role-content">
-        <div className="role-title">
-          Operator
-        </div>
+            <div className="role-content">
+              <div className="role-title">
+                Operator
+              </div>
 
-        <div className="role-subtitle">
-          Buyurtmalarni qabul qilish va boshqarish
-        </div>
-      </div>
+              <div className="role-subtitle">
+                Buyurtmalarni qabul qilish va boshqarish
+              </div>
+            </div>
 
-      <div className="role-arrow">›</div>
-    </div>
-
-
-    {/* DRIVER */}
-    <div
-      className={`role-card ${driverEnabled ? "" : "role-disabled"}`}
-      onClick={() => {
-        if (driverEnabled) {
-          setRole("driver");
-        }
-      }}
-    >
-      <div className="role-icon driver-icon">
-        <svg viewBox="0 0 64 64" fill="none">
-          <path
-            d="M7 38V27C7 24.8 8.8 23 11 23H42L50 31H55C56.7 31 58 32.3 58 34V44H7V38Z"
-            fill="currentColor"
-            opacity=".9"
-          />
-
-          <path
-            d="M42 23V31H50"
-            stroke="white"
-            strokeWidth="2"
-            opacity=".7"
-          />
-
-          <circle
-            cx="18"
-            cy="45"
-            r="6"
-            fill="#10162f"
-            stroke="currentColor"
-            strokeWidth="3"
-          />
-
-          <circle
-            cx="48"
-            cy="45"
-            r="6"
-            fill="#10162f"
-            stroke="currentColor"
-            strokeWidth="3"
-          />
-
-          <path
-            d="M11 35H37"
-            stroke="white"
-            strokeWidth="2"
-            opacity=".5"
-          />
-        </svg>
-      </div>
-
-      <div className="role-content">
-        <div className="role-title">
-          Driver
-        </div>
-
-        <div className="role-subtitle">
-          Buyurtmalarni yetkazish va statusni yangilash
-        </div>
-      </div>
-
-      <div className="role-arrow">›</div>
-    </div>
+            <div className="role-arrow">›</div>
+          </div>
 
 
-    {/* WASHER */}
-    <div
-      className={`role-card ${washerEnabled ? "" : "role-disabled"}`}
-      onClick={() => {
-        if (washerEnabled) {
-          setRole("washer");
-        }
-      }}
-    >
-      <div className="role-icon washer-icon">
-        <svg viewBox="0 0 64 64" fill="none">
-          <path
-            d="M12 35C12 28 17 23 24 23H48C52 23 55 26 55 30V39C55 44 51 48 46 48H20C15 48 12 43 12 35Z"
-            fill="currentColor"
-            opacity=".9"
-          />
+          {/* DRIVER */}
+          <div
+            className={`role-card ${driverEnabled ? "" : "role-disabled"}`}
+            onClick={() => {
+              if (driverEnabled) {
+                setRole("driver");
+              }
+            }}
+          >
+            <div className="role-icon-wrap">
+              <img
+                src={DriverIcon}
+                className="role-icon"
+                alt="Driver"
+              />
+            </div>
 
-          <path
-            d="M18 27C20 22 24 19 29 19"
-            stroke="white"
-            strokeWidth="3"
-            strokeLinecap="round"
-            opacity=".7"
-          />
+            <div className="role-content">
+              <div className="role-title">
+                Driver
+              </div>
 
-          <circle
-            cx="42"
-            cy="17"
-            r="5"
-            fill="currentColor"
-            opacity=".7"
-          />
+              <div className="role-subtitle">
+                Buyurtmalarni yetkazish va statusni yangilash
+              </div>
+            </div>
 
-          <circle
-            cx="51"
-            cy="11"
-            r="3"
-            fill="currentColor"
-            opacity=".5"
-          />
-
-          <path
-            d="M19 39C24 42 31 43 39 42"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            opacity=".5"
-          />
-        </svg>
-      </div>
-
-      <div className="role-content">
-        <div className="role-title">
-          Washer
-        </div>
-
-        <div className="role-subtitle">
-          Gilamlarni yuvish va holatini belgilash
-        </div>
-      </div>
-
-      <div className="role-arrow">›</div>
-    </div>
+            <div className="role-arrow">›</div>
+          </div>
 
 
-    {/* TAYYORLOVCHI */}
-    <div
-      className={`role-card ${packingEnabled ? "" : "role-disabled"}`}
-      onClick={() => {
-        if (packingEnabled) {
-          setRole("tayyorlovchi");
-        }
-      }}
-    >
-      <div className="role-icon packing-icon">
-        <svg viewBox="0 0 64 64" fill="none">
-          <path
-            d="M10 20L32 10L54 20L32 30L10 20Z"
-            fill="currentColor"
-            opacity=".95"
-          />
+          {/* WASHER */}
+          <div
+            className={`role-card ${washerEnabled ? "" : "role-disabled"}`}
+            onClick={() => {
+              if (washerEnabled) {
+                setRole("washer");
+              }
+            }}
+          >
+            <div className="role-icon-wrap">
+              <img
+                src={WasherIcon}
+                className="role-icon"
+                alt="Washer"
+              />
+            </div>
 
-          <path
-            d="M10 20V45L32 55V30L10 20Z"
-            fill="currentColor"
-            opacity=".7"
-          />
+            <div className="role-content">
+              <div className="role-title">
+                Washer
+              </div>
 
-          <path
-            d="M54 20V45L32 55V30L54 20Z"
-            fill="currentColor"
-            opacity=".5"
-          />
+              <div className="role-subtitle">
+                Gilamlarni yuvish va holatini belgilash
+              </div>
+            </div>
 
-          <path
-            d="M32 10V30"
-            stroke="white"
-            strokeWidth="2"
-            opacity=".7"
-          />
+            <div className="role-arrow">›</div>
+          </div>
 
-          <path
-            d="M22 15L44 25"
-            stroke="white"
-            strokeWidth="2"
-            opacity=".4"
-          />
-        </svg>
-      </div>
 
-      <div className="role-content">
-        <div className="role-title">
-          Tayyorlovchi
-        </div>
+          {/* TAYYORLOVCHI */}
+          <div
+            className={`role-card ${packingEnabled ? "" : "role-disabled"}`}
+            onClick={() => {
+              if (packingEnabled) {
+                setRole("tayyorlovchi");
+              }
+            }}
+          >
+            <div className="role-icon packing-icon">
+              <img
+                src={PackingIcon}
+                className="role-icon"
+                alt="Packing"
+              />
+            </div>
 
-        <div className="role-subtitle">
-          Gilamlarni tayyorlash va qadoqlash
-        </div>
-      </div>
+            <div className="role-content">
+              <div className="role-title">
+                Tayyorlovchi
+              </div>  
 
-      <div className="role-arrow">›</div>
-    </div>
+              <div className="role-subtitle">
+                Gilamlarni tayyorlash va qadoqlash
+              </div>
+            </div> 
+
+            <div className="role-arrow">›</div>
+          </div>
 
 
     {/* ADMIN */}
