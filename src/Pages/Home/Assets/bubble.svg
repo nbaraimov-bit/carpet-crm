@@ -1,0 +1,444 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 200 200"
+  fill="none"
+>
+
+  <defs>
+
+    <!-- =========================
+         BUBBLE ICHKI SHAFFOFLIGI
+    ========================== -->
+
+    <radialGradient id="glass" cx="48%" cy="42%" r="62%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.015"/>
+      <stop offset="48%"  stop-color="#b99aff" stop-opacity="0.035"/>
+      <stop offset="72%"  stop-color="#8c4cff" stop-opacity="0.08"/>
+      <stop offset="90%"  stop-color="#35116d" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#140421" stop-opacity="0.22"/>
+    </radialGradient>
+
+
+    <!-- =========================
+         BINAfSHA / PUSHTI / KO'K
+         IRI DESCENT
+    ========================== -->
+
+    <radialGradient id="iridescent"
+      cx="50%"
+      cy="50%"
+      r="70%"
+    >
+      <stop offset="0%"
+        stop-color="#7cecff"
+        stop-opacity="0.00"/>
+
+      <stop offset="42%"
+        stop-color="#7c8cff"
+        stop-opacity="0.05"/>
+
+      <stop offset="68%"
+        stop-color="#d45cff"
+        stop-opacity="0.20"/>
+
+      <stop offset="84%"
+        stop-color="#ff72dc"
+        stop-opacity="0.34"/>
+
+      <stop offset="100%"
+        stop-color="#67ddff"
+        stop-opacity="0.05"/>
+    </radialGradient>
+
+
+    <!-- =========================
+         KO'K REFLECTION
+    ========================== -->
+
+    <radialGradient id="blueReflection">
+      <stop offset="0%"
+        stop-color="#b9f7ff"
+        stop-opacity="0.62"/>
+
+      <stop offset="38%"
+        stop-color="#65ddff"
+        stop-opacity="0.30"/>
+
+      <stop offset="72%"
+        stop-color="#5a8cff"
+        stop-opacity="0.10"/>
+
+      <stop offset="100%"
+        stop-color="#5a8cff"
+        stop-opacity="0"/>
+    </radialGradient>
+
+
+    <!-- =========================
+         PUSHTI REFLECTION
+    ========================== -->
+
+    <radialGradient id="pinkReflection">
+      <stop offset="0%"
+        stop-color="#ffffff"
+        stop-opacity="0.52"/>
+
+      <stop offset="28%"
+        stop-color="#ffb7f1"
+        stop-opacity="0.40"/>
+
+      <stop offset="60%"
+        stop-color="#ff55d8"
+        stop-opacity="0.20"/>
+
+      <stop offset="100%"
+        stop-color="#ff55d8"
+        stop-opacity="0"/>
+    </radialGradient>
+
+
+    <!-- =========================
+         OQ HIGHLIGHT
+    ========================== -->
+
+    <radialGradient id="whiteHighlight">
+      <stop offset="0%"
+        stop-color="#ffffff"
+        stop-opacity="0.95"/>
+
+      <stop offset="30%"
+        stop-color="#ffffff"
+        stop-opacity="0.70"/>
+
+      <stop offset="65%"
+        stop-color="#dffaff"
+        stop-opacity="0.22"/>
+
+      <stop offset="100%"
+        stop-color="#ffffff"
+        stop-opacity="0"/>
+    </radialGradient>
+
+
+    <!-- =========================
+         BUBBLE TASHQI HALQASI
+    ========================== -->
+
+    <linearGradient
+      id="rim"
+      x1="20"
+      y1="10"
+      x2="180"
+      y2="190"
+      gradientUnits="userSpaceOnUse"
+    >
+
+      <stop offset="0%"
+        stop-color="#ffffff"
+        stop-opacity="0.88"/>
+
+      <stop offset="12%"
+        stop-color="#b7f5ff"
+        stop-opacity="0.65"/>
+
+      <stop offset="27%"
+        stop-color="#a37aff"
+        stop-opacity="0.58"/>
+
+      <stop offset="43%"
+        stop-color="#ff75dd"
+        stop-opacity="0.68"/>
+
+      <stop offset="57%"
+        stop-color="#8d5cff"
+        stop-opacity="0.48"/>
+
+      <stop offset="73%"
+        stop-color="#62ddff"
+        stop-opacity="0.56"/>
+
+      <stop offset="88%"
+        stop-color="#d58cff"
+        stop-opacity="0.70"/>
+
+      <stop offset="100%"
+        stop-color="#ffffff"
+        stop-opacity="0.82"/>
+
+    </linearGradient>
+
+
+    <!-- =========================
+         TASHQI GLOW
+    ========================== -->
+
+    <filter
+      id="glow"
+      x="-60%"
+      y="-60%"
+      width="220%"
+      height="220%"
+    >
+      <feGaussianBlur
+        stdDeviation="3"
+      />
+    </filter>
+
+    <filter
+      id="soft"
+      x="-80%"
+      y="-80%"
+      width="260%"
+      height="260%"
+    >
+      <feGaussianBlur
+        stdDeviation="1.5"
+      />
+    </filter>
+
+
+    <!-- Bubble clipping -->
+    <clipPath id="clip">
+      <circle
+        cx="100"
+        cy="100"
+        r="91"
+      />
+    </clipPath>
+
+  </defs>
+
+
+  <!-- ==================================
+       JUDA YENGIL TASHQI YORUG'LIK
+  =================================== -->
+
+  <circle
+    cx="100"
+    cy="100"
+    r="89"
+    fill="#a85cff"
+    opacity="0.16"
+    filter="url(#glow)"
+  />
+
+
+  <!-- ==================================
+       SHAFFOF BUBBLE TANASI
+  =================================== -->
+
+  <circle
+    cx="100"
+    cy="100"
+    r="89"
+    fill="url(#glass)"
+  />
+
+
+  <!-- ==================================
+       IRI DESCENT RANGLAR
+  =================================== -->
+
+  <circle
+    cx="100"
+    cy="100"
+    r="87"
+    fill="url(#iridescent)"
+    opacity="0.75"
+  />
+
+
+  <!-- ==================================
+       ICHKI REFLECTIONLAR
+  =================================== -->
+
+  <g clip-path="url(#clip)">
+
+    <!-- katta ko'k reflection -->
+    <ellipse
+      cx="76"
+      cy="108"
+      rx="42"
+      ry="24"
+      fill="url(#blueReflection)"
+      opacity="0.65"
+      transform="rotate(-42 76 108)"
+    />
+
+
+    <!-- pushti reflection -->
+    <ellipse
+      cx="140"
+      cy="108"
+      rx="31"
+      ry="18"
+      fill="url(#pinkReflection)"
+      opacity="0.65"
+      transform="rotate(-42 140 108)"
+    />
+
+
+    <!-- pastki binafsha rang -->
+    <ellipse
+      cx="102"
+      cy="157"
+      rx="55"
+      ry="22"
+      fill="#a855ff"
+      opacity="0.08"
+      filter="url(#soft)"
+    />
+
+  </g>
+
+
+  <!-- ==================================
+       YUQORI CHAP KATTA OQ HIGHLIGHT
+  =================================== -->
+
+  <ellipse
+    cx="65"
+    cy="57"
+    rx="28"
+    ry="17"
+    fill="url(#whiteHighlight)"
+    opacity="0.92"
+    transform="rotate(-38 65 57)"
+    filter="url(#soft)"
+  />
+
+
+  <!-- Highlight ichidagi yorqin nuqta -->
+
+  <ellipse
+    cx="56"
+    cy="51"
+    rx="11"
+    ry="7"
+    fill="#ffffff"
+    opacity="0.70"
+    transform="rotate(-35 56 51)"
+    filter="url(#soft)"
+  />
+
+
+  <!-- ==================================
+       O'NG TOMON KICHIK HIGHLIGHT
+  =================================== -->
+
+  <ellipse
+    cx="157"
+    cy="73"
+    rx="18"
+    ry="10"
+    fill="url(#whiteHighlight)"
+    opacity="0.60"
+    transform="rotate(38 157 73)"
+    filter="url(#soft)"
+  />
+
+
+  <!-- ==================================
+       YUQORI CHEKADAGI YORQIN HALQA
+  =================================== -->
+
+  <path
+    d="
+      M 30 73
+      C 39 35, 68 12, 105 11
+      C 137 10, 164 24, 178 49
+    "
+    stroke="url(#rim)"
+    stroke-width="5"
+    stroke-linecap="round"
+    opacity="0.82"
+    filter="url(#soft)"
+  />
+
+
+  <!-- ==================================
+       PASTKI YORQIN HALQA
+  =================================== -->
+
+  <path
+    d="
+      M 27 133
+      C 43 174, 83 191, 119 184
+      C 148 179, 171 160, 180 133
+    "
+    stroke="url(#rim)"
+    stroke-width="4"
+    stroke-linecap="round"
+    opacity="0.70"
+    filter="url(#soft)"
+  />
+
+
+  <!-- ==================================
+       O'NG CHEKADAGI RANG
+  =================================== -->
+
+  <path
+    d="
+      M 169 47
+      C 188 73, 192 105, 177 132
+    "
+    stroke="#b77aff"
+    stroke-width="3"
+    stroke-linecap="round"
+    opacity="0.42"
+    filter="url(#soft)"
+  />
+
+
+  <!-- ==================================
+       ENG TASHQI NOZIK OQ KONTUR
+  =================================== -->
+
+  <circle
+    cx="100"
+    cy="100"
+    r="89"
+    stroke="#ffffff"
+    stroke-width="1.5"
+    stroke-opacity="0.42"
+  />
+
+
+  <!-- ==================================
+       MAYDA YORUG'LIK NUQTALARI
+  =================================== -->
+
+  <circle
+    cx="109"
+    cy="61"
+    r="2"
+    fill="#ffffff"
+    opacity="0.70"
+  />
+
+  <circle
+    cx="124"
+    cy="75"
+    r="1.5"
+    fill="#9cefff"
+    opacity="0.65"
+  />
+
+  <circle
+    cx="88"
+    cy="129"
+    r="1.8"
+    fill="#ffffff"
+    opacity="0.45"
+  />
+
+  <circle
+    cx="137"
+    cy="136"
+    r="1.4"
+    fill="#8eeaff"
+    opacity="0.55"
+  />
+
+</svg>

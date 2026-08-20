@@ -1,4 +1,4 @@
-import HomePage from "./HomePage/HomePage"
+import HomePage from "./Pages/Home/WelcomeCard/HomePage"
 import WasherPanel from "./components/WasherPanel"
 import DriverPanel from "./components/DriverPanel"
 import OperatorPanel from "./components/OperatorPanel"
@@ -88,6 +88,7 @@ function App() {
   const [statsTab, setStatsTab] = useState("stats");
   const [todayWorkers, setTodayWorkers] = useState([]);
   const [loading, setLoading] = useState({});
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [stats, setStats] = useState({
     income: 0,
     salary: 0,
@@ -533,43 +534,29 @@ function App() {
     0
   )
 
-  const washerTeam = teams.find(
-    (team) =>
-    team.type === "washer" &&
-    currentWorker &&
-    team.members?.[currentPhone]
-  );
-
-
   const driverTeam = teams.find(
     (team) =>
-    team.type === "driver" &&
-    currentWorker &&
-    team.members?.[currentPhone]
+      team.type === "driver" &&
+      team.members?.[currentPhone]?.working === true
+  );
+
+  const washerTeam = teams.find(
+    (team) =>
+      team.type === "washer" &&
+      team.members?.[currentPhone]?.working === true
   );
 
   const packingTeam = teams.find(
     (team) =>
       team.type === "packing" &&
-      currentWorker &&
-      team.members?.[currentPhone]
+      team.members?.[currentPhone]?.working === true
   );
 
   const operatorTeam = teams.find(
     (team) =>
       team.type === "operator" &&
-      currentWorker &&
-      team.members?.[currentPhone]
+      team.members?.[currentPhone]?.working === true
   );
-
-  const washerMember = washerTeam?.members?.[currentPhone];
-  const driverMember = driverTeam?.members?.[currentPhone];
-  const packingMember = packingTeam?.members?.[currentPhone];
-  const operatorMember = operatorTeam?.members?.[currentPhone];
-  const operatorEnabled = !!operatorTeam && operatorMember?.working;
-  const driverEnabled = !!driverTeam && driverMember?.working;
-  const washerEnabled = !!washerTeam && washerMember?.working;
-  const packingEnabled = !!packingTeam && packingMember?.working;
 
   const totalDailySalary = dailyWasherSalary + dailyHourlySalary
 
@@ -821,6 +808,35 @@ function App() {
 
 
   {/* ===== use effectlar ===== */}
+  useEffect(() => {
+    const images = [
+      "/Assets/logo.png",
+      "/Assets/carpet.png",
+      "/Assets/operatorIcon.png",
+      "/Assets/driverIcon.png",
+      "/Assets/washerIcon.png",
+      "/Assets/packingIcon.png",
+      "/Assets/adminIcon.png",
+      "/Assets/egaIcon.png",
+    ];
+
+    const promises = images.map((src) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+    
+        img.onload = resolve;
+        img.onerror = resolve;
+
+        img.src = src;
+      });
+    });
+
+    Promise.all(promises).then(() => {
+      setAssetsLoaded(true);
+    });
+  }, []);
+
+
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "orders"),
@@ -1853,8 +1869,8 @@ function App() {
   }
 
   if (
-    currentWorker &&
-    workers.length === 0
+    !assetsLoaded || (currentWorker &&
+    workers.length === 0)
   ) {
     return (
       <div
@@ -2110,7 +2126,6 @@ function App() {
 
   <div 
     style={{ 
-      padding: 17,
       marginBottom: 80,
     }}
   >
@@ -2133,7 +2148,7 @@ function App() {
 
 
     {/* ===== statistika =====  */}
-    {page === "stats" && (<>
+    {page === "stats" && (<div style={{padding: 15,}}>
 
       <div className="stats-tabs">
 
@@ -2323,7 +2338,7 @@ function App() {
         </div>
       )}
 
-    </>)}
+    </div>)}
 
 
     {/* ===== profil ===== */}
@@ -2343,6 +2358,20 @@ function App() {
           >
             ➕ Xarajat qo'shish
           </button>
+
+        <div
+          style={{
+            marginTop: 10,
+            padding: 10,
+            borderRadius: 5,
+            border: "3px solid #ff0000",
+
+           }}
+        >
+          <button onClick={logout}>
+            Chiqish
+          </button>
+        </div> 
 
       </div>
     )}
@@ -2629,7 +2658,7 @@ function App() {
         onClick={() => setShowExpenseModal(false)}
       >
 
-        <div 
+        <div
           className="expense-modal"
           onClick={(e) => e.stopPropagation()}
         >

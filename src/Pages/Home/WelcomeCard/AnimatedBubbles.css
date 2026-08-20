@@ -1,0 +1,36 @@
+.bubble {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+
+  animation:
+    bubbleFloat 12s ease-in-out infinite,
+    bubblePulse 7s ease-in-out infinite;
+}
+
+
+@keyframes bubbleFloat{
+    0%{
+        transform:translateY(0) scale(1);
+    }
+
+    50%{
+        transform:translateY(-10px) scale(1.06);
+    }
+
+    100%{
+        transform:translateY(0) scale(1);
+    }
+}
+
+@keyframes bubblePulse {
+
+    0%,100%{
+        filter:brightness(1);
+    }
+
+    50%{
+        filter:brightness(1.35);
+    }
+
+}
