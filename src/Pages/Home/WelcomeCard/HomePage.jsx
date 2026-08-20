@@ -7,7 +7,7 @@ import DriverIcon from "../Assets/driverIcon.png"
 import WasherIcon from "../Assets/washerIcon.png"
 import PackingIcon from "../Assets/packingIcon.png"
 import AdminIcon from "../Assets/adminIcon.png"
-import EgaIcon from "../Assets/egaIcon"
+import EgaIcon from "../Assets/egaIcon.png"
 
 export default function HomePage({
 
