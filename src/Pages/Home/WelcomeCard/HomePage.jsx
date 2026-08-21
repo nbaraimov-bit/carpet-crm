@@ -33,8 +33,6 @@ export default function HomePage({
   return (
 
     <>
-
-      <SakuraPetals />
         
       <div className="home-hero">
 
