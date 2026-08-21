@@ -6,7 +6,7 @@
     justify-content:center;
     align-items:center;
     right: -15px;
-    top: 10;
+    top: 10px;
     pointer-events: none;
     padding-top: 50px;
     padding-right: 10px;
@@ -29,7 +29,7 @@
 
 .carpet-glow{
 
-    position:absolute;
+    
     width:280px;
     height:280px;
     left:50%;
