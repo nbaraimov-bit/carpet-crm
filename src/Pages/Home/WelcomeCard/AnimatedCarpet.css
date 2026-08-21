@@ -31,13 +31,11 @@
 
     position:absolute;
     width:200px;
-    height:280px;
+    height:200px;
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
     border-radius:50%;
-    width: 340px;
-    height: 340px;
     background:
     radial-gradient(
         circle,
