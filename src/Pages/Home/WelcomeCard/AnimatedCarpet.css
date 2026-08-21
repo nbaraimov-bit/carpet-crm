@@ -50,7 +50,6 @@
 
 .carpet-shadow{
 
-    position:absolute;
     bottom:0;
     width:190px;
     height:22px;
@@ -62,7 +61,6 @@
 }
 
 .carpet-shine{
-    position:absolute;
     inset:0;
     pointer-events:none;
     overflow:hidden;
@@ -71,7 +69,6 @@
 
 .carpet-shine::before{
     content:"";
-    position:absolute;
     width:70px;
     height:100%;
     left:-120px;
