@@ -2122,11 +2122,12 @@ function App() {
   }
 
 
-  return (<>
+  return (
 
   <div 
     style={{ 
       marginBottom: 80,
+      padding: 1,
     }}
   >
 
@@ -2644,6 +2645,12 @@ function App() {
       />
     )}
 
+    <BottomNavigation
+      page={page}
+      setPage={setPage}
+      currentWorker={currentWorker}
+    />
+
     {showExpenseModal && (
 
       <div
@@ -2727,13 +2734,7 @@ function App() {
 
     )}
   </div>
-
-  <BottomNavigation
-    page={page}
-    setPage={setPage}
-    currentWorker={currentWorker}
-  />
-  </>)
+  )
 }
 
 export default App
