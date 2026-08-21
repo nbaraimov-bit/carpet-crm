@@ -13,7 +13,7 @@
     background:#111827;
     border-top:1px solid #2b3347;
 
-    z-index:1000;
+    z-index:9999;
 }
 
 .bottom-nav-item{
