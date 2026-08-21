@@ -2122,7 +2122,7 @@ function App() {
   }
 
 
-  return (
+  return (<>
 
   <div 
     style={{ 
@@ -2141,7 +2141,6 @@ function App() {
         driverTeam={driverTeam}
         packingTeam={packingTeam}
         operatorTeam={operatorTeam}
-        logout={logout}
       />
    
     )}
@@ -2645,12 +2644,6 @@ function App() {
       />
     )}
 
-    <BottomNavigation
-      page={page}
-      setPage={setPage}
-      currentWorker={currentWorker}
-    />
-
     {showExpenseModal && (
 
       <div
@@ -2734,7 +2727,13 @@ function App() {
 
     )}
   </div>
-  )
+
+  <BottomNavigation
+    page={page}
+    setPage={setPage}
+    currentWorker={currentWorker}
+  />
+  </>)
 }
 
 export default App
