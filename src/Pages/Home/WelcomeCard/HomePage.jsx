@@ -18,7 +18,6 @@ export default function HomePage({
   driverTeam,
   packingTeam,
   operatorTeam,
-  logout,
 
 }) {
 
