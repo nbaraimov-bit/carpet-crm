@@ -29,8 +29,8 @@
 .carpet-glow{
 
     position:absolute;
-    width:150px;
-    height:150px;
+    width:200px;
+    height:200px;
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
@@ -49,6 +49,7 @@
 
 .carpet-shadow{
 
+    position:absolute;
     bottom:0;
     width:190px;
     height:22px;
@@ -60,6 +61,7 @@
 }
 
 .carpet-shine{
+    position:absolute;
     inset:0;
     pointer-events:none;
     overflow:hidden;
@@ -68,8 +70,9 @@
 
 .carpet-shine::before{
     content:"";
+    position:absolute;
     width:70px;
-    height:100%;
+    height:160%;
     left:-120px;
     top:-30%;
 
