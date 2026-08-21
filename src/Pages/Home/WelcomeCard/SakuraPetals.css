@@ -6,6 +6,7 @@
 }
 
 .petal{
+    position:absolute;
     top:-60px;
 
     font-size:24px;
