@@ -5,7 +5,7 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    right: -15px;
+    left: 15px;
     top: 10px;
     pointer-events: none;
     padding-top: 50px;
