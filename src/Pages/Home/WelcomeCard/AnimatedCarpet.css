@@ -5,7 +5,6 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    right: -15px;
     top: 10px;
     pointer-events: none;
     padding-top: 50px;
@@ -34,7 +33,7 @@
     height:150px;
     left:50%;
     top:50%;
-   
+    transform:translate(-50%,-50%);
     border-radius:50%;
     background:
     radial-gradient(
@@ -72,7 +71,6 @@
     width:70px;
     height:100%;
     left:-120px;
-    top:-30%;
 
     background:linear-gradient(
         90deg,
