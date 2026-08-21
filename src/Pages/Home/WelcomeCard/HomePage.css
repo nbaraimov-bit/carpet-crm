@@ -333,7 +333,7 @@
 
   filter: saturate(0.55);
 
-  transform: none;
+  transform: none !important;
 
   border-color: rgba(150, 150, 180, 0.12);
 

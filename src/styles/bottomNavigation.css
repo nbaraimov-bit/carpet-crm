@@ -1,8 +1,8 @@
 .bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
+    position:fixed !important;
+    bottom:0 !important;
+    left:0 !important;
+    right:0 !important;
 
     display:flex;
     justify-content:space-around;
@@ -13,7 +13,7 @@
     background:#111827;
     border-top:1px solid #2b3347;
 
-    z-index:9999;
+    z-index:99999 !important;
 }
 
 .bottom-nav-item{
