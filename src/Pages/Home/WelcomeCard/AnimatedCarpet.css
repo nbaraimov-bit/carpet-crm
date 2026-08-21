@@ -1,11 +1,11 @@
 .carpet-wrapper{
 
     position: absolute;
-    width:320px;
+    width:300px;
     display:flex;
     justify-content:center;
     align-items:center;
-    left: 75px;
+    left: 80px;
     top: 10px;
     pointer-events: none;
     padding-top: 50px;
@@ -16,7 +16,7 @@
 .carpet-image{
 
     width:100%;
-    
+    display:block;
     position:relative;
     z-index:3;
     pointer-events:none;
