@@ -1,7 +1,11 @@
-
+.petals-container{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
 
 .petal{
-    position:absolute;
     top:-60px;
 
     font-size:24px;

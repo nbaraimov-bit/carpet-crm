@@ -333,7 +333,7 @@
 
   filter: saturate(0.55);
 
-  transform: none !important;
+  transform: none;
 
   border-color: rgba(150, 150, 180, 0.12);
 
@@ -360,7 +360,7 @@
    MOBILE
 ================================ */
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
 
   .roles-grid {
     padding-left: 10px;

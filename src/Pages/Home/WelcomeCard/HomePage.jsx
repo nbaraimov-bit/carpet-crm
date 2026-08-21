@@ -88,8 +88,6 @@ export default function HomePage({
 
       </div>
 
-      <div className="app-container">
-
         <div className="roles-grid">
 
           {/* OPERATOR */}
@@ -292,7 +290,6 @@ export default function HomePage({
     )}
 
   </div>
-</div>
 
     </>
 
