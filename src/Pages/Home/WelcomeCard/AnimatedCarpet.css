@@ -5,7 +5,7 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    left: 50px;
+    left: 75px;
     top: 10px;
     pointer-events: none;
     padding-top: 50px;
@@ -16,7 +16,7 @@
 .carpet-image{
 
     width:100%;
-    display:block;
+    
     position:relative;
     z-index:3;
     pointer-events:none;
