@@ -135,11 +135,48 @@
 }
 
 
-.info-status-item small {
+/* ===== GILAM / ADYOL / YAKANDOZ / PARDA ===== */
+
+.info-status-products {
+  width: 100%;
+  margin-top: 8px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  gap: 7px 5px;
+}
+
+
+/* Bitta mahsulot */
+
+.info-product {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  min-width: 0;
+}
+
+
+/* SVG icon */
+
+.info-product svg {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+}
+
+
+/* Mahsulot soni */
+
+.info-product span {
   color: rgba(220, 215, 255, 0.65);
   font-size: 8px;
-  margin-top: 7px;
-  white-space: nowrap;
+  line-height: 1;
 }
 
 
