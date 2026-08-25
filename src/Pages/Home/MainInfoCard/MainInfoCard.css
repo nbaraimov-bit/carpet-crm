@@ -128,16 +128,24 @@
 }
 
 
-.info-status-item span {
+.info-status-main span {
   color: rgba(220, 215, 255, 0.55);
   font-size: 8px;
   margin-top: 3px;
 }
 
 
-/* ===== GILAM / ADYOL / YAKANDOZ / PARDA ===== */
+.info-status-item small {
+  color: rgba(220, 215, 255, 0.65);
+  font-size: 8px;
+  margin-top: 7px;
+  white-space: nowrap;
+}
 
-.info-status-products {
+
+/* ===== 4 TA MAHSULOT — 2×2 ===== */
+
+.info-products {
   width: 100%;
   margin-top: 8px;
 
@@ -145,28 +153,27 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 
-  gap: 7px 5px;
+  gap: 7px 4px;
 }
 
 
-/* Bitta mahsulot */
+/* Har bir mahsulot */
 
 .info-product {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
 
+  gap: 3px;
   min-width: 0;
 }
 
 
-/* SVG icon */
+/* Mahsulot SVG */
 
 .info-product svg {
   width: 18px;
   height: 18px;
-
   flex-shrink: 0;
 }
 
@@ -238,6 +245,15 @@
 
   .info-status-item span,
   .info-status-item small {
+    font-size: 7px;
+  }
+
+  .info-product svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .info-product span {
     font-size: 7px;
   }
 }
