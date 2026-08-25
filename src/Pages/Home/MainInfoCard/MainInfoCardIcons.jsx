@@ -128,7 +128,7 @@ export function ReadyIcon({ size = 24 }) {
 
 // Mahsulot ikonkalari
 
-export function CarpetIcon({ size = 22 }) {
+export function CarpetIcon({ size = 24 }) {
   return (
     <svg
       width={size}
@@ -137,26 +137,59 @@ export function CarpetIcon({ size = 22 }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect
-        x="4"
-        y="5"
-        width="16"
-        height="14"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.7"
-      />
+      {/* Gilam tanasi */}
       <path
-        d="M7 8H17M7 12H17M7 16H14"
+        d="M5 5.5
+           C5 4.7 5.7 4 6.5 4
+           H18
+           C18.8 4 19.5 4.7 19.5 5.5
+           V16.5
+           C19.5 17.3 18.8 18 18 18
+           H7
+           C5.9 18 5 17.1 5 16
+           V5.5Z"
         stroke="currentColor"
-        strokeWidth="1.4"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+
+      {/* Gilam ichki naqshi */}
+      <path
+        d="M7.5 7
+           H17
+           M7.5 10
+           H17
+           M7.5 13
+           H17"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+        opacity="0.55"
+      />
+
+      {/* O'ralgan qismi */}
+      <path
+        d="M5 5.5
+           C3.6 5.5 3.2 7.2 4.3 8
+           C5.1 8.6 6.3 8.1 6.3 7
+           C6.3 6.3 5.7 5.8 5 5.8"
+        stroke="currentColor"
+        strokeWidth="1.5"
         strokeLinecap="round"
       />
+
+      {/* Gilam cheti */}
       <path
-        d="M2.5 7V17"
+        d="M7 18
+           C7 19.2 6.3 20 5.2 20
+           M10 18
+           C10 19.2 9.3 20 8.2 20
+           M13 18
+           C13 19.2 12.3 20 11.2 20"
         stroke="currentColor"
-        strokeWidth="1.7"
+        strokeWidth="1.2"
         strokeLinecap="round"
+        opacity="0.7"
       />
     </svg>
   );
