@@ -1,0 +1,206 @@
+.main-info-card {
+  width: 100%;
+  max-width: 760px;
+  margin: 18px auto 0;
+  padding: 14px;
+  box-sizing: border-box;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(#10142f, #10142f) padding-box,
+    linear-gradient(
+      120deg,
+      #6330b8,
+      #d98cff,
+      #6330b8,
+      #8d45ff,
+      #6330b8
+    ) border-box;
+
+  border: 1.2px solid transparent;
+  background-size: 100% 100%, 300% 100%;
+  animation: mainInfoBorder 8s linear infinite;
+
+  box-shadow:
+    0 0 18px rgba(150, 70, 255, 0.18),
+    inset 0 0 25px rgba(150, 60, 255, 0.12);
+
+  box-sizing: border-box;
+}
+
+
+/* ===== KATTA INFO QISMI ===== */
+
+.main-info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 4px 4px 14px;
+}
+
+.main-info-header h3 {
+  margin: 0 0 4px;
+
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.main-info-header p {
+  margin: 0;
+
+  color: rgba(220, 215, 255, 0.62);
+  font-size: 11px;
+}
+
+
+.main-info-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.main-info-total strong {
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.main-info-total span {
+  margin-top: 4px;
+
+  color: rgba(220, 215, 255, 0.58);
+  font-size: 9px;
+}
+
+
+/* ===== 4 TA USTUN ===== */
+
+.main-info-status {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+
+.info-status-item {
+  min-width: 0;
+
+  padding: 10px 5px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(180, 110, 255, 0.16);
+
+  box-shadow:
+    inset 0 0 12px rgba(140, 60, 255, 0.08);
+
+  box-sizing: border-box;
+}
+
+
+.info-status-icon {
+  font-size: 17px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+
+.info-status-title {
+  color: rgba(230, 225, 255, 0.75);
+  font-size: 9px;
+  margin-bottom: 4px;
+}
+
+
+.info-status-item strong {
+  color: #fff;
+  font-size: 19px;
+  line-height: 1;
+}
+
+
+.info-status-item span {
+  color: rgba(220, 215, 255, 0.55);
+  font-size: 8px;
+  margin-top: 3px;
+}
+
+
+.info-status-item small {
+  color: rgba(220, 215, 255, 0.65);
+  font-size: 8px;
+  margin-top: 7px;
+  white-space: nowrap;
+}
+
+
+/* ===== ANIMATION ===== */
+
+@keyframes mainInfoBorder {
+  0% {
+    background-position: 0 0, 0% 50%;
+  }
+
+  100% {
+    background-position: 0 0, 300% 50%;
+  }
+}
+
+
+/* ===== TELEFON ===== */
+
+@media (max-width: 600px) {
+
+  .main-info-card {
+    margin-top: 14px;
+    padding: 10px;
+    border-radius: 15px;
+  }
+
+  .main-info-header {
+    padding-bottom: 10px;
+  }
+
+  .main-info-header h3 {
+    font-size: 14px;
+  }
+
+  .main-info-total strong {
+    font-size: 21px;
+  }
+
+  .main-info-status {
+    gap: 5px;
+  }
+
+  .info-status-item {
+    padding: 8px 3px;
+    border-radius: 10px;
+  }
+
+  .info-status-icon {
+    font-size: 15px;
+  }
+
+  .info-status-title {
+    font-size: 8px;
+  }
+
+  .info-status-item strong {
+    font-size: 17px;
+  }
+
+  .info-status-item span,
+  .info-status-item small {
+    font-size: 7px;
+  }
+}

@@ -1,4 +1,5 @@
 import "./HomePage.css"
+import MainInfoCard from "./MainInfoCard";
 import SakuraPetals from "./SakuraPetals";
 import AnimatedCarpet from "./AnimatedCarpet";
 import logo from "../Assets/logo.png"
@@ -210,86 +211,67 @@ export default function HomePage({
           </div>
 
 
-    {/* ADMIN */}
-    {(currentWorker?.role === "admin" ||
-      currentWorker?.role === "ega") && (
-      <div
-        className="role-card"
-        onClick={() => setRole("admin")}
-      >
-        <div className="role-icon admin-icon">
-          <svg viewBox="0 0 64 64" fill="none">
-            <path
-              d="M32 8L52 16V30C52 43 43 52 32 56C21 52 12 43 12 30V16L32 8Z"
-              fill="currentColor"
-              opacity=".85"
-            />
+          {/* ADMIN */}
+          {(currentWorker?.role === "admin" ||
+            currentWorker?.role === "ega") && (
+            <div
+              className="role-card"
+              onClick={() => setRole("admin")}
+            >
+              <div className="role-icon-wrap">
+                <img
+                  src={AdminIcon}
+                  className="role-icon"
+                  alt="Admin"
+                />
+              </div>
 
-            <path
-              d="M23 32L29 38L42 24"
-              stroke="white"
-              strokeWidth="4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+              <div className="role-content">
+                <div className="role-title">
+                  Admin
+                </div>
+
+                <div className="role-subtitle">
+                  Tizimni boshqarish va nazorat qilish
+                </div>
+              </div>
+
+              <div className="role-arrow">›</div>
+            </div>
+          )}
+
+
+          {/* EGA */}
+          {currentWorker?.role === "ega" && (
+            <div
+              className="role-card"
+              onClick={() => setRole("ega")}
+            >
+              <div className="role-icon-wrap">
+                <img
+                  src={EgaIcon}
+                  className="role-icon"
+                  alt="Ega"
+                />
+              </div>
+
+              <div className="role-content">
+                <div className="role-title">
+                  Ega
+                </div>
+ 
+                <div className="role-subtitle">
+                  Umumiy nazorat va tahlillar
+                </div>
+              </div> 
+
+              <div className="role-arrow">›</div>
+            </div>
+          )}
+
         </div>
 
-        <div className="role-content">
-          <div className="role-title">
-            Admin
-          </div>
-
-          <div className="role-subtitle">
-            Tizimni boshqarish va nazorat qilish
-          </div>
-        </div>
-
-        <div className="role-arrow">›</div>
-      </div>
-    )}
-
-
-    {/* EGA */}
-    {currentWorker?.role === "ega" && (
-      <div
-        className="role-card"
-        onClick={() => setRole("ega")}
-      >
-        <div className="role-icon owner-icon">
-          <svg viewBox="0 0 64 64" fill="none">
-            <path
-              d="M10 46L15 24L25 34L32 16L39 34L49 24L54 46H10Z"
-              fill="currentColor"
-              opacity=".9"
-            />
-
-            <path
-              d="M10 49H54"
-              stroke="currentColor"
-              strokeWidth="4"
-              strokeLinecap="round"
-            />
-
-            <circle cx="32" cy="12" r="3" fill="white" />
-          </svg>
-        </div>
-
-        <div className="role-content">
-          <div className="role-title">
-            Ega
-          </div>
-
-          <div className="role-subtitle">
-            Umumiy nazorat va tahlillar
-          </div>
-        </div>
-
-        <div className="role-arrow">›</div>
-      </div>
-    )}
-
-  </div>
+        <MainInfoCard/>
 
     </>
 
