@@ -1,5 +1,5 @@
 import "./HomePage.css"
-import MainInfoCard from "./MainInfoCard";
+import MainInfoCard from "../MainInfoCard/MainInfoCard";
 import SakuraPetals from "./SakuraPetals";
 import AnimatedCarpet from "./AnimatedCarpet";
 import logo from "../Assets/logo.png"
