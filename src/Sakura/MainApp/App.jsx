@@ -1,18 +1,18 @@
-import HomePage from "./Pages/Home/WelcomeCard/HomePage"
-import WasherPanel from "./components/WasherPanel"
-import DriverPanel from "./components/DriverPanel"
-import OperatorPanel from "./components/OperatorPanel"
-import AdminPanel from "./components/AdminPanel"
-import getCount from "./utils/getCount"
-import getHours from "./utils/getHours"
-import getSalary from "./utils/getSalary"
-import getAttendanceSalary from "./utils/getAttendanceSalary"
-import EgaPanel from "./components/EgaPanel";
-import TeamsPanel from "./components/TeamsPanel/TeamsPanel";
-import BottomNavigation from "./components/BottomNavigation";
+import HomePage from "../Pages/Home/WelcomeCard/HomePage"
+import WasherPanel from "../../components/WasherPanel"
+import DriverPanel from "../../components/DriverPanel"
+import OperatorPanel from "../../components/OperatorPanel"
+import AdminPanel from "../../components/AdminPanel"
+import getCount from "../../utils/getCount"
+import getHours from "../../utils/getHours"
+import getSalary from "../../utils/getSalary"
+import getAttendanceSalary from "../../utils/getAttendanceSalary"
+import EgaPanel from "../../components/EgaPanel";
+import TeamsPanel from "../../components/TeamsPanel/TeamsPanel";
+import BottomNavigation from "../BottomNavigation/BottomNavigation";
 import "./App.css";
 import { useState, useEffect } from "react"
-import { db } from "./firebase";
+import { db } from "../../firebase";
 import {
   collection,
   addDoc,
