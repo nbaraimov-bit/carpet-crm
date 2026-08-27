@@ -1,4 +1,4 @@
-import HomePage from "../Pages/Home/WelcomeCard/HomePage"
+import HomePage from "../Pages/Home/HomeMain/HomePage"
 import WasherPanel from "../../components/WasherPanel"
 import DriverPanel from "../../components/DriverPanel"
 import OperatorPanel from "../../components/OperatorPanel"
