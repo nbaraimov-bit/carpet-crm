@@ -1,7 +1,4 @@
-import {
-  getTemporaryArchiveStats,
-  buildTemporaryArchiveCards,
-} from "./VaqtinchalikHisobot";
+import VaqtinchalikHisobot from "./VaqtinchalikHisobot"
 import HomePage from "../Pages/Home/HomeMain/HomePage"
 import WasherPanel from "../../components/WasherPanel"
 import DriverPanel from "../../components/DriverPanel"
@@ -2377,8 +2374,7 @@ function App() {
           </button>
         </div> 
 
-         <getTemporaryArchiveStats/>
-        <buildTemporaryArchiveCards/>
+         <VaqtinchalikHisobot />
 
       </div>
     )}
