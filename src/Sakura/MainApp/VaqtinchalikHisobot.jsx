@@ -36,7 +36,7 @@ function VaqtinchalikHisobot() {
 
         const q = query(
           collection(db, "archives"),
-          where("archiveDate", ">=", boshlanish)
+          where("archivedAt", ">=", boshlanish)
         );
 
         const snapshot = await getDocs(q);
