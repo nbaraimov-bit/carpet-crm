@@ -16,8 +16,6 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
-export default function VaqtinchalikHisobot (){
-
 const CARPET_COST_PER_M2 = 6000;
 const BLANKET_COST = 23500;
 const YAKANDOZ_COST = 22500;
@@ -206,4 +204,3 @@ export const buildTemporaryArchiveCards = (stats) => {
     },
   ];
 };
-}
