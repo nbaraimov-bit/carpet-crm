@@ -1,15 +1,7 @@
 import "./MainInfoCard.css";
-
-import {
-  NewIcon,
-  ReceivedIcon,
-  WashedIcon,
-  ReadyIcon,
-  CarpetIcon,
-  BlanketIcon,
-  YakandozIcon,
-  CurtainIcon,
-} from "./MainInfoCardIcons";
+import YangiIcon from "../Assets/yangiIcon.png";
+import OlindiIcon from "../Assets/olindiIcon.png";
+import YuvildiIcon from "../Assets/yuvildiIcon.png"
 
 export default function MainInfoCard() {
   return (
