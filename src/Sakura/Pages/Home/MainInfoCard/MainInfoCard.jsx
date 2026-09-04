@@ -1,7 +1,13 @@
 import "./MainInfoCard.css";
-import YangiIcon from "../Assets/yangiIcon.png";
+import NewIcon from "../Assets/newIcon.png";
 import OlindiIcon from "../Assets/olindiIcon.png";
-import YuvildiIcon from "../Assets/yuvildiIcon.png"
+import YuvildiIcon from "../Assets/yuvildiIcon.png";
+import TayyorIcon from "../Assets/tayyorIcon.png";
+import CarpetIcon from "../Assets/carpetIcon.png";
+import BlanketIcon from "../Assets/blanketIcon.png";
+import YakandozIcon from "../Assets/yakandozIcon.png";
+import PardaIcon from "../Assets/pardaIcon.png";
+
 
 export default function MainInfoCard() {
   return (
@@ -67,7 +73,7 @@ export default function MainInfoCard() {
         <div className="info-status-item">
 
           <div className="info-status-main">
-            <ReceivedIcon size={23} />
+            <OlindiIcon size={23} />
 
             <div>
               <div className="info-status-title">Olindi</div>
@@ -107,7 +113,7 @@ export default function MainInfoCard() {
         <div className="info-status-item">
 
           <div className="info-status-main">
-            <WashedIcon size={23} />
+            <YuvildiIcon size={23} />
 
             <div>
               <div className="info-status-title">Yuvildi</div>
@@ -147,7 +153,7 @@ export default function MainInfoCard() {
         <div className="info-status-item">
 
           <div className="info-status-main">
-            <ReadyIcon size={23} />
+            <TayyorIcon size={23} />
 
             <div>
               <div className="info-status-title">Tayyor</div>
