@@ -57,7 +57,7 @@ function VaqtinchalikOylikChiqim() {
           // =========================
 
           const earnedToday = Number(
-            String(data.earningToday ?? 0)
+            String(data.earnedToday ?? 0)
               .replace(/\s/g, "")
               .replace(",", ".")
           );
