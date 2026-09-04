@@ -6,7 +6,7 @@ import TayyorIcon from "../Assets/tayyorIcon.png";
 import CarpetIcon from "../Assets/carpetIcon.png";
 import BlanketIcon from "../Assets/blanketIcon.png";
 import YakandozIcon from "../Assets/yakandozIcon.png";
-import PardaIcon from "../Assets/pardaIcon.png";
+import CurtainIcon from "../Assets/curtainIcon.png";
 
 
 export default function MainInfoCard() {
