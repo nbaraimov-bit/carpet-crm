@@ -1,3 +1,4 @@
+import VaqtinchalikOylikChiqim from "./VaqtinchalikOylikChiqim"
 import VaqtinchalikHisobot from "./VaqtinchalikHisobot"
 import HomePage from "../Pages/Home/HomeMain/HomePage"
 import WasherPanel from "../../components/WasherPanel"
@@ -2375,6 +2376,7 @@ function App() {
         </div> 
 
          <VaqtinchalikHisobot />
+         <VaqtinchalikOylikChiqim/>
 
       </div>
     )}
