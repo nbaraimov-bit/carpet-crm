@@ -8,6 +8,7 @@
 // carpetCount = gilam SONI.
 // Gilamning kv.m maydoni Firestore'da "kvm" fieldida saqlanadi.
 
+import { db } from "../../firebase";
 import {
   collection,
   getDocs,
