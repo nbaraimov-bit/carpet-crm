@@ -2363,9 +2363,6 @@ function App() {
           ➕ Xarajat qo'shish
         </button>
 
-        <getTemporaryArchiveStats/>
-        <buildTemporaryArchiveCards/>
-
         <div
           style={{
             marginTop: 10,
@@ -2379,6 +2376,9 @@ function App() {
             Chiqish
           </button>
         </div> 
+
+         <getTemporaryArchiveStats/>
+        <buildTemporaryArchiveCards/>
 
       </div>
     )}
