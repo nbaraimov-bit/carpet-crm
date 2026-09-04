@@ -56,14 +56,14 @@ function VaqtinchalikOylikChiqim() {
           // earningToday
           // =========================
 
-          const earningToday = Number(
+          const earnedToday = Number(
             String(data.earningToday ?? 0)
               .replace(/\s/g, "")
               .replace(",", ".")
           );
 
-          if (Number.isFinite(earningToday)) {
-            jamiEarningToday += earningToday;
+          if (Number.isFinite(earnedToday)) {
+            jamiEarningToday += earnedToday;
           }
 
           // =========================
