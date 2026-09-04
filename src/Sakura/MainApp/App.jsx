@@ -1,3 +1,7 @@
+import {
+  getTemporaryArchiveStats,
+  buildTemporaryArchiveCards,
+} from "./VaqtinchalikHisobot";
 import HomePage from "../Pages/Home/HomeMain/HomePage"
 import WasherPanel from "../../components/WasherPanel"
 import DriverPanel from "../../components/DriverPanel"
@@ -2353,11 +2357,14 @@ function App() {
         />
 
         <button
-            className="add-expense-btn"
-            onClick={() => setShowExpenseModal(true)}
-          >
-            ➕ Xarajat qo'shish
-          </button>
+          className="add-expense-btn"
+          onClick={() => setShowExpenseModal(true)}
+        >
+          ➕ Xarajat qo'shish
+        </button>
+
+        <getTemporaryArchiveStats/>
+        <buildTemporaryArchiveCards/>
 
         <div
           style={{
