@@ -14,7 +14,6 @@ import {
   query,
   where,
   Timestamp,
-  db,
 } from "firebase/firestore";
 
 const CARPET_COST_PER_M2 = 6000;
