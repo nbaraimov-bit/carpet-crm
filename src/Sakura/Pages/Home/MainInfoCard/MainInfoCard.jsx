@@ -1,6 +1,6 @@
 import "./MainInfoCard.css";
 
-import YangiIcon from "../Assets/YangiIcon.png";
+import YangiIcon from "../Assets/yangiIcon.png";
 import OlindiIcon from "../Assets/olindiIcon.png";
 import YuvildiIcon from "../Assets/yuvildiIcon.png";
 import TayyorIcon from "../Assets/tayyorIcon.png";
