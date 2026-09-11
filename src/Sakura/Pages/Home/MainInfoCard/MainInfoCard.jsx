@@ -100,17 +100,9 @@ export default function MainInfoCard() {
                 className="info-status-icon"
               />
 
-              <div className="info-status-data">
-
-                <div className="info-status-title">
-                  {status.title}
-                </div>
-
                 <strong>
                   {status.orders}
                 </strong>
-
-              </div>
 
             </div>
 

@@ -143,8 +143,8 @@
 /* PNG status icon */
 
 .info-status-icon {
-  width: 42px;
-  height: 42px;
+  width: 55px;
+  height: 55px;
 
   object-fit: contain;
 
@@ -156,24 +156,6 @@
 
 
 /* Nom + buyurtma soni */
-
-.info-status-data {
-  display: flex;
-  flex-direction: column;
-
-  align-items: flex-start;
-
-  min-width: 0;
-}
-
-.info-status-title {
-  color: rgba(235, 230, 255, 0.78);
-
-  font-size: 10px;
-  line-height: 1.1;
-
-  margin-bottom: 3px;
-}
 
 .info-status-item strong {
   color: #ffffff;
@@ -225,8 +207,8 @@
 /* Mahsulot PNG */
 
 .info-product img {
-  width: 23px;
-  height: 23px;
+  width: 30px;
+  height: 30px;
 
   object-fit: contain;
 
