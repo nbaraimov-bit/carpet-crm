@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase";
+
 import "./MainInfoCard.css";
 
 import YangiIcon from "../Assets/yangiIcon.png";
@@ -12,52 +16,187 @@ import CurtainIcon from "../Assets/curtainIcon.png";
 
 export default function MainInfoCard() {
 
+  const [stats, setStats] = useState({
+    yangi: {
+      orders: 0,
+      carpet: 0,
+      blanket: 0,
+      yakandoz: 0,
+      curtain: 0,
+    },
+    olindi: {
+      orders: 0,
+      carpet: 0,
+      blanket: 0,
+      yakandoz: 0,
+      curtain: 0,
+    },
+    yuvildi: {
+      orders: 0,
+      carpet: 0,
+      blanket: 0,
+      yakandoz: 0,
+      curtain: 0,
+    },
+    tayyor: {
+      orders: 0,
+      carpet: 0,
+      blanket: 0,
+      yakandoz: 0,
+      curtain: 0,
+    },
+  });
+
+  useEffect(() => {
+
+    const loadStats = async () => {
+
+      const snapshot = await getDocs(
+        collection(db, "orders")
+      );
+
+      const result = {
+        yangi: {
+          orders: 0,
+          carpet: 0,
+          blanket: 0,
+          yakandoz: 0,
+          curtain: 0,
+        },
+        olindi: {
+          orders: 0,
+          carpet: 0,
+          blanket: 0,
+          yakandoz: 0,
+          curtain: 0,
+        },
+        yuvildi: {
+          orders: 0,
+          carpet: 0,
+          blanket: 0,
+          yakandoz: 0,
+          curtain: 0,
+        },
+        tayyor: {
+          orders: 0,
+          carpet: 0,
+          blanket: 0,
+          yakandoz: 0,
+          curtain: 0,
+        },
+      };
+
+      snapshot.forEach((doc) => {
+
+        const data = doc.data();
+        const status = data.status || "";
+
+        let group = null;
+
+        if (
+          status === "Yangi" ||
+          status === "Olinmoqda"
+        ) {
+          group = "yangi";
+
+        } else if (
+          status === "Olindi" ||
+          status === "Yuvilmoqda"
+        ) {
+          group = "olindi";
+
+        } else if (
+          status === "Yuvildi"
+        ) {
+          group = "yuvildi";
+
+        } else if (
+          status === "Tayyor" ||
+          status === "Yetkazilmoqda"
+        ) {
+          group = "tayyor";
+        }
+
+        if (!group) return;
+
+        result[group].orders += 1;
+
+        result[group].carpet += Number(
+          data.carpetCount || 0
+        );
+
+        result[group].blanket += Number(
+          data.blanketCount || 0
+        );
+
+        result[group].yakandoz += Number(
+          data.yakandozCount || 0
+        );
+
+        result[group].curtain += Number(
+          data.curtainCount || 0
+        );
+
+      });
+
+      setStats(result);
+    };
+
+    loadStats();
+
+  }, []);
+
+  
   const statuses = [
     {
       title: "Yangi",
       icon: YangiIcon,
-      orders: 12,
+      orders: stats.yangi.orders,
       products: {
-        carpet: 18,
-        blanket: 6,
-        yakandoz: 2,
-        curtain: 1,
+        carpet: stats.yangi.carpet,
+        blanket: stats.yangi.blanket,
+        yakandoz: stats.yangi.yakandoz,
+        curtain: stats.yangi.curtain,
       },
     },
+
     {
       title: "Olindi",
       icon: OlindiIcon,
-      orders: 8,
+      orders: stats.olindi.orders,
       products: {
-        carpet: 12,
-        blanket: 3,
-        yakandoz: 2,
-        curtain: 1,
+        carpet: stats.olindi.carpet,
+        blanket: stats.olindi.blanket,
+        yakandoz: stats.olindi.yakandoz,
+        curtain: stats.olindi.curtain,
       },
     },
+    
     {
       title: "Yuvildi",
       icon: YuvildiIcon,
-      orders: 5,
+      orders: stats.yuvildi.orders,
       products: {
-        carpet: 8,
-        blanket: 2,
-        yakandoz: 1,
-        curtain: 1,
+        carpet: stats.yuvildi.carpet,
+        blanket: stats.yuvildi.blanket,
+        yakandoz: stats.yuvildi.yakandoz,
+        curtain: stats.yuvildi.curtain,
       },
     },
+
     {
       title: "Tayyor",
       icon: TayyorIcon,
-      orders: 7,
+      orders: stats.tayyor.orders,
       products: {
-        carpet: 10,
-        blanket: 4,
-        yakandoz: 2,
-        curtain: 1,
+        carpet: stats.tayyor.carpet,
+        blanket: stats.tayyor.blanket,
+        yakandoz: stats.tayyor.yakandoz,
+        curtain: stats.tayyor.curtain,
       },
     },
   ];
+
 
   return (
     <section className="main-info-card">
@@ -72,7 +211,12 @@ export default function MainInfoCard() {
         </div>
 
         <div className="main-info-total">
-          <strong>32</strong>
+          <strong>
+            {stats.yangi.orders +
+            stats.olindi.orders +
+            stats.yuvildi.orders +
+            stats.tayyor.orders}
+          </strong>
           <span>buyurtma</span>
         </div>
 
