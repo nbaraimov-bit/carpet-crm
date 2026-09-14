@@ -355,7 +355,7 @@
 
 
   .info-product {
-    height: 43px;
+    height: 50px;
     margin-top: 10px;
     gap: 2px;
 
@@ -364,8 +364,8 @@
 
 
   .info-product img {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
   }
 
 
