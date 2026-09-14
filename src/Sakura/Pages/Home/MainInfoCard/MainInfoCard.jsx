@@ -122,7 +122,7 @@ export default function MainInfoCard() {
         result[group].orders += 1;
 
         result[group].carpet += Number(
-          data.carpetCount || 0
+          data.kvm || 0
         );
 
         result[group].blanket += Number(
@@ -199,7 +199,7 @@ export default function MainInfoCard() {
 
 
   return (
-    
+
     <section className="main-info-card">
 
       {/* ===== HEADER ===== */}
