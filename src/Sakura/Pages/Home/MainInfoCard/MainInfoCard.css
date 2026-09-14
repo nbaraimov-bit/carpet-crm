@@ -95,6 +95,17 @@
 
   gap: 8px;
 
+  background:
+    linear-gradient(#10142f, #10142f) padding-box,
+    linear-gradient(
+      120deg,
+      #6330b8,
+      #d98cff,
+      #6330b8,
+      #8d45ff,
+      #6330b8
+    ) border-box;
+
   animation: mainInfoBorder 8s linear infinite;
 }
 
@@ -351,7 +362,7 @@
 
   .info-product {
     height: 43px;
-
+    margin-top: 10px;
     gap: 2px;
 
     border-radius: 7px;
