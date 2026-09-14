@@ -199,6 +199,7 @@ export default function MainInfoCard() {
 
 
   return (
+    
     <section className="main-info-card">
 
       {/* ===== HEADER ===== */}
