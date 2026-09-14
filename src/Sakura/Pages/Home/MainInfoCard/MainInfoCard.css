@@ -210,10 +210,6 @@
 
   background: rgba(255, 255, 255, 0.025);
   border: 1px solid rgb(108, 55, 139);
-  margin-top: 3px;
-  margin-bottom: 3px;
-  margin-left: 3px;
-  margin-right: 3px;
 }
 
 
@@ -227,8 +223,13 @@
 
   flex-shrink: 0;
 
-  filter:
-    drop-shadow(0 0 4px rgba(190, 80, 255, 0.5));
+  filter: drop-shadow(0 0 4px rgba(190, 80, 255, 0.5));
+  
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-left: 3px;
+  margin-right: 3px;
+  
 }
 
 
@@ -241,6 +242,11 @@
   font-weight: 500;
 
   line-height: 1;
+
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-left: 3px;
+  margin-right: 3px;
 }
 
 
