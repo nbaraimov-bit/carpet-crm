@@ -22,7 +22,7 @@
       #6330b8
     ) border-box;
 
-  border: 1.5px solid transparent;
+  border: 2px solid transparent;
   background-size: 100% 100%, 300% 100%;
 
   animation: mainInfoBorder 8s linear infinite;
@@ -106,7 +106,7 @@
       #6330b8
     ) border-box;
 
-  border: 1 px solid transparent;
+  border: 1.2px solid transparent;
   background-size: 100% 100%, 300% 100%;
 
   animation: mainInfoBorder 8s linear infinite;
