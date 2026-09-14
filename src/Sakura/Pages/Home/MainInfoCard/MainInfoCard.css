@@ -94,6 +94,8 @@
     repeat(4, minmax(0, 1fr));
 
   gap: 8px;
+
+  animation: mainInfoBorder 8s linear infinite;
 }
 
 
@@ -315,13 +317,13 @@
   .info-status-main {
     gap: 4px;
 
-    min-height: 48px;
+    min-height: 45px;
   }
 
 
   .info-status-icon {
-    width: 55px;
-    height: 55px;
+    width: 45px;
+    height: 45px;
   }
 
 
@@ -357,13 +359,13 @@
 
 
   .info-product img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
   }
 
 
   .info-product span {
-    font-size: 8px;
+    font-size: 15px;
   }
 
 }
