@@ -225,11 +225,6 @@
 
   filter: drop-shadow(0 0 4px rgba(190, 80, 255, 0.5));
   
-  margin-top: 3px;
-  margin-bottom: 3px;
-  margin-left: 3px;
-  margin-right: 3px;
-  
 }
 
 
@@ -242,11 +237,6 @@
   font-weight: 500;
 
   line-height: 1;
-
-  margin-top: 3px;
-  margin-bottom: 3px;
-  margin-left: 3px;
-  margin-right: 3px;
 }
 
 
