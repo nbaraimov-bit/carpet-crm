@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../../../firebase";
 
 import "./MainInfoCard.css";
@@ -48,12 +48,9 @@ export default function MainInfoCard() {
   });
 
   useEffect(() => {
-
-    const loadStats = async () => {
-
-      const snapshot = await getDocs(
-        collection(db, "orders")
-      );
+  const unsubscribe = onSnapshot(
+    collection(db, "orders"),
+    (snapshot) => {
 
       const result = {
         yangi: {
@@ -122,7 +119,7 @@ export default function MainInfoCard() {
         result[group].orders += 1;
 
         result[group].carpet += Number(
-          data.kvm || 0
+          data.carpetCount || 0
         );
 
         result[group].blanket += Number(
@@ -140,11 +137,12 @@ export default function MainInfoCard() {
       });
 
       setStats(result);
-    };
+    }
+  );
 
-    loadStats();
+  return () => unsubscribe();
 
-  }, []);
+}, []);
 
   
   const statuses = [
