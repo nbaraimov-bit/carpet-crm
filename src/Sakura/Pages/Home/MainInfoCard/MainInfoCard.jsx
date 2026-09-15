@@ -146,17 +146,6 @@ export default function MainInfoCard() {
 
   
   const statuses = [
-    {
-      title: "Yangi",
-      icon: YangiIcon,
-      orders: stats.yangi.orders,
-      products: {
-        carpet: stats.yangi.carpet,
-        blanket: stats.yangi.blanket,
-        yakandoz: stats.yangi.yakandoz,
-        curtain: stats.yangi.curtain,
-      },
-    },
 
     {
       title: "Olindi",
@@ -197,7 +186,6 @@ export default function MainInfoCard() {
 
 
   return (
-
     <section className="main-info-card">
 
       {/* ===== HEADER ===== */}
@@ -209,20 +197,48 @@ export default function MainInfoCard() {
           <p>Bugungi ko‘rsatkichlar</p>
         </div>
 
-        <div className="main-info-total">
+      </div>
+
+
+      {/* ===== JAMI + YANGI ===== */}
+
+      <div className="main-info-summary">
+
+        {/* JAMI */}
+        <div className="summary-total">
+          <span className="summary-label">JAMI</span>
+
           <strong>
             {stats.yangi.orders +
-            stats.olindi.orders +
-            stats.yuvildi.orders +
-            stats.tayyor.orders}
+             stats.olindi.orders +
+             stats.yuvildi.orders +
+             stats.tayyor.orders}
           </strong>
-          <span>buyurtma</span>
+
+          <small>buyurtma</small>
+        </div>
+
+
+        {/* YANGI */}
+        <div className="summary-new">
+
+          <img
+            src={YangiIcon}
+            alt="Yangi"
+            className="summary-new-icon"
+          />
+
+          <div className="summary-new-number">
+            <strong>{stats.yangi.orders}</strong>
+            <small>buyurtma</small>
+          </div>
+
         </div>
 
       </div>
 
 
-      {/* ===== 4 TA STATUS ===== */}
+      {/* ===== 3 TA STATUS ===== */}
 
       <div className="main-info-status">
 
@@ -233,7 +249,7 @@ export default function MainInfoCard() {
             key={status.title}
           >
 
-            {/* Status icon + nomi + buyurtma soni */}
+            {/* STATUS ICON + SONI */}
 
             <div className="info-status-main">
 
@@ -243,9 +259,9 @@ export default function MainInfoCard() {
                 className="info-status-icon"
               />
 
-                <strong>
-                  {status.orders}
-                </strong>
+              <strong>
+                {status.orders}
+              </strong>
 
             </div>
 
