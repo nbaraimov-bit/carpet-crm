@@ -94,6 +94,18 @@
     inset 0 0 15px rgba(140, 60, 255, 0.08);
 }
 
+.summary-total-icon {
+  width: 60px;
+  height: 60px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+
+  filter:
+    drop-shadow(0 0 6px rgba(190, 80, 255, 0.6));
+}
+
 .summary-total .summary-label {
   color: rgba(220, 215, 255, 0.65);
   font-size: 9px;
@@ -104,11 +116,6 @@
   color: #fff;
   font-size: 28px;
   line-height: 1;
-}
-
-.summary-total small {
-  color: rgba(220, 215, 255, 0.55);
-  font-size: 8px;
 }
 
 
@@ -156,13 +163,6 @@
   color: #fff;
   font-size: 28px;
   line-height: 1;
-}
-
-.summary-new-number small {
-  margin-top: 4px;
-
-  color: rgba(220, 215, 255, 0.55);
-  font-size: 8px;
 }
 
 
@@ -399,6 +399,11 @@
     height: 52px;
   }
 
+  .summary-total-icon {
+    width: 52px;
+    height: 52px;
+  }
+
   .summary-new-number strong {
     font-size: 25px;
   }
@@ -491,6 +496,11 @@
   }
 
   .summary-new-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .summary-total-icon {
     width: 45px;
     height: 45px;
   }

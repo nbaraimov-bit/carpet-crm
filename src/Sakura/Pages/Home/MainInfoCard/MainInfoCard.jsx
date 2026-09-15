@@ -4,6 +4,7 @@ import { db } from "../../../../firebase";
 
 import "./MainInfoCard.css";
 
+import JamiIcon from "../Assets/jamiIcon.png";
 import YangiIcon from "../Assets/yangiIcon.png";
 import OlindiIcon from "../Assets/olindiIcon.png";
 import YuvildiIcon from "../Assets/yuvildiIcon.png";
@@ -206,7 +207,12 @@ export default function MainInfoCard() {
 
         {/* JAMI */}
         <div className="summary-total">
-          <span className="summary-label">JAMI</span>
+          
+          <img
+            src={JamiIcon}
+            alt="Jami"
+            className="summary-total-icon"
+          />
 
           <strong>
             {stats.yangi.orders +
@@ -215,7 +221,6 @@ export default function MainInfoCard() {
              stats.tayyor.orders}
           </strong>
 
-          <small>buyurtma</small>
         </div>
 
 
@@ -230,7 +235,7 @@ export default function MainInfoCard() {
 
           <div className="summary-new-number">
             <strong>{stats.yangi.orders}</strong>
-            <small>buyurtma</small>
+
           </div>
 
         </div>
