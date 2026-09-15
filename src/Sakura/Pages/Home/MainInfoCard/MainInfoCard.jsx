@@ -48,101 +48,101 @@ export default function MainInfoCard() {
   });
 
   useEffect(() => {
-  const unsubscribe = onSnapshot(
-    collection(db, "orders"),
-    (snapshot) => {
+   const unsubscribe = onSnapshot(
+      collection(db, "orders"),
+      (snapshot) => {  
 
-      const result = {
-        yangi: {
-          orders: 0,
-          carpet: 0,
-          blanket: 0,
-          yakandoz: 0,
-          curtain: 0,
-        },
-        olindi: {
-          orders: 0,
-          carpet: 0,
-          blanket: 0,
-          yakandoz: 0,
-          curtain: 0,
-        },
-        yuvildi: {
-          orders: 0,
-          carpet: 0,
-          blanket: 0,
-          yakandoz: 0,
-          curtain: 0,
-        },
-        tayyor: {
-          orders: 0,
-          carpet: 0,
-          blanket: 0,
-          yakandoz: 0,
-          curtain: 0,
-        },
-      };
+        const result = {
+          yangi: {
+            orders: 0,
+            carpet: 0,
+            blanket: 0,
+            yakandoz: 0,
+            curtain: 0,
+          },
+          olindi: {
+            orders: 0,
+            carpet: 0,
+            blanket: 0,
+            yakandoz: 0,
+            curtain: 0,
+          },
+          yuvildi: {
+            orders: 0,
+            carpet: 0,
+            blanket: 0,
+            yakandoz: 0,
+            curtain: 0,
+          },
+          tayyor: {
+            orders: 0,
+            carpet: 0,
+            blanket: 0,
+            yakandoz: 0,
+            curtain: 0,
+          },
+        };
 
-      snapshot.forEach((doc) => {
+        snapshot.forEach((doc) => {
 
-        const data = doc.data();
-        const status = data.status || "";
+          const data = doc.data();
+          const status = data.status || "";
 
-        let group = null;
+          let group = null;
 
-        if (
-          status === "Yangi" ||
-          status === "Olinmoqda"
-        ) {
-          group = "yangi";
+          if (
+            status === "Yangi" ||
+            status === "Olinmoqda"
+          ) {
+            group = "yangi";
 
-        } else if (
-          status === "Olindi" ||
-          status === "Yuvilmoqda"
-        ) {
-          group = "olindi";
+          } else if (
+            status === "Olindi" ||
+            status === "Yuvilmoqda"
+          ) {
+            group = "olindi";
 
-        } else if (
-          status === "Yuvildi"
-        ) {
-          group = "yuvildi";
+          } else if (
+            status === "Yuvildi"
+          ) {
+            group = "yuvildi";
 
-        } else if (
-          status === "Tayyor" ||
-          status === "Yetkazilmoqda"
-        ) {
-          group = "tayyor";
-        }
+          } else if (
+            status === "Tayyor" ||
+            status === "Yetkazilmoqda"
+          ) {
+            group = "tayyor";
+          }
 
-        if (!group) return;
+          if (!group) return;
 
-        result[group].orders += 1;
+          result[group].orders += 1;
 
-        result[group].carpet += Number(
-          data.carpetCount || 0
-        );
+          result[group].carpet += Number(
+            data.kvm || 0
+          );
 
-        result[group].blanket += Number(
-          data.blanketCount || 0
-        );
+          result[group].blanket += Number(
+            data.blanketCount || 0
+          );
 
-        result[group].yakandoz += Number(
-          data.yakandozCount || 0
-        );
+          result[group].yakandoz += Number(
+            data.yakandozCount || 0
+          );
 
-        result[group].curtain += Number(
-          data.curtainCount || 0
-        );
+          result[group].curtain += Number(
+            data.curtainCount || 0
+          );
 
-      });
+        });
 
-      setStats(result);
-    }
-  );
+        setStats(result);
+      }
+    );
 
-  return () => unsubscribe();
+    return () => unsubscribe();
 
-}, []);
+  }, []);
 
   
   const statuses = [
