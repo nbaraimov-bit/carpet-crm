@@ -87,11 +87,25 @@
 
   border-radius: 13px;
 
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(180, 110, 255, 0.18);
+  background:
+    linear-gradient(#10142f, #10142f) padding-box,
+    linear-gradient(
+      120deg,
+      #6330b8,
+      #d98cff,
+      #6330b8,
+      #8d45ff,
+      #6330b8
+    ) border-box;
+
+  border: 1.2px solid transparent;
+  background-size: 100% 100%, 300% 100%;
+
+  animation: mainInfoBorder 8s linear infinite;
 
   box-shadow:
-    inset 0 0 15px rgba(140, 60, 255, 0.08);
+    0 0 14px rgba(150, 70, 255, 0.14),
+    inset 0 0 18px rgba(150, 60, 255, 0.08);
 }
 
 .summary-total-icon {
@@ -134,11 +148,25 @@
 
   border-radius: 13px;
 
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(180, 110, 255, 0.18);
+  background:
+    linear-gradient(#10142f, #10142f) padding-box,
+    linear-gradient(
+      120deg,
+      #6330b8,
+      #d98cff,
+      #6330b8,
+      #8d45ff,
+      #6330b8
+    ) border-box;
+
+  border: 1.2px solid transparent;
+  background-size: 100% 100%, 300% 100%;
+
+  animation: mainInfoBorder 8s linear infinite;
 
   box-shadow:
-    inset 0 0 15px rgba(140, 60, 255, 0.08);
+    0 0 14px rgba(150, 70, 255, 0.14),
+    inset 0 0 18px rgba(150, 60, 255, 0.08);
 }
 
 .summary-new-icon {
@@ -303,8 +331,8 @@
 /* Mahsulot PNG */
 
 .info-product img {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 
   object-fit: contain;
 
@@ -320,7 +348,7 @@
 .info-product span {
   color: rgba(235, 230, 255, 0.82);
 
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
 
   line-height: 1;
@@ -465,7 +493,7 @@
   }
 
   .info-product span {
-    font-size: 9px;
+    font-size: 13px;
   }
 
 }
