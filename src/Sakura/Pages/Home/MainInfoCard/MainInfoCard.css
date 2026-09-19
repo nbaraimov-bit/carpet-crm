@@ -462,8 +462,8 @@
   }
 
   .info-status-icon {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
   }
 
   .info-status-main strong {
@@ -494,87 +494,6 @@
 
   .info-product span {
     font-size: 13px;
-  }
-
-}
-
-
-/* =========================================
-   JUDA KICHIK TELEFONLAR
-========================================= */
-
-@media (max-width: 380px) {
-
-  .main-info-card {
-    padding: 8px;
-  }
-
-  .main-info-header h3 {
-    font-size: 15px;
-  }
-
-
-  .summary-total,
-  .summary-new {
-    min-height: 62px;
-  }
-
-  .summary-total strong {
-    font-size: 22px;
-  }
-
-  .summary-new-icon {
-    width: 45px;
-    height: 45px;
-  }
-
-  .summary-total-icon {
-    width: 45px;
-    height: 45px;
-  }
-
-  .summary-new-number strong {
-    font-size: 22px;
-  }
-
-
-  .main-info-status {
-    gap: 4px;
-  }
-
-  .info-status-item {
-    padding: 7px 3px;
-  }
-
-  .info-status-main {
-    gap: 2px;
-  }
-
-  .info-status-icon {
-    width: 42px;
-    height: 42px;
-  }
-
-  .info-status-main strong {
-    font-size: 19px;
-  }
-
-
-  .info-products {
-    gap: 4px 2px;
-  }
-
-  .info-product {
-    height: 48px;
-  }
-
-  .info-product img {
-    width: 25px;
-    height: 25px;
-  }
-
-  .info-product span {
-    font-size: 8px;
   }
 
 }
