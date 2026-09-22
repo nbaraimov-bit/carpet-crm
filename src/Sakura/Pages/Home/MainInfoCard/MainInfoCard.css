@@ -11,55 +11,25 @@
   box-sizing: border-box;
   border-radius: 20px;
 
-  position: relative;
-  isolation: isolate;
-
-  border: 1.8px solid transparent;
-
   background:
-    linear-gradient(#10142f, #10142f) padding-box;
+    linear-gradient(#10142f, #10142f) padding-box,
+    linear-gradient(
+      120deg,
+      #6330b8,
+      #d98cff,
+      #6330b8,
+      #8d45ff,
+      #6330b8
+    ) border-box;
+
+  border: 2px solid transparent;
+  background-size: 100% 100%, 300% 100%;
+
+  animation: mainInfoBorder 8s linear infinite;
 
   box-shadow:
     0 0 18px rgba(150, 70, 255, 0.18),
     inset 0 0 25px rgba(150, 60, 255, 0.12);
-}
-
-.main-info-card::before {
-  content: "";
-
-  position: absolute;
-  inset: -2px;
-
-  border-radius: 22px;
-
-  background: conic-gradient(
-    from 0deg,
-    #6330b8 0deg,
-    #6330b8 285deg,
-    #b96cff 310deg,
-    #ffffff 325deg,
-    #d98cff 335deg,
-    #6330b8 350deg,
-    #6330b8 360deg
-  );
-
-  animation: mainInfoBorder 8s linear infinite;
-
-  z-index: -2;
-}
-
-
-.main-info-card::after {
-  content: "";
-
-  position: absolute;
-  inset: 2px;
-
-  border-radius: 18px;
-
-  background: #10142f;
-
-  z-index: -1;
 }
 
 
