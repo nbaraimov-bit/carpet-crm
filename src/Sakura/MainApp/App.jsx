@@ -80,7 +80,7 @@ function App() {
   const [packingPrices, setPackingPrices] = useState({})
   const [tarif, setTarif] = useState("standart")
   const [driverComment, setDriverComment] = useState("")
-  const [archives, setArchives] = useState([])
+  /*const [archives, setArchives] = useState([])*/
   const [workerEarnings, setWorkerEarnings] = useState({})
   const [teams, setTeams] = useState([])
   const [teamEarnings, setTeamEarnings] = useState({})
@@ -1092,29 +1092,7 @@ function App() {
     return () => unsubscribe()
 
   }, [])
-
-  useEffect(() => {
-
-    const unsubscribe = onSnapshot(
-      collection(
-        db,
-        "archives"
-      ),
-
-      (snapshot) => {
-        setArchives(
-          snapshot.docs.map(
-            (doc) => ({
-              firebaseId: doc.id, ...doc.data(),
-            })
-          )
-        )
-      }
-    )
-
-    return () => unsubscribe()
-
-  }, [])
+  
 
   useEffect(() => {
     return onSnapshot(
