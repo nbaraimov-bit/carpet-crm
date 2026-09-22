@@ -1,9 +1,38 @@
 import { useState } from "react";
+import { db } from "../../firebase";
+import {
+  collection,
+  doc,
+  docs,
+} from "firebase/firestore";
 
 export default function ArchivePage({ }) {
 
   const [archiveSearch, setArchiveSearch] = useState("");
   const [archives, setArchives] = useState([])
+
+    useEffect(() => {
+  
+      const unsubscribe = onSnapshot(
+        collection(
+          db,
+          "archives"
+        ),
+  
+        (snapshot) => {
+          setArchives(
+            snapshot.docs.map(
+              (doc) => ({
+                firebaseId: doc.id, ...doc.data(),
+              })
+            )
+          )
+        }
+      )
+  
+      return () => unsubscribe()
+  
+    }, [])
 
   // ===== MIJOZLAR BO'YICHA GURUHLASH =====
 
