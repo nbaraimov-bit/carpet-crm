@@ -391,16 +391,12 @@
 
 @keyframes mainInfoBorder {
 
-  0% {
-    background-position:
-      0 0,
-      0% 50%;
+  from {
+    --border-angle: 0deg;
   }
 
-  100% {
-    background-position:
-      0 0,
-      300% 50%;
+  to {
+    --border-angle: 360deg;
   }
 
 }
