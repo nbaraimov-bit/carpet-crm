@@ -80,7 +80,7 @@ function App() {
   const [packingPrices, setPackingPrices] = useState({})
   const [tarif, setTarif] = useState("standart")
   const [driverComment, setDriverComment] = useState("")
-  /*const [archives, setArchives] = useState([])*/
+  const [archives, setArchives] = useState([])
   const [workerEarnings, setWorkerEarnings] = useState({})
   const [teams, setTeams] = useState([])
   const [teamEarnings, setTeamEarnings] = useState({})

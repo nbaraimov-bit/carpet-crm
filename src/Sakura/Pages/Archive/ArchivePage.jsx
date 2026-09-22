@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function ArchivePage({ }) {
 
   const [archiveSearch, setArchiveSearch] = useState("");
+  const [archives, setArchives] = useState([])
 
   // ===== MIJOZLAR BO'YICHA GURUHLASH =====
 
