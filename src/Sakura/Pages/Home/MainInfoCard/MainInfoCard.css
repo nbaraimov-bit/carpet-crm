@@ -14,7 +14,7 @@
   position: relative;
   isolation: isolate;
 
-  border: 2px solid transparent;
+  border: 1.8px solid transparent;
 
   background:
     linear-gradient(#10142f, #10142f) padding-box;
@@ -43,7 +43,7 @@
     #6330b8 360deg
   );
 
-  animation: mainInfoBorder 5s linear infinite;
+  animation: mainInfoBorder 8s linear infinite;
 
   z-index: -2;
 }
@@ -391,12 +391,16 @@
 
 @keyframes mainInfoBorder {
 
-  from {
-    --border-angle: 0deg;
+  0% {
+    background-position:
+      0 0,
+      0% 50%;
   }
 
-  to {
-    --border-angle: 360deg;
+  100% {
+    background-position:
+      0 0,
+      300% 50%;
   }
 
 }
