@@ -1092,7 +1092,29 @@ function App() {
     return () => unsubscribe()
 
   }, [])
-  
+
+  useEffect(() => {
+
+    const unsubscribe = onSnapshot(
+      collection(
+        db,
+        "archives"
+      ),
+
+      (snapshot) => {
+        setArchives(
+          snapshot.docs.map(
+            (doc) => ({
+              firebaseId: doc.id, ...doc.data(),
+            })
+          )
+        )
+      }
+    )
+
+    return () => unsubscribe()
+
+  }, [])
 
   useEffect(() => {
     return onSnapshot(
