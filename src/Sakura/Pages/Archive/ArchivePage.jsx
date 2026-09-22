@@ -3,7 +3,6 @@ import { db } from "../../../firebase";
 import {
   collection,
   doc,
-  docs,
 } from "firebase/firestore";
 
 export default function ArchivePage({ }) {
