@@ -85,28 +85,28 @@ export default function ArchivePage({ }) {
 
         .filter(([customerId, orders]) => {
 
-  const text = archiveSearch.toLowerCase().trim();
+          const text = archiveSearch.toLowerCase().trim();
 
-  if (!text) return true;
+          if (!text) return true;
 
-  return (
-    customerId.toLowerCase().includes(text) ||
+          return (
+            customerId.toLowerCase().includes(text) ||
 
-    // Telefon
-    String(orders[0]?.phone || "")
-      .toLowerCase()
-      .includes(text) ||
+            // Telefon
+            String(orders[0]?.phone || "")
+              .toLowerCase()
+              .includes(text) ||
 
-    // Buyurtmaning barcha ma'lumotlari
-    orders.some((order) =>
-      Object.values(order).some((value) =>
-        String(value ?? "")
-          .toLowerCase()
-          .includes(text)
-      )
-    )
-  );
-})
+            // Buyurtmaning barcha ma'lumotlari
+            orders.some((order) =>
+              Object.values(order).some((value) =>
+                String(value ?? "")
+                  .toLowerCase()
+                  .includes(text)
+              )
+            )
+          );
+        })
 
         .sort(([a], [b]) => {
 
