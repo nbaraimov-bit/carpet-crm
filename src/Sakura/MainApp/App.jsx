@@ -1,5 +1,6 @@
 import VaqtinchalikOylikChiqim from "./VaqtinchalikOylikChiqim"
 import VaqtinchalikHisobot from "./VaqtinchalikHisobot"
+import ArchivePage from "../Pages/Archive/ArchivePage"
 import HomePage from "../Pages/Home/HomeMain/HomePage"
 import WasherPanel from "../../components/WasherPanel"
 import DriverPanel from "../../components/DriverPanel"
@@ -79,8 +80,7 @@ function App() {
   const [packingPrices, setPackingPrices] = useState({})
   const [tarif, setTarif] = useState("standart")
   const [driverComment, setDriverComment] = useState("")
-  const [archives, setArchives] = useState([])
-  const [archiveSearch, setArchiveSearch] = useState("")
+  /*const [archives, setArchives] = useState([])*/
   const [workerEarnings, setWorkerEarnings] = useState({})
   const [teams, setTeams] = useState([])
   const [teamEarnings, setTeamEarnings] = useState({})
@@ -2649,6 +2649,12 @@ function App() {
 
       />
     )}
+
+
+    {page === "archive" && (
+      <ArchivePage/>
+    )}
+
 
     <BottomNavigation
       page={page}
