@@ -202,7 +202,7 @@ ${adminState[chatId].message}`,
           worker.telegramId,
           `📢  Sayt yangilandi!
 
-🆕 Versiya: Sakura ${state.version}
+🆕 Versiya: ${state.version}
 
 Yangilanish haqida:
 
