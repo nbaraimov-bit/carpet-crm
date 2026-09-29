@@ -13,7 +13,12 @@ import {
 import { db } from "../../../firebase"
 
 export default function OperatorPanel({
-  orders
+  orders,
+  updateStatus,
+  setRole,
+  role,
+  loading,
+  runAction,
 }) {
   
   const [operatorMode, setOperatorMode] = useState("")
