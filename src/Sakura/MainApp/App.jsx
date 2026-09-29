@@ -4,7 +4,7 @@ import ArchivePage from "../Pages/Archive/ArchivePage"
 import HomePage from "../Pages/Home/HomeMain/HomePage"
 import WasherPanel from "../../components/WasherPanel"
 import DriverPanel from "../../components/DriverPanel"
-import OperatorPanel from "../../components/OperatorPanel"
+import OperatorPanel from "../Panels/OperatorPanel"
 import AdminPanel from "../../components/AdminPanel"
 import getCount from "../../utils/getCount"
 import getHours from "../../utils/getHours"
@@ -67,18 +67,8 @@ function App() {
   const [MonthOpen,setMonthOpen] = useState(false)
   const [allOpen,setAllOpen] = useState(false)
   const [selectedDate,setSelectedDate] = useState("")
-  const [operatorMode, setOperatorMode] = useState("")
-  const [comment, setComment] = useState("")
-  const [phone, setPhone] = useState("")
-  const [address, setAddress] =  useState("")
-  const [editingId, setEditingId] = useState(null)
-  const [editPhone, setEditPhone] = useState("")
-  const [editAddress, setEditAddress] = useState("")
-  const [editComment, setEditComment] = useState("")
-  const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [driverPrices, setDriverPrices] = useState({})
   const [packingPrices, setPackingPrices] = useState({})
-  const [tarif, setTarif] = useState("standart")
   const [driverComment, setDriverComment] = useState("")
   const [archives, setArchives] = useState([])
   const [workerEarnings, setWorkerEarnings] = useState({})
@@ -1272,94 +1262,6 @@ function App() {
     return total;
   }
 
-
-  {/* ===== add order ===== */}
-  const addOrder = async () => {
-
-    if (!phone || !address) return
-
-    const customersSnapshot = await getDocs(
-      collection(
-        db,
-        "customers"
-      )
-    )
-
-    const customers = customersSnapshot.docs.map(
-      (doc) => ({
-        firebaseId: doc.id,
-        ...doc.data(),
-      })
-    )
-
-    const existingCustomer = customers.find(
-      (c) => c.phone === phone
-    )
-
-    let customerId = ""
-
-    if (existingCustomer) {
-      customerId = existingCustomer.customerId
-    } else {
-      const nextCustomerNumber = customers.length + 1
-
-      customerId = `C${String(
-        nextCustomerNumber
-      ).padStart(4, "0")}`
-
-      await setDoc(
-        doc(
-          db, "customers", customerId
-        ), {
-          customerId,
-          phone,
-          address,
-          ordersCount: 1,
-          createdAt: serverTimestamp(),
-        }
-      )
-
-    }
-
-    const counterRef = doc(
-      db,
-      "counters",
-      "orders"
-    )
-
-    const counterSnap = await getDoc(counterRef)
-    const lastOrderNumber = Number( counterSnap.data() ?.lastOrderNumber) || 0
-    const nextOrderNumber = lastOrderNumber + 1
-
-    await updateDoc(counterRef,{
-      lastOrderNumber: nextOrderNumber
-    })
-
-    const orderId = `AA${String(
-      nextOrderNumber
-    ).padStart(4, "0")}`
-
-    const newOrder = {
-      id: orderId,
-      customerId,
-      phone,
-      address,
-      status: "Yangi",
-      comment,
-      tarif,
-      driverNotified: false,
-      createdAt: serverTimestamp()
-    }
-
-    await setDoc(
-      doc(db, "orders", orderId),
-      newOrder
-    )
-    setPhone("")
-    setAddress("")
-    setComment("")
-  }
-
   {/* ===== update status ===== */}
   const updateStatus = async (id, status) => {
 
@@ -1773,18 +1675,6 @@ function App() {
     await updateDoc(orderRef, updates)
   }
 
-
-  const activeOrders = orders.filter(
-    (o) =>
-      o.status !== "Yetkazildi" &&
-      o.status !== "Rad etildi"
-  )
-
-  const finishedOrders = orders.filter(
-    (o) =>
-      o.status === "Yetkazildi" ||
-      o.status === "Rad etildi"
-  )
 
   {/* ===== kirish ===== */}
   if (!currentWorker && !requestSent ) {
