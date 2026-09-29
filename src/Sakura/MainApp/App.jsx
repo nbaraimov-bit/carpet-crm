@@ -2278,27 +2278,6 @@ function App() {
       <OperatorPanel
 
         orders={orders}
-        activeOrders={activeOrders}
-        finishedOrders={finishedOrders}
-        phone={phone}
-        setPhone={setPhone}
-        address={address}
-        setAddress={setAddress}
-        comment={comment}
-        setComment={setComment}
-        tarif={tarif}
-        setTarif={setTarif}
-        addOrder={addOrder}
-        editingId={editingId}
-        setEditingId={setEditingId}
-        editPhone={editPhone}
-        setEditPhone={setEditPhone}
-        editAddress={editAddress}
-        setEditAddress={setEditAddress}
-        editComment={editComment}
-        setEditComment={setEditComment}
-        deleteOrderId={deleteOrderId}
-        setDeleteOrderId={setDeleteOrderId}
         updateStatus={updateStatus}
         setRole={setRole}
         role={role}
