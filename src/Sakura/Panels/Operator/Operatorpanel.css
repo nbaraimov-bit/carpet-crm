@@ -1,0 +1,116 @@
+/* ================================
+   OPERATOR PAGE
+================================ */
+
+.operator-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #fff;
+}
+
+/* ================================
+   HEADER
+================================ */
+
+.operator-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.operator-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.operator-header p {
+  margin: 5px 0 0;
+  color: #9292a8;
+  font-size: 13px;
+}
+
+/* ================================
+   NEW ORDER BUTTON
+================================ */
+
+.operator-new-order {
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.95),
+    rgba(168, 85, 247, 0.85)
+  );
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow:
+    0 8px 25px rgba(124, 58, 237, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: 0.2s ease;
+}
+
+.operator-new-order:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 30px rgba(124, 58, 237, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.operator-new-order:active {
+  transform: scale(0.97);
+}
+
+/* ================================
+   ORDERS SECTION
+================================ */
+
+.operator-orders {
+  width: 100%;
+}
+
+.operator-orders h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 650;
+  color: #f4f4f7;
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  .operator-page {
+    padding: 14px;
+  }
+
+  .operator-header {
+    align-items: flex-start;
+  }
+
+  .operator-header h1 {
+    font-size: 24px;
+  }
+
+  .operator-header p {
+    font-size: 12px;
+  }
+
+  .operator-new-order {
+    padding: 10px 13px;
+    border-radius: 12px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+}

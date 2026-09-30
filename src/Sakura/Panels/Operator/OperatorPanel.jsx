@@ -1,5 +1,7 @@
-import { useState } from "react"
+import "./OperatorPanel.css"
 
+import { db } from "../../../firebase"
+import { useState } from "react"
 import {
   collection,
   doc,
@@ -10,7 +12,6 @@ import {
   serverTimestamp
 } from "firebase/firestore"
 
-import { db } from "../../../firebase"
 
 export default function OperatorPanel({
   orders,
@@ -131,9 +132,27 @@ export default function OperatorPanel({
       o.status === "Rad etildi"
   )
 
-  return(
-    <div>
-      Operator Panel
+  return (
+    <div className="operator-page">
+
+      <div className="operator-header">
+        <div>
+          <h1>Operator</h1>
+          <p>Buyurtmalar boshqaruvi</p>
+        </div>
+
+        <button className="operator-new-order">
+          + Yangi buyurtma
+        </button>
+      </div>
+
+      <div className="operator-orders"> 
+        <h2>Faol buyurtmalar</h2>
+
+        {/* Buyurtmalar shu yerga chiqadi */}
+
+      </div>
+
     </div>
   )
 
