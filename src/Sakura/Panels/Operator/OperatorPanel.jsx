@@ -2,6 +2,8 @@ import "./Operatorpanel.css";
 
 import LocationIcon from "../../MainIcons/LocationIcon";
 import PhoneIcon from "../../MainIcons/PhoneIcon";
+import UserIcon from "../../MainIcons/UserIcon";
+import CommentIcon from "../../MainIcons/CommentIcon";
 
 import CarpetIcon from "../../MainIcons/carpetIcon.png"
 import BlanketIcon from "../../MainIcons/blanketIcon.png"
@@ -177,25 +179,25 @@ export default function OperatorPanel({
 
           {activeOrders.map((order) => {
 
-            const hasCarpet = Object.prototype.hasOwnProperty.call(
-              order,
-              "carpetCount"
-            )
+            const hasCarpet =
+  order.carpetCount !== undefined &&
+  order.carpetCount !== null &&
+  order.carpetCount !== ""
 
-            const hasBlanket = Object.prototype.hasOwnProperty.call(
-              order,
-              "blanketCount"
-            )
+  const hasBlanket =
+  order.blanketCount !== undefined &&
+  order.blanketCount !== null &&
+  order.blanketCount !== ""
 
-            const hasYakandoz = Object.prototype.hasOwnProperty.call(
-              order,
-              "yakandozCount"
-            )
+const hasYakandoz =
+  order.yakandozCount !== undefined &&
+  order.yakandozCount !== null &&
+  order.yakandozCount !== ""
 
-            const hasCurtain = Object.prototype.hasOwnProperty.call(
-              order,
-              "curtainCount"
-            )
+const hasCurtain =
+  order.curtainCount !== undefined &&
+  order.curtainCount !== null &&
+  order.curtainCount !== ""
 
             return (
               <div
@@ -221,7 +223,7 @@ export default function OperatorPanel({
                 <div className="operator-order-info"> 
 
                   <div className="operator-info-row">
-                    <span>👤</span>
+                    <UserIcon/>
                     <span>{order.customerId}</span>
                   </div>
 
@@ -292,6 +294,14 @@ export default function OperatorPanel({
                   </div>
       
                 </div>
+
+                {order.comment && (
+                  <div className="operator-comment">
+                    <CommentIcon />
+
+                    <span>{order.comment}</span>
+                  </div> 
+                )}
       
       
                 {/* DATE */}
