@@ -1,4 +1,4 @@
-import "../OperatorPanel.css";
+import "./OperatorPanel.css";
 
 import { db } from "../../../firebase"
 import { useState } from "react"
