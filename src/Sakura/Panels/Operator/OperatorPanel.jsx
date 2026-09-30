@@ -180,24 +180,24 @@ export default function OperatorPanel({
           {activeOrders.map((order) => {
 
             const hasCarpet =
-  order.carpetCount !== undefined &&
-  order.carpetCount !== null &&
-  order.carpetCount !== ""
+              order.carpetCount !== undefined &&
+              order.carpetCount !== null &&
+              order.carpetCount !== ""
 
-  const hasBlanket =
-  order.blanketCount !== undefined &&
-  order.blanketCount !== null &&
-  order.blanketCount !== ""
+            const hasBlanket =
+              order.blanketCount !== undefined &&
+              order.blanketCount !== null &&
+              order.blanketCount !== ""
 
-const hasYakandoz =
-  order.yakandozCount !== undefined &&
-  order.yakandozCount !== null &&
-  order.yakandozCount !== ""
+            const hasYakandoz =
+              order.yakandozCount !== undefined &&
+              order.yakandozCount !== null &&
+              order.yakandozCount !== ""
 
-const hasCurtain =
-  order.curtainCount !== undefined &&
-  order.curtainCount !== null &&
-  order.curtainCount !== ""
+            const hasCurtain =
+              order.curtainCount !== undefined &&
+              order.curtainCount !== null &&
+              order.curtainCount !== ""
 
             return (
               <div
