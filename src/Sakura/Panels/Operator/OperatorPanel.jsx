@@ -1,4 +1,8 @@
 import "./Operatorpanel.css";
+import CarpetIcon from "../../MainIcons/carpetIcon.png"
+import BlanketIcon from "../../MainIcons/blanketIcon.png"
+import YakandozIcon from "../../MainIcons/yakandozIcon.png"
+import CurtainIcon from "../../MainIcons/curtainIcon.png"
 
 import { db } from "../../../firebase"
 import { useState } from "react"
@@ -120,6 +124,22 @@ export default function OperatorPanel({
     setComment("")
   }
 
+  const formatOrderDate = (timestamp) => {
+    if (!timestamp) return ""
+
+    const date = timestamp?.toDate
+      ? timestamp.toDate()
+      : new Date(timestamp)
+
+    return date.toLocaleString("uz-UZ", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  }
+
   const activeOrders = orders.filter(
     (o) =>
       o.status !== "Yetkazildi" &&
@@ -149,7 +169,134 @@ export default function OperatorPanel({
       <div className="operator-orders"> 
         <h2>Faol buyurtmalar</h2>
 
-        {/* Buyurtmalar shu yerga chiqadi */}
+        <div className="operator-order-list">
+
+          {activeOrders.map((order) => {
+
+            const hasCarpet = Object.prototype.hasOwnProperty.call(
+              order,
+              "carpetCount"
+            )
+
+            const hasBlanket = Object.prototype.hasOwnProperty.call(
+              order,
+              "blanketCount"
+            )
+
+            const hasYakandoz = Object.prototype.hasOwnProperty.call(
+              order,
+              "yakandozCount"
+            )
+
+            const hasCurtain = Object.prototype.hasOwnProperty.call(
+              order,
+              "curtainCount"
+            )
+
+            return (
+              <div
+                className="operator-order-card"
+                key={order.id}
+              >
+
+                {/* TOP */}
+                <div className="operator-order-top">  
+
+                  <div className="operator-order-id">
+                    {order.id}
+                  </div>
+
+                  <div className="operator-order-status">
+                    {order.status}
+                  </div>
+
+                </div>
+  
+
+                {/* CUSTOMER */}
+                <div className="operator-order-info"> 
+
+                  <div className="operator-info-row">
+                    <span>👤</span>
+                    <span>{order.customerId}</span>
+                  </div>
+
+                  <div className="operator-info-row">
+                    <span>📞</span>
+                    <span>{order.phone}</span>
+                  </div>
+
+                  <div className="operator-info-row">
+                    <span>📍</span>
+                    <span>{order.address}</span>
+                  </div>
+
+                </div>
+  
+
+                {/* PRODUCTS */}
+                <div className="operator-products">
+
+                  <div
+                    className={`operator-product ${
+                      hasCarpet ? "active" : "inactive"
+                    }`}
+                  >
+                    <img src={CarpetIcon} />
+                    {hasCarpet && (
+                      <span>{order.carpetCount}</span>
+                    )}
+                  </div>
+
+
+                  <div
+                    className={`operator-product ${
+                      hasBlanket ? "active" : "inactive"
+                    }`}
+                  >
+                    <img src={BlanketIcon} />
+                    {hasBlanket && (
+                      <span>{order.blanketCount}</span>
+                    )}
+                  </div>
+
+
+                  <div
+                    className={`operator-product ${
+                      hasYakandoz ? "active" : "inactive"
+                    }`}
+                  >
+                    <img src={YakandozIcon} />
+                    {hasYakandoz && (
+                      <span>{order.yakandozCount}</span>
+                    )}
+                  </div>
+
+
+                  <div
+                    className={`operator-product ${
+                      hasCurtain ? "active" : "inactive"
+                    }`}
+                  >
+                    <img src={CurtainIcon} />
+                    {hasCurtain && (
+                      <span>{order.curtainCount}</span>
+                    )}
+                  </div>
+      
+                </div>
+      
+      
+                {/* DATE */}
+                <div className="operator-order-date">
+                  🕐 {formatOrderDate(order.createdAt)}
+                </div>
+      
+              </div>
+            )
+          })}
+
+        </div>
 
       </div>
 
