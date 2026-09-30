@@ -1,4 +1,8 @@
 import "./Operatorpanel.css";
+
+import LocationIcon from "../../MainIcons/LocationIcon";
+import PhoneIcon from "../../MainIcons/PhoneIcon";
+
 import CarpetIcon from "../../MainIcons/carpetIcon.png"
 import BlanketIcon from "../../MainIcons/blanketIcon.png"
 import YakandozIcon from "../../MainIcons/yakandozIcon.png"
@@ -222,12 +226,12 @@ export default function OperatorPanel({
                   </div>
 
                   <div className="operator-info-row">
-                    <span>📞</span>
+                    <PhoneIcon/>
                     <span>{order.phone}</span>
                   </div>
 
                   <div className="operator-info-row">
-                    <span>📍</span>
+                    <LocationIcon/>
                     <span>{order.address}</span>
                   </div>
 
@@ -242,9 +246,12 @@ export default function OperatorPanel({
                       hasCarpet ? "active" : "inactive"
                     }`}
                   >
-                    <img src={CarpetIcon} />
+                    <img src={CarpetIcon} alt="Gilam" />
+
                     {hasCarpet && (
-                      <span>{order.carpetCount}</span>
+                      <span>
+                        {order.carpetCount ?? 0} / {order.kvm ?? 0}
+                      </span>
                     )}
                   </div>
 
