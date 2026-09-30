@@ -19,7 +19,7 @@ export default function OperatorPanel({
   setRole,
   role,
   loading,
-  runAction,
+  runAction
 }) {
   
   const [operatorMode, setOperatorMode] = useState("")
