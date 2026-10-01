@@ -244,49 +244,6 @@ export default function OperatorPanel({
                   </div>
 
                 </div>
-
-                <div className="operator-card-actions">
-
-  <button
-    className="operator-menu-button"
-    onClick={() =>
-      setOpenMenuId(
-        openMenuId === order.id
-          ? null
-          : order.id
-      )
-    }
-  >
-    <span>
-      {openMenuId === order.id ? "⌃" : "⌄"}
-    </span>
-  </button>
-
-  {openMenuId === order.id && (
-    <div className="operator-action-menu">
-
-      <button
-        onClick={() => {
-          setEditingId(order.id)
-          setOpenMenuId(null)
-        }}
-      >
-        ✎ Tahrirlash
-      </button>
-
-      <button
-        onClick={() => {
-          setDeleteOrderId(order.id)
-          setOpenMenuId(null)
-        }}
-      >
-        🗑 O‘chirish
-      </button>
-
-    </div>
-  )}
-
-</div>
   
 
                 {/* CUSTOMER */}
@@ -402,6 +359,49 @@ export default function OperatorPanel({
                 <div className="operator-order-date">
                   🕐 {formatOrderDate(order.createdAt)}
                 </div>
+
+                <div className="operator-card-actions">
+
+  <button
+    className="operator-menu-button"
+    onClick={() =>
+      setOpenMenuId(
+        openMenuId === order.id
+          ? null
+          : order.id
+      )
+    }
+  >
+    <span>
+      {openMenuId === order.id ? "⌃" : "⌄"}
+    </span>
+  </button>
+
+  {openMenuId === order.id && (
+    <div className="operator-action-menu">
+
+      <button
+        onClick={() => {
+          setEditingId(order.id)
+          setOpenMenuId(null)
+        }}
+      >
+        ✎ Tahrirlash
+      </button>
+
+      <button
+        onClick={() => {
+          setDeleteOrderId(order.id)
+          setOpenMenuId(null)
+        }}
+      >
+        🗑 O‘chirish
+      </button>
+
+    </div>
+  )}
+
+</div>
       
               </div>
             )
