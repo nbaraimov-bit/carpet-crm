@@ -434,7 +434,6 @@
 .operator-order-date {
   display: flex;
   align-items: center;
-  gap: 7px;
 
   color: #77788f;
   font-size: 11px;
