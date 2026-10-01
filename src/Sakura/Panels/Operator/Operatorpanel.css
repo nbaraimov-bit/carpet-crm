@@ -417,3 +417,119 @@
 }
 
 
+
+/* ================================
+   CARD ACTION MENU
+================================ */
+
+.operator-card-actions {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  z-index: 20;
+}
+
+.operator-menu-button {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(192, 132, 252, 0.30);
+  border-radius: 10px;
+
+  background: rgba(168, 85, 247, 0.08);
+
+  color: #c084fc;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.operator-menu-button:hover {
+  background: rgba(168, 85, 247, 0.16);
+
+  box-shadow:
+    0 0 10px rgba(168, 85, 247, 0.18);
+}
+
+.operator-menu-button:active {
+  transform: scale(0.94);
+}
+
+.operator-menu-button span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+
+/* ================================
+   ACTION DROPDOWN
+================================ */
+
+.operator-action-menu {
+  position: absolute;
+
+  top: 39px;
+  right: 0;
+
+  width: 150px;
+
+  padding: 6px;
+
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(27, 25, 55, 0.98),
+      rgba(13, 14, 32, 0.99)
+    );
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 16px rgba(168, 85, 247, 0.12);
+
+  backdrop-filter: blur(10px);
+}
+
+.operator-action-menu button {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 10px 11px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #ddd9e8;
+
+  font-size: 13px;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: 0.18s ease;
+}
+
+.operator-action-menu button:hover {
+  background: rgba(168, 85, 247, 0.12);
+  color: #c084fc;
+}
+
+.operator-action-menu button:active {
+  transform: scale(0.98);
+}

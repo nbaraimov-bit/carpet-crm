@@ -42,6 +42,7 @@ export default function OperatorPanel({
   const [editComment, setEditComment] = useState("")
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [tarif, setTarif] = useState("standart")
+  const [openMenuId, setOpenMenuId] = useState(null)
 
   {/* ===== add order ===== */}
   const addOrder = async () => {
@@ -232,7 +233,7 @@ export default function OperatorPanel({
               >
 
                 {/* TOP */}
-                <div className="operator-order-top">  
+                <div className="operator-order-top">
 
                   <div className="operator-order-id">
                     {order.id}
@@ -243,6 +244,49 @@ export default function OperatorPanel({
                   </div>
 
                 </div>
+
+                <div className="operator-card-actions">
+
+  <button
+    className="operator-menu-button"
+    onClick={() =>
+      setOpenMenuId(
+        openMenuId === order.id
+          ? null
+          : order.id
+      )
+    }
+  >
+    <span>
+      {openMenuId === order.id ? "⌃" : "⌄"}
+    </span>
+  </button>
+
+  {openMenuId === order.id && (
+    <div className="operator-action-menu">
+
+      <button
+        onClick={() => {
+          setEditingId(order.id)
+          setOpenMenuId(null)
+        }}
+      >
+        ✎ Tahrirlash
+      </button>
+
+      <button
+        onClick={() => {
+          setDeleteOrderId(order.id)
+          setOpenMenuId(null)
+        }}
+      >
+        🗑 O‘chirish
+      </button>
+
+    </div>
+  )}
+
+</div>
   
 
                 {/* CUSTOMER */}
