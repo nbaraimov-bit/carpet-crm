@@ -432,9 +432,11 @@
 ================================ */
 
 .operator-order-date {
-  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
 
-  color: #77788f;
+  color: #58586a;
   font-size: 11px;
 }
 
