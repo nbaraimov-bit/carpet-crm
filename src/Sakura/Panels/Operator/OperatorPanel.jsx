@@ -355,52 +355,56 @@ export default function OperatorPanel({
                 )}
       
       
-                {/* DATE */}
-                <div className="operator-order-date">
-                  🕐 {formatOrderDate(order.createdAt)}
-                </div>
+                <div className="operator-order-bottom">
 
-                <div className="operator-card-actions">
+                  {/* DATE */}
+                  <div className="operator-order-date">
+                    🕐 {formatOrderDate(order.createdAt)}
+                  </div>
 
-                  <button
-                    className="operator-menu-button"
-                    onClick={() =>
-                      setOpenMenuId(
-                        openMenuId === order.id
-                          ? null
-                          : order.id
-                      )
-                    }
-                  >
-                    <span>
-                      {openMenuId === order.id ? "⌃" : "⌄"}
-                    </span>
-                  </button>
+                  <div className="operator-card-actions">
+ 
+                    <button
+                      className="operator-menu-button"
+                      onClick={() =>
+                        setOpenMenuId(
+                          openMenuId === order.id
+                            ? null
+                            : order.id
+                        )
+                      }
+                    >
+                      <span>
+                        {openMenuId === order.id ? "⌃" : "⌄"}
+                      </span>
+                    </button>
 
-                  {openMenuId === order.id && (
-                    <div className="operator-action-menu">
+                    {openMenuId === order.id && (
+                      <div className="operator-action-menu"> 
 
-                      <button
-                        onClick={() => {
-                          setEditingId(order.id)
-                          setOpenMenuId(null)
-                        }}
-                      >
-                        ✎ Tahrirlash
-                      </button>
+                        <button
+                          onClick={() => {
+                            setEditingId(order.id)
+                            setOpenMenuId(null)
+                          }}
+                        >
+                          ✎ Tahrirlash
+                        </button>
+  
+                        <button
+                          onClick={() => {
+                            setDeleteOrderId(order.id)
+                            setOpenMenuId(null)
+                          }}
+                        >
+                          🗑 O‘chirish
+                        </button>
+  
+                      </div>
+                    )}
 
-                      <button
-                        onClick={() => {
-                          setDeleteOrderId(order.id)
-                          setOpenMenuId(null)
-                        }}
-                      >
-                        🗑 O‘chirish
-                      </button>
-
-                    </div>
-                  )}
-
+                  </div>
+                
                 </div>
       
               </div>
