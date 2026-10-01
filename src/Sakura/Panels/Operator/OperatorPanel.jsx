@@ -158,6 +158,26 @@ export default function OperatorPanel({
       o.status === "Rad etildi"
   )
 
+  const getProductStatusClass = (status) => {
+    if (!status) return ""
+
+    const value = String(status).toLowerCase()
+
+    if (value === "yangi") return "status-yangi"
+    if (
+      value === "olingan" ||
+      value === "olinmoqda" ||
+      value === "yuvilmoqda"
+    ) {
+      return "status-jarayon"
+    }
+
+    if (value === "yuvildi") return "status-yuvildi"
+    if (value === "tayyor") return "status-tayyor"
+
+    return ""
+  }
+
   return (
     <div className="operator-page">
 
@@ -255,6 +275,12 @@ export default function OperatorPanel({
                         {order.carpetCount ?? 0} / {order.kvm ?? 0}
                       </span>
                     )}
+
+                    <div
+                      className={`product-status-line ${
+                        getProductStatusClass(order.carpetStatus)
+                      }`}
+                    />
                   </div>
 
 
@@ -267,6 +293,12 @@ export default function OperatorPanel({
                     {hasBlanket && (
                       <span>{order.blanketCount}</span>
                     )}
+
+                    <div
+                      className={`product-status-line ${
+                        getProductStatusClass(order.blanketStatus)
+                      }`}
+                    />
                   </div>
 
 
@@ -279,6 +311,12 @@ export default function OperatorPanel({
                     {hasYakandoz && (
                       <span>{order.yakandozCount}</span>
                     )}
+
+                    <div
+                      className={`product-status-line ${
+                        getProductStatusClass(order.yakandozStatus)
+                      }`}
+                    />
                   </div>
 
 
@@ -291,6 +329,12 @@ export default function OperatorPanel({
                     {hasCurtain && (
                       <span>{order.curtainCount}</span>
                     )}
+
+                    <div
+                      className={`product-status-line ${
+                        getProductStatusClass(order.curtainStatus)
+                      }`}
+                    />
                   </div>
       
                 </div>
