@@ -443,9 +443,25 @@
    CARD ACTION MENU
 ================================ */
 
+.operator-arrow {
+  width: 20px;
+  height: 20px;
+
+  color: #c084fc;
+
+  filter:
+    drop-shadow(0 0 3px rgba(192, 132, 252, 0.9))
+    drop-shadow(0 0 7px rgba(168, 85, 247, 0.55));
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+
 .operator-menu-button {
-  width: 32px;
-  height: 25px;
+  width: 36px;
+  height: 36px;
 
   display: flex;
   align-items: center;
@@ -453,8 +469,8 @@
 
   padding: 0;
 
-  border: 1px solid rgba(192, 132, 252, 0.30);
-  border-radius: 10px;
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  border-radius: 11px;
 
   background: rgba(168, 85, 247, 0.08);
 
@@ -462,7 +478,15 @@
 
   cursor: pointer;
 
+  box-shadow:
+    inset 0 0 8px rgba(168, 85, 247, 0.06),
+    0 0 10px rgba(168, 85, 247, 0.08);
+
   transition: 0.2s ease;
+}
+
+.operator-menu-button:active {
+  transform: scale(0.93);
 }
 
 .operator-menu-button:hover {
@@ -470,10 +494,6 @@
 
   box-shadow:
     0 0 10px rgba(168, 85, 247, 0.18);
-}
-
-.operator-menu-button:active {
-  transform: scale(0.94);
 }
 
 .operator-menu-button span {
@@ -488,9 +508,9 @@
 
 .operator-action-menu {
   position: absolute;
-  z-index: 20;
+  z-index: 10;
 
-  top: 39px;
+  bottom: 39px;
   right: 0;
 
   width: 150px;

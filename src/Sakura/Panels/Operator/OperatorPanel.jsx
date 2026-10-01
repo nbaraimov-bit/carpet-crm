@@ -374,9 +374,24 @@ export default function OperatorPanel({
                         )
                       }
                     >
-                      <span>
-                        {openMenuId === order.id ? "⌃" : "⌄"}
-                      </span>
+                      <svg
+                        className="operator-arrow"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d={
+                            openMenuId === order.id
+                              ? "M6 14L12 8L18 14"
+                              : "M6 10L12 16L18 10"
+                          }
+                          stroke="currentColor"
+                          strokeWidth="2.2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </button>
 
                     {openMenuId === order.id && (
