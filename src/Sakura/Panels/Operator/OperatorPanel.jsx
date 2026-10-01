@@ -178,7 +178,6 @@ export default function OperatorPanel({
     return ""
   }
 
-  const isQuickOrder = order.tarif === "tezkor"
 
   return (
     <div className="operator-page">
@@ -220,6 +219,8 @@ export default function OperatorPanel({
               order.curtainCount !== undefined &&
               order.curtainCount !== null &&
               order.curtainCount !== ""
+
+            const isQuickOrder = order.tarif === "tezkor"
 
             return (
               <div
