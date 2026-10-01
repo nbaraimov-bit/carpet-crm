@@ -184,7 +184,7 @@
 
   pointer-events: none;
 
-  animation: quickWave 2.2s ease-out infinite 0.55s;
+  animation: quickWave 0.2s ease-out infinite 0.55s;
 }
 
 @keyframes quickWave {
