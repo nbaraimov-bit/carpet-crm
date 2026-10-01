@@ -488,6 +488,7 @@
 
 .operator-action-menu {
   position: absolute;
+  z-index: 20;
 
   top: 39px;
   right: 0;
