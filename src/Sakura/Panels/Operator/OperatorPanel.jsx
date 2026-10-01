@@ -392,29 +392,29 @@ export default function OperatorPanel({
                       </svg>
                     </button>
 
-                    {openMenuId === order.id && (
-                      <div className="operator-action-menu"> 
+                    <div
+                      className={`operator-action-menu ${
+                        openMenuId === order.id ? "menu-open" : ""
+                      }`}
+                    >
+                      <button
+                        onClick={() => {
+                          setEditingId(order.id)
+                          setOpenMenuId(null)
+                        }}
+                      >
+                        ✎ Tahrirlash
+                      </button>
 
-                        <button
-                          onClick={() => {
-                            setEditingId(order.id)
-                            setOpenMenuId(null)
-                          }}
-                        >
-                          ✎ Tahrirlash
-                        </button>
-  
-                        <button
-                          onClick={() => {
-                            setDeleteOrderId(order.id)
-                            setOpenMenuId(null)
-                          }}
-                        >
-                          🗑 O‘chirish
-                        </button>
-  
-                      </div>
-                    )}
+                      <button
+                        onClick={() => {
+                          setDeleteOrderId(order.id)
+                          setOpenMenuId(null)
+                        }}
+                      >
+                        🗑 O‘chirish
+                      </button>
+                    </div>
 
                   </div>
                 
