@@ -359,7 +359,34 @@ export default function OperatorPanel({
 
                   {/* DATE */}
                   <div className="operator-order-date">
-                    🕐 {formatOrderDate(order.createdAt)}
+
+                    <svg
+                      className="operator-time-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="8.5"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                      />
+                  
+                     <path
+                        d="M12 7.5V12L15 14"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+
+                    <span>
+                      {formatOrderDate(order.createdAt)}
+                    </span>
+
                   </div>
 
                   <div className="operator-card-actions">
