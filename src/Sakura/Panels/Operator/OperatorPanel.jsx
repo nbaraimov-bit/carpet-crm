@@ -178,6 +178,8 @@ export default function OperatorPanel({
     return ""
   }
 
+  const isQuickOrder = order.tarif === "tezkor"
+
   return (
     <div className="operator-page">
 
@@ -221,7 +223,10 @@ export default function OperatorPanel({
 
             return (
               <div
-                className="operator-order-card"
+                className={`operator-order-card ${
+                  isQuickOrder ? "quick-order-card" : ""
+                }`}
+
                 key={order.id}
               >
 
