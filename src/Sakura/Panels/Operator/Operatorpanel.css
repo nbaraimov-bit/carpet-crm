@@ -476,7 +476,7 @@
 .operator-action-menu {
   position: absolute;
 
-  bottom: 39px;
+  top: 39px;
   right: 0;
 
   width: 150px;
@@ -508,7 +508,8 @@
 
   gap: 9px;
 
-  padding: 10px 11px;
+  padding-bottom: 10px;
+  padding-right: 11px;
 
   border: none;
   border-radius: 9px;
