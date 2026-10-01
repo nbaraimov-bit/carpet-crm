@@ -146,6 +146,7 @@
     );
 
   border: 2px solid rgba(168, 85, 247, 0.32);
+  border: 1px solid rgba(228, 199, 254, 0.32);
 
   box-shadow:
     0 0 0 1px rgba(168, 85, 247, 0.05),
