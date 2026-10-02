@@ -1,4 +1,4 @@
-import "./AddOrderModals.css";
+import "./AddOrderModal.css";
 
 
 import { db } from "../../../../firebase"
