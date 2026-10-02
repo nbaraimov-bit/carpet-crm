@@ -43,6 +43,8 @@ export default function OperatorPanel({
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [tarif, setTarif] = useState("standart")
   const [openMenuId, setOpenMenuId] = useState(null)
+  const [newOrderMenuOpen, setNewOrderMenuOpen] = useState(false)
+  
 
   {/* ===== add order ===== */}
   const addOrder = async () => {
