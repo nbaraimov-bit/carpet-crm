@@ -33,7 +33,7 @@ export default function OperatorPanel({
   loading,
   runAction
 }) {
-  
+
   const [operatorMode, setOperatorMode] = useState("")
   const [comment, setComment] = useState("")
   const [phone, setPhone] = useState("")
@@ -488,6 +488,9 @@ export default function OperatorPanel({
       </div>
 
       <AddOrderModal
+
+      newOrderModalOpen={newOrderModalOpen}
+      setNewOrderModalOpen={setNewOrderModalOpen}
 
   phone={phone}
   setPhone={setPhone}

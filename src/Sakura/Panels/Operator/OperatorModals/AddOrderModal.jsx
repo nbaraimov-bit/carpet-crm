@@ -16,6 +16,9 @@ import {
 
 export default function AddOrderModal({
 
+  newOrderModalOpen,
+  setNewOrderModalOpen,
+
   phone,
   setPhone,
 
@@ -27,6 +30,8 @@ export default function AddOrderModal({
 
   addOrder
 }) {
+
+  if (!newOrderModalOpen) return null
 
   return (
     <div className="new-order-modal-overlay">
