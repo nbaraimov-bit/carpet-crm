@@ -28,10 +28,6 @@ export default function AddOrderModal({
   addOrder
 }) {
 
-  const [newOrderModalOpen, setNewOrderModalOpen] = useState(false)
-
-  if (!newOrderModalOpen) return null
-
   return (
     <div className="new-order-modal-overlay">
 
