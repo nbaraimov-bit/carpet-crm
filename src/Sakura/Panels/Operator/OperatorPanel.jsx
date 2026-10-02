@@ -455,6 +455,52 @@ export default function OperatorPanel({
 
       </div>
 
+      <div className={`new-order-fab ${newOrderMenuOpen ? "fab-open" : ""}`}>
+
+  <div className="new-order-fab-menu">
+
+    <button
+      className="new-order-fab-action"
+      onClick={() => {
+        setNewOrderModalOpen(true)
+        setNewOrderMenuOpen(false)
+      }}
+    >
+      <span>Yangi buyurtma</span>
+    </button>
+
+  </div>
+
+  <button
+    className="new-order-fab-button"
+    onClick={() =>
+      setNewOrderMenuOpen(!newOrderMenuOpen)
+    }
+    aria-label="Yangi buyurtma"
+  >
+    <svg
+      className="new-order-plus"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <path
+        d="M12 5V19"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M5 12H19"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  </button>
+
+</div>
+
     </div>
   )
 
