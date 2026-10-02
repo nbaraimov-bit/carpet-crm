@@ -1,5 +1,7 @@
 import "./Operatorpanel.css";
 
+import AddOrderModal from "./OperatorModals/AddOrderModal";
+
 import LocationIcon from "../../MainIcons/LocationIcon";
 import PhoneIcon from "../../MainIcons/PhoneIcon";
 import UserIcon from "../../MainIcons/UserIcon";
@@ -43,7 +45,6 @@ export default function OperatorPanel({
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [tarif, setTarif] = useState("standart")
   const [openMenuId, setOpenMenuId] = useState(null)
-  const [newOrderMenuOpen, setNewOrderMenuOpen] = useState(false)
   
 
   {/* ===== add order ===== */}
@@ -457,51 +458,47 @@ export default function OperatorPanel({
 
       </div>
 
-      <div className={`new-order-fab ${newOrderMenuOpen ? "fab-open" : ""}`}>
+      <div className="new-order-fab">
+        <button
+          className={`new-order-fab-button ${
+            newOrderModalOpen ? "fab-open" : ""
+         }`}
+          onClick={() => setNewOrderModalOpen(!newOrderModalOpen)}
+        >
+          <svg
+            className="new-order-plus"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M12 5V19"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+            />
+            <path
+              d="M5 12H19"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      </div>
 
-  <div className="new-order-fab-menu">
+      <AddOrderModal
 
-    <button
-      className="new-order-fab-action"
-      onClick={() => {
-        setNewOrderModalOpen(true)
-        setNewOrderMenuOpen(false)
-      }}
-    >
-      <span>Yangi buyurtma</span>
-    </button>
+  phone={phone}
+  setPhone={setPhone}
 
-  </div>
+  address={address}
+  setAddress={setAddress}
 
-  <button
-    className="new-order-fab-button"
-    onClick={() =>
-      setNewOrderMenuOpen(!newOrderMenuOpen)
-    }
-    aria-label="Yangi buyurtma"
-  >
-    <svg
-      className="new-order-plus"
-      viewBox="0 0 24 24"
-      fill="none"
-    >
-      <path
-        d="M12 5V19"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-      />
+  comment={comment}
+  setComment={setComment}
 
-      <path
-        d="M5 12H19"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-      />
-    </svg>
-  </button>
-
-</div>
+  addOrder={addOrder}
+/>
 
     </div>
   )
