@@ -18,18 +18,102 @@ export default function AddOrderModal({
 
   newOrderModalOpen,
   setNewOrderModalOpen,
-
-  phone,
-  setPhone,
-
-  address,
-  setAddress,
-
-  comment,
-  setComment,
-
-  addOrder
+  runAction,
+  loading,
 }) {
+
+  const [comment, setComment] = useState("")
+  const [phone, setPhone] = useState("")
+  const [address, setAddress] =  useState("")
+
+
+  {/* ===== add order ===== */}
+  const addOrder = async () => {
+  
+    if (!phone || !address) return
+  
+    const customersSnapshot = await getDocs(
+      collection(
+        db,
+        "customers"
+      )
+    )
+  
+    const customers = customersSnapshot.docs.map(
+      (doc) => ({
+        firebaseId: doc.id,
+        ...doc.data(),
+      })
+    )
+  
+    const existingCustomer = customers.find(
+      (c) => c.phone === phone
+    )
+  
+    let customerId = ""
+  
+    if (existingCustomer) {
+      customerId = existingCustomer.customerId
+    } else {
+      const nextCustomerNumber = customers.length + 1
+  
+      customerId = `C${String(
+        nextCustomerNumber
+      ).padStart(4, "0")}`
+  
+      await setDoc(
+        doc(
+          db, "customers", customerId
+        ), {
+          customerId,
+          phone,
+          address,
+          ordersCount: 1,
+          createdAt: serverTimestamp(),
+        }
+      )
+  
+    }
+  
+    const counterRef = doc(
+      db,
+      "counters",
+      "orders"
+    )
+  
+    const counterSnap = await getDoc(counterRef)
+    const lastOrderNumber = Number( counterSnap.data() ?.lastOrderNumber) || 0
+    const nextOrderNumber = lastOrderNumber + 1
+  
+    await updateDoc(counterRef,{
+      lastOrderNumber: nextOrderNumber
+    })
+  
+    const orderId = `AA${String(
+      nextOrderNumber
+    ).padStart(4, "0")}`
+  
+    const newOrder = {
+      id: orderId,
+      customerId,
+      phone,
+      address,
+      status: "Yangi",
+      comment,
+      tarif,
+      driverNotified: false,
+      createdAt: serverTimestamp()
+    }
+  
+    await setDoc(
+      doc(db, "orders", orderId),
+      newOrder
+    )
+    setPhone("")
+    setAddress("")
+    setComment("")
+  }
+
 
   if (!newOrderModalOpen) return null
 
@@ -74,6 +158,32 @@ export default function AddOrderModal({
             />
           </label>
 
+
+          <div className="tarif-selector">
+
+            <button
+              type="button"
+              className={`tarif-option ${
+                tarif === "standart" ? "active" : ""
+              }`}
+              onClick={() => setTarif("standart")}
+            >
+              Standart
+            </button>
+          
+            <button
+              type="button"
+              className={`tarif-option ${
+                tarif === "tezkor" ? "active" : ""
+              }`}
+              onClick={() => setTarif("tezkor")}
+            >
+              Tezkor
+            </button>
+          
+          </div>          
+
+
           <div className="new-order-modal-actions">
 
             <button
@@ -85,12 +195,17 @@ export default function AddOrderModal({
 
             <button
               className="new-order-create"
-              onClick={async () => {
-                await addOrder()
-                setNewOrderModalOpen(false)
+              disabled={loading?.addOrder}
+              onClick={() => {
+                runAction("addOrder", async () => {
+                  await addOrder()
+                  setNewOrderModalOpen(false)
+                })
               }}
             >
-              Yaratish
+              {loading?.addOrder
+                ? "⏳ Saqlanmoqda..."
+                : "Yaratish"}
             </button>
 
           </div>

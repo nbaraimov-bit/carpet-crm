@@ -101,6 +101,60 @@
     0 0 12px rgba(168, 85, 247, 0.18);
 }
 
+
+.tarif-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  margin-top: 4px;
+}
+
+.tarif-option {
+  padding: 13px 10px;
+
+  border: 1px solid rgba(192, 132, 252, 0.25);
+  border-radius: 13px;
+
+  background: rgba(168, 85, 247, 0.05);
+
+  color: #85859b;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.tarif-option:active {
+  transform: scale(0.97);
+}
+
+.tarif-option.active {
+  border-color: rgba(192, 132, 252, 0.8);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(168, 85, 247, 0.28),
+      rgba(126, 34, 206, 0.18)
+    );
+
+  color: #c084fc;
+
+  box-shadow:
+    0 0 10px rgba(168, 85, 247, 0.2),
+    inset 0 0 10px rgba(168, 85, 247, 0.06);
+}
+
+
 .new-order-modal-actions {
   display: flex;
   gap: 12px;
