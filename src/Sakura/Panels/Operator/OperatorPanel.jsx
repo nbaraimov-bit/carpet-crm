@@ -40,7 +40,6 @@ export default function OperatorPanel({
   const [editAddress, setEditAddress] = useState("")
   const [editComment, setEditComment] = useState("")
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
-  const [tarif, setTarif] = useState("standart")
   const [openMenuId, setOpenMenuId] = useState(null)
   const [newOrderModalOpen, setNewOrderModalOpen] = useState(false)
   

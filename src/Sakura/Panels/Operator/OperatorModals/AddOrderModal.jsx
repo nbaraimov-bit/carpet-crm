@@ -25,6 +25,7 @@ export default function AddOrderModal({
   const [comment, setComment] = useState("")
   const [phone, setPhone] = useState("")
   const [address, setAddress] =  useState("")
+  const [tarif, setTarif] = useState("standart")
 
 
   {/* ===== add order ===== */}
