@@ -113,6 +113,14 @@ export default function AddOrderModal({
     setPhone("")
     setAddress("")
     setComment("")
+    setTarif("standart")
+  }
+
+  const resetNewOrderForm = () => {
+    setPhone("")
+    setAddress("")
+    setComment("")
+    setTarif("standart")
   }
 
 
@@ -189,7 +197,10 @@ export default function AddOrderModal({
 
             <button
               className="new-order-cancel"
-              onClick={() => setNewOrderModalOpen(false)}
+              onClick={() => {
+                resetNewOrderForm()
+                setNewOrderModalOpen(false)
+              }}
             >
               Bekor
             </button>
