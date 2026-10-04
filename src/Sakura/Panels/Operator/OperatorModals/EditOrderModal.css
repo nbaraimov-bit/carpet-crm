@@ -58,16 +58,17 @@
 
 
 .edit-order-modal::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 
 .edit-order-modal::-webkit-scrollbar-track {
+  margin: 20px 2px;
   background: transparent;
 }
 
 .edit-order-modal::-webkit-scrollbar-thumb {
   background: rgba(168, 85, 247, 0.45);
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .edit-order-modal {
