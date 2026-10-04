@@ -1501,19 +1501,19 @@ function App() {
       driverComment,
       price,
       carpetStatus: carpetCount
-        ? "Kutmoqda"
+        ? "Olindi"
         : "",
    
       blanketStatus: blanketCount
-        ? "Kutmoqda"
+        ? "Olindi"
         : "",
 
       yakandozStatus: yakandozCount || other
-        ? "Kutmoqda"
+        ? "Olindi"
         : "",
 
       curtainStatus: curtainMeter
-        ? "Kutmoqda"
+        ? "Olindi"
         : "",
     })
 

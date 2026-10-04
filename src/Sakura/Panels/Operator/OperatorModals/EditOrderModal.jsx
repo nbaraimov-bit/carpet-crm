@@ -14,14 +14,18 @@ import {
 } from "firebase/firestore"
 
 const EditOrderModal = ({
+  editingId,
+  setEditingId,
+  editPhone,
+  setEditPhone,
+  editAddress,
+  setEditAddress,
+  editComment,
+  setEditComment,
+  saveEdit,
   runAction,
   loading,
 }) => {
-
-  const [editingId, setEditingId] = useState(null)
-  const [editPhone, setEditPhone] = useState("")
-  const [editAddress, setEditAddress] = useState("")
-  const [editComment, setEditComment] = useState("")
 
   const saveEdit = async () => {
   if (!editingId) return

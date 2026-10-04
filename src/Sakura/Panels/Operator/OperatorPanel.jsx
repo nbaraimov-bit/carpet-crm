@@ -1,6 +1,7 @@
 import "./Operatorpanel.css";
 
 import AddOrderModal from "./OperatorModals/AddOrderModal";
+import EditOrderModal from "./OperatorModals/EditOrderModal";
 
 import LocationIcon from "../../MainIcons/LocationIcon";
 import PhoneIcon from "../../MainIcons/PhoneIcon";
@@ -35,6 +36,10 @@ export default function OperatorPanel({
 }) {
 
   const [operatorMode, setOperatorMode] = useState("")
+  const [editingId, setEditingId] = useState(null)
+  const [editPhone, setEditPhone] = useState("")
+  const [editAddress, setEditAddress] = useState("")
+  const [editComment, setEditComment] = useState("")
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [openMenuId, setOpenMenuId] = useState(null)
   const [newOrderModalOpen, setNewOrderModalOpen] = useState(false)
@@ -332,6 +337,11 @@ export default function OperatorPanel({
                       <button
                         onClick={() => {
                           setEditingId(order.id)
+
+                          setEditPhone(order.phone || "")
+                          setEditAddress(order.address || "")
+                          setEditComment(order.comment || "")
+
                           setOpenMenuId(null)
                         }}
                       >
@@ -347,6 +357,23 @@ export default function OperatorPanel({
                         🗑 O‘chirish
                       </button>
                     </div>
+
+                    <EditOrderModal
+                      editingId={editingId}
+                      setEditingId={setEditingId}
+
+                      editPhone={editPhone}
+                      setEditPhone={setEditPhone}
+
+                      editAddress={editAddress}
+                      setEditAddress={setEditAddress}
+
+                      editComment={editComment}
+                      setEditComment={setEditComment}
+
+                      runAction={runAction}
+                      loading={loading}
+                    />
 
                   </div>
                 
