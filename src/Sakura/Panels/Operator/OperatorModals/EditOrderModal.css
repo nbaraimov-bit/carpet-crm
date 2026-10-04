@@ -7,12 +7,17 @@
   align-items: center;
   justify-content: center;
 
-  padding: 20px;
+  box-sizing: border-box;
+  padding: 20px 20px 100px;
 
   background: rgba(3, 3, 15, 0.72);
   backdrop-filter: blur(8px);
 
-  overflow-y: auto;
+  /* ORQA SAHIFA SCROLL BO'LMAYDI */
+  overflow: hidden;
+
+  /* TOUCH SCROLLNI MODALGA QOLDIRAMIZ */
+  overscroll-behavior: none;
 
   animation: editModalFadeIn 0.2s ease;
 }
@@ -20,7 +25,9 @@
 
 .edit-order-modal {
   width: min(430px, 100%);
-  max-height: calc(100vh - 40px);
+
+  /* Bottom navigation uchun joy qoldiramiz */
+  max-height: calc(100dvh - 120px);
 
   box-sizing: border-box;
 
@@ -39,7 +46,12 @@
     0 0 25px rgba(168, 85, 247, 0.25),
     0 20px 60px rgba(0, 0, 0, 0.55);
 
+  /* FAQAT MODAL ICHI SCROLL */
   overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 
   animation: editModalOpen 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
