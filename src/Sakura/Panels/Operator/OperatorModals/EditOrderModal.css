@@ -100,6 +100,37 @@
     0 0 12px rgba(168, 85, 247, 0.18);
 }
 
+
+.edit-products-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-products-title {
+  color: #c084fc;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.edit-products-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.edit-products-grid label {
+  min-width: 0;
+}
+
+@media (max-width: 420px) {
+  .edit-products-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+}
+
+
 .edit-order-modal-actions {
   display: flex;
   gap: 12px;

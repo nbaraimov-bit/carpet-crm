@@ -22,22 +22,38 @@ const EditOrderModal = ({
   setEditAddress,
   editComment,
   setEditComment,
+  editCarpetCount,
+  setEditCarpetCount,
+  editKvm,
+  setEditKvm,
+  editBlanketCount,
+  setEditBlanketCount,
+  editYakandozCount,
+  setEditYakandozCount,
+  editPrice,
+  setEditPrice,
   runAction,
   loading,
 }) => {
 
   const saveEdit = async () => {
-  if (!editingId) return
+    if (!editingId) return
 
-  await updateDoc(
-    doc(db, "orders", editingId),
-    {
-      phone: editPhone,
-      address: editAddress,
-      comment: editComment,
-    }
-  )
-}
+    await updateDoc(
+      doc(db, "orders", editingId),
+      {
+        phone: editPhone,
+        address: editAddress,
+        comment: editComment,
+
+        carpetCount: Number(editCarpetCount || 0),
+        kvm: Number(editKvm || 0),
+        blanketCount: Number(editBlanketCount || 0),
+        yakandozCount: Number(editYakandozCount || 0),
+        price: Number(editPrice || 0),
+      }
+    )
+  }
 
 
   if (!editingId) return null
@@ -83,6 +99,71 @@ const EditOrderModal = ({
               placeholder="Izoh..."
             />
           </label>
+
+          <div className="edit-products-section">
+  <div className="edit-products-title">
+    Mahsulotlar
+  </div>
+
+  <div className="edit-products-grid">
+
+    <label>
+      Gilam soni
+      <input
+        type="number"
+        min="0"
+        value={editCarpetCount}
+        onChange={(e) => setEditCarpetCount(e.target.value)}
+        placeholder="0"
+      />
+    </label>
+
+    <label>
+      Gilam m²
+      <input
+        type="number"
+        min="0"
+        value={editKvm}
+        onChange={(e) => setEditKvm(e.target.value)}
+        placeholder="0"
+      />
+    </label>
+
+    <label>
+      Adyol soni
+      <input
+        type="number"
+        min="0"
+        value={editBlanketCount}
+        onChange={(e) => setEditBlanketCount(e.target.value)}
+        placeholder="0"
+      />
+    </label>
+
+    <label>
+      Yakandoz soni
+      <input
+        type="number"
+        min="0"
+        value={editYakandozCount}
+        onChange={(e) => setEditYakandozCount(e.target.value)}
+        placeholder="0"
+      />
+    </label>
+
+  </div>
+</div>
+
+<label>
+  Jami narx
+  <input
+    type="number"
+    min="0"
+    value={editPrice}
+    onChange={(e) => setEditPrice(e.target.value)}
+    placeholder="0"
+  />
+</label>
 
           <div className="edit-order-modal-actions">
 

@@ -40,6 +40,11 @@ export default function OperatorPanel({
   const [editPhone, setEditPhone] = useState("")
   const [editAddress, setEditAddress] = useState("")
   const [editComment, setEditComment] = useState("")
+  const [editCarpetCount, setEditCarpetCount] = useState("")
+  const [editKvm, setEditKvm] = useState("")
+  const [editBlanketCount, setEditBlanketCount] = useState("")
+  const [editYakandozCount, setEditYakandozCount] = useState("")
+  const [editPrice, setEditPrice] = useState("")
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [openMenuId, setOpenMenuId] = useState(null)
   const [newOrderModalOpen, setNewOrderModalOpen] = useState(false)
@@ -341,6 +346,11 @@ export default function OperatorPanel({
                           setEditPhone(order.phone || "")
                           setEditAddress(order.address || "")
                           setEditComment(order.comment || "")
+                          setEditCarpetCount(order.carpetCount ?? "")
+                          setEditKvm(order.kvm ?? "")
+                          setEditBlanketCount(order.blanketCount ?? "")
+                          setEditYakandozCount(order.yakandozCount ?? "")
+                          setEditPrice(order.price ?? "")
 
                           setOpenMenuId(null)
                         }}
@@ -406,21 +416,27 @@ export default function OperatorPanel({
       />
 
       <EditOrderModal
-                      editingId={editingId}
-                      setEditingId={setEditingId}
-
-                      editPhone={editPhone}
-                      setEditPhone={setEditPhone}
-
-                      editAddress={editAddress}
-                      setEditAddress={setEditAddress}
-
-                      editComment={editComment}
-                      setEditComment={setEditComment}
-
-                      runAction={runAction}
-                      loading={loading}
-                    />
+        editingId={editingId}
+        setEditingId={setEditingId}
+        editPhone={editPhone}
+        setEditPhone={setEditPhone}
+        editAddress={editAddress}
+        setEditAddress={setEditAddress}
+        editComment={editComment}
+        setEditComment={setEditComment}
+        editCarpetCount={editCarpetCount}
+        setEditCarpetCount={setEditCarpetCount}
+        editKvm={editKvm}
+        setEditKvm={setEditKvm}
+        editBlanketCount={editBlanketCount}
+        setEditBlanketCount={setEditBlanketCount}
+        editYakandozCount={editYakandozCount}
+        setEditYakandozCount={setEditYakandozCount}
+        editPrice={editPrice}
+        setEditPrice={setEditPrice}
+        runAction={runAction}
+        loading={loading}
+      />
 
     </div>
   )
