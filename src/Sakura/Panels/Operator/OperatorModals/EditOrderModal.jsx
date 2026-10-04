@@ -22,7 +22,6 @@ const EditOrderModal = ({
   setEditAddress,
   editComment,
   setEditComment,
-  saveEdit,
   runAction,
   loading,
 }) => {
