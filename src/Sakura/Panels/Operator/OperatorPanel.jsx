@@ -358,23 +358,6 @@ export default function OperatorPanel({
                       </button>
                     </div>
 
-                    <EditOrderModal
-                      editingId={editingId}
-                      setEditingId={setEditingId}
-
-                      editPhone={editPhone}
-                      setEditPhone={setEditPhone}
-
-                      editAddress={editAddress}
-                      setEditAddress={setEditAddress}
-
-                      editComment={editComment}
-                      setEditComment={setEditComment}
-
-                      runAction={runAction}
-                      loading={loading}
-                    />
-
                   </div>
                 
                 </div>
@@ -421,6 +404,23 @@ export default function OperatorPanel({
         runAction={runAction}
         loading={loading}
       />
+
+      <EditOrderModal
+                      editingId={editingId}
+                      setEditingId={setEditingId}
+
+                      editPhone={editPhone}
+                      setEditPhone={setEditPhone}
+
+                      editAddress={editAddress}
+                      setEditAddress={setEditAddress}
+
+                      editComment={editComment}
+                      setEditComment={setEditComment}
+
+                      runAction={runAction}
+                      loading={loading}
+                    />
 
     </div>
   )
