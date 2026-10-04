@@ -35,10 +35,6 @@ export default function OperatorPanel({
 }) {
 
   const [operatorMode, setOperatorMode] = useState("")
-  const [editingId, setEditingId] = useState(null)
-  const [editPhone, setEditPhone] = useState("")
-  const [editAddress, setEditAddress] = useState("")
-  const [editComment, setEditComment] = useState("")
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [openMenuId, setOpenMenuId] = useState(null)
   const [newOrderModalOpen, setNewOrderModalOpen] = useState(false)
@@ -101,10 +97,6 @@ export default function OperatorPanel({
           <h1>Operator</h1>
           <p>Buyurtmalar boshqaruvi</p>
         </div>
-
-        <button className="operator-new-order">
-          + Yangi buyurtma
-        </button>
       </div>
 
       <div className="operator-orders"> 
