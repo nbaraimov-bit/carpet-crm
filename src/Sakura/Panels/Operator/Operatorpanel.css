@@ -437,16 +437,22 @@
   font-weight: 600;
 }
 
-.operator-price-icon {
-  width: 17px;
-  height: 17px;
-  flex-shrink: 0;
+.operator-order-price .operator-price-icon {
+  width: 18px !important;
+  height: 18px !important;
+
+  min-width: 18px;
+  min-height: 18px;
+
+  flex: 0 0 18px;
 
   color: #c084fc;
 
+  display: block;
+
   filter:
-    drop-shadow(0 0 3px rgba(192, 132, 252, 0.8))
-    drop-shadow(0 0 6px rgba(168, 85, 247, 0.35));
+    drop-shadow(0 0 3px rgba(192, 132, 252, 0.95))
+    drop-shadow(0 0 7px rgba(168, 85, 247, 0.65));
 }
 
 
