@@ -3,10 +3,13 @@ import "./Operatorpanel.css";
 import AddOrderModal from "./OperatorModals/AddOrderModal";
 import EditOrderModal from "./OperatorModals/EditOrderModal";
 
-import LocationIcon from "../../MainIcons/LocationIcon";
-import PhoneIcon from "../../MainIcons/PhoneIcon";
-import UserIcon from "../../MainIcons/UserIcon";
-import CommentIcon from "../../MainIcons/CommentIcon";
+import {
+  LocationIcon,
+  PhoneIcon,
+  UserIcon,
+  CommentIcon,
+ } from "../../MainIcons/SvgIcons";
+
 
 import CarpetIcon from "../../MainIcons/carpetIcon.png"
 import BlanketIcon from "../../MainIcons/blanketIcon.png"
