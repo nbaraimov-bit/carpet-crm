@@ -425,6 +425,31 @@
 }
 
 
+.operator-order-price {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: 12px;
+
+  color: #e9d5ff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.operator-price-icon {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+
+  color: #c084fc;
+
+  filter:
+    drop-shadow(0 0 3px rgba(192, 132, 252, 0.8))
+    drop-shadow(0 0 6px rgba(168, 85, 247, 0.35));
+}
+
+
 .operator-order-bottom {
   display: flex;
   align-items: center;
