@@ -287,7 +287,9 @@ export default function OperatorPanel({
                 </div>
 
                 <div className="operator-order-price">
-                  <PriceIcon />
+                  <PriceIcon 
+                    className="operator-price-icon"
+                  />
                   <span>
                     {Number(order.price).toLocaleString("uz-UZ")} so'm
                   </span>
