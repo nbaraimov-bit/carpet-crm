@@ -286,14 +286,19 @@ export default function OperatorPanel({
       
                 </div>
 
-                <div className="operator-order-price">
-                  <PriceIcon 
-                    className="operator-price-icon"
-                  />
-                  <span>
-                    {Number(order.price).toLocaleString("uz-UZ")} so'm
-                  </span>
-                </div>
+                {order.price !== undefined &&
+                  order.price !== null &&
+                  order.price !== "" && (
+                    <div className="operator-order-price">
+                      <PriceIcon 
+                        className="operator-price-icon"
+                      />
+                      <span>
+                        {Number(order.price).toLocaleString("uz-UZ")} so'm
+                      </span>
+                    </div>
+                  )
+                }
 
 
                 {order.comment && (
