@@ -88,15 +88,7 @@ export default function OperatorPanel({
 
     const value = String(status).toLowerCase()
 
-    if (value === "olindii") return "status-olindi"
-    if (
-      value === "olindi" ||
-      value === "olinmoqda" ||
-      value === "yuvilmoqda"
-    ) {
-      return "status-jarayon"
-    }
-
+    if (value === "olindi") return "status-olindi"
     if (value === "yuvildi") return "status-yuvildi"
     if (value === "tayyor") return "status-tayyor"
 
