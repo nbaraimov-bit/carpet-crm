@@ -32,7 +32,7 @@ export default function WasherPanel({
 }) {  
 
   const waitingFilter = (service) => (o) =>
-  o[`${service}Status`] === "Olindi" &&
+  o[`${service}Status`] === "Olindi" || "Kutmoqda" &&
   o[`${service}Count`] &&
   !o[`${service}WasherTeamId`];
 
