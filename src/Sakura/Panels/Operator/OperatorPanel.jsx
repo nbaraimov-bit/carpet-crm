@@ -186,10 +186,13 @@ export default function OperatorPanel({
                     <span>{order.customerId}</span>
                   </div>
 
-                  <div className="operator-info-row">
-                    <PhoneIcon/>
+                  <a
+                    className="operator-order-info"
+                    href={`tel:${order.phone}`}
+                  >
+                    <PhoneIcon />
                     <span>{order.phone}</span>
-                  </div>
+                  </a>
 
                   <div className="operator-info-row">
                     <LocationIcon/>
@@ -369,7 +372,7 @@ export default function OperatorPanel({
 
                       <button
                         onClick={() => {
-                          setDeleteOrderId(order.id)
+                          setDeleteOrderId(order.firebaseId)
                           setOpenMenuId(null)
                         }}
                       >
