@@ -238,14 +238,14 @@ export const PriceIcon = ({className = "" }) => (
   </svg>
 )
 
-export const PriceIcon = ({className = "" }) => (
+export const TimeIcon = ({className = "" }) => (
 
-<svg
-                      className="operator-time-icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+  <svg
+    className="operator-time-icon"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
                       <circle
                         cx="12"
                         cy="12"
