@@ -186,13 +186,13 @@ export default function OperatorPanel({
                     <span>{order.customerId}</span>
                   </div>
 
-                  <a
+                  <div
                     className="operator-order-info"
                     href={`tel:${order.phone}`}
                   >
                     <PhoneIcon />
                     <span>{order.phone}</span>
-                  </a>
+                  </div>
 
                   <div className="operator-info-row">
                     <LocationIcon/>
