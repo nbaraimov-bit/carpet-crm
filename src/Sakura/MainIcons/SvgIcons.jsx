@@ -182,3 +182,84 @@ export const CommentIcon = ({className = "" }) =>
       />
     </svg>
   )
+
+export const PriceIcon = ({className = "" }) => (
+
+  <svg
+    className="operator-price-icon"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <rect
+      x="3"
+      y="6"
+      width="18"
+      height="12"
+      rx="2"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    />
+
+    <path
+      d="M7 9.5C7 10.9 5.9 12 4.5 12"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+
+    <path
+      d="M17 9.5C17 10.9 18.1 12 19.5 12"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+
+    <circle
+      cx="12"
+      cy="12"
+      r="2.3"
+      stroke="currentColor"
+      strokeWidth="1.6"
+    />
+
+    <path
+      d="M12 10.8V13.2"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+
+    <path
+      d="M10.9 11.4C10.9 10.9 11.4 10.6 12 10.6C12.6 10.6 13.1 10.9 13.1 11.4C13.1 11.9 12.8 12.1 12 12.3C11.2 12.5 10.9 12.8 10.9 13.3C10.9 13.8 11.4 14.1 12 14.1C12.6 14.1 13.1 13.8 13.1 13.3"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+    />
+  </svg>
+)
+
+export const PriceIcon = ({className = "" }) => (
+
+<svg
+                      className="operator-time-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="8.5"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                      />
+                  
+                     <path
+                        d="M12 7.5V12L15 14"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+)

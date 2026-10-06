@@ -8,6 +8,8 @@ import {
   PhoneIcon,
   UserIcon,
   CommentIcon,
+  PriceIcon,
+  TimeIcon,
  } from "../../MainIcons/SvgIcons";
 
 
@@ -284,50 +286,13 @@ export default function OperatorPanel({
       
                 </div>
 
-                {order.price !== undefined &&
- order.price !== null &&
- order.price !== "" && (
-  <div className="operator-order-price">
-    <svg
-      className="operator-price-icon"
-      viewBox="0 0 24 24"
-      fill="none"
-    >
-      <rect
-        x="3"
-        y="5"
-        width="18"
-        height="14"
-        rx="2.5"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-      <path
-        d="M7 9H17"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      <path
-        d="M7 13H11"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      <circle
-        cx="16"
-        cy="14"
-        r="1.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-    </svg>
+                <div className="operator-order-price">
+                  <PriceIcon />
+                  <span>
+                    {Number(order.price).toLocaleString("uz-UZ")} so'm
+                  </span>
+                </div>
 
-    <span>
-      {Number(order.price).toLocaleString("uz-UZ")} so'm
-    </span>
-  </div>
-)}
 
                 {order.comment && (
                   <div className="operator-comment">
@@ -342,30 +307,7 @@ export default function OperatorPanel({
 
                   {/* DATE */}
                   <div className="operator-order-date">
-
-                    <svg
-                      className="operator-time-icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="8.5"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                      />
-                  
-                     <path
-                        d="M12 7.5V12L15 14"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-
+                    <TimeIcon />
                     <span>
                       {formatOrderDate(order.createdAt)}
                     </span>
