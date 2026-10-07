@@ -155,6 +155,7 @@ export default function OperatorPanel({
               aria-label="Qidirish"
             >
               <SearchIcon />
+              
             </button>
           ) : (
             <div className="operator-search-input-wrapper">
