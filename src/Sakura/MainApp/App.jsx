@@ -2313,7 +2313,7 @@ function App() {
 
         orders={orders}
         updateStatus={updateStatus}
-        setRole={setRole}
+        setRole={changeRole}
         role={role}
         loading={loading}
         runAction={runAction}
@@ -2332,7 +2332,7 @@ function App() {
         setDriverMode={setDriverMode}
         updateStatus={updateStatus}
         saveDetails={saveDetails}
-        setRole={setRole}
+        setRole={changeRole}
         carpetCount={carpetCount}
         setCarpetCount={setCarpetCount}
         kvm={kvm}
@@ -2376,7 +2376,7 @@ function App() {
         getHours={getHours}
         getCount={getCount}
         washerPrices={washerPrices}
-        setRole={setRole}  
+        setRole={changeRole}  
         logout={logout}
         todayOpen={todayOpen}
         setTodayOpen={setTodayOpen}
@@ -2405,7 +2405,7 @@ function App() {
       <h1>Tayyorlovchi panel</h1>
 
       <button
-        onClick={() => setRole("")}
+        onClick={() => changeRole("")}
         style={{fontSize: 20}} 
       >
         ⏪️
@@ -2503,7 +2503,7 @@ function App() {
         setSelectedDate={setSelectedDate}
         driverPrices={driverPrices}
         getHourlyPrice={getHourlyPrice}
-        setRole={setRole}
+        setRole={changeRole}
         editingStatus={editingStatus}
         setEditingStatus={setEditingStatus}
         expandedWorker={expandedWorker}
@@ -2521,7 +2521,7 @@ function App() {
     {page === "home" && displayRole === "ega"  && (
     
       <EgaPanel
-        setRole={setRole}
+        setRole={changeRole}
 
         priceInputs={priceInputs}
         setPriceInputs={setPriceInputs}
