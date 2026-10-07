@@ -11,7 +11,6 @@ import {
 const DeleteOrderModal = ({
   deleteOrderId,
   setDeleteOrderId,
-  deleteOrder,
   runAction,
   loading,
 }) => {
