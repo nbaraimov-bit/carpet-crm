@@ -256,7 +256,7 @@ export const SearchIcon = ({className = "" }) => (
 )
 
 
-export const SearchIcon = ({className = "" }) => (
+export const BackIcon = ({className = "" }) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
