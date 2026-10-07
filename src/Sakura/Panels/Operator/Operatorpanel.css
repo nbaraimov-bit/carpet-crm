@@ -288,7 +288,7 @@
 .operator-info-row {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
 
   color: #b7b7c9;
   font-size: 13px;
@@ -332,8 +332,8 @@
 }
 
 .operator-product img {
-  width: 38px;
-  height: 38px;
+  width: 45px;
+  height: 45px;
   object-fit: contain;
 }
 
