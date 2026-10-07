@@ -13,6 +13,21 @@ import getAttendanceSalary from "../../utils/getAttendanceSalary"
 import EgaPanel from "../../components/EgaPanel";
 import TeamsPanel from "../../components/TeamsPanel/TeamsPanel";
 import BottomNavigation from "../BottomNavigation/BottomNavigation";
+
+import logo from "../Pages/Home/Assets/logo.png";
+import carpet from "../Pages/Home/Assets/carpet.png";
+import operatorIcon from "../Pages/Home/Assets/operatorIcon.png";
+import driverIcon from "../Pages/Home/Assets/driverIcon.png";
+import washerIcon from "../Pages/Home/Assets/washerIcon.png";
+import packingIcon from "../Pages/Home/Assets/packingIcon.png";
+import adminIcon from "../Pages/Home/Assets/adminIcon.png";
+import egaIcon from "../Pages/Home/Assets/egaIcon.png";
+import jamiIcon from "../Pages/Home/Assets/jamiIcon.png";
+import yangiIcon from "../Pages/Home/Assets/yangiIcon.png";
+import olindiIcon from "../Pages/Home/Assets/olindiIcon.png";
+import yuvildiIcon from "../Pages/Home/Assets/yuvildiIcon.png";
+import tayyorIcon from "../Pages/Home/Assets/tayyorIcon.png";
+
 import "./App.css";
 import { useState, useEffect } from "react"
 import { db } from "../../firebase";
@@ -833,19 +848,19 @@ function App() {
   {/* ===== use effectlar ===== */}
   useEffect(() => {
     const images = [
-      "../Pages/Home/Assets/logo.png",
-      "../Pages/Home/Assets/carpet.png",
-      "../Pages/Home/Assets/operatorIcon.png",
-      "../Pages/Home/Assets/driverIcon.png",
-      "../Pages/Home/Assets/washerIcon.png",
-      "../Pages/Home/Assets/packingIcon.png",
-      "../Pages/Home/Assets/adminIcon.png",
-      "../Pages/Home/Assets/egaIcon.png",
-      "../Pages/Home/Assets/jamiIcon.png",
-      "../Pages/Home/Assets/yangiIcon.png",
-      "../Pages/Home/Assets/olindiIcon.png",
-      "../Pages/Home/Assets/yuvildiIcon.png",
-      "../Pages/Home/Assets/tayyorIcon.png",
+      logo,
+      carpet,
+      operatorIcon,
+      driverIcon,
+      washerIcon,
+      packingIcon,
+      adminIcon,
+      egaIcon,
+      jamiIcon,
+      yangiIcon,
+      olindiIcon,
+      yuvildiIcon,
+      tayyorIcon,
     ];
 
     const promises = images.map((src) => {
