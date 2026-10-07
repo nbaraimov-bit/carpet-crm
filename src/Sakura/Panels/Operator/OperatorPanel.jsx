@@ -11,6 +11,8 @@ import {
   CommentIcon,
   PriceIcon,
   TimeIcon,
+  SearchIcon,
+  SearchInputIcon
  } from "../../MainIcons/SvgIcons";
 
 
@@ -54,6 +56,8 @@ export default function OperatorPanel({
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [openMenuId, setOpenMenuId] = useState(null)
   const [newOrderModalOpen, setNewOrderModalOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchText, setSearchText] = useState("")
   
 
   const formatOrderDate = (timestamp) => {
@@ -83,6 +87,18 @@ export default function OperatorPanel({
       o.status === "Yetkazildi" ||
       o.status === "Rad etildi"
   )
+
+  const filteredActiveOrders = activeOrders.filter((order) => {
+    const text = searchText.trim().toLowerCase()
+
+    if (!text) return true
+
+    return (
+      String(order.id ?? "").toLowerCase().includes(text) ||
+      String(order.phone ?? "").toLowerCase().includes(text) ||
+      String(order.address ?? "").toLowerCase().includes(text)
+    )
+  })
 
   const getProductStatusClass = (status) => {
     if (!status) return ""
@@ -130,9 +146,47 @@ export default function OperatorPanel({
       <div className="operator-orders"> 
         <h2>Faol buyurtmalar</h2>
 
+        <div className="operator-search-wrapper">
+
+          {!searchOpen ? (
+            <button
+              className="operator-search-button"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Qidirish"
+            >
+              <SearchIcon />
+            </button>
+          ) : (
+            <div className="operator-search-input-wrapper">
+  
+              <SearchInputIcon />
+
+              <input
+                autoFocus
+                type="text"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                placeholder="ID, telefon yoki manzil..."
+              />
+
+              <button
+                className="operator-search-close"
+                onClick={() => {
+                  setSearchText("")
+                  setSearchOpen(false)
+                }}
+              >
+                ×
+              </button>
+
+            </div>
+          )}
+
+        </div>
+
         <div className="operator-order-list">
 
-          {activeOrders.map((order) => {
+          {filteredActiveOrders.map((order) => {
 
             const hasCarpet =
               order.carpetCount !== undefined &&
