@@ -235,9 +235,9 @@ export const TimeIcon = ({className = "" }) => (
 
 export const SearchIcon = ({className = "" }) => (
   <svg
+    className={className}
     viewBox="0 0 24 24"
     fill="none"
-    className="operator-search-icon"
   >
     <circle
       cx="11"
@@ -256,24 +256,18 @@ export const SearchIcon = ({className = "" }) => (
 )
 
 
-export const SearchInputIcon = ({className = "" }) => (
+export const SearchIcon = ({className = "" }) => (
   <svg
+    className={className}
     viewBox="0 0 24 24"
     fill="none"
-    className="operator-search-input-icon"
   >
-    <circle
-      cx="11"
-      cy="11"
-      r="6.5"
-      stroke="currentColor"
-      strokeWidth="1.8"
-    />
     <path
-      d="M16 16L20 20"
+      d="M15 18L9 12L15 6"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="2.2"
       strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 )
