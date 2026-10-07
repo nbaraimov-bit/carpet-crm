@@ -38,6 +38,8 @@ import {
 function App() {
   const [orders, setOrders] = useState([])
   const [role, setRole] = useState("")
+  const [displayRole, setDisplayRole] = useState("")
+  const [roleTransition, setRoleTransition] = useState("")
   const [driverMode, setDriverMode] = useState("") 
   const [washerMode, setWasherMode] = useState("")
   const [carpetCount, setCarpetCount] = useState("")
@@ -132,6 +134,35 @@ function App() {
       }));
 
     }
+  }
+
+
+  const changeRole = (nextRole) => {
+    if (nextRole === role) return
+
+    // Panelga kirish
+    if (nextRole) {
+      setDisplayRole(nextRole)
+      setRoleTransition("role-enter")
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setRole(nextRole)
+          setRoleTransition("role-enter-active")
+        })
+      })
+
+      return
+    }
+
+    // Paneldan chiqish
+    setRoleTransition("role-exit")
+
+    setTimeout(() => {
+      setRole("")
+      setDisplayRole("")
+      setRoleTransition("")
+    }, 280)
   }
 
 
@@ -2028,7 +2059,7 @@ function App() {
 
       <HomePage
         currentWorker={currentWorker}
-        setRole={setRole}
+        setRole={changeRole}
         currentPhone={currentPhone}
         washerTeam={washerTeam}
         driverTeam={driverTeam}
@@ -2272,8 +2303,11 @@ function App() {
     )}
 
 
+    <div
+      className={`role-transition ${roleTransition}`}
+    >
     {/* ===== operator panel ===== */}
-    {page === "home" && role === "operator" && (
+    {page === "home" && displayRole === "operator" && (
 
       <OperatorPanel
 
@@ -2290,7 +2324,7 @@ function App() {
 
 
     {/* ===== driver panel ===== */}
-    {page === "home" && role === "driver" && (
+    {page === "home" && displayRole === "driver" && (
       <DriverPanel
 
         orders={orders}
@@ -2329,7 +2363,7 @@ function App() {
 
 
     {/* ===== washer panel ===== */}
-    {page === "home" && role === "washer" && (
+    {page === "home" && displayRole === "washer" && (
       <WasherPanel
 
         orders={orders}
@@ -2366,7 +2400,7 @@ function App() {
 
 
     {/* ===== tayyorlovchi panel ===== */}
-    {page === "home" && role === "tayyorlovchi" && (
+    {page === "home" && displayRole === "tayyorlovchi" && (
     <div>
       <h1>Tayyorlovchi panel</h1>
 
@@ -2437,7 +2471,7 @@ function App() {
 
 
     {/* ===== admin panel ===== */}
-    {page === "home" && role === "admin" && (
+    {page === "home" && displayRole === "admin" && (
     
       <AdminPanel
 
@@ -2484,7 +2518,7 @@ function App() {
     )}
 
     {/* ===== ega panel ===== */}
-    {page === "home" && role === "ega"  && (
+    {page === "home" && displayRole === "ega"  && (
     
       <EgaPanel
         setRole={setRole}
@@ -2501,6 +2535,8 @@ function App() {
       />  
 
     )}
+
+    </div>
 
     {/* ===== teams panel ===== */}
     {page === "teams" && (
