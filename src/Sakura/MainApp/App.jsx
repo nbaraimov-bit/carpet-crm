@@ -833,14 +833,19 @@ function App() {
   {/* ===== use effectlar ===== */}
   useEffect(() => {
     const images = [
-      "/Assets/logo.png",
-      "/Assets/carpet.png",
-      "/Assets/operatorIcon.png",
-      "/Assets/driverIcon.png",
-      "/Assets/washerIcon.png",
-      "/Assets/packingIcon.png",
-      "/Assets/adminIcon.png",
-      "/Assets/egaIcon.png",
+      "../Pages/Home/Assets/logo.png",
+      "../Pages/Home/Assets/carpet.png",
+      "../Pages/Home/Assets/operatorIcon.png",
+      "../Pages/Home/Assets/driverIcon.png",
+      "../Pages/Home/Assets/washerIcon.png",
+      "../Pages/Home/Assets/packingIcon.png",
+      "../Pages/Home/Assets/adminIcon.png",
+      "../Pages/Home/Assets/egaIcon.png",
+      "../Pages/Home/Assets/jamiIcon.png",
+      "../Pages/Home/Assets/yangiIcon.png",
+      "../Pages/Home/Assets/olindiIcon.png",
+      "../Pages/Home/Assets/yuvildiIcon.png",
+      "../Pages/Home/Assets/tayyorIcon.png",
     ];
 
     const promises = images.map((src) => {
