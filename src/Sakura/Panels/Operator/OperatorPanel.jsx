@@ -141,10 +141,6 @@ export default function OperatorPanel({
           <h1>Operator</h1>
           <p>Buyurtmalar boshqaruvi</p>
         </div>
-      </div>
-
-      <div className="operator-orders"> 
-        <h2>Faol buyurtmalar</h2>
 
         <div className="operator-search-wrapper">
 
@@ -184,6 +180,10 @@ export default function OperatorPanel({
           )}
 
         </div>
+      </div>
+
+      <div className="operator-orders"> 
+        <h2>Faol buyurtmalar</h2>
 
         <div className="operator-order-list">
 

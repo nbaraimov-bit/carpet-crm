@@ -89,53 +89,6 @@
 }
 
 
-/* ================================
-   ORDERS SECTION
-================================ */
-
-.operator-orders {
-  width: 100%;
-}
-
-.operator-orders h2 {
-  margin: 0 0 16px;
-  font-size: 18px;
-  font-weight: 650;
-  color: #f4f4f7;
-}
-
-/* ================================
-   MOBILE
-================================ */
-
-@media (max-width: 600px) {
-
-  .operator-page {
-    padding: 14px;
-  }
-
-  .operator-header {
-    align-items: flex-start;
-  }
-
-  .operator-header h1 {
-    font-size: 24px;
-  }
-
-  .operator-header p {
-    font-size: 12px;
-  }
-
-  .operator-new-order {
-    padding: 10px 13px;
-    border-radius: 12px;
-    font-size: 13px;
-    white-space: nowrap;
-  }
-
-}
-
-
 /* =========================
    OPERATOR SEARCH
 ========================= */
@@ -321,6 +274,53 @@
     opacity: 1;
     transform: scaleX(1);
   }
+}
+
+
+/* ================================
+   ORDERS SECTION
+================================ */
+
+.operator-orders {
+  width: 100%;
+}
+
+.operator-orders h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 650;
+  color: #f4f4f7;
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  .operator-page {
+    padding: 14px;
+  }
+
+  .operator-header {
+    align-items: flex-start;
+  }
+
+  .operator-header h1 {
+    font-size: 24px;
+  }
+
+  .operator-header p {
+    font-size: 12px;
+  }
+
+  .operator-new-order {
+    padding: 10px 13px;
+    border-radius: 12px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
 }
 
 
