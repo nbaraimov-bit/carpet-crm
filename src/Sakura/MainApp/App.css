@@ -489,7 +489,7 @@
   opacity: 0;
   transform: translateY(12px) scale(0.98);
   transition:
-    opacity 0.28s ease,
-    transform 0.28s cubic-bezier(.4,0,.2,1);
+    opacity 0.22s ease,
+    transform 0.22s cubic-bezier(.4,0,.2,1);
 }
 /* ===== ⬆️ROLE PANEL TRANSITION⬆️ ===== */
