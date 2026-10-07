@@ -12,7 +12,6 @@ import {
   PriceIcon,
   TimeIcon,
   SearchIcon,
-  SearchInputIcon
  } from "../../MainIcons/SvgIcons";
 
 
@@ -150,13 +149,17 @@ export default function OperatorPanel({
               onClick={() => setSearchOpen(true)}
               aria-label="Qidirish"
             >
-              <SearchIcon />
+              <SearchIcon 
+                className="operator-search-icon"
+              />
               
             </button>
           ) : (
             <div className="operator-search-input-wrapper">
   
-              <SearchInputIcon />
+              <SearchIcon
+                className="operator-search-input-icon"
+              />
 
               <input
                 autoFocus
