@@ -2,6 +2,7 @@ import "./Operatorpanel.css";
 
 import AddOrderModal from "./OperatorModals/AddOrderModal";
 import EditOrderModal from "./OperatorModals/EditOrderModal";
+import DeleteOrderModal from "./OperatorModals/DeleteOrderModal";
 
 import {
   LocationIcon,
@@ -446,6 +447,13 @@ export default function OperatorPanel({
         setEditYakandozCount={setEditYakandozCount}
         editPrice={editPrice}
         setEditPrice={setEditPrice}
+        runAction={runAction}
+        loading={loading}
+      />
+
+      <DeleteOrderModal
+        deleteOrderId={deleteOrderId}
+        setDeleteOrderId={setDeleteOrderId}
         runAction={runAction}
         loading={loading}
       />
