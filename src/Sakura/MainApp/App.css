@@ -469,25 +469,26 @@
   transform-origin: center center;
 }
 
-/* Ochilish boshlanishi */
+/* Kirish */
 .role-enter {
   opacity: 0;
   transform: translateY(18px) scale(0.97);
-}
 
-/* Ochilish */
-.role-enter-active {
-  opacity: 1;
-  transform: translateY(0) scale(1);
   transition:
     opacity 0.32s ease,
     transform 0.32s cubic-bezier(.2,.8,.2,1);
 }
 
-/* Yopilish */
+/* Kirib bo‘lgandan keyin transform yo‘q */
+.role-enter-active {
+  opacity: 1;
+}
+
+/* Chiqish */
 .role-exit {
   opacity: 0;
   transform: translateY(12px) scale(0.98);
+
   transition:
     opacity 0.22s ease,
     transform 0.22s cubic-bezier(.4,0,.2,1);
