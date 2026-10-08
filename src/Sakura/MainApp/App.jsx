@@ -4,7 +4,7 @@ import ArchivePage from "../Pages/Archive/ArchivePage"
 import HomePage from "../Pages/Home/HomeMain/HomePage"
 import WasherPanel from "../../components/WasherPanel"
 import DriverPanel from "../../components/DriverPanel"
-import OperatorPanel from "../../components/OperatorPanel"
+import OperatorPanel from "../Panels/Operator/OperatorPanel"
 import AdminPanel from "../../components/AdminPanel"
 import getCount from "../../utils/getCount"
 import getHours from "../../utils/getHours"
@@ -13,6 +13,21 @@ import getAttendanceSalary from "../../utils/getAttendanceSalary"
 import EgaPanel from "../../components/EgaPanel";
 import TeamsPanel from "../../components/TeamsPanel/TeamsPanel";
 import BottomNavigation from "../BottomNavigation/BottomNavigation";
+
+import logo from "../Pages/Home/Assets/logo.png";
+import carpet from "../Pages/Home/Assets/carpet.png";
+import operatorIcon from "../Pages/Home/Assets/operatorIcon.png";
+import driverIcon from "../Pages/Home/Assets/driverIcon.png";
+import washerIcon from "../Pages/Home/Assets/washerIcon.png";
+import packingIcon from "../Pages/Home/Assets/packingIcon.png";
+import adminIcon from "../Pages/Home/Assets/adminIcon.png";
+import egaIcon from "../Pages/Home/Assets/egaIcon.png";
+import jamiIcon from "../Pages/Home/Assets/jamiIcon.png";
+import yangiIcon from "../Pages/Home/Assets/yangiIcon.png";
+import olindiIcon from "../Pages/Home/Assets/olindiIcon.png";
+import yuvildiIcon from "../Pages/Home/Assets/yuvildiIcon.png";
+import tayyorIcon from "../Pages/Home/Assets/tayyorIcon.png";
+
 import "./App.css";
 import { useState, useEffect } from "react"
 import { db } from "../../firebase";
@@ -38,6 +53,8 @@ import {
 function App() {
   const [orders, setOrders] = useState([])
   const [role, setRole] = useState("")
+  const [displayRole, setDisplayRole] = useState("")
+  const [roleTransition, setRoleTransition] = useState("")
   const [driverMode, setDriverMode] = useState("") 
   const [washerMode, setWasherMode] = useState("")
   const [carpetCount, setCarpetCount] = useState("")
@@ -67,18 +84,8 @@ function App() {
   const [MonthOpen,setMonthOpen] = useState(false)
   const [allOpen,setAllOpen] = useState(false)
   const [selectedDate,setSelectedDate] = useState("")
-  const [operatorMode, setOperatorMode] = useState("")
-  const [comment, setComment] = useState("")
-  const [phone, setPhone] = useState("")
-  const [address, setAddress] =  useState("")
-  const [editingId, setEditingId] = useState(null)
-  const [editPhone, setEditPhone] = useState("")
-  const [editAddress, setEditAddress] = useState("")
-  const [editComment, setEditComment] = useState("")
-  const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [driverPrices, setDriverPrices] = useState({})
   const [packingPrices, setPackingPrices] = useState({})
-  const [tarif, setTarif] = useState("standart")
   const [driverComment, setDriverComment] = useState("")
   const [archives, setArchives] = useState([])
   const [workerEarnings, setWorkerEarnings] = useState({})
@@ -142,6 +149,35 @@ function App() {
       }));
 
     }
+  }
+
+
+  const changeRole = (nextRole) => {
+    if (nextRole === role) return
+
+    // Panelga kirish
+    if (nextRole) {
+      setDisplayRole(nextRole)
+      setRoleTransition("role-enter")
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setRole(nextRole)
+          setRoleTransition("role-enter-active")
+        })
+      })
+
+      return
+    }
+
+    // Paneldan chiqish
+    setRoleTransition("role-exit")
+
+    setTimeout(() => {
+      setRole("")
+      setDisplayRole("")
+      setRoleTransition("")
+    }, 280)
   }
 
 
@@ -812,14 +848,19 @@ function App() {
   {/* ===== use effectlar ===== */}
   useEffect(() => {
     const images = [
-      "/Assets/logo.png",
-      "/Assets/carpet.png",
-      "/Assets/operatorIcon.png",
-      "/Assets/driverIcon.png",
-      "/Assets/washerIcon.png",
-      "/Assets/packingIcon.png",
-      "/Assets/adminIcon.png",
-      "/Assets/egaIcon.png",
+      logo,
+      carpet,
+      operatorIcon,
+      driverIcon,
+      washerIcon,
+      packingIcon,
+      adminIcon,
+      egaIcon,
+      jamiIcon,
+      yangiIcon,
+      olindiIcon,
+      yuvildiIcon,
+      tayyorIcon,
     ];
 
     const promises = images.map((src) => {
@@ -1272,94 +1313,6 @@ function App() {
     return total;
   }
 
-
-  {/* ===== add order ===== */}
-  const addOrder = async () => {
-
-    if (!phone || !address) return
-
-    const customersSnapshot = await getDocs(
-      collection(
-        db,
-        "customers"
-      )
-    )
-
-    const customers = customersSnapshot.docs.map(
-      (doc) => ({
-        firebaseId: doc.id,
-        ...doc.data(),
-      })
-    )
-
-    const existingCustomer = customers.find(
-      (c) => c.phone === phone
-    )
-
-    let customerId = ""
-
-    if (existingCustomer) {
-      customerId = existingCustomer.customerId
-    } else {
-      const nextCustomerNumber = customers.length + 1
-
-      customerId = `C${String(
-        nextCustomerNumber
-      ).padStart(4, "0")}`
-
-      await setDoc(
-        doc(
-          db, "customers", customerId
-        ), {
-          customerId,
-          phone,
-          address,
-          ordersCount: 1,
-          createdAt: serverTimestamp(),
-        }
-      )
-
-    }
-
-    const counterRef = doc(
-      db,
-      "counters",
-      "orders"
-    )
-
-    const counterSnap = await getDoc(counterRef)
-    const lastOrderNumber = Number( counterSnap.data() ?.lastOrderNumber) || 0
-    const nextOrderNumber = lastOrderNumber + 1
-
-    await updateDoc(counterRef,{
-      lastOrderNumber: nextOrderNumber
-    })
-
-    const orderId = `AA${String(
-      nextOrderNumber
-    ).padStart(4, "0")}`
-
-    const newOrder = {
-      id: orderId,
-      customerId,
-      phone,
-      address,
-      status: "Yangi",
-      comment,
-      tarif,
-      driverNotified: false,
-      createdAt: serverTimestamp()
-    }
-
-    await setDoc(
-      doc(db, "orders", orderId),
-      newOrder
-    )
-    setPhone("")
-    setAddress("")
-    setComment("")
-  }
-
   {/* ===== update status ===== */}
   const updateStatus = async (id, status) => {
 
@@ -1599,19 +1552,19 @@ function App() {
       driverComment,
       price,
       carpetStatus: carpetCount
-        ? "Kutmoqda"
+        ? "Olindi"
         : "",
    
       blanketStatus: blanketCount
-        ? "Kutmoqda"
+        ? "Olindi"
         : "",
 
       yakandozStatus: yakandozCount || other
-        ? "Kutmoqda"
+        ? "Olindi"
         : "",
 
       curtainStatus: curtainMeter
-        ? "Kutmoqda"
+        ? "Olindi"
         : "",
     })
 
@@ -1773,18 +1726,6 @@ function App() {
     await updateDoc(orderRef, updates)
   }
 
-
-  const activeOrders = orders.filter(
-    (o) =>
-      o.status !== "Yetkazildi" &&
-      o.status !== "Rad etildi"
-  )
-
-  const finishedOrders = orders.filter(
-    (o) =>
-      o.status === "Yetkazildi" ||
-      o.status === "Rad etildi"
-  )
 
   {/* ===== kirish ===== */}
   if (!currentWorker && !requestSent ) {
@@ -2138,7 +2079,7 @@ function App() {
 
       <HomePage
         currentWorker={currentWorker}
-        setRole={setRole}
+        setRole={changeRole}
         currentPhone={currentPhone}
         washerTeam={washerTeam}
         driverTeam={driverTeam}
@@ -2382,35 +2323,17 @@ function App() {
     )}
 
 
+    <div
+      className={`role-transition ${roleTransition}`}
+    >
     {/* ===== operator panel ===== */}
-    {page === "home" && role === "operator" && (
+    {page === "home" && displayRole === "operator" && (
 
       <OperatorPanel
 
         orders={orders}
-        activeOrders={activeOrders}
-        finishedOrders={finishedOrders}
-        phone={phone}
-        setPhone={setPhone}
-        address={address}
-        setAddress={setAddress}
-        comment={comment}
-        setComment={setComment}
-        tarif={tarif}
-        setTarif={setTarif}
-        addOrder={addOrder}
-        editingId={editingId}
-        setEditingId={setEditingId}
-        editPhone={editPhone}
-        setEditPhone={setEditPhone}
-        editAddress={editAddress}
-        setEditAddress={setEditAddress}
-        editComment={editComment}
-        setEditComment={setEditComment}
-        deleteOrderId={deleteOrderId}
-        setDeleteOrderId={setDeleteOrderId}
         updateStatus={updateStatus}
-        setRole={setRole}
+        setRole={changeRole}
         role={role}
         loading={loading}
         runAction={runAction}
@@ -2421,7 +2344,7 @@ function App() {
 
 
     {/* ===== driver panel ===== */}
-    {page === "home" && role === "driver" && (
+    {page === "home" && displayRole === "driver" && (
       <DriverPanel
 
         orders={orders}
@@ -2429,7 +2352,7 @@ function App() {
         setDriverMode={setDriverMode}
         updateStatus={updateStatus}
         saveDetails={saveDetails}
-        setRole={setRole}
+        setRole={changeRole}
         carpetCount={carpetCount}
         setCarpetCount={setCarpetCount}
         kvm={kvm}
@@ -2460,7 +2383,7 @@ function App() {
 
 
     {/* ===== washer panel ===== */}
-    {page === "home" && role === "washer" && (
+    {page === "home" && displayRole === "washer" && (
       <WasherPanel
 
         orders={orders}
@@ -2473,7 +2396,7 @@ function App() {
         getHours={getHours}
         getCount={getCount}
         washerPrices={washerPrices}
-        setRole={setRole}  
+        setRole={changeRole}  
         logout={logout}
         todayOpen={todayOpen}
         setTodayOpen={setTodayOpen}
@@ -2497,12 +2420,12 @@ function App() {
 
 
     {/* ===== tayyorlovchi panel ===== */}
-    {page === "home" && role === "tayyorlovchi" && (
+    {page === "home" && displayRole === "tayyorlovchi" && (
     <div>
       <h1>Tayyorlovchi panel</h1>
 
       <button
-        onClick={() => setRole("")}
+        onClick={() => changeRole("")}
         style={{fontSize: 20}} 
       >
         ⏪️
@@ -2568,7 +2491,7 @@ function App() {
 
 
     {/* ===== admin panel ===== */}
-    {page === "home" && role === "admin" && (
+    {page === "home" && displayRole === "admin" && (
     
       <AdminPanel
 
@@ -2600,7 +2523,7 @@ function App() {
         setSelectedDate={setSelectedDate}
         driverPrices={driverPrices}
         getHourlyPrice={getHourlyPrice}
-        setRole={setRole}
+        setRole={changeRole}
         editingStatus={editingStatus}
         setEditingStatus={setEditingStatus}
         expandedWorker={expandedWorker}
@@ -2615,10 +2538,10 @@ function App() {
     )}
 
     {/* ===== ega panel ===== */}
-    {page === "home" && role === "ega"  && (
+    {page === "home" && displayRole === "ega"  && (
     
       <EgaPanel
-        setRole={setRole}
+        setRole={changeRole}
 
         priceInputs={priceInputs}
         setPriceInputs={setPriceInputs}
@@ -2632,6 +2555,8 @@ function App() {
       />  
 
     )}
+
+    </div>
 
     {/* ===== teams panel ===== */}
     {page === "teams" && (

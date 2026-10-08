@@ -460,3 +460,36 @@
   color: white;
 }
 /* ===== ⬆️xarajat qo'shish modaliniki⬆️ ===== */
+
+
+/* ===== ⬇️ROLE PANEL TRANSITION⬇️ ===== */
+.role-transition {
+  width: 100%;
+  min-height: 100%;
+  transform-origin: center center;
+}
+
+/* Ochilish boshlanishi */
+.role-enter {
+  opacity: 0;
+  transform: translateY(18px) scale(0.97);
+}
+
+/* Ochilish */
+.role-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity 0.32s ease,
+    transform 0.32s cubic-bezier(.2,.8,.2,1);
+}
+
+/* Yopilish */
+.role-exit {
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s cubic-bezier(.4,0,.2,1);
+}
+/* ===== ⬆️ROLE PANEL TRANSITION⬆️ ===== */

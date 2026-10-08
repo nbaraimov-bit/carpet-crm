@@ -10,10 +10,10 @@ import OlindiIcon from "../Assets/olindiIcon.png";
 import YuvildiIcon from "../Assets/yuvildiIcon.png";
 import TayyorIcon from "../Assets/tayyorIcon.png";
 
-import CarpetIcon from "../Assets/carpetIcon.png";
-import BlanketIcon from "../Assets/blanketIcon.png";
-import YakandozIcon from "../Assets/yakandozIcon.png";
-import CurtainIcon from "../Assets/curtainIcon.png";
+import CarpetIcon from "../../../MainIcons/carpetIcon.png";
+import BlanketIcon from "../../../MainIcons/blanketIcon.png";
+import YakandozIcon from "../../../MainIcons/yakandozIcon.png";
+import CurtainIcon from "../../../MainIcons/curtainIcon.png";
 
 export default function MainInfoCard() {
 

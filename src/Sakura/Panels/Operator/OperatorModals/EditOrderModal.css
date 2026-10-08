@@ -1,0 +1,267 @@
+.edit-order-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  padding: 20px 20px 100px;
+
+  background: rgba(3, 3, 15, 0.72);
+  backdrop-filter: blur(8px);
+
+  /* ORQA SAHIFA SCROLL BO'LMAYDI */
+  overflow: hidden;
+
+  /* TOUCH SCROLLNI MODALGA QOLDIRAMIZ */
+  overscroll-behavior: none;
+
+  animation: editModalFadeIn 0.2s ease;
+}
+
+
+.edit-order-modal {
+  width: min(430px, 100%);
+
+  /* Bottom navigation uchun joy qoldiramiz */
+  max-height: calc(100dvh - 120px);
+
+  box-sizing: border-box;
+
+  padding: 24px;
+
+  border: 1px solid rgba(192, 132, 252, 0.45);
+  border-radius: 24px;
+
+  background: linear-gradient(
+    145deg,
+    #15152b,
+    #0e0e20
+  );
+
+  box-shadow:
+    0 0 25px rgba(168, 85, 247, 0.25),
+    0 20px 60px rgba(0, 0, 0, 0.55);
+
+  /* FAQAT MODAL ICHI SCROLL */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  animation: editModalOpen 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+.edit-order-modal-scroll {
+  max-height: calc(100dvh - 120px);
+
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+/* Chrome / Android */
+.edit-order-modal-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+
+.edit-order-modal-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+  font-size: 24px;
+}
+
+.edit-order-modal-header p {
+  margin: 5px 0 22px;
+
+  color: #85859b;
+  font-size: 13px;
+}
+
+.edit-order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-order-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  color: #c084fc;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.edit-order-form input,
+.edit-order-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid rgba(148, 85, 220, 0.28);
+  border-radius: 13px;
+
+  background: #191a2d;
+  color: #ffffff;
+
+  padding: 13px 14px;
+
+  outline: none;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.edit-order-form textarea {
+  min-height: 85px;
+  resize: none;
+}
+
+.edit-order-form input:focus,
+.edit-order-form textarea:focus {
+  border-color: #a855f7;
+
+  box-shadow:
+    0 0 0 2px rgba(168, 85, 247, 0.12),
+    0 0 12px rgba(168, 85, 247, 0.18);
+}
+
+
+.edit-products-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-products-title {
+  color: #c084fc;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.edit-products-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.edit-products-grid label {
+  min-width: 0;
+}
+
+@media (max-width: 420px) {
+  .edit-products-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+}
+
+
+.edit-order-modal-actions {
+  display: flex;
+  gap: 12px;
+
+  margin-top: 8px;
+}
+
+.edit-order-modal-actions button {
+  flex: 1;
+
+  padding: 13px;
+
+  border-radius: 13px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.edit-order-modal-actions button:active {
+  transform: scale(0.97);
+}
+
+.edit-order-cancel {
+  border: 1px solid #303149;
+  background: #1b1c2d;
+  color: #aaaabd;
+}
+
+.edit-order-cancel:hover {
+  border-color: #454660;
+  color: #ffffff;
+}
+
+.edit-order-save {
+  border: 1px solid #b66aff;
+
+  background: linear-gradient(
+    135deg,
+    #a855f7,
+    #7e22ce
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 0 14px rgba(168, 85, 247, 0.35);
+}
+
+.edit-order-save:hover {
+  box-shadow:
+    0 0 18px rgba(168, 85, 247, 0.5);
+}
+
+.edit-order-save:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@keyframes editModalFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes editModalOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
