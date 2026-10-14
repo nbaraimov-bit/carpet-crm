@@ -2,6 +2,8 @@ import { useState } from "react";
 import { BackIcon } from "../../MainIcons/SvgIcons";
 import "./DriverPanel.css";
 
+import DriverPickupMode from "./DriverPickupMode/DriverPickupMode";
+
 export default function DriverPanel({ 
   setRole,
   orders,
