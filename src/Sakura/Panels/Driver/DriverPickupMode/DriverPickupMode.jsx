@@ -8,7 +8,7 @@ import {
   CommentIcon,
   PriceIcon,
   TimeIcon,
-} from "../../MainIcons/SvgIcons";
+} from "../../../MainIcons/SvgIcons";
 
 export default function DriverPickupMode({
   orders = [],
