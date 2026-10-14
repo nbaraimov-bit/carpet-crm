@@ -26,7 +26,7 @@ export default function DriverPanel({ setRole }) {
           onClick={handleBack}
           aria-label="Orqaga"
         >
-          <BackIcon />
+          <BackIcon className="driver-back-icon"/>
         </button>
 
         <button
