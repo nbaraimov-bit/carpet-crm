@@ -3,7 +3,9 @@ import { BackIcon } from "../../MainIcons/SvgIcons";
 import "./DriverPanel.css";
 
 export default function DriverPanel({ setRole }) {
-  const [driverMode, setDriverMode] = useState("");
+  const [driverMode, setDriverMode] = useState(
+    () => sessionStorage.getItem("sakuraDriverMode") || "olish"
+  );
 
   const handleBack = () => {
     setRole("");
@@ -37,29 +39,9 @@ export default function DriverPanel({ setRole }) {
       </div>
 
       <div className="driver-panel-content">
-        {!driverMode ? (
-          <div className="driver-mode-selection">
-            <h2>Driver panel</h2>
-
-            <button
-              type="button"
-              onClick={() => setDriverMode("olish")}
-            >
-              📦 Olish
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setDriverMode("yetkazish")}
-            >
-              🚚 Yetkazish
-            </button>
-          </div>
-        ) : (
-          <h2>
-            {driverMode === "olish" ? "Olish rejimi" : "Yetkazish rejimi"}
-          </h2>
-        )}
+        <h2>
+          {driverMode === "olish" ? "Olish rejimi" : "Yetkazish rejimi"}
+        </h2>
       </div>
     </div>
   );
