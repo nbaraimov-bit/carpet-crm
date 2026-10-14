@@ -27,6 +27,7 @@
 
 .driver-mode-toggle {
   position: absolute;
+  top: 30px;
   right: 20px;
   min-height: 44px;
   border: 1px solid rgba(167, 139, 250, 0.45);

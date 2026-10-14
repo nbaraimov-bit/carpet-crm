@@ -1,0 +1,345 @@
+.driver-pickup {
+  width: 100%;
+  color: #f5f3ff;
+}
+
+.driver-pickup-header {
+  margin-bottom: 28px;
+}
+
+.driver-pickup-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+
+.driver-pickup-header p {
+  margin: 6px 0 0;
+  color: #a5a1bd;
+  font-size: 13px;
+}
+
+.driver-pickup-section {
+  margin-bottom: 30px;
+}
+
+.driver-pickup-section h2 {
+  margin: 0 0 14px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.driver-pickup-list {
+  display: grid;
+  gap: 14px;
+}
+
+.driver-pickup-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid rgba(139, 92, 246, 0.24);
+  border-radius: 20px;
+  background: linear-gradient(
+    145deg,
+    rgba(31, 29, 55, 0.97),
+    rgba(17, 16, 34, 0.98)
+  );
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+}
+
+.driver-pickup-card--urgent {
+  border-color: rgba(248, 113, 113, 0.7);
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.1);
+}
+
+.driver-pickup-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.driver-pickup-card__id {
+  color: #e9ddff;
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.driver-pickup-card__status {
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.driver-pickup-card__status.is-new {
+  color: #86efac;
+  border-color: rgba(74, 222, 128, 0.25);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.driver-pickup-card__status.is-progress {
+  color: #c4b5fd;
+  border-color: rgba(167, 139, 250, 0.3);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.driver-pickup-card__info {
+  display: grid;
+  gap: 12px;
+}
+
+.driver-pickup-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  color: #d7d3e8;
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.driver-pickup-info-row svg {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  color: #a78bfa;
+}
+
+.driver-pickup-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(167, 139, 250, 0.12);
+}
+
+.driver-pickup-date {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #9691ae;
+  font-size: 11px;
+}
+
+.driver-pickup-date svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.driver-pickup-primary-button,
+.driver-pickup-secondary-button {
+  min-height: 42px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.driver-pickup-primary-button {
+  color: #fff;
+  border: 1px solid rgba(167, 139, 250, 0.55);
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.2);
+}
+
+.driver-pickup-secondary-button {
+  color: #ddd6fe;
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  background: rgba(139, 92, 246, 0.08);
+}
+
+.driver-pickup-primary-button:active,
+.driver-pickup-secondary-button:active {
+  transform: scale(0.97);
+}
+
+.driver-pickup-primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.driver-pickup-empty {
+  padding: 24px 16px;
+  border: 1px dashed rgba(167, 139, 250, 0.25);
+  border-radius: 16px;
+  color: #9691ae;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Modal */
+
+.driver-pickup-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(5, 4, 15, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.driver-pickup-modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: min(88vh, 820px);
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  border-radius: 22px;
+  color: #f5f3ff;
+  background: linear-gradient(145deg, #211c3b, #111020);
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+  animation: driver-modal-enter 0.22s ease-out;
+}
+
+.driver-pickup-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.driver-pickup-modal__header h2 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.driver-pickup-modal__header p {
+  margin: 6px 0 0;
+  color: #aaa4c4;
+  font-size: 12px;
+}
+
+.driver-pickup-modal__close {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  border-radius: 10px;
+  color: #e9ddff;
+  background: rgba(139, 92, 246, 0.1);
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.driver-pickup-form {
+  display: grid;
+  gap: 15px;
+}
+
+.driver-pickup-form label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  color: #c9c3e0;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.driver-pickup-form input,
+.driver-pickup-form textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid rgba(167, 139, 250, 0.24);
+  border-radius: 12px;
+  outline: none;
+  color: #fff;
+  background: rgba(8, 7, 20, 0.65);
+  font: inherit;
+  font-size: 14px;
+}
+
+.driver-pickup-form input:focus,
+.driver-pickup-form textarea:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+.driver-pickup-form input::placeholder,
+.driver-pickup-form textarea::placeholder {
+  color: #706a89;
+}
+
+.driver-pickup-form textarea {
+  resize: vertical;
+}
+
+.driver-pickup-form__two,
+.driver-pickup-form__three {
+  display: grid;
+  gap: 10px;
+}
+
+.driver-pickup-form__two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.driver-pickup-form__three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.driver-pickup-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(167, 139, 250, 0.15);
+}
+
+@keyframes driver-modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 420px) {
+  .driver-pickup-card {
+    padding: 13px;
+  }
+
+  .driver-pickup-card__footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .driver-pickup-card__footer button {
+    width: 100%;
+  }
+
+  .driver-pickup-modal {
+    padding: 16px;
+  }
+
+  .driver-pickup-form__three {
+    grid-template-columns: 1fr;
+  }
+}
