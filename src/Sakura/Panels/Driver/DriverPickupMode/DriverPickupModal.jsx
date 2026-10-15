@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./DriverPickupModal.css";
 
 export default function DriverPickupModal({
@@ -5,8 +6,43 @@ export default function DriverPickupModal({
   form,
   onClose,
   onFieldChange,
+  onSave,
+  saving = false,
 }) {
+  const [locationPrompt, setLocationPrompt] = useState(false);
+  const [locating, setLocating] = useState(false);
+
+  useEffect(() => {
+    setLocationPrompt(false);
+    setLocating(false);
+  }, [order?.firebaseId]);
+
   if (!order) return null;
+
+  const requestSave = () => {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setLocationPrompt(true);
+      return;
+    }
+
+    setLocating(true);
+    try {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords }) => {
+          setLocating(false);
+          onSave(`https://maps.google.com/?q=${coords.latitude},${coords.longitude}`);
+        },
+        () => {
+          setLocating(false);
+          setLocationPrompt(true);
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    } catch {
+      setLocating(false);
+      setLocationPrompt(true);
+    }
+  };
 
   const input = (name, label, placeholder, options = {}) => (
     <label>
@@ -78,20 +114,56 @@ export default function DriverPickupModal({
             type="button"
             className="driver-pickup-secondary-button"
             onClick={onClose}
+            disabled={saving || locating}
           >
             Bekor qilish
           </button>
           <button
             type="button"
             className="driver-pickup-primary-button"
-            onClick={() => {
-              console.log("Driver form:", { orderId: order.firebaseId, form });
-            }}
+            onClick={requestSave}
+            disabled={saving || locating}
           >
-            Saqlash
+            {saving ? "Saqlanmoqda..." : locating ? "Joylashuv olinmoqda..." : "Saqlash"}
           </button>
         </div>
       </div>
+
+      {locationPrompt && (
+        <div className="driver-location-prompt-overlay">
+          <div
+            className="driver-location-prompt"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="driver-location-prompt-title"
+          >
+            <p id="driver-location-prompt-title">
+              Joylashuv olib bo‘lmadi, GPS o‘chiq bo‘lishi mumkin. Davom etasizmi?
+            </p>
+            <div className="driver-pickup-modal__actions">
+              <button
+                type="button"
+                className="driver-pickup-secondary-button"
+                onClick={() => setLocationPrompt(false)}
+                disabled={saving}
+              >
+                Yo‘q
+              </button>
+              <button
+                type="button"
+                className="driver-pickup-primary-button"
+                onClick={() => {
+                  setLocationPrompt(false);
+                  onSave(null);
+                }}
+                disabled={saving}
+              >
+                Ha
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
