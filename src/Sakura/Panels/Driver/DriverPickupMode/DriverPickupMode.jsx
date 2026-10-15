@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./DriverPickupMode.css";
+import DriverPickupModal from "./DriverPickupModal";
 
 import {
   UserIcon,
@@ -224,181 +225,12 @@ export default function DriverPickupMode({
         </div>
       </section>
 
-      {editingOrder && (
-        <div
-          className="driver-pickup-modal-overlay"
-          onClick={closeModal}
-        >
-          <div
-            className="driver-pickup-modal"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="driver-pickup-modal__header">
-              <div>
-                <h2>Ma’lumot kiritish</h2>
-                <p>Buyurtma #{editingOrder.id}</p>
-              </div>
-
-              <button
-                type="button"
-                className="driver-pickup-modal__close"
-                onClick={closeModal}
-                aria-label="Yopish"
-              >
-                ×
-              </button>
-            </div>
-
-            <div className="driver-pickup-form">
-              <label>
-                Gilam soni
-                <input
-                  type="number"
-                  min="0"
-                  value={form.carpetCount}
-                  onChange={(e) =>
-                    updateField("carpetCount", e.target.value)
-                  }
-                  placeholder="Gilam soni"
-                />
-              </label>
-
-              <div className="driver-pickup-form__two">
-                <label>
-                  KVM (ST)
-                  <input
-                    type="number"
-                    min="0"
-                    step="any"
-                    value={form.kvmst}
-                    onChange={(e) =>
-                      updateField("kvmst", e.target.value)
-                    }
-                    placeholder="ST kv.m"
-                  />
-                </label>
-
-                <label>
-                  KVM (PRO)
-                  <input
-                    type="number"
-                    min="0"
-                    step="any"
-                    value={form.kvmpro}
-                    onChange={(e) =>
-                      updateField("kvmpro", e.target.value)
-                    }
-                    placeholder="PRO kv.m"
-                  />
-                </label>
-              </div>
-
-              <label>
-                Adyol soni
-                <input
-                  type="number"
-                  min="0"
-                  value={form.blanketCount}
-                  onChange={(e) =>
-                    updateField("blanketCount", e.target.value)
-                  }
-                  placeholder="Adyol"
-                />
-              </label>
-
-              <div className="driver-pickup-form__three">
-                <label>
-                  Yakandoz M
-                  <input
-                    type="number"
-                    min="0"
-                    value={form.yakandozM}
-                    onChange={(e) =>
-                      updateField("yakandozM", e.target.value)
-                    }
-                    placeholder="M"
-                  />
-                </label>
-
-                <label>
-                  Yakandoz S
-                  <input
-                    type="number"
-                    min="0"
-                    value={form.yakandozS}
-                    onChange={(e) =>
-                      updateField("yakandozS", e.target.value)
-                    }
-                    placeholder="S"
-                  />
-                </label>
-
-                <label>
-                  Yakandoz L
-                  <input
-                    type="number"
-                    min="0"
-                    value={form.yakandozL}
-                    onChange={(e) =>
-                      updateField("yakandozL", e.target.value)
-                    }
-                    placeholder="L"
-                  />
-                </label>
-              </div>
-
-              <label>
-                Izoh
-                <textarea
-                  rows="3"
-                  value={form.driverComment}
-                  onChange={(e) =>
-                    updateField("driverComment", e.target.value)
-                  }
-                  placeholder="Qo‘shimcha izoh..."
-                />
-              </label>
-
-              <label>
-                Jami narx
-                <input
-                  type="number"
-                  min="0"
-                  value={form.price}
-                  onChange={(e) =>
-                    updateField("price", e.target.value)
-                  }
-                  placeholder="Jami narx"
-                />
-              </label>
-            </div>
-
-            <div className="driver-pickup-modal__actions">
-              <button
-                type="button"
-                className="driver-pickup-secondary-button"
-                onClick={closeModal}
-              >
-                Bekor qilish
-              </button>
-
-              <button
-                type="button"
-                className="driver-pickup-primary-button"
-                onClick={() => {
-                  // Keyingi bosqichda Firebase saqlash funksiyasi ulanadi.
-                  console.log("Driver form:", {
-                    orderId: editingOrder.firebaseId,
-                    form,
-                  });
-                }}
-              >
-                Saqlash
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <DriverPickupModal
+        order={editingOrder}
+        form={form}
+        onClose={closeModal}
+        onFieldChange={updateField}
+      />
     </div>
   );
 }
