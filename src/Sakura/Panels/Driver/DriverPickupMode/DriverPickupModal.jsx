@@ -49,7 +49,11 @@ export default function DriverPickupModal({
             {input("kvmst", "KVM (ST)", "ST kv.m", { step: "any" })}
             {input("kvmpro", "KVM (PRO)", "PRO kv.m", { step: "any" })}
           </div>
-          {input("blanketCount", "Adyol soni", "Adyol")}
+          <div className="driver-pickup-form__three">
+            {input("blanketCount", "Adyol (1x)", "Adyol (1x)")}
+            {input("blanketCount2", "Adyol (2x)", "Adyol (2x)")}
+            {input("mattressCount", "Matras", "Matras")}
+          </div>
           <div className="driver-pickup-form__three">
             {input("yakandozM", "Yakandoz M", "M")}
             {input("yakandozS", "Yakandoz S", "S")}

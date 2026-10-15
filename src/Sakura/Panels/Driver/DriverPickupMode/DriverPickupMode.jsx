@@ -25,6 +25,8 @@ export default function DriverPickupMode({
     kvmst: "",
     kvmpro: "",
     blanketCount: "",
+    blanketCount2: "",
+    mattressCount: "",
     yakandozM: "",
     yakandozS: "",
     yakandozL: "",
@@ -56,6 +58,8 @@ export default function DriverPickupMode({
       kvmst: order.kvmst ?? "",
       kvmpro: order.kvmpro ?? "",
       blanketCount: order.blanketCount ?? "",
+      blanketCount2: order.blanketCount2 ?? "",
+      mattressCount: order.mattressCount ?? "",
       yakandozM: order.yakandozM ?? "",
       yakandozS: order.yakandozS ?? "",
       yakandozL: order.yakandozL ?? "",
@@ -87,18 +91,18 @@ export default function DriverPickupMode({
 
   const OrderCard = ({ order, mine = false }) => (
     <article
-      className={`driver-pickup-card ${
-        order.tarif === "tezkor" ? "driver-pickup-card--urgent" : ""
+      className={`driver-order-card ${
+        order.tarif === "tezkor" ? "driver-order-card--quick" : ""
       }`}
       key={order.firebaseId || order.id}
     >
-      <div className="driver-pickup-card__top">
-        <span className="driver-pickup-card__id">
+      <div className="driver-order-card__top">
+        <span className="driver-order-card__id">
           #{order.id}
         </span>
 
         <span
-          className={`driver-pickup-card__status ${
+          className={`driver-order-card__status ${
             mine ? "is-progress" : "is-new"
           }`}
         >
@@ -106,15 +110,15 @@ export default function DriverPickupMode({
         </span>
       </div>
 
-      <div className="driver-pickup-card__info">
-        <div className="driver-pickup-info-row">
+      <div className="driver-order-card__info">
+        <div className="driver-order-info-row">
           <UserIcon />
           <span>{order.customerId || "Mijoz"}</span>
         </div>
 
         {order.phone && (
           <a
-            className="driver-pickup-info-row"
+            className="driver-order-info-row"
             href={`tel:${order.phone}`}
           >
             <PhoneIcon />
@@ -123,21 +127,21 @@ export default function DriverPickupMode({
         )}
 
         {order.address && (
-          <div className="driver-pickup-info-row">
+          <div className="driver-order-info-row">
             <LocationIcon />
             <span>{order.address}</span>
           </div>
         )}
 
         {order.comment && (
-          <div className="driver-pickup-info-row">
+          <div className="driver-order-info-row">
             <CommentIcon />
             <span>{order.comment}</span>
           </div>
         )}
       </div>
 
-      <div className="driver-pickup-card__footer">
+      <div className="driver-order-card__bottom">
         <div className="driver-pickup-date">
           <TimeIcon />
           <span>{formatDate(order.createdAt)}</span>
