@@ -1,0 +1,273 @@
+.washer-page {
+  width: min(100%, 980px);
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 24px 16px 130px;
+  color: #f8f5ff;
+}
+
+.washer-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.washer-eyebrow {
+  color: #c794f6;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+.washer-page-header h1 {
+  margin: 5px 0;
+  font-size: clamp(24px, 5vw, 34px);
+}
+
+.washer-page-header p {
+  margin: 0;
+  color: #aaa6c2;
+  font-size: 13px;
+}
+
+.washer-exit,
+.washer-cancel-button,
+.washer-done-button {
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid rgba(168, 85, 247, .4);
+  border-radius: 12px;
+  color: #eee2ff;
+  background: rgba(79, 42, 119, .26);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.washer-notice,
+.washer-empty {
+  margin: 12px 0;
+  padding: 14px;
+  border: 1px solid rgba(168, 85, 247, .3);
+  border-radius: 15px;
+  color: #d9c5f4;
+  background: rgba(40, 27, 67, .68);
+}
+
+.washer-notice {
+  border-color: rgba(255, 91, 119, .4);
+  color: #ffb2bf;
+}
+
+.washer-orders {
+  display: grid;
+  gap: 14px;
+}
+
+.washer-order-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid rgba(126, 34, 206, .4);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(126, 34, 206, .14), transparent 38%),
+    linear-gradient(145deg, rgba(24, 19, 50, .98), rgba(11, 15, 38, .98));
+  box-shadow: 0 8px 24px rgba(5, 4, 20, .22), inset 0 0 18px rgba(126, 34, 206, .06);
+}
+
+.washer-order-card.quick {
+  border-color: rgba(255, 75, 104, .72);
+  box-shadow: 0 0 18px rgba(255, 55, 90, .14), inset 0 0 20px rgba(255, 55, 90, .06);
+}
+
+.washer-order-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.washer-order-label {
+  color: #9e94bd;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.washer-order-header h2 {
+  margin: 3px 0 0;
+  font-size: 21px;
+}
+
+.washer-order-status {
+  padding: 6px 10px;
+  border: 1px solid rgba(45, 217, 132, .3);
+  border-radius: 999px;
+  color: #76e9a7;
+  background: rgba(15, 112, 70, .16);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.washer-order-status.quick {
+  border-color: rgba(255, 87, 115, .4);
+  color: #ff9bab;
+  background: rgba(155, 30, 64, .18);
+}
+
+.washer-order-details {
+  display: grid;
+  gap: 5px;
+  margin: 10px 0 14px;
+  color: #c3bdd5;
+  font-size: 12px;
+}
+
+.washer-order-details a {
+  color: #d7b5ff;
+  text-decoration: none;
+}
+
+.washer-order-details p {
+  margin: 2px 0;
+  white-space: pre-wrap;
+}
+
+.washer-products {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.washer-product {
+  min-width: 0;
+  display: grid;
+  justify-items: stretch;
+  align-content: start;
+  gap: 7px;
+  padding: 10px;
+  border: 1px solid rgba(137, 87, 202, .27);
+  border-radius: 15px;
+  background: rgba(7, 11, 31, .58);
+}
+
+.washer-product-quantity {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  color: #eee7fb;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.washer-product-quantity img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 9px rgba(143, 64, 225, .27));
+}
+
+.washer-done-button {
+  min-width: 0;
+  min-height: 38px;
+  padding: 0 7px;
+  border-color: rgba(61, 222, 143, .38);
+  color: #9af0bd;
+  background: rgba(21, 114, 70, .2);
+  font-size: 11px;
+}
+
+.washer-done-button:disabled,
+.washer-cancel-button:disabled {
+  opacity: .5;
+  cursor: wait;
+}
+
+.washer-product-salary {
+  color: #b4a9c9;
+  font-size: 10px;
+  text-align: center;
+}
+
+.washer-confirm-overlay {
+  position: fixed;
+  z-index: 2200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  padding: 16px;
+  background: rgba(3, 4, 18, .78);
+  backdrop-filter: blur(9px);
+}
+
+.washer-confirm-modal {
+  width: min(100%, 440px);
+  box-sizing: border-box;
+  padding: 22px;
+  border: 1px solid rgba(168, 85, 247, .48);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #19132f, #0c1028);
+  box-shadow: 0 15px 48px rgba(0, 0, 0, .38), 0 0 22px rgba(126, 34, 206, .16);
+}
+
+.washer-confirm-modal h2 {
+  margin: 9px 0 20px;
+  font-size: 19px;
+  line-height: 1.45;
+}
+
+.washer-confirm-actions {
+  display: flex;
+  gap: 9px;
+}
+
+.washer-confirm-actions button {
+  flex: 1;
+}
+
+.washer-cancel-button {
+  border-color: rgba(174, 163, 197, .24);
+  color: #d1c8df;
+  background: rgba(255, 255, 255, .05);
+}
+
+@media (max-width: 520px) {
+  .washer-page {
+    padding: 18px 12px 125px;
+  }
+
+  .washer-order-card {
+    padding: 12px;
+    border-radius: 17px;
+  }
+
+  .washer-products {
+    gap: 6px;
+  }
+
+  .washer-product {
+    gap: 6px;
+    padding: 7px 5px;
+    border-radius: 12px;
+  }
+
+  .washer-product-quantity img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .washer-product-quantity {
+    font-size: 10px;
+  }
+
+  .washer-done-button {
+    font-size: 9px;
+  }
+
+  .washer-product-salary {
+    font-size: 9px;
+  }
+}

@@ -15,9 +15,9 @@ import { db } from "../../../firebase";
 import { teamDefaultShares, teamTypeMap } from "./teamTypes";
 import CreateTeamModal from "./CreateTeamModal";
 import TeamDetail from "./TeamDetail";
-import washerIcon from "../../Pages/Home/Assets/washerIcon.png";
-import packingIcon from "../../Pages/Home/Assets/packingIcon.png";
-import driverIcon from "../../Pages/Home/Assets/driverIcon.png";
+import washerIcon from "../Home/Assets/washerIcon.png";
+import packingIcon from "../Home/Assets/packingIcon.png";
+import driverIcon from "../Home/Assets/driverIcon.png";
 import "./teams.css";
 
 const teamArt = { washer: washerIcon, packing: packingIcon, driver: driverIcon };

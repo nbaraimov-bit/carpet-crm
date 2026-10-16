@@ -2,7 +2,7 @@ import VaqtinchalikOylikChiqim from "./VaqtinchalikOylikChiqim"
 import VaqtinchalikHisobot from "./VaqtinchalikHisobot"
 import ArchivePage from "../Pages/Archive/ArchivePage"
 import HomePage from "../Pages/Home/HomeMain/HomePage"
-import WasherPanel from "../../components/WasherPanel"
+import WasherPanel from "../Panels/Washer/WasherPanel"
 import DriverPanel from "../Panels/Driver/DriverPanel"
 import OperatorPanel from "../Panels/Operator/OperatorPanel"
 import AdminPanel from "../../components/AdminPanel"
@@ -11,7 +11,7 @@ import getHours from "../../utils/getHours"
 import getSalary from "../../utils/getSalary"
 import getAttendanceSalary from "../../utils/getAttendanceSalary"
 import EgaPanel from "../../components/EgaPanel";
-import TeamsPanel from "../Panels/Teams/TeamsPanel";
+import TeamsPanel from "../Pages/Teams/TeamsPanel";
 import BottomNavigation from "../BottomNavigation/BottomNavigation";
 
 import logo from "../Pages/Home/Assets/logo.png";
@@ -56,7 +56,6 @@ function App() {
   const [displayRole, setDisplayRole] = useState("")
   const [roleTransition, setRoleTransition] = useState("")
   const [driverMode, setDriverMode] = useState("") 
-  const [washerMode, setWasherMode] = useState("")
   const [carpetCount, setCarpetCount] = useState("")
   const [kvm, setKvm] = useState("")
   const [blanketCount, setBlanketCount] = useState("")
@@ -638,7 +637,7 @@ function App() {
 
         if (!member.working) continue;
 
-        earned = Number(member[service.key] || 0) * Number(service.quantity || 0);
+        earned = Number(member[service.rateKey || service.key] ?? member[service.key] ?? 0) * Number(service.quantity || 0);
 
       }
 
@@ -1578,159 +1577,119 @@ function App() {
 
   
   {/* ===== update wash status ===== */}
-  const updateWashStatus = async (
-    id,
-    field,
-    value
-  ) => {
-    const orderRef = doc(db, "orders", id)
-
-    const order = orders.find(
-      (o) => o.firebaseId === id
-    )
-
-    const updates = {
-      [field]: value,
-    }
-
-    const team = teams.find(team =>
-      team.type === "washer" &&
-      team.members?.[currentWorker.phone]
+  const updateWasherStatus = async (id, category) => {
+    const orderRef = doc(db, "orders", id);
+    const team = teams.find((item) =>
+      item.type === "washer" &&
+      item.members?.[currentWorker?.phone]?.working === true
     );
 
-    if (value === "Yuvilmoqda" && team) {
-
-      if (field === "carpetStatus") {
-        updates.carpetWasherTeamId = team.id;
-        updates.carpetWasherTeamName = team.teamName;
-      }
-
-      if (field === "blanketStatus") {
-        updates.blanketWasherTeamId = team.id;
-        updates.blanketWasherTeamName = team.teamName;
-      }
-
-      if (field === "yakandozStatus") {
-        updates.yakandozWasherTeamId = team.id;
-        updates.yakandozWasherTeamName = team.teamName;
-      }
-
-      if (field === "curtainStatus") {
-        updates.curtainWasherTeamId = team.id;
-        updates.curtainWasherTeamName = team.teamName;
-      }
-
+    if (!team || !currentWorker?.phone) {
+      throw new Error("Faol yuvuvchi jamoa topilmadi");
     }
 
-    if (
-      value === "Yuvildi" && currentWorker
-    ) {
+    const categoryConfig = {
+      carpet: {
+        statusField: "carpetStatus",
+        teamIdField: "carpetWasherTeamId",
+        teamNameField: "carpetWasherTeamName",
+        dateField: "carpetDate",
+        rates: [
+          { key: "carpet", rateKey: "carpetSt", legacyRateKey: "carpet", quantity: "kvmSt" },
+          { key: "carpet", rateKey: "carpetPro", legacyRateKey: "carpet", quantity: "kvmPro" },
+        ],
+      },
+      blanket: {
+        statusField: "blanketStatus",
+        teamIdField: "blanketWasherTeamId",
+        teamNameField: "blanketWasherTeamName",
+        dateField: "blanketDate",
+        rates: [
+          { key: "blanket", rateKey: "blanket1x", legacyRateKey: "blanket", quantity: "blanket1x" },
+          { key: "blanket", rateKey: "blanket2x", legacyRateKey: "blanket", quantity: "blanket2x" },
+          { key: "blanket", rateKey: "matras", legacyRateKey: "blanket", quantity: "matras" },
+        ],
+      },
+      yakandoz: {
+        statusField: "yakandozStatus",
+        teamIdField: "yakandozWasherTeamId",
+        teamNameField: "yakandozWasherTeamName",
+        dateField: "yakandozDate",
+        rates: [
+          { key: "yakandoz", rateKey: "yakandozM", legacyRateKey: "yakandoz", quantity: "yakandozM" },
+          { key: "yakandoz", rateKey: "yakandozS", legacyRateKey: "yakandoz", quantity: "yakandozS" },
+          { key: "yakandoz", rateKey: "yakandozL", legacyRateKey: "yakandoz", quantity: "yakandozL" },
+        ],
+      },
+    };
+    const config = categoryConfig[category];
+    if (!config) throw new Error("Mahsulot turi noto‘g‘ri");
 
-      updates[field.replace(
-        "Status",
-        "Date"
-      )] = serverTimestamp() 
+    const order = await runTransaction(db, async (transaction) => {
+      const orderSnapshot = await transaction.get(orderRef);
+      if (!orderSnapshot.exists()) throw new Error("Buyurtma topilmadi");
+      const latestOrder = orderSnapshot.data();
+      if (latestOrder[config.statusField] === "Yuvildi") return null;
 
-      const serviceMap = {
-        carpetStatus: {
-          key: "carpet",
-          amount: Number(team.members[currentWorker.phone].carpet || 0),
-          quantity: Number(order.kvm || 0),
-        },
+      const assignedTeamId = latestOrder[config.teamIdField];
+      if (assignedTeamId && assignedTeamId !== team.id) {
+        throw new Error("Bu mahsulot boshqa jamoaga biriktirilgan");
+      }
 
-        blanketStatus: {
-          key: "blanket",
-          amount: Number(team.members[currentWorker.phone].blanket || 0),
-          quantity: Number(order.blanketCount || 0),
-        },
-
-        yakandozStatus: {
-          key: "yakandoz",
-          amount: Number(team.members[currentWorker.phone].yakandoz || 0),
-          quantity: Number(order.yakandozCount || 0),
-        },
-
-        curtainStatus: {
-          key: "curtain",
-          amount: Number(team.members[currentWorker.phone].curtain || 0),
-          quantity: Number(order.curtainMeter || 0),
-        },
+      const orderUpdates = {
+        [config.statusField]: "Yuvildi",
+        [config.teamIdField]: team.id,
+        [config.teamNameField]: team.teamName,
+        [config.dateField]: serverTimestamp(),
       };
+      const categoryFields = [
+        { status: "carpetStatus", count: Number(latestOrder.kvmSt || 0) + Number(latestOrder.kvmPro || 0) || Number(latestOrder.kvm || 0) || Number(latestOrder.carpetCount || 0) },
+        { status: "blanketStatus", count: Number(latestOrder.blanket1x || 0) + Number(latestOrder.blanket2x || 0) + Number(latestOrder.matras || 0) || Number(latestOrder.blanketCount || 0) },
+        { status: "yakandozStatus", count: Number(latestOrder.yakandozM || 0) + Number(latestOrder.yakandozS || 0) + Number(latestOrder.yakandozL || 0) || Number(latestOrder.yakandozCount || 0) },
+      ].filter((item) => item.count > 0);
+      const allProductsDone = categoryFields.every((item) =>
+        item.status === config.statusField || latestOrder[item.status] === "Yuvildi"
+      );
+      if (allProductsDone) orderUpdates.status = "Yuvildi";
+      transaction.update(orderRef, orderUpdates);
+      return latestOrder;
+    });
+    if (!order) return;
 
-      const serviceStats = {
-        carpet: "carpetKvm",
-        blanket: "blanketCount",
-        yakandoz: "yakandozCount",
-        curtain: "curtainMeter",
-      }; 
+    const hasSizeFields = config.rates.some((rate) => Number(order[rate.quantity] || 0) > 0);
+    const legacyQuantity = category === "carpet"
+      ? Number(order.kvm || 0)
+      : Number(order[category === "blanket" ? "blanketCount" : "yakandozCount"] || 0);
+    const wageServices = config.rates
+      .map((rate) => ({
+        key: rate.key,
+        rateKey: hasSizeFields ? rate.rateKey : rate.legacyRateKey,
+        quantity: hasSizeFields ? Number(order[rate.quantity] || 0) : 0,
+      }))
+      .filter((service) => service.quantity > 0);
 
-      const service = serviceMap[field];
-      const washerTeam = teams.find((team) => team.id === order[`${service.key}WasherTeamId`]);
-      const members = Object.values(washerTeam.members);
-      const serviceAmount = service.amount;
-      const statField = serviceStats[service.key];
-  
-      const today = new Date();
-
-      const dateId = today.getFullYear() +
-      "-" + String(today.getMonth() + 1).padStart(2, "0") +
-      "-" + String(today.getDate()).padStart(2, "0");
-
-      await addWorkerEarnings({
-        dateId,
-        members,
-        service,
-        teamId: washerTeam.id,
-        teamName: washerTeam.teamName,
-        teamType: "washer"
+    if (!hasSizeFields && legacyQuantity > 0) {
+      wageServices.push({
+        key: category,
+        rateKey: config.rates[0].legacyRateKey,
+        quantity: legacyQuantity,
       });
-
     }
 
-    const carpetDone =
-      !order.carpetStatus ||
-      field === "carpetStatus"
-        ? value === "Yuvildi"
-        : order.carpetStatus ===
-          "Yuvildi"
-
-    const blanketDone =
-      !order.blanketStatus ||
-      field === "blanketStatus"
-        ? value === "Yuvildi"
-        : order.blanketStatus ===
-          "Yuvildi"
-
-    const yakandozDone =
-      !order.yakandozStatus ||
-      field === "yakandozStatus"
-        ? value === "Yuvildi"
-        : order.yakandozStatus ===
-          "Yuvildi"
-
-    const curtainDone =
-      !order.curtainStatus ||
-      field === "curtainStatus"
-        ? value === "Yuvildi"
-        : order.curtainStatus ===
-          "Yuvildi"
-
-    if (
-      carpetDone &&
-      blanketDone &&
-      yakandozDone &&
-      curtainDone
-    ) {
-      updates.status = "Yuvildi"  
-
-      updates.carpetStatus = ""
-      updates.blanketStatus = ""
-      updates.yakandozStatus = ""
-      updates.curtainStatus = ""
+    const activeMembers = Object.entries(team.members || {})
+      .filter(([, member]) => member.working)
+      .map(([phone, member]) => ({ ...member, phone: member.phone || phone }));
+    for (const service of wageServices) {
+      await addWorkerEarnings({
+        dateId: getTodayString(),
+        members: activeMembers,
+        service,
+        teamId: team.id,
+        teamName: team.teamName,
+        teamType: "washer",
+      });
     }
-
-    await updateDoc(orderRef, updates)
-  }
+  };
 
 
   {/* ===== kirish ===== */}
@@ -2397,33 +2356,9 @@ function App() {
       <WasherPanel
 
         orders={orders}
-        washerMode={washerMode}
-        setWasherMode={setWasherMode}  
-        updateWashStatus={updateWashStatus}
-        currentWorker={currentWorker}
-        workers={workers}
-        getSalary={getSalary}
-        getHours={getHours}
-        getCount={getCount}
-        washerPrices={washerPrices}
+        updateWasherStatus={updateWasherStatus}
         setRole={changeRole}  
-        logout={logout}
-        todayOpen={todayOpen}
-        setTodayOpen={setTodayOpen}
-        weekOpen={weekOpen}
-        setWeekOpen={setWeekOpen}
-        MonthOpen={MonthOpen}
-        setMonthOpen={setMonthOpen}
-        allOpen={allOpen}
-        setAllOpen={setAllOpen}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        workerEarnings={workerEarnings}
-        attendance={attendance}
-        teams={teams}
         washerTeam={washerTeam}
-        loading={loading}
-        runAction={runAction}
   
       />
     )}
