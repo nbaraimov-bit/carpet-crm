@@ -8,7 +8,7 @@ import driverIcon from "../../Pages/Home/Assets/driverIcon.png";
 
 const teamArt = { washer: washerIcon, packing: packingIcon, driver: driverIcon };
 
-export default function CreatePremiumTeamModal({ myTeams, currentWorker, onClose }) {
+export default function CreateTeamModal({ myTeams, currentWorker, onClose }) {
   const [teamName, setTeamName] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,15 +38,15 @@ export default function CreatePremiumTeamModal({ myTeams, currentWorker, onClose
   };
 
   return (
-    <div className="premium-team-modal-overlay" onMouseDown={(event) => event.target === event.currentTarget && !loading && onClose()}>
-      <section className="premium-team-modal premium-create-modal" role="dialog" aria-modal="true" aria-labelledby="create-team-title">
-        <button type="button" className="premium-team-modal-close" onClick={onClose} disabled={loading} aria-label="Yopish">×</button>
-        <p className="premium-teams-eyebrow">YANGI JAMOA</p>
+    <div className="team-modal-overlay" onMouseDown={(event) => event.target === event.currentTarget && !loading && onClose()}>
+      <section className="team-modal create-modal" role="dialog" aria-modal="true" aria-labelledby="create-team-title">
+        <button type="button" className="team-modal-close" onClick={onClose} disabled={loading} aria-label="Yopish">×</button>
+        <p className="teams-eyebrow">YANGI JAMOA</p>
         <h2 id="create-team-title">Jamoa yaratish</h2>
-        <label className="premium-create-name">Jamoa nomi
+        <label className="create-name">Jamoa nomi
           <input value={teamName} maxLength={20} onChange={(event) => setTeamName(event.target.value)} placeholder="Masalan: Sakura jamoasi" />
         </label>
-        <div className="premium-create-types">
+        <div className="create-types">
           {teamTypes.map((type) => (
             <button type="button" key={type.id} disabled={joinedTypes.has(type.id)} className={selectedType === type.id ? "selected" : ""} onClick={() => setSelectedType(type.id)}>
               <img src={teamArt[type.id]} alt="" />
@@ -55,11 +55,11 @@ export default function CreatePremiumTeamModal({ myTeams, currentWorker, onClose
             </button>
           ))}
         </div>
-        {teamName.trim().length > 0 && !validName && <p className="premium-create-hint">Jamoa nomi 5 dan 20 tagacha belgidan iborat bo‘lsin.</p>}
-        {error && <p className="premium-create-error" role="alert">{error}</p>}
-        <div className="premium-modal-actions">
+        {teamName.trim().length > 0 && !validName && <p className="create-hint">Jamoa nomi 5 dan 20 tagacha belgidan iborat bo‘lsin.</p>}
+        {error && <p className="create-error" role="alert">{error}</p>}
+        <div className="modal-actions">
           <button type="button" onClick={onClose} disabled={loading}>Bekor qilish</button>
-          <button type="button" className="premium-modal-save" onClick={createTeam} disabled={!validName || !selectedType || loading}>{loading ? "Yaratilmoqda..." : "So‘rov yuborish"}</button>
+          <button type="button" className="modal-save" onClick={createTeam} disabled={!validName || !selectedType || loading}>{loading ? "Yaratilmoqda..." : "So‘rov yuborish"}</button>
         </div>
       </section>
     </div>

@@ -45,7 +45,7 @@ const driverPickupRates = { carpet: 700, blanket1x: 1200, blanket2x: 1500, matra
 const driverDeliveryRates = { carpet: 500, blanket: 1000, yakandozM: 500, yakandozS: 1000, yakandozL: 1200 };
 const money = (value) => Number(value || 0).toLocaleString("uz-UZ");
 
-export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = {}, driverPrices = {}, packingPrices = {}, onBack }) {
+export default function TeamDetail({ team, currentWorker, teamEarnings = {}, driverPrices = {}, packingPrices = {}, onBack }) {
   const [dailyEarnings, setDailyEarnings] = useState({});
   const [joinRequests, setJoinRequests] = useState([]);
   const [showDistribution, setShowDistribution] = useState(false);
@@ -300,32 +300,32 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
   const handleOpenDistribution = () => setShowDistribution(true);
 
   return (
-    <main className="premium-team-detail-page">
-      <header className="premium-detail-topbar">
-        <button type="button" className="premium-detail-back" onClick={onBack}>‹ <span>Jamoalar</span></button>
+    <main className="team-detail-page">
+      <header className="detail-topbar">
+        <button type="button" className="detail-back" onClick={onBack}>‹ <span>Jamoalar</span></button>
         {team.type === "washer" && canManage && (
-          <button type="button" className="premium-distribution-button" onClick={handleOpenDistribution}>↗ <span>Narxlarni taqsimlash</span></button>
+          <button type="button" className="distribution-button" onClick={handleOpenDistribution}>↗ <span>Narxlarni taqsimlash</span></button>
         )}
       </header>
 
-      <section className="premium-detail-hero">
-        <div className="premium-detail-identity">
-          <div className={`premium-detail-art ${team.type}`}><img src={team.type === "washer" ? washerIcon : team.type === "packing" ? packingIcon : driverIcon} alt="" /></div>
+      <section className="detail-hero">
+        <div className="detail-identity">
+          <div className={`detail-art ${team.type}`}><img src={team.type === "washer" ? washerIcon : team.type === "packing" ? packingIcon : driverIcon} alt="" /></div>
           <div>
-          <span className={`premium-team-status ${team.status === "blocked" ? "blocked" : "active"}`}><i />{team.status === "blocked" ? "Bloklangan" : "Faol"}</span>
+          <span className={`team-status ${team.status === "blocked" ? "blocked" : "active"}`}><i />{team.status === "blocked" ? "Bloklangan" : "Faol"}</span>
           <h1>{team.teamName}</h1>
           <p>{teamType?.title}</p>
           </div>
         </div>
-        <div className="premium-detail-active-count"><span className="premium-online-dot" />{activeMembers.length} kishi faol</div>
+        <div className="detail-active-count"><span className="online-dot" />{activeMembers.length} kishi faol</div>
       </section>
 
-      {notice && <div className="premium-teams-notice" role="status">{notice}</div>}
+      {notice && <div className="teams-notice" role="status">{notice}</div>}
 
-      <section className="premium-team-stats-grid">
+      <section className="team-stats-grid">
         {serviceStats.map((service) => (
-          <article className="premium-team-stat" key={service.key}>
-            <div className="premium-team-stat-heading"><img src={service.icon} alt={service.label} /></div>
+          <article className="team-stat" key={service.key}>
+            <div className="team-stat-heading"><img src={service.icon} alt={service.label} /></div>
             {team.type === "driver" ? (
               <>
                 <p><span>Yetkazish</span><b>{money(todayTeam[service.quantity])} {service.unit} · {money(todayTeam[service.salary])} so‘m</b></p>
@@ -337,15 +337,15 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
           </article>
         ))}
       </section>
-      <div className="premium-team-total"><span><img src={totalIcon} alt="" /> Jami ish haqi</span><strong>{money(todayTeam.salary)} so‘m</strong></div>
+      <div className="team-total"><span><img src={totalIcon} alt="" /> Jami ish haqi</span><strong>{money(todayTeam.salary)} so‘m</strong></div>
 
       {canManage && joinRequests.length > 0 && (
-        <section className="premium-join-requests">
+        <section className="join-requests">
           <h2>Qo‘shilish so‘rovlari</h2>
           {joinRequests.map((request) => (
-            <div className="premium-join-request" key={request.id}>
+            <div className="join-request" key={request.id}>
               <div><strong>{request.name}</strong><small>{request.sender}</small></div>
-              <div className="premium-join-request-actions">
+              <div className="join-request-actions">
                 <button type="button" disabled={busy} onClick={() => rejectJoinRequest(request)}>Rad etish</button>
                 <button type="button" disabled={busy} onClick={() => approveJoinRequest(request)}>Tasdiqlash</button>
               </div>
@@ -354,34 +354,34 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
         </section>
       )}
 
-      <section className="premium-members-section">
-        <div className="premium-members-title"><h2>Jamoa a’zolari</h2><span>{members.length} kishi</span></div>
+      <section className="members-section">
+        <div className="members-title"><h2>Jamoa a’zolari</h2><span>{members.length} kishi</span></div>
         {members.map(({ key, member }) => {
           const products = memberProducts({ ...member, phone: member.phone || key });
           const salaryField = team.type === "packing" ? "packingSalary" : team.type === "driver" ? "driverSalary" : "washerSalary";
           return (
-            <article className={`premium-member-card ${member.working ? "" : "inactive"}`} key={key}>
-              <header className="premium-member-header">
-                <div className="premium-member-avatar">{(member.name || "?").trim().charAt(0).toUpperCase()}</div>
-                <div className="premium-member-name"><h3>{member.name || key}</h3><p>{member.rank === "leader" ? "Jamoa rahbari" : "Jamoa a’zosi"}</p></div>
-                <span className={`premium-member-status ${member.working ? "active" : "inactive"}`}><i />{member.working ? "Faol" : "Nofaol"}</span>
+            <article className={`member-card ${member.working ? "" : "inactive"}`} key={key}>
+              <header className="member-header">
+                <div className="member-avatar">{(member.name || "?").trim().charAt(0).toUpperCase()}</div>
+                <div className="member-name"><h3>{member.name || key}</h3><p>{member.rank === "leader" ? "Jamoa rahbari" : "Jamoa a’zosi"}</p></div>
+                <span className={`member-status ${member.working ? "active" : "inactive"}`}><i />{member.working ? "Faol" : "Nofaol"}</span>
               </header>
 
-              <div className="premium-member-products">
+              <div className="member-products">
                 {products.map((product) => (
-                  <div className="premium-member-product" key={product.title}>
-                    <div className="premium-member-product-title"><img src={product.icon} alt={product.title} /></div>
-                    <div className="premium-member-product-values">{product.lines.map((line) => <span key={line}>{line}</span>)}</div>
+                  <div className="member-product" key={product.title}>
+                    <div className="member-product-title"><img src={product.icon} alt={product.title} /></div>
+                    <div className="member-product-values">{product.lines.map((line) => <span key={line}>{line}</span>)}</div>
                   </div>
                 ))}
               </div>
 
-              <div className="premium-member-salary"><span><img src={totalIcon} alt="" /> Bugungi ish haqi</span><strong>{money(dailyEarnings?.[member.phone || key]?.[salaryField])} so‘m</strong></div>
+              <div className="member-salary"><span><img src={totalIcon} alt="" /> Bugungi ish haqi</span><strong>{money(dailyEarnings?.[member.phone || key]?.[salaryField])} so‘m</strong></div>
 
               {canManage && (
-                <div className="premium-member-actions">
-                  {member.rank !== "leader" && <button type="button" className="premium-member-remove" disabled={busy} onClick={() => removeMember({ key, member })}>Jamoadan chiqarish</button>}
-                  <button type="button" className={`premium-member-toggle ${member.working ? "active" : "inactive"}`} disabled={busy} onClick={() => toggleMember(key)}>{member.working ? "Faollikni o‘chirish" : "Faollashtirish"}</button>
+                <div className="member-actions">
+                  {member.rank !== "leader" && <button type="button" className="member-remove" disabled={busy} onClick={() => removeMember({ key, member })}>Jamoadan chiqarish</button>}
+                  <button type="button" className={`member-toggle ${member.working ? "active" : "inactive"}`} disabled={busy} onClick={() => toggleMember(key)}>{member.working ? "Faollikni o‘chirish" : "Faollashtirish"}</button>
                 </div>
               )}
             </article>
@@ -390,7 +390,7 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
       </section>
 
       {canManage && (
-        <button type="button" className="premium-delete-team" disabled={busy} onClick={deleteTeam}>
+        <button type="button" className="delete-team" disabled={busy} onClick={deleteTeam}>
           <span aria-hidden="true">×</span><div><strong>Jamoani o‘chirish</strong><small>Jamoa ro‘yxatidan olib tashlash</small></div><b>›</b>
         </button>
       )}

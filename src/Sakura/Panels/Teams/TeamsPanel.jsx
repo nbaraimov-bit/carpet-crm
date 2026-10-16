@@ -13,16 +13,16 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { teamDefaultShares, teamTypeMap } from "./teamTypes";
-import CreatePremiumTeamModal from "./CreatePremiumTeamModal";
-import PremiumTeamDetail from "./PremiumTeamDetail";
+import CreateTeamModal from "./CreateTeamModal";
+import TeamDetail from "./TeamDetail";
 import washerIcon from "../../Pages/Home/Assets/washerIcon.png";
 import packingIcon from "../../Pages/Home/Assets/packingIcon.png";
 import driverIcon from "../../Pages/Home/Assets/driverIcon.png";
-import "./premium-teams.css";
+import "./teams.css";
 
 const teamArt = { washer: washerIcon, packing: packingIcon, driver: driverIcon };
 
-export default function PremiumTeamsPanel({
+export default function TeamsPanel({
   teams = [],
   setPage,
   currentWorker,
@@ -168,7 +168,7 @@ export default function PremiumTeamsPanel({
 
   if (selectedTeam) {
     return (
-      <PremiumTeamDetail
+      <TeamDetail
         team={selectedTeam}
         currentWorker={currentWorker}
         teamEarnings={teamEarnings}
@@ -186,66 +186,66 @@ export default function PremiumTeamsPanel({
   };
 
   return (
-    <main className="premium-teams-page">
-      <header className="premium-teams-hero">
-        <button className="premium-teams-back" type="button" onClick={() => setPage("home")} aria-label="Orqaga">‹</button>
+    <main className="teams-page">
+      <header className="teams-hero">
+        <button className="teams-back" type="button" onClick={() => setPage("home")} aria-label="Orqaga">‹</button>
         <div>
-          <p className="premium-teams-eyebrow">SAKURA · JAMOALAR</p>
+          <p className="teams-eyebrow">SAKURA · JAMOALAR</p>
           <h1>Jamoa boshqaruv paneli</h1>
-          <p className="premium-teams-subtitle">Jamoalarni yarating, ularga qo‘shiling va boshqaring.</p>
+          <p className="teams-subtitle">Jamoalarni yarating, ularga qo‘shiling va boshqaring.</p>
         </div>
       </header>
 
       {isWorker && (
-        <div className="premium-teams-actions">
-          <button type="button" className="premium-team-action create" onClick={() => setShowCreate(true)}>
-            <span className="premium-team-action-icon">+</span>
+        <div className="teams-actions">
+          <button type="button" className="team-action create" onClick={() => setShowCreate(true)}>
+            <span className="team-action-icon">+</span>
             <span><strong>Jamoa yaratish</strong><small>Yangi jamoa ochish</small></span>
           </button>
-          <button type="button" className="premium-team-action join" onClick={() => setShowJoin(true)}>
-            <span className="premium-team-action-icon">↗</span>
+          <button type="button" className="team-action join" onClick={() => setShowJoin(true)}>
+            <span className="team-action-icon">↗</span>
             <span><strong>Jamoaga qo‘shilish</strong><small>Taklif yuborish</small></span>
           </button>
         </div>
       )}
 
-      {notice && <div className="premium-teams-notice" role="status">{notice}</div>}
+      {notice && <div className="teams-notice" role="status">{notice}</div>}
 
-      {isWorker && <h2 className="premium-teams-section-title">Jamoalarim</h2>}
-      {isAdmin && <h2 className="premium-teams-section-title">Jamoalarni boshqarish</h2>}
+      {isWorker && <h2 className="teams-section-title">Jamoalarim</h2>}
+      {isAdmin && <h2 className="teams-section-title">Jamoalarni boshqarish</h2>}
 
       {pendingTeams.map((team) => {
         const type = teamTypeMap[team.type];
         const rejected = team.status === "rejected";
         return (
-          <article className={`premium-team-card pending ${rejected ? "rejected" : ""}`} key={`pending-${team.id}`}>
-            <div className="premium-team-card-accent" />
-            <div className="premium-team-card-copy">
-              <span className={`premium-team-status ${rejected ? "blocked" : "pending"}`}>{rejected ? "Rad etilgan" : "Tasdiqlash kutilmoqda"}</span>
+          <article className={`team-card pending ${rejected ? "rejected" : ""}`} key={`pending-${team.id}`}>
+            <div className="team-card-accent" />
+            <div className="team-card-copy">
+              <span className={`team-status ${rejected ? "blocked" : "pending"}`}>{rejected ? "Rad etilgan" : "Tasdiqlash kutilmoqda"}</span>
               <h3>{team.teamName}</h3>
-              <p><img className="premium-team-inline-art" src={teamArt[team.type]} alt="" />{type?.title || "Jamoa"}</p>
-              <div className="premium-team-meta"><span>{team.leaderName}</span><span>{team.createdBy}</span></div>
+              <p><img className="team-inline-art" src={teamArt[team.type]} alt="" />{type?.title || "Jamoa"}</p>
+              <div className="team-meta"><span>{team.leaderName}</span><span>{team.createdBy}</span></div>
             </div>
             {isAdmin && !rejected && (
-              <div className="premium-team-pending-actions">
+              <div className="team-pending-actions">
                 <button type="button" disabled={busyId === team.id} onClick={() => rejectTeam(team)}>Rad etish</button>
                 <button type="button" disabled={busyId === team.id} onClick={() => approveTeam(team)}>{busyId === team.id ? "Kuting..." : "Tasdiqlash"}</button>
               </div>
             )}
-            {!isAdmin && <button type="button" className="premium-team-more" aria-label="So‘rovni o‘chirish" disabled={busyId === team.id} onClick={() => cancelPending(team, "pendingTeams")}>⋮</button>}
+            {!isAdmin && <button type="button" className="team-more" aria-label="So‘rovni o‘chirish" disabled={busyId === team.id} onClick={() => cancelPending(team, "pendingTeams")}>⋮</button>}
           </article>
         );
       })}
 
       {myJoinRequests.map((request) => (
-        <article className={`premium-team-card pending ${request.status === "rejected" ? "rejected" : ""}`} key={`join-${request.id}`}>
-          <div className="premium-team-card-accent" />
-          <div className="premium-team-card-copy">
-            <span className={`premium-team-status ${request.status === "rejected" ? "blocked" : "pending"}`}>{request.status === "rejected" ? "Rad etilgan" : "Qo‘shilish so‘rovi yuborildi"}</span>
+        <article className={`team-card pending ${request.status === "rejected" ? "rejected" : ""}`} key={`join-${request.id}`}>
+          <div className="team-card-accent" />
+          <div className="team-card-copy">
+            <span className={`team-status ${request.status === "rejected" ? "blocked" : "pending"}`}>{request.status === "rejected" ? "Rad etilgan" : "Qo‘shilish so‘rovi yuborildi"}</span>
             <h3>{request.teamName}</h3>
-            <p><img className="premium-team-inline-art" src={teamArt[request.type]} alt="" />{teamTypeMap[request.type]?.title}</p>
+            <p><img className="team-inline-art" src={teamArt[request.type]} alt="" />{teamTypeMap[request.type]?.title}</p>
           </div>
-          <button type="button" className="premium-team-more" aria-label="So‘rovni o‘chirish" disabled={busyId === request.id} onClick={() => cancelPending(request, "joinRequests")}>⋮</button>
+          <button type="button" className="team-more" aria-label="So‘rovni o‘chirish" disabled={busyId === request.id} onClick={() => cancelPending(request, "joinRequests")}>⋮</button>
         </article>
       ))}
 
@@ -256,26 +256,26 @@ export default function PremiumTeamsPanel({
         const leader = members.find((member) => member.rank === "leader");
         const teamTypeClass = team.type || "other";
         return (
-          <button className={`premium-team-card active ${teamTypeClass}`} type="button" key={team.id} onClick={() => setSelectedTeamId(team.id)}>
-            <div className="premium-team-card-accent" />
-            <div className="premium-team-card-art" aria-hidden="true"><img src={teamArt[team.type]} alt="" /></div>
-            <div className="premium-team-card-copy">
-              <span className={`premium-team-status ${status.kind}`}><i />{status.label}</span>
+          <button className={`team-card active ${teamTypeClass}`} type="button" key={team.id} onClick={() => setSelectedTeamId(team.id)}>
+            <div className="team-card-accent" />
+            <div className="team-card-art" aria-hidden="true"><img src={teamArt[team.type]} alt="" /></div>
+            <div className="team-card-copy">
+              <span className={`team-status ${status.kind}`}><i />{status.label}</span>
               <h3>{team.teamName}</h3>
-              <p><img className="premium-team-inline-art" src={teamArt[team.type]} alt="" />{type?.title || "Jamoa"}</p>
-              <div className="premium-team-meta"><span>{members.length} ta a’zo</span>{leader && <span>{leader.name || team.leader}</span>}</div>
+              <p><img className="team-inline-art" src={teamArt[team.type]} alt="" />{type?.title || "Jamoa"}</p>
+              <div className="team-meta"><span>{members.length} ta a’zo</span>{leader && <span>{leader.name || team.leader}</span>}</div>
             </div>
-            <span className="premium-team-open" aria-hidden="true">›</span>
+            <span className="team-open" aria-hidden="true">›</span>
           </button>
         );
       })}
 
       {!myTeams.length && !pendingTeams.length && !myJoinRequests.length && (
-        <div className="premium-teams-empty"><span>✦</span><strong>Hozircha jamoa yo‘q</strong><p>Yangi jamoa yarating yoki mavjud jamoaga qo‘shiling.</p></div>
+        <div className="teams-empty"><span>✦</span><strong>Hozircha jamoa yo‘q</strong><p>Yangi jamoa yarating yoki mavjud jamoaga qo‘shiling.</p></div>
       )}
 
       {showCreate && (
-        <CreatePremiumTeamModal
+        <CreateTeamModal
           onClose={() => setShowCreate(false)}
           myTeams={[
             ...myTeams,
@@ -286,23 +286,23 @@ export default function PremiumTeamsPanel({
       )}
 
       {showJoin && (
-        <div className="premium-team-modal-overlay" onClick={() => setShowJoin(false)}>
-          <section className="premium-team-modal" onClick={(event) => event.stopPropagation()}>
-            <button type="button" className="premium-team-modal-close" onClick={() => setShowJoin(false)}>×</button>
-            <p className="premium-teams-eyebrow">JAMOANI TANLANG</p>
+        <div className="team-modal-overlay" onClick={() => setShowJoin(false)}>
+          <section className="team-modal" onClick={(event) => event.stopPropagation()}>
+            <button type="button" className="team-modal-close" onClick={() => setShowJoin(false)}>×</button>
+            <p className="teams-eyebrow">JAMOANI TANLANG</p>
             <h2>Jamoaga qo‘shilish</h2>
-            <div className="premium-team-join-list">
+            <div className="team-join-list">
               {availableTeams.filter((team) => !team.members?.[phone] && !team.blocked && team.status !== "blocked").map((team) => {
                 const type = teamTypeMap[team.type];
                 const requested = pendingRequestTeamIds.has(team.id);
                 return (
-                  <div className="premium-team-join-row" key={team.id}>
-                    <div><strong>{team.teamName}</strong><small><img className="premium-team-inline-art" src={teamArt[team.type]} alt="" />{type?.title}</small></div>
+                  <div className="team-join-row" key={team.id}>
+                    <div><strong>{team.teamName}</strong><small><img className="team-inline-art" src={teamArt[team.type]} alt="" />{type?.title}</small></div>
                     <button type="button" disabled={requested || busyId === team.id} onClick={() => sendJoinRequest(team)}>{requested ? "Yuborildi" : busyId === team.id ? "Kuting..." : "So‘rash"}</button>
                   </div>
                 );
               })}
-              {!availableTeams.some((team) => !team.members?.[phone] && !team.blocked && team.status !== "blocked") && <p className="premium-team-join-empty">Qo‘shilish mumkin bo‘lgan jamoa topilmadi.</p>}
+              {!availableTeams.some((team) => !team.members?.[phone] && !team.blocked && team.status !== "blocked") && <p className="team-join-empty">Qo‘shilish mumkin bo‘lgan jamoa topilmadi.</p>}
             </div>
           </section>
         </div>

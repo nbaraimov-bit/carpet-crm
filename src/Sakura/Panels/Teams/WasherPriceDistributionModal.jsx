@@ -51,12 +51,12 @@ export default function WasherPriceDistributionModal({
   };
 
   return (
-    <div className="premium-team-modal-overlay" onMouseDown={(event) => event.target === event.currentTarget && !saving && onClose()}>
-      <section className="premium-team-modal washer-distribution-modal" role="dialog" aria-modal="true" aria-labelledby="washer-distribution-title">
-        <button type="button" className="premium-team-modal-close" onClick={onClose} disabled={saving} aria-label="Yopish">×</button>
-        <p className="premium-teams-eyebrow">JAMOA ISH HAQI</p>
+    <div className="team-modal-overlay" onMouseDown={(event) => event.target === event.currentTarget && !saving && onClose()}>
+      <section className="team-modal washer-distribution-modal" role="dialog" aria-modal="true" aria-labelledby="washer-distribution-title">
+        <button type="button" className="team-modal-close" onClick={onClose} disabled={saving} aria-label="Yopish">×</button>
+        <p className="teams-eyebrow">JAMOA ISH HAQI</p>
         <h2 id="washer-distribution-title">Narxlarni taqsimlash</h2>
-        <p className="premium-modal-description">Har bir mahsulot bo‘yicha faol a’zolarga ajrating. Jami belgilangan limitga teng bo‘lishi kerak.</p>
+        <p className="modal-description">Har bir mahsulot bo‘yicha faol a’zolarga ajrating. Jami belgilangan limitga teng bo‘lishi kerak.</p>
 
         <div className="washer-distribution-limits">
           {products.map((product) => {
@@ -98,9 +98,9 @@ export default function WasherPriceDistributionModal({
           {!members.length && <p className="washer-distribution-empty">Narx taqsimlash uchun faol a’zo yo‘q.</p>}
         </div>
 
-        <div className="premium-modal-actions">
-          <button type="button" className="premium-modal-cancel" onClick={onClose} disabled={saving}>Bekor qilish</button>
-          <button type="button" className="premium-modal-save" onClick={() => onSave(values)} disabled={!isValid || saving}>
+        <div className="modal-actions">
+          <button type="button" className="modal-cancel" onClick={onClose} disabled={saving}>Bekor qilish</button>
+          <button type="button" className="modal-save" onClick={() => onSave(values)} disabled={!isValid || saving}>
             {saving ? "Saqlanmoqda..." : "Taqsimotni saqlash"}
           </button>
         </div>

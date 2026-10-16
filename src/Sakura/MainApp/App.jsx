@@ -11,7 +11,7 @@ import getHours from "../../utils/getHours"
 import getSalary from "../../utils/getSalary"
 import getAttendanceSalary from "../../utils/getAttendanceSalary"
 import EgaPanel from "../../components/EgaPanel";
-import TeamsPanel from "../Panels/Teams/PremiumTeamsPanel";
+import TeamsPanel from "../Panels/Teams/TeamsPanel";
 import BottomNavigation from "../BottomNavigation/BottomNavigation";
 
 import logo from "../Pages/Home/Assets/logo.png";
