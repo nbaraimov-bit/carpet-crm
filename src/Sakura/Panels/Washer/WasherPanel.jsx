@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import carpetIcon from "../../MainIcons/carpetIcon.png";
 import blanketIcon from "../../MainIcons/blanketIcon.png";
 import yakandozIcon from "../../MainIcons/yakandozIcon.png";
-import { CommentIcon, LocationIcon, PhoneIcon, UserIcon } from "../../MainIcons/SvgIcons";
+import { BackIcon, CommentIcon, LocationIcon, PhoneIcon, UserIcon } from "../../MainIcons/SvgIcons";
 import "./WasherPanel.css";
 
 const products = [
@@ -108,13 +108,20 @@ export default function WasherPanel({
 
   return (
     <main className="washer-page">
+      <button
+        type="button"
+        className="washer-back-button"
+        onClick={() => setRole?.("")}
+        aria-label="Bosh menyuga qaytish"
+      >
+        <BackIcon className="washer-back-icon" />
+      </button>
       <header className="washer-page-header">
         <div>
           <span className="washer-eyebrow">WASHER PANEL</span>
           <h1>Yuvish buyurtmalari</h1>
           <p>{washerTeam?.teamName || "Faol yuvuvchi jamoa tanlanmagan"}</p>
         </div>
-        <button type="button" className="washer-exit" onClick={() => setRole?.("")}>Chiqish</button>
       </header>
 
       {notice && <div className="washer-notice" role="alert">{notice}</div>}
@@ -131,10 +138,7 @@ export default function WasherPanel({
         {visibleOrders.map((order) => (
           <article className={`washer-order-card ${order.tarif === "tezkor" ? "quick" : ""}`} key={order.firebaseId || order.id}>
             <header className="washer-order-header">
-              <div>
-                <span className="washer-order-label">BUYURTMA</span>
-                <h2>{order.id}</h2>
-              </div>
+              <div className="washer-order-id">{order.id}</div>
               <span className={`washer-order-status ${order.tarif === "tezkor" ? "quick" : ""}`}>
                 {order.tarif === "tezkor" ? "Tezkor" : order.status || "Olindi"}
               </span>

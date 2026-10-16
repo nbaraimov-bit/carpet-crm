@@ -11,6 +11,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 14px;
+  min-height: 46px;
+  padding-left: 56px;
   margin-bottom: 20px;
 }
 
@@ -32,7 +34,6 @@
   font-size: 13px;
 }
 
-.washer-exit,
 .washer-cancel-button,
 .washer-done-button {
   min-height: 42px;
@@ -43,6 +44,34 @@
   background: rgba(79, 42, 119, .26);
   font-weight: 700;
   cursor: pointer;
+}
+
+.washer-back-button {
+  position: fixed;
+  z-index: 500;
+  top: 18px;
+  left: 18px;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 2px solid rgba(192, 132, 252, .55);
+  border-radius: 50%;
+  color: #c084fc;
+  background: linear-gradient(145deg, rgba(168, 85, 247, .28), rgba(126, 34, 206, .18));
+  box-shadow: 0 0 10px rgba(168, 85, 247, .35), inset 0 0 8px rgba(168, 85, 247, .08);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.washer-back-button:active {
+  transform: scale(.92);
+}
+
+.washer-back-icon {
+  width: 23px;
+  height: 23px;
+  filter: drop-shadow(0 0 3px rgba(192, 132, 252, .9)) drop-shadow(0 0 7px rgba(168, 85, 247, .4));
 }
 
 .washer-notice,
@@ -100,16 +129,14 @@
   gap: 10px;
 }
 
-.washer-order-label {
-  color: #9e94bd;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: .12em;
-}
-
-.washer-order-header h2 {
-  margin: 3px 0 0;
-  font-size: 21px;
+.washer-order-id {
+  padding: 6px 10px;
+  border: 1px solid rgba(168, 85, 247, .22);
+  border-radius: 10px;
+  color: #c084fc;
+  background: rgba(168, 85, 247, .12);
+  font-size: 17px;
+  font-weight: 700;
 }
 
 .washer-order-status {
@@ -329,8 +356,8 @@
     border-radius: 18px;
   }
 
-  .washer-order-header h2 {
-    font-size: 19px;
+  .washer-order-id {
+    font-size: 16px;
   }
 
   .washer-products {
