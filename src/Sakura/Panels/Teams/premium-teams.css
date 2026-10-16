@@ -530,3 +530,205 @@
   .premium-detail-back span { display: none; }
   .premium-distribution-button span { display: inline; }
 }
+
+/* SAKURA panel ranglari va ixcham mobil joylashuv */
+.premium-teams-page,
+.premium-team-detail-page {
+  --teams-violet: #a855f7;
+  --teams-pink: #a855f7;
+}
+
+.premium-teams-page::before,
+.premium-team-detail-page::before {
+  background:
+    radial-gradient(ellipse at 90% 5%, rgba(126, 34, 206, .12), transparent 36%),
+    radial-gradient(ellipse at 8% 38%, rgba(168, 85, 247, .08), transparent 42%),
+    linear-gradient(180deg, #08091c 0%, #080a20 60%, #090b1d 100%);
+}
+
+.premium-team-action {
+  min-height: 72px;
+  padding: 10px 12px;
+  border-color: rgba(168, 85, 247, .42);
+  border-radius: 17px;
+}
+
+.premium-team-action.create,
+.premium-team-action.join {
+  background: linear-gradient(120deg, rgba(84, 39, 133, .65), rgba(20, 18, 48, .96));
+  box-shadow: 0 5px 18px rgba(72, 33, 122, .18), inset 0 0 18px rgba(126, 34, 206, .11);
+}
+
+.premium-team-action.join {
+  border-color: rgba(126, 103, 214, .44);
+}
+
+.premium-team-action-icon {
+  flex-basis: 40px;
+  width: 40px;
+  height: 40px;
+  border-color: rgba(168, 85, 247, .45);
+  background: rgba(126, 34, 206, .18);
+  box-shadow: 0 0 12px rgba(126, 34, 206, .2);
+  font-size: 25px;
+}
+
+.premium-team-action.join .premium-team-action-icon {
+  border-color: rgba(168, 85, 247, .45);
+  background: rgba(126, 34, 206, .18);
+}
+
+.premium-team-card,
+.premium-team-card.pending,
+.premium-team-card.pending.rejected {
+  border-color: rgba(126, 34, 206, .42);
+  background:
+    radial-gradient(circle at 2% 50%, rgba(126, 34, 206, .16), transparent 29%),
+    linear-gradient(108deg, rgba(24, 18, 49, .98), rgba(12, 14, 38, .97) 68%, rgba(30, 17, 54, .94));
+  box-shadow: inset 8px 0 24px -18px rgba(168, 85, 247, .78), 0 5px 20px rgba(48, 21, 83, .19);
+}
+
+.premium-team-card-accent,
+.premium-team-card.pending .premium-team-card-accent,
+.premium-team-card.pending.rejected .premium-team-card-accent {
+  width: 5px;
+  background: linear-gradient(180deg, #a855f7, #7e22ce);
+  box-shadow: 0 0 13px rgba(126, 34, 206, .58);
+}
+
+.premium-team-card.active:hover {
+  box-shadow: inset 8px 0 26px -18px rgba(168, 85, 247, .9), 0 8px 23px rgba(67, 29, 110, .27);
+}
+
+.premium-team-card-art {
+  flex-basis: 96px;
+  width: 96px;
+  height: 96px;
+  border-color: rgba(126, 34, 206, .42);
+  background: linear-gradient(145deg, rgba(36, 23, 63, .9), rgba(13, 16, 43, .96));
+  box-shadow: inset 0 0 18px rgba(126, 34, 206, .15), 0 0 11px rgba(126, 34, 206, .12);
+}
+
+.premium-team-card-art img {
+  width: 84%;
+  height: 84%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 10px rgba(126, 34, 206, .24));
+}
+
+.premium-team-card-copy > p {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.premium-team-inline-art {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.premium-team-meta span {
+  border-color: rgba(126, 34, 206, .22);
+  background: rgba(75, 50, 112, .15);
+}
+
+.premium-detail-hero {
+  border-color: rgba(126, 34, 206, .46);
+  background: radial-gradient(ellipse at 0 100%, rgba(126, 34, 206, .19), transparent 49%), linear-gradient(135deg, rgba(25, 19, 50, .98), rgba(12, 15, 40, .97));
+  box-shadow: inset 0 0 24px rgba(126, 34, 206, .09), 0 10px 28px rgba(42, 19, 76, .18);
+}
+
+.premium-detail-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.premium-detail-art {
+  display: grid;
+  flex: 0 0 76px;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  border: 1px solid rgba(126, 34, 206, .4);
+  border-radius: 19px;
+  background: rgba(126, 34, 206, .11);
+}
+
+.premium-detail-art img { width: 82%; height: 82%; object-fit: contain; }
+
+.premium-team-stat,
+.premium-member-card {
+  border-color: rgba(126, 34, 206, .36);
+  background: radial-gradient(circle at 100% 0, rgba(126, 34, 206, .1), transparent 42%), linear-gradient(145deg, rgba(22, 19, 49, .98), rgba(11, 16, 39, .98));
+  box-shadow: inset 0 0 18px rgba(126, 34, 206, .07), 0 6px 19px rgba(39, 20, 68, .16);
+}
+
+.premium-team-stat-heading img { width: 38px; height: 38px; }
+.premium-team-total span,
+.premium-member-salary span { display: inline-flex; align-items: center; gap: 8px; }
+.premium-team-total span img,
+.premium-member-salary span img { width: 24px; height: 24px; object-fit: contain; }
+.premium-team-total,
+.premium-member-salary { border-color: rgba(126, 34, 206, .34); background: linear-gradient(100deg, rgba(64, 37, 98, .28), rgba(18, 24, 49, .85)); }
+.premium-member-product { border-color: rgba(126, 34, 206, .24); }
+.premium-member-product-title { min-height: 29px; }
+.premium-member-product-title img { width: 31px; height: 31px; }
+
+.premium-create-types button {
+  position: relative;
+  display: flex;
+  min-height: 78px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid rgba(126, 34, 206, .32);
+  border-radius: 14px;
+  color: #f5efff;
+  background: rgba(12, 16, 40, .74);
+  text-align: left;
+}
+.premium-create-types { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 13px; }
+.premium-create-types button.selected { border-color: #a855f7; background: rgba(92, 47, 142, .28); box-shadow: inset 0 0 16px rgba(126, 34, 206, .17); }
+.premium-create-types button:disabled { opacity: .46; }
+.premium-create-types img { width: 46px; height: 46px; object-fit: contain; }
+.premium-create-types span { font-weight: 700; font-size: 12px; }
+.premium-create-types small { position: absolute; top: 5px; right: 7px; color: #b9a6d8; font-size: 8px; }
+.premium-create-name { display: grid; gap: 7px; margin-top: 15px; color: #cec4e0; font-size: 12px; }
+.premium-create-name input { min-height: 43px; padding: 0 12px; border: 1px solid rgba(126, 34, 206, .36); border-radius: 11px; color: white; background: rgba(5, 8, 27, .65); }
+.premium-create-hint,.premium-create-error { color: #f0a2b4; font-size: 12px; }
+
+.washer-distribution-limit { min-width: 0; align-items: center; border-color: rgba(126, 34, 206, .3); color: #e4c7f8; background: rgba(59, 34, 83, .17); }
+.washer-distribution-limit.valid { border-color: rgba(53, 225, 143, .38); color: #8aefb4; background: rgba(22, 124, 74, .12); }
+.washer-distribution-limit.over { border-color: rgba(255, 76, 103, .48); color: #ff9dac; }
+.washer-distribution-limit strong { white-space: nowrap; font-size: 10px; }
+.washer-distribution-product { display: inline-flex; align-items: center; gap: 5px; min-width: 0; }
+.washer-distribution-product img { flex: 0 0 21px; width: 21px; height: 21px; object-fit: contain; }
+.washer-distribution-grid label > span { min-height: 25px; display: flex; align-items: center; }
+.washer-distribution-grid .washer-distribution-product img { width: 22px; height: 22px; }
+
+@media (max-width: 600px) {
+  .premium-team-action { min-height: 68px; padding: 8px; gap: 7px; }
+  .premium-team-action-icon { flex-basis: 34px; width: 34px; height: 34px; font-size: 21px; }
+  .premium-team-action strong { font-size: 12px; }
+  .premium-team-action small { font-size: 9px; }
+  .premium-team-card { min-height: 126px; }
+  .premium-team-card-art { flex-basis: 68px; width: 68px; height: 76px; }
+  .premium-detail-identity { gap: 10px; }
+  .premium-detail-art { flex-basis: 58px; width: 58px; height: 58px; border-radius: 15px; }
+  .premium-member-products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .washer-distribution-limits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .washer-distribution-limit { padding: 7px; }
+  .washer-distribution-limit strong { font-size: 9px; }
+  .washer-distribution-limit .washer-distribution-product { gap: 3px; font-size: 10px; }
+  .washer-distribution-limit .washer-distribution-product img { flex-basis: 17px; width: 17px; height: 17px; }
+}
+
+@media (max-width: 380px) {
+  .premium-team-card-art { display: grid; }
+  .premium-team-open { display: grid; }
+  .premium-team-card { gap: 8px; padding: 10px; }
+  .premium-team-card-art { flex-basis: 54px; width: 54px; height: 62px; }
+  .premium-team-open { flex-basis: 28px; width: 28px; height: 28px; font-size: 22px; }
+}

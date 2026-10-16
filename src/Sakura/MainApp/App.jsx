@@ -11,7 +11,7 @@ import getHours from "../../utils/getHours"
 import getSalary from "../../utils/getSalary"
 import getAttendanceSalary from "../../utils/getAttendanceSalary"
 import EgaPanel from "../../components/EgaPanel";
-import TeamsPanel from "../../components/TeamsPanel/PremiumTeamsPanel";
+import TeamsPanel from "../Panels/Teams/PremiumTeamsPanel";
 import BottomNavigation from "../BottomNavigation/BottomNavigation";
 
 import logo from "../Pages/Home/Assets/logo.png";
@@ -635,6 +635,8 @@ function App() {
 
       if (teamType === "washer") {
 
+        if (!member.working) continue;
+
         earned = Number(member[service.key] || 0) * Number(service.quantity || 0);
 
       }
@@ -645,13 +647,17 @@ function App() {
 
         const total = Number(service.amount || 0) * Number(service.quantity || 0);
 
+        const activeLeaders = activeMembers.filter((activeMember) => activeMember.rank === "leader").length;
+        const activeNonLeaders = activeMembers.filter((activeMember) => activeMember.rank !== "leader").length;
+
         if (activeMembers.length === 1) {
           earned = total;
-        } else {
-          earned =
-            member.rank === "leader"
+        } else if (activeLeaders === 1 && activeNonLeaders > 0) {
+          earned = member.rank === "leader"
             ? total * 0.55
-            : total * 0.45;
+            : (total * 0.45) / activeNonLeaders;
+        } else {
+          earned = total / activeMembers.length;
         } 
 
       }
@@ -683,18 +689,18 @@ function App() {
 
         washerSalary:
           teamType === "washer"
-          ? oldWorker.washerSalary + earned
-          : oldWorker.washerSalary,  
+          ? Number(oldWorker.washerSalary || 0) + earned
+          : Number(oldWorker.washerSalary || 0),
  
         driverSalary:
           teamType === "driver"
-          ? oldWorker.driverSalary + earned
-          : oldWorker.driverSalary,
+          ? Number(oldWorker.driverSalary || 0) + earned
+          : Number(oldWorker.driverSalary || 0),
 
         packingSalary:
           teamType === "packing"
-          ? oldWorker.packingSalary + earned
-          : oldWorker.packingSalary,
+          ? Number(oldWorker.packingSalary || 0) + earned
+          : Number(oldWorker.packingSalary || 0),
       };
 
     }

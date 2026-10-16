@@ -10,13 +10,17 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import { teamDefaultShares, teamTypeMap } from "./teamTypes";
 import WasherPriceDistributionModal from "./WasherPriceDistributionModal";
-import carpetIcon from "../../Sakura/MainIcons/carpetIcon.png";
-import blanketIcon from "../../Sakura/MainIcons/blanketIcon.png";
-import yakandozIcon from "../../Sakura/MainIcons/yakandozIcon.png";
-import curtainIcon from "../../Sakura/MainIcons/curtainIcon.png";
+import carpetIcon from "../../MainIcons/carpetIcon.png";
+import blanketIcon from "../../MainIcons/blanketIcon.png";
+import yakandozIcon from "../../MainIcons/yakandozIcon.png";
+import curtainIcon from "../../MainIcons/curtainIcon.png";
+import totalIcon from "../../Pages/Home/Assets/jamiIcon.png";
+import washerIcon from "../../Pages/Home/Assets/washerIcon.png";
+import packingIcon from "../../Pages/Home/Assets/packingIcon.png";
+import driverIcon from "../../Pages/Home/Assets/driverIcon.png";
 
 const washerLimits = {
   carpetSt: 1500,
@@ -267,7 +271,7 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
       { icon: curtainIcon, title: "Parda", lines: [`${money(member.curtain)} so‘m`] },
     ];
     if (team.type === "packing") {
-      const share = (value) => activeMembers.length ? Number(value || 0) / activeMembers.length : 0;
+      const share = (value) => member.working && activeMembers.length ? Number(value || 0) / activeMembers.length : 0;
       return [
         { icon: carpetIcon, title: "Gilam", lines: [`${money(share(packingRates.carpet))} so‘m / kv`] },
         { icon: blanketIcon, title: "Adyol", lines: [`1x · ${money(share(packingRates.blanket1x))}`, `2x · ${money(share(packingRates.blanket2x))}`, `Matras · ${money(share(packingRates.matras))}`] },
@@ -275,15 +279,21 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
         { icon: curtainIcon, title: "Parda", lines: [`${money(share(packingPrices.curtain))} so‘m`] },
       ];
     }
-    const driverShare = (total, rank) => {
-      if (activeMembers.length === 1) return activeMembers[0].key === (member.phone || "") || rank === "leader" ? total : 0;
-      return Math.round(total * (rank === "leader" ? 0.55 : 0.45));
+    const driverShare = (total) => {
+      if (!member.working || !activeMembers.length) return 0;
+      if (activeMembers.length === 1) return activeMembers[0].key === member.phone ? total : 0;
+      const leaderCount = activeMembers.filter(({ member: active }) => active.rank === "leader").length;
+      const nonLeaderCount = activeMembers.length - leaderCount;
+      if (leaderCount === 1 && nonLeaderCount > 0) {
+        return member.rank === "leader" ? total * 0.55 : (total * 0.45) / nonLeaderCount;
+      }
+      return total / activeMembers.length;
     };
     return [
-      { icon: carpetIcon, title: "Gilam", lines: [`Olish · ${money(driverShare(driverPickupRates.carpet, member.rank))}`, `Yetkazish · ${money(driverShare(driverDeliveryRates.carpet, member.rank))}`] },
-      { icon: blanketIcon, title: "Adyol", lines: [`1x · ${money(driverShare(driverPickupRates.blanket1x, member.rank))}`, `2x · ${money(driverShare(driverPickupRates.blanket2x, member.rank))}`, `Matras · ${money(driverShare(driverPickupRates.matras, member.rank))}`, `Yetkazish · ${money(driverDeliveryRates.blanket)}`] },
-      { icon: yakandozIcon, title: "Yakandoz", lines: [`M · ${money(driverShare(driverPickupRates.yakandozM, member.rank))} / ${money(driverShare(driverDeliveryRates.yakandozM, member.rank))}`, `S · ${money(driverShare(driverPickupRates.yakandozS, member.rank))} / ${money(driverShare(driverDeliveryRates.yakandozS, member.rank))}`, `L · ${money(driverShare(driverPickupRates.yakandozL, member.rank))} / ${money(driverShare(driverDeliveryRates.yakandozL, member.rank))}`] },
-      { icon: curtainIcon, title: "Parda", lines: [`Olish · ${money(driverShare(driverPrices.pickupCurtain, member.rank))}`, `Yetkazish · ${money(driverShare(driverPrices.deliveryCurtain, member.rank))}`] },
+      { icon: carpetIcon, title: "Gilam", lines: [`Olish · ${money(driverShare(driverPickupRates.carpet))}`, `Yetkazish · ${money(driverShare(driverDeliveryRates.carpet))}`] },
+      { icon: blanketIcon, title: "Adyol", lines: [`1x · ${money(driverShare(driverPickupRates.blanket1x))}`, `2x · ${money(driverShare(driverPickupRates.blanket2x))}`, `Matras · ${money(driverShare(driverPickupRates.matras))}`, `Yetkazish · ${money(driverShare(driverDeliveryRates.blanket))}`] },
+      { icon: yakandozIcon, title: "Yakandoz", lines: [`M · ${money(driverShare(driverPickupRates.yakandozM))} / ${money(driverShare(driverDeliveryRates.yakandozM))}`, `S · ${money(driverShare(driverPickupRates.yakandozS))} / ${money(driverShare(driverDeliveryRates.yakandozS))}`, `L · ${money(driverShare(driverPickupRates.yakandozL))} / ${money(driverShare(driverDeliveryRates.yakandozL))}`] },
+      { icon: curtainIcon, title: "Parda", lines: [`Olish · ${money(driverShare(driverPrices.pickupCurtain))}`, `Yetkazish · ${money(driverShare(driverPrices.deliveryCurtain))}`] },
     ];
   };
 
@@ -299,10 +309,13 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
       </header>
 
       <section className="premium-detail-hero">
-        <div>
+        <div className="premium-detail-identity">
+          <div className={`premium-detail-art ${team.type}`}><img src={team.type === "washer" ? washerIcon : team.type === "packing" ? packingIcon : driverIcon} alt="" /></div>
+          <div>
           <span className={`premium-team-status ${team.status === "blocked" ? "blocked" : "active"}`}><i />{team.status === "blocked" ? "Bloklangan" : "Faol"}</span>
           <h1>{team.teamName}</h1>
-          <p>{teamType?.icon} {teamType?.title}</p>
+          <p>{teamType?.title}</p>
+          </div>
         </div>
         <div className="premium-detail-active-count"><span className="premium-online-dot" />{activeMembers.length} kishi faol</div>
       </section>
@@ -312,7 +325,7 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
       <section className="premium-team-stats-grid">
         {serviceStats.map((service) => (
           <article className="premium-team-stat" key={service.key}>
-            <div className="premium-team-stat-heading"><img src={service.icon} alt="" /><strong>{service.label}</strong></div>
+            <div className="premium-team-stat-heading"><img src={service.icon} alt={service.label} /></div>
             {team.type === "driver" ? (
               <>
                 <p><span>Yetkazish</span><b>{money(todayTeam[service.quantity])} {service.unit} · {money(todayTeam[service.salary])} so‘m</b></p>
@@ -324,7 +337,7 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
           </article>
         ))}
       </section>
-      <div className="premium-team-total"><span>💰 Jami ish haqi</span><strong>{money(todayTeam.salary)} so‘m</strong></div>
+      <div className="premium-team-total"><span><img src={totalIcon} alt="" /> Jami ish haqi</span><strong>{money(todayTeam.salary)} so‘m</strong></div>
 
       {canManage && joinRequests.length > 0 && (
         <section className="premium-join-requests">
@@ -350,20 +363,20 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
             <article className={`premium-member-card ${member.working ? "" : "inactive"}`} key={key}>
               <header className="premium-member-header">
                 <div className="premium-member-avatar">{(member.name || "?").trim().charAt(0).toUpperCase()}</div>
-                <div className="premium-member-name"><h3>{member.name || key}</h3><p>{member.rank === "leader" ? "♛ Jamoa rahbari" : "Jamoa a’zosi"}</p></div>
+                <div className="premium-member-name"><h3>{member.name || key}</h3><p>{member.rank === "leader" ? "Jamoa rahbari" : "Jamoa a’zosi"}</p></div>
                 <span className={`premium-member-status ${member.working ? "active" : "inactive"}`}><i />{member.working ? "Faol" : "Nofaol"}</span>
               </header>
 
               <div className="premium-member-products">
                 {products.map((product) => (
                   <div className="premium-member-product" key={product.title}>
-                    <div className="premium-member-product-title"><img src={product.icon} alt="" /><strong>{product.title}</strong></div>
+                    <div className="premium-member-product-title"><img src={product.icon} alt={product.title} /></div>
                     <div className="premium-member-product-values">{product.lines.map((line) => <span key={line}>{line}</span>)}</div>
                   </div>
                 ))}
               </div>
 
-              <div className="premium-member-salary"><span>💰 Bugungi ish haqi</span><strong>{money(dailyEarnings?.[member.phone || key]?.[salaryField])} so‘m</strong></div>
+              <div className="premium-member-salary"><span><img src={totalIcon} alt="" /> Bugungi ish haqi</span><strong>{money(dailyEarnings?.[member.phone || key]?.[salaryField])} so‘m</strong></div>
 
               {canManage && (
                 <div className="premium-member-actions">
@@ -378,7 +391,7 @@ export default function PremiumTeamDetail({ team, currentWorker, teamEarnings = 
 
       {canManage && (
         <button type="button" className="premium-delete-team" disabled={busy} onClick={deleteTeam}>
-          <span>♲</span><div><strong>Jamoani o‘chirish</strong><small>Jamoa ro‘yxatidan olib tashlash</small></div><b>›</b>
+          <span aria-hidden="true">×</span><div><strong>Jamoani o‘chirish</strong><small>Jamoa ro‘yxatidan olib tashlash</small></div><b>›</b>
         </button>
       )}
 

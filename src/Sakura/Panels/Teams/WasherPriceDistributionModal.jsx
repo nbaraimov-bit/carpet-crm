@@ -1,14 +1,17 @@
 import { useMemo, useState } from "react";
+import carpetIcon from "../../MainIcons/carpetIcon.png";
+import blanketIcon from "../../MainIcons/blanketIcon.png";
+import yakandozIcon from "../../MainIcons/yakandozIcon.png";
 
 const products = [
-  { key: "carpetSt", label: "Gilam ST", limit: 1500 },
-  { key: "carpetPro", label: "Gilam PRO", limit: 2000 },
-  { key: "blanket1x", label: "Adyol 1x", limit: 4000 },
-  { key: "blanket2x", label: "Adyol 2x", limit: 5000 },
-  { key: "matras", label: "Matras", limit: 8000 },
-  { key: "yakandozM", label: "Yakandoz M", limit: 2000 },
-  { key: "yakandozS", label: "Yakandoz S", limit: 4000 },
-  { key: "yakandozL", label: "Yakandoz L", limit: 6000 },
+  { key: "carpetSt", label: "ST", icon: carpetIcon, limit: 1500 },
+  { key: "carpetPro", label: "PRO", icon: carpetIcon, limit: 2000 },
+  { key: "blanket1x", label: "1x", icon: blanketIcon, limit: 4000 },
+  { key: "blanket2x", label: "2x", icon: blanketIcon, limit: 5000 },
+  { key: "matras", label: "Matras", icon: blanketIcon, limit: 8000 },
+  { key: "yakandozM", label: "M", icon: yakandozIcon, limit: 2000 },
+  { key: "yakandozS", label: "S", icon: yakandozIcon, limit: 4000 },
+  { key: "yakandozL", label: "L", icon: yakandozIcon, limit: 6000 },
 ];
 
 const amount = (value) => {
@@ -61,7 +64,7 @@ export default function WasherPriceDistributionModal({
             const state = total === product.limit ? "valid" : total > product.limit ? "over" : "under";
             return (
               <div className={`washer-distribution-limit ${state}`} key={product.key}>
-                <span>{product.label}</span>
+                <span className="washer-distribution-product"><img src={product.icon} alt="" />{product.label}</span>
                 <strong>{total.toLocaleString("uz-UZ")} / {product.limit.toLocaleString("uz-UZ")} so‘m</strong>
               </div>
             );
@@ -75,7 +78,7 @@ export default function WasherPriceDistributionModal({
               <div className="washer-distribution-grid">
                 {products.map((product) => (
                   <label key={product.key}>
-                    <span>{product.label}</span>
+                    <span className="washer-distribution-product"><img src={product.icon} alt="" />{product.label}</span>
                     <div className="washer-money-input">
                       <input
                         type="number"

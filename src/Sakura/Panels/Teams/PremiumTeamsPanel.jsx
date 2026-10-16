@@ -11,11 +11,16 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import { teamDefaultShares, teamTypeMap } from "./teamTypes";
-import CreateTeamModal from "./CreateTeamModal";
+import CreatePremiumTeamModal from "./CreatePremiumTeamModal";
 import PremiumTeamDetail from "./PremiumTeamDetail";
+import washerIcon from "../../Pages/Home/Assets/washerIcon.png";
+import packingIcon from "../../Pages/Home/Assets/packingIcon.png";
+import driverIcon from "../../Pages/Home/Assets/driverIcon.png";
 import "./premium-teams.css";
+
+const teamArt = { washer: washerIcon, packing: packingIcon, driver: driverIcon };
 
 export default function PremiumTeamsPanel({
   teams = [],
@@ -198,7 +203,7 @@ export default function PremiumTeamsPanel({
             <span><strong>Jamoa yaratish</strong><small>Yangi jamoa ochish</small></span>
           </button>
           <button type="button" className="premium-team-action join" onClick={() => setShowJoin(true)}>
-            <span className="premium-team-action-icon">♟</span>
+            <span className="premium-team-action-icon">↗</span>
             <span><strong>Jamoaga qo‘shilish</strong><small>Taklif yuborish</small></span>
           </button>
         </div>
@@ -218,8 +223,8 @@ export default function PremiumTeamsPanel({
             <div className="premium-team-card-copy">
               <span className={`premium-team-status ${rejected ? "blocked" : "pending"}`}>{rejected ? "Rad etilgan" : "Tasdiqlash kutilmoqda"}</span>
               <h3>{team.teamName}</h3>
-              <p>{type?.icon} {type?.title || "Jamoa"}</p>
-              <div className="premium-team-meta"><span>♟ {team.leaderName}</span><span>{team.createdBy}</span></div>
+              <p><img className="premium-team-inline-art" src={teamArt[team.type]} alt="" />{type?.title || "Jamoa"}</p>
+              <div className="premium-team-meta"><span>{team.leaderName}</span><span>{team.createdBy}</span></div>
             </div>
             {isAdmin && !rejected && (
               <div className="premium-team-pending-actions">
@@ -238,7 +243,7 @@ export default function PremiumTeamsPanel({
           <div className="premium-team-card-copy">
             <span className={`premium-team-status ${request.status === "rejected" ? "blocked" : "pending"}`}>{request.status === "rejected" ? "Rad etilgan" : "Qo‘shilish so‘rovi yuborildi"}</span>
             <h3>{request.teamName}</h3>
-            <p>{teamTypeMap[request.type]?.icon} {teamTypeMap[request.type]?.title}</p>
+            <p><img className="premium-team-inline-art" src={teamArt[request.type]} alt="" />{teamTypeMap[request.type]?.title}</p>
           </div>
           <button type="button" className="premium-team-more" aria-label="So‘rovni o‘chirish" disabled={busyId === request.id} onClick={() => cancelPending(request, "joinRequests")}>⋮</button>
         </article>
@@ -253,12 +258,12 @@ export default function PremiumTeamsPanel({
         return (
           <button className={`premium-team-card active ${teamTypeClass}`} type="button" key={team.id} onClick={() => setSelectedTeamId(team.id)}>
             <div className="premium-team-card-accent" />
-            <div className="premium-team-card-art" aria-hidden="true">{type?.icon || "✦"}</div>
+            <div className="premium-team-card-art" aria-hidden="true"><img src={teamArt[team.type]} alt="" /></div>
             <div className="premium-team-card-copy">
               <span className={`premium-team-status ${status.kind}`}><i />{status.label}</span>
               <h3>{team.teamName}</h3>
-              <p>{type?.icon} {type?.title || "Jamoa"}</p>
-              <div className="premium-team-meta"><span>♟ {members.length} ta a’zo</span>{leader && <span>♛ {leader.name || team.leader}</span>}</div>
+              <p><img className="premium-team-inline-art" src={teamArt[team.type]} alt="" />{type?.title || "Jamoa"}</p>
+              <div className="premium-team-meta"><span>{members.length} ta a’zo</span>{leader && <span>{leader.name || team.leader}</span>}</div>
             </div>
             <span className="premium-team-open" aria-hidden="true">›</span>
           </button>
@@ -270,9 +275,8 @@ export default function PremiumTeamsPanel({
       )}
 
       {showCreate && (
-        <CreateTeamModal
-          showCreateTeam={showCreate}
-          setShowCreateTeam={setShowCreate}
+        <CreatePremiumTeamModal
+          onClose={() => setShowCreate(false)}
           myTeams={[
             ...myTeams,
             ...pendingTeams.filter((team) => team.status === "pending"),
@@ -293,7 +297,7 @@ export default function PremiumTeamsPanel({
                 const requested = pendingRequestTeamIds.has(team.id);
                 return (
                   <div className="premium-team-join-row" key={team.id}>
-                    <div><strong>{team.teamName}</strong><small>{type?.icon} {type?.title}</small></div>
+                    <div><strong>{team.teamName}</strong><small><img className="premium-team-inline-art" src={teamArt[team.type]} alt="" />{type?.title}</small></div>
                     <button type="button" disabled={requested || busyId === team.id} onClick={() => sendJoinRequest(team)}>{requested ? "Yuborildi" : busyId === team.id ? "Kuting..." : "So‘rash"}</button>
                   </div>
                 );
