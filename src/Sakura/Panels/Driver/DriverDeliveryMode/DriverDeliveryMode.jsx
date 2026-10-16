@@ -15,6 +15,7 @@ import {
 import carpetIcon from "../../../MainIcons/carpetIcon.png";
 import blanketIcon from "../../../MainIcons/blanketIcon.png";
 import yakandozIcon from "../../../MainIcons/yakandozIcon.png";
+import curtainIcon from "../../../MainIcons/curtainIcon.png";
 import "./DriverDeliveryMode.css";
 
 const numberOrZero = (value) => {
@@ -220,6 +221,8 @@ export default function DriverDeliveryMode({
     order.status === "Yetkazilmoqda" &&
     order.deliveryDriverTeamId === driverTeam?.id
   );
+  const hasProductCount = (value) =>
+    value !== undefined && value !== null && value !== "";
 
   const OrderCard = ({ order, mine = false }) => {
     const id = order.firebaseId || order.id;
@@ -250,20 +253,36 @@ export default function DriverDeliveryMode({
               )}
             </div>
           )}
-          {order.comment && <div className="driver-order-info-row"><CommentIcon /><span>{order.comment}</span></div>}
         </div>
 
         <div className="driver-delivery-products">
-          {numberOrZero(order.carpetCount) > 0 && (
-            <div><img src={carpetIcon} alt="Gilam" /><span>{order.carpetCount} ta</span>{numberOrZero(order.kvm) > 0 && <small>{order.kvm} m2</small>}</div>
-          )}
-          {numberOrZero(order.blanketCount) > 0 && (
-            <div><img src={blanketIcon} alt="Adyol" /><span>{order.blanketCount} ta</span></div>
-          )}
-          {numberOrZero(order.yakandozCount) > 0 && (
-            <div><img src={yakandozIcon} alt="Yakandoz" /><span>{order.yakandozCount} ta</span></div>
-          )}
+          <div className={`driver-delivery-product ${hasProductCount(order.carpetCount) ? "active" : "inactive"}`}>
+            <img src={carpetIcon} alt="Gilam" />
+            {hasProductCount(order.carpetCount) && <span>{order.carpetCount ?? 0} / {order.kvm ?? 0}</span>}
+          </div>
+          <div className={`driver-delivery-product ${hasProductCount(order.blanketCount) ? "active" : "inactive"}`}>
+            <img src={blanketIcon} alt="Adyol" />
+            {hasProductCount(order.blanketCount) && <span>{order.blanketCount}</span>}
+          </div>
+          <div className={`driver-delivery-product ${hasProductCount(order.yakandozCount) ? "active" : "inactive"}`}>
+            <img src={yakandozIcon} alt="Yakandoz" />
+            {hasProductCount(order.yakandozCount) && <span>{order.yakandozCount}</span>}
+          </div>
+          <div className={`driver-delivery-product ${hasProductCount(order.curtainCount) ? "active" : "inactive"}`}>
+            <img src={curtainIcon} alt="Parda" />
+            {hasProductCount(order.curtainCount) && <span>{order.curtainCount}</span>}
+          </div>
         </div>
+
+        {(order.comment || order.driverComment) && (
+          <div className="driver-delivery-comment">
+            <CommentIcon />
+            <div>
+              {order.comment && <p> {order.comment}</p>}
+              {order.driverComment && <p> {order.driverComment}</p>}
+            </div>
+          </div>
+        )}
 
         <div className="driver-order-card__bottom">
           <div className="driver-pickup-date"><TimeIcon /><span>{formatDate(order.createdAt)}</span></div>
