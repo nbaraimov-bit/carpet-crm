@@ -65,7 +65,14 @@ export default function TeamDetail({ team, currentWorker, teamEarnings = {}, dri
   const todayTeam = teamEarnings?.[team.id] || {};
 
   useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
+    const dateParts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Tashkent",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).formatToParts(new Date());
+    const datePart = (type) => dateParts.find((part) => part.type === type)?.value;
+    const today = `${datePart("year")}-${datePart("month")}-${datePart("day")}`;
     return onSnapshot(doc(db, "workerEarnings", today), (snapshot) => {
       setDailyEarnings(snapshot.exists() ? snapshot.data() : {});
     }, (error) => setNotice(error.message || "Bugungi ish haqini yuklab bo‘lmadi"));
@@ -309,6 +316,7 @@ export default function TeamDetail({ team, currentWorker, teamEarnings = {}, dri
       </header>
 
       <section className="detail-hero">
+        <div className="detail-hero-top">
         <div className="detail-identity">
           <div className={`detail-art ${team.type}`}><img src={team.type === "washer" ? washerIcon : team.type === "packing" ? packingIcon : driverIcon} alt="" /></div>
           <div>
@@ -318,26 +326,26 @@ export default function TeamDetail({ team, currentWorker, teamEarnings = {}, dri
           </div>
         </div>
         <div className="detail-active-count"><span className="online-dot" />{activeMembers.length} kishi faol</div>
+        </div>
+        <section className="team-stats-grid">
+          {serviceStats.filter((service) => service.key !== "curtain").map((service) => (
+            <article className="team-stat" key={service.key}>
+              <div className="team-stat-heading"><img src={service.icon} alt={service.label} /></div>
+              {team.type === "driver" ? (
+                <div className="team-stat-values">
+                  <p>{money(todayTeam[service.quantity])} {service.unit} | {money(todayTeam[service.salary])} so'm</p>
+                  <p>{money(todayTeam[service.secondQuantity])} {service.unit} | {money(todayTeam[service.secondSalary])} so'm</p>
+                </div>
+              ) : (
+                <p className="team-stat-values">{money(todayTeam[service.quantity])} {service.unit} | {money(todayTeam[service.salary])} so'm</p>
+              )}
+            </article>
+          ))}
+        </section>
+        <div className="team-total"><span><img src={totalIcon} alt="" /> Jami ish haqi</span><strong>{money(todayTeam.salary)} so'm</strong></div>
       </section>
 
       {notice && <div className="teams-notice" role="status">{notice}</div>}
-
-      <section className="team-stats-grid">
-        {serviceStats.map((service) => (
-          <article className="team-stat" key={service.key}>
-            <div className="team-stat-heading"><img src={service.icon} alt={service.label} /></div>
-            {team.type === "driver" ? (
-              <>
-                <p><span>Yetkazish</span><b>{money(todayTeam[service.quantity])} {service.unit} · {money(todayTeam[service.salary])} so‘m</b></p>
-                <p><span>Olish</span><b>{money(todayTeam[service.secondQuantity])} {service.unit} · {money(todayTeam[service.secondSalary])} so‘m</b></p>
-              </>
-            ) : (
-              <p><span>{money(todayTeam[service.quantity])} {service.unit}</span><b>{money(todayTeam[service.salary])} so‘m</b></p>
-            )}
-          </article>
-        ))}
-      </section>
-      <div className="team-total"><span><img src={totalIcon} alt="" /> Jami ish haqi</span><strong>{money(todayTeam.salary)} so‘m</strong></div>
 
       {canManage && joinRequests.length > 0 && (
         <section className="join-requests">
@@ -368,7 +376,7 @@ export default function TeamDetail({ team, currentWorker, teamEarnings = {}, dri
               </header>
 
               <div className="member-products">
-                {products.map((product) => (
+                {products.filter((product) => product.title !== "Parda").map((product) => (
                   <div className="member-product" key={product.title}>
                     <div className="member-product-title"><img src={product.icon} alt={product.title} /></div>
                     <div className="member-product-values">{product.lines.map((line) => <span key={line}>{line}</span>)}</div>

@@ -182,13 +182,14 @@ function App() {
 
 
   function getTodayString() {
-    const now = new Date();
-
-    return `${now.getFullYear()}-${
-      String(now.getMonth() + 1).padStart(2, "0")
-    }-${
-      String(now.getDate()).padStart(2, "0")
-    }`;
+    const dateParts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Tashkent",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).formatToParts(new Date());
+    const datePart = (type) => dateParts.find((part) => part.type === type)?.value;
+    return `${datePart("year")}-${datePart("month")}-${datePart("day")}`;
   }
 
 
@@ -1017,7 +1018,7 @@ function App() {
 
   useEffect(() => {
 
-    const today = new Date().toISOString().slice(0, 10);
+    const today = getTodayString();
 
     const unsubscribe = onSnapshot(
 
@@ -1436,7 +1437,7 @@ function App() {
         updates.packingTeamName = packingTeam.teamName;
       }
 
-      const dateId = new Date().toISOString().slice(0, 10);
+      const dateId = getTodayString();
 
       if (packingTeam) {
 
@@ -1483,7 +1484,7 @@ function App() {
         (team) => team.id === order.pickupDriverTeamId
       );
 
-      const dateId = new Date().toISOString().slice(0, 10);
+      const dateId = getTodayString();
 
       if (pickupTeam) {
 
