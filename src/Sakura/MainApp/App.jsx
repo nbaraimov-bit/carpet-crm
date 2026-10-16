@@ -11,7 +11,7 @@ import getHours from "../../utils/getHours"
 import getSalary from "../../utils/getSalary"
 import getAttendanceSalary from "../../utils/getAttendanceSalary"
 import EgaPanel from "../../components/EgaPanel";
-import TeamsPanel from "../../components/TeamsPanel/TeamsPanel";
+import TeamsPanel from "../../components/TeamsPanel/PremiumTeamsPanel";
 import BottomNavigation from "../BottomNavigation/BottomNavigation";
 
 import logo from "../Pages/Home/Assets/logo.png";
@@ -1425,8 +1425,10 @@ function App() {
         team.members?.[currentPhone]
       );
 
-      updates.packingTeamId = packingTeam?.id;
-      updates.packingTeamName = packingTeam?.teamName;
+      if (packingTeam) {
+        updates.packingTeamId = packingTeam.id;
+        updates.packingTeamName = packingTeam.teamName;
+      }
 
       const dateId = new Date().toISOString().slice(0, 10);
 
@@ -1434,22 +1436,18 @@ function App() {
 
         const members = Object.values(packingTeam.members);
 
+        const hasBlanketSizes = [order.blanket1x, order.blanket2x, order.matras]
+          .some((value) => value !== undefined && value !== null && value !== "");
+        const hasYakandozSizes = [order.yakandozM, order.yakandozS, order.yakandozL]
+          .some((value) => value !== undefined && value !== null && value !== "");
         const packingServices = [
-          {
-            key: "carpet",
-            amount: Number(packingPrices.carpet || 0),
-            quantity: Number(order.kvm || 0),
-          },
-          {
-            key: "blanket",
-            amount: Number(packingPrices.blanket || 0),
-            quantity: Number(order.blanketCount || 0),
-          },
-          {
-            key: "yakandoz",
-            amount: Number(packingPrices.yakandoz || 0),
-            quantity: Number(order.yakandozCount || 0),
-          },
+          { key: "carpet", amount: 300, quantity: Number(order.kvm || 0) },
+          { key: "blanket", amount: 800, quantity: hasBlanketSizes ? Number(order.blanket1x || 0) : Number(order.blanketCount || 0) },
+          { key: "blanket", amount: 1000, quantity: Number(order.blanket2x || 0) },
+          { key: "blanket", amount: 2000, quantity: Number(order.matras || 0) },
+          { key: "yakandoz", amount: 500, quantity: hasYakandozSizes ? Number(order.yakandozM || 0) : Number(order.yakandozCount || 0) },
+          { key: "yakandoz", amount: 1000, quantity: Number(order.yakandozS || 0) },
+          { key: "yakandoz", amount: 1500, quantity: Number(order.yakandozL || 0) },
           {
             key: "curtain",
             amount: Number(packingPrices.curtain || 0),
@@ -2567,15 +2565,11 @@ function App() {
     {page === "teams" && (
       <TeamsPanel
         teams={teams}
-        setTeams={setTeams}
-        workers={workers}
         currentWorker={currentWorker}
         setPage={setPage}
-        role={currentWorker?.role} 
         teamEarnings={teamEarnings}
         driverPrices={driverPrices}
         packingPrices={packingPrices}
-        washerPrices={washerPrices}
 
       />
     )}
