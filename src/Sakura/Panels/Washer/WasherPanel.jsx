@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import carpetIcon from "../../MainIcons/carpetIcon.png";
 import blanketIcon from "../../MainIcons/blanketIcon.png";
 import yakandozIcon from "../../MainIcons/yakandozIcon.png";
+import { CommentIcon, LocationIcon, PhoneIcon, UserIcon } from "../../MainIcons/SvgIcons";
 import "./WasherPanel.css";
 
 const products = [
@@ -27,11 +28,11 @@ function getProductInfo(order, key, washerTeam) {
     const count = number(order.carpetCount);
     const salary = st * rateTotal(hasSizes ? "carpetSt" : "carpet", "carpet")
       + pro * rateTotal("carpetPro", "carpet");
-  return {
-    count: count ? `${count} ta / ${st + pro} kv` : `${st + pro} kv`,
-    confirmationCount: count ? `${count} ta` : `${st + pro} kv`,
-    salary,
-  };
+    return {
+      count: count ? `${count} / ${st + pro}` : `${st + pro}`,
+      confirmationCount: count ? `${count} ta` : `${st + pro}`,
+      salary,
+    };
   }
 
   if (key === "blanket") {
@@ -42,7 +43,7 @@ function getProductInfo(order, key, washerTeam) {
     const salary = oneX * rateTotal(hasSizes ? "blanket1x" : "blanket", "blanket")
       + twoX * rateTotal("blanket2x", "blanket")
       + matras * rateTotal("matras", "blanket");
-    return { count: `${oneX + twoX + matras} ta`, confirmationCount: `${oneX + twoX + matras} ta`, salary };
+    return { count: `${oneX + twoX + matras}`, confirmationCount: `${oneX + twoX + matras} ta`, salary };
   }
 
   const hasSizes = number(order.yakandozM) + number(order.yakandozS) + number(order.yakandozL) > 0;
@@ -52,7 +53,7 @@ function getProductInfo(order, key, washerTeam) {
   const salary = sizeM * rateTotal(hasSizes ? "yakandozM" : "yakandoz", "yakandoz")
     + sizeS * rateTotal("yakandozS", "yakandoz")
     + sizeL * rateTotal("yakandozL", "yakandoz");
-  return { count: `${sizeM + sizeS + sizeL} ta`, confirmationCount: `${sizeM + sizeS + sizeL} ta`, salary };
+  return { count: `${sizeM + sizeS + sizeL}`, confirmationCount: `${sizeM + sizeS + sizeL} ta`, salary };
 }
 
 function hasProduct(order, key) {
@@ -140,33 +141,45 @@ export default function WasherPanel({
             </header>
 
             <div className="washer-order-details">
-              {order.customerId && <span>{order.customerId}</span>}
-              {order.phone && <a href={`tel:${order.phone}`}>{order.phone}</a>}
-              {order.address && <span>{order.address}</span>}
-              {order.comment && <p>{order.comment}</p>}
-              {order.driverComment && <p>{order.driverComment}</p>}
+              <div className="washer-info-row"><UserIcon /><span>{order.customerId || "Mijoz"}</span></div>
+              {order.phone && <a className="washer-info-row" href={`tel:${order.phone}`}><PhoneIcon /><span>{order.phone}</span></a>}
+              {order.address && <div className="washer-info-row"><LocationIcon /><span>{order.address}</span></div>}
             </div>
 
+            {(order.comment || order.driverComment) && (
+              <div className="washer-comment">
+                <CommentIcon />
+                <div>
+                  {order.comment && <p>{order.comment}</p>}
+                  {order.driverComment && <p>{order.driverComment}</p>}
+                </div>
+              </div>
+            )}
+
             <div className="washer-products">
-              {order.availableProducts.map((product) => {
+              {products.map((product) => {
                 const info = getProductInfo(order, product.key, washerTeam);
                 const actionKey = `washer-${product.key}-${order.firebaseId}`;
                 const busy = savingKey === actionKey;
+                const present = hasProduct(order, product.key);
+                const completed = order[product.statusField] === "Yuvildi";
+                const available = order.availableProducts.some((item) => item.key === product.key);
                 return (
-                  <div className="washer-product" key={product.key}>
+                  <div className={`washer-product ${present ? "active" : "inactive"} ${completed ? "completed" : ""}`} key={product.key}>
                     <div className="washer-product-quantity">
                       <img src={product.icon} alt={product.title} />
-                      <span>{info.count}</span>
+                      {present && <span>{info.count}</span>}
+                      <i className={completed ? "is-done" : ""} />
                     </div>
                     <button
                       type="button"
                       className="washer-done-button"
-                      disabled={busy || !teamId}
+                      disabled={busy || !teamId || !present || !available || completed}
                       onClick={() => setConfirmation({ order, product, info })}
                     >
-                      {busy ? "Kuting..." : `${product.title} yuvildi`}
+                      {busy ? "Kuting..." : "Yuvildi"}
                     </button>
-                    <small className="washer-product-salary">{formatMoney(info.salary)}</small>
+                    {present && <small className="washer-product-salary">{formatMoney(info.salary)}</small>}
                   </div>
                 );
               })}

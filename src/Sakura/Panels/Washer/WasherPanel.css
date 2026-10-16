@@ -15,7 +15,7 @@
 }
 
 .washer-eyebrow {
-  color: #c794f6;
+  color: #b78be8;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .16em;
@@ -66,24 +66,36 @@
 }
 
 .washer-order-card {
+  position: relative;
+  isolation: isolate;
   min-width: 0;
   padding: 16px;
-  border: 1px solid rgba(126, 34, 206, .4);
-  border-radius: 20px;
+  overflow: hidden;
+  border: 3px solid #352354;
+  border-radius: 22px;
   background:
-    radial-gradient(circle at 100% 0, rgba(126, 34, 206, .14), transparent 38%),
-    linear-gradient(145deg, rgba(24, 19, 50, .98), rgba(11, 15, 38, .98));
-  box-shadow: 0 8px 24px rgba(5, 4, 20, .22), inset 0 0 18px rgba(126, 34, 206, .06);
+    radial-gradient(circle at 100% 0, rgba(126, 34, 206, .16), transparent 38%),
+    linear-gradient(145deg, #19142d, #101427 72%, #171329);
+  box-shadow: 0 8px 24px rgba(5, 4, 20, .24), inset 0 0 18px rgba(126, 34, 206, .06);
 }
 
 .washer-order-card.quick {
-  border-color: rgba(255, 75, 104, .72);
-  box-shadow: 0 0 18px rgba(255, 55, 90, .14), inset 0 0 20px rgba(255, 55, 90, .06);
+  border-color: #a42e66;
+  background:
+    radial-gradient(circle at 100% 0, rgba(255, 50, 120, .15), transparent 40%),
+    linear-gradient(145deg, #211329, #111427 72%, #1a142d);
+  box-shadow: 0 0 18px rgba(255, 55, 120, .17), inset 0 0 20px rgba(255, 55, 120, .05);
+  animation: washer-quick-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes washer-quick-pulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(255, 55, 120, .13), inset 0 0 18px rgba(255, 55, 120, .04); }
+  50% { box-shadow: 0 0 25px rgba(255, 55, 120, .28), inset 0 0 22px rgba(255, 55, 120, .08); }
 }
 
 .washer-order-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 10px;
 }
@@ -108,87 +120,159 @@
   background: rgba(15, 112, 70, .16);
   font-size: 11px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .washer-order-status.quick {
-  border-color: rgba(255, 87, 115, .4);
-  color: #ff9bab;
-  background: rgba(155, 30, 64, .18);
+  border-color: rgba(255, 87, 145, .4);
+  color: #ff9bbb;
+  background: rgba(155, 30, 82, .18);
 }
 
 .washer-order-details {
   display: grid;
-  gap: 5px;
-  margin: 10px 0 14px;
+  gap: 8px;
+  margin: 13px 0;
   color: #c3bdd5;
   font-size: 12px;
 }
 
-.washer-order-details a {
-  color: #d7b5ff;
+.washer-info-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  color: #c3bdd5;
   text-decoration: none;
 }
 
-.washer-order-details p {
-  margin: 2px 0;
+.washer-info-row svg,
+.washer-comment > svg {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  color: #a98bcf;
+}
+
+.washer-info-row span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.washer-order-details a:hover {
+  color: #e4c9ff;
+}
+
+.washer-comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(139, 116, 181, .2);
+  border-radius: 13px;
+  color: #c7c1d6;
+  background: rgba(8, 12, 30, .42);
+  font-size: 12px;
+}
+
+.washer-comment > div {
+  min-width: 0;
+}
+
+.washer-comment p {
+  margin: 0;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.washer-comment p + p {
+  margin-top: 6px;
 }
 
 .washer-products {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 9px;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(142, 116, 180, .2);
 }
 
 .washer-product {
+  display: flex;
   min-width: 0;
-  display: grid;
-  justify-items: stretch;
-  align-content: start;
+  flex-direction: column;
+  align-items: center;
   gap: 7px;
-  padding: 10px;
-  border: 1px solid rgba(137, 87, 202, .27);
-  border-radius: 15px;
-  background: rgba(7, 11, 31, .58);
+  text-align: center;
+  transition: opacity .2s ease, filter .2s ease;
+}
+
+.washer-product.inactive {
+  opacity: .34;
+  filter: grayscale(1);
 }
 
 .washer-product-quantity {
-  display: grid;
-  justify-items: center;
-  gap: 5px;
-  color: #eee7fb;
-  font-size: 12px;
-  font-weight: 700;
-  text-align: center;
+  display: flex;
+  min-height: 76px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3px;
+  color: #f0eaff;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.2;
 }
 
 .washer-product-quantity img {
-  width: 56px;
-  height: 56px;
+  width: 54px;
+  height: 54px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 9px rgba(143, 64, 225, .27));
+  filter: drop-shadow(0 4px 9px rgba(143, 64, 225, .24));
+}
+
+.washer-product-quantity i {
+  display: block;
+  width: 24px;
+  height: 3px;
+  margin-top: 2px;
+  border-radius: 99px;
+  background: transparent;
+}
+
+.washer-product-quantity i.is-done {
+  background: #28e889;
+  box-shadow: 0 0 9px rgba(40, 232, 137, .8);
 }
 
 .washer-done-button {
-  min-width: 0;
+  width: min(100%, 150px);
   min-height: 38px;
-  padding: 0 7px;
+  padding: 0 10px;
   border-color: rgba(61, 222, 143, .38);
   color: #9af0bd;
   background: rgba(21, 114, 70, .2);
-  font-size: 11px;
+  font-size: 12px;
+  transition: background .18s ease, transform .18s ease;
 }
 
-.washer-done-button:disabled,
-.washer-cancel-button:disabled {
-  opacity: .5;
-  cursor: wait;
+.washer-done-button:not(:disabled):hover {
+  transform: translateY(-1px);
+  background: rgba(21, 145, 83, .32);
+}
+
+.washer-done-button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
 }
 
 .washer-product-salary {
-  color: #b4a9c9;
+  color: #aaa3bf;
   font-size: 10px;
-  text-align: center;
+  line-height: 1.25;
 }
 
 .washer-confirm-overlay {
@@ -207,9 +291,10 @@
   width: min(100%, 440px);
   box-sizing: border-box;
   padding: 22px;
-  border: 1px solid rgba(168, 85, 247, .48);
+  border: 1px solid rgba(126, 34, 206, .48);
   border-radius: 20px;
-  background: linear-gradient(145deg, #19132f, #0c1028);
+  color: #f8f5ff;
+  background: linear-gradient(145deg, #19142f, #0e1228);
   box-shadow: 0 15px 48px rgba(0, 0, 0, .38), 0 0 22px rgba(126, 34, 206, .16);
 }
 
@@ -241,17 +326,20 @@
 
   .washer-order-card {
     padding: 12px;
-    border-radius: 17px;
+    border-radius: 18px;
+  }
+
+  .washer-order-header h2 {
+    font-size: 19px;
   }
 
   .washer-products {
     gap: 6px;
   }
 
-  .washer-product {
-    gap: 6px;
-    padding: 7px 5px;
-    border-radius: 12px;
+  .washer-product-quantity {
+    min-height: 67px;
+    font-size: 11px;
   }
 
   .washer-product-quantity img {
@@ -259,15 +347,19 @@
     height: 48px;
   }
 
-  .washer-product-quantity {
-    font-size: 10px;
-  }
-
   .washer-done-button {
-    font-size: 9px;
+    min-height: 35px;
+    padding: 0 5px;
+    font-size: 11px;
   }
 
   .washer-product-salary {
     font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .washer-order-card.quick {
+    animation: none;
   }
 }
