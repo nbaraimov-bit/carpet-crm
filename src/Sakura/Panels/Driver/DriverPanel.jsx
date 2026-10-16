@@ -8,7 +8,6 @@ export default function DriverPanel({
   setRole,
   orders,
   driverTeam,
-  updateStatus,
   loading,
   runAction,
 }) {
@@ -52,7 +51,6 @@ export default function DriverPanel({
           <DriverPickupMode
             orders={orders}
             driverTeam={driverTeam}
-            updateStatus={updateStatus}
             loading={loading}
             runAction={runAction}
           />

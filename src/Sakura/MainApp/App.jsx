@@ -2351,7 +2351,6 @@ function App() {
         orders={orders}
         driverMode={driverMode}
         setDriverMode={setDriverMode}
-        updateStatus={updateStatus}
         saveDetails={saveDetails}
         setRole={changeRole}
         carpetCount={carpetCount}

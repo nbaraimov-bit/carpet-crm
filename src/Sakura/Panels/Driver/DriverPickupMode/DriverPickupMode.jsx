@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { db } from "../../../../firebase";
-import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
+import { deleteField, doc, runTransaction, serverTimestamp } from "firebase/firestore";
 import "./DriverPickupMode.css";
 import DriverPickupModal from "./DriverPickupModal";
 
@@ -16,7 +16,6 @@ import {
 export default function DriverPickupMode({
   orders = [],
   driverTeam,
-  updateStatus,
   loading = {},
   runAction,
 }) {
@@ -79,6 +78,52 @@ export default function DriverPickupMode({
       ...prev,
       [name]: value,
     }));
+  };
+
+  const driverPickupStatus = async (id, nextStatus) => {
+    if (!driverTeam?.id) {
+      throw new Error("Haydovchi jamoasi topilmadi");
+    }
+
+    const orderRef = doc(db, "orders", id);
+
+    await runTransaction(db, async (transaction) => {
+      const orderSnap = await transaction.get(orderRef);
+      if (!orderSnap.exists()) throw new Error("Buyurtma topilmadi");
+
+      const order = orderSnap.data();
+
+      if (nextStatus === "Olinmoqda") {
+        if (order.status !== "Yangi") {
+          throw new Error("Buyurtma boshqa haydovchi tomonidan olingan");
+        }
+
+        transaction.update(orderRef, {
+          status: "Olinmoqda",
+          pickupDriverTeamId: driverTeam.id,
+          pickupDriverTeamName: driverTeam.teamName,
+        });
+        return;
+      }
+
+      if (nextStatus === "Yangi") {
+        if (
+          order.status !== "Olinmoqda" ||
+          order.pickupDriverTeamId !== driverTeam.id
+        ) {
+          throw new Error("Bu buyurtma sizning jamoangizga biriktirilmagan");
+        }
+
+        transaction.update(orderRef, {
+          status: "Yangi",
+          pickupDriverTeamId: deleteField(),
+          pickupDriverTeamName: deleteField(),
+        });
+        return;
+      }
+
+      throw new Error("Haydovchi buyurtma holati noto‘g‘ri");
+    });
   };
 
   const updateDriverStatus = async (id, form, locationUrl) => {
@@ -379,13 +424,30 @@ export default function DriverPickupMode({
         </div>
 
         {mine ? (
-          <button
-            type="button"
-            className="driver-pickup-primary-button"
-            onClick={() => openModal(order)}
-          >
-            Ma’lumot kiritish
-          </button>
+          <div className="driver-order-actions">
+            <button
+              type="button"
+              className="driver-pickup-primary-button"
+              onClick={() => openModal(order)}
+            >
+              Ma’lumot kiritish
+            </button>
+            <button
+              type="button"
+              className="driver-pickup-cancel-button"
+              disabled={loading[`cancel-pickup-${order.firebaseId}`]}
+              onClick={() =>
+                runAction(
+                  `cancel-pickup-${order.firebaseId}`,
+                  async () => driverPickupStatus(order.firebaseId, "Yangi")
+                )
+              }
+            >
+              {loading[`cancel-pickup-${order.firebaseId}`]
+                ? "Kuting..."
+                : "Bekor qilish"}
+            </button>
+          </div>
         ) : (
           <button
             type="button"
@@ -394,12 +456,7 @@ export default function DriverPickupMode({
             onClick={() =>
               runAction(
                 `take-${order.firebaseId}`,
-                async () => {
-                  await updateStatus(
-                    order.firebaseId,
-                    "Olinmoqda"
-                  );
-                }
+                async () => driverPickupStatus(order.firebaseId, "Olinmoqda")
               )
             }
           >

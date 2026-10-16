@@ -180,5 +180,9 @@
 
 @media (max-width: 420px) {
   .driver-pickup-modal { padding: 20px 16px; }
-  .driver-pickup-form__three { grid-template-columns: 1fr; }
+  .driver-pickup-form__three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .driver-pickup-form__three input { padding: 11px 8px; }
 }

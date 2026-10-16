@@ -191,6 +191,33 @@
   background: #1b1c2d;
 }
 
+.driver-order-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.driver-order-actions button {
+  flex: 1;
+  white-space: nowrap;
+}
+
+.driver-pickup-cancel-button {
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 12px;
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.08);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.driver-pickup-cancel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .driver-pickup-primary-button:active,
 .driver-pickup-secondary-button:active {
   transform: scale(0.97);
@@ -214,4 +241,12 @@
   .driver-order-card { padding: 14px; }
   .driver-order-card__bottom { align-items: stretch; flex-direction: column; }
   .driver-order-card__bottom button { width: 100%; }
+  .driver-order-actions { width: 100%; gap: 6px; }
+  .driver-order-actions button {
+    width: auto;
+    min-width: 0;
+    padding: 10px 6px;
+    white-space: normal;
+    line-height: 1.2;
+  }
 }
