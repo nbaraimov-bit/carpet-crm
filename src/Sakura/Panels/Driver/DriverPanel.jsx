@@ -3,6 +3,7 @@ import { BackIcon } from "../../MainIcons/SvgIcons";
 import "./DriverPanel.css";
 
 import DriverPickupMode from "./DriverPickupMode/DriverPickupMode";
+import DriverDeliveryMode from "./DriverDeliveryMode/DriverDeliveryMode";
 
 export default function DriverPanel({ 
   setRole,
@@ -10,6 +11,11 @@ export default function DriverPanel({
   driverTeam,
   loading,
   runAction,
+  calculateTotalSalary,
+  washerPrices,
+  driverPrices,
+  packingPrices,
+  updateExpenseFund,
 }) {
   const [driverMode, setDriverMode] = useState(
     () => sessionStorage.getItem("sakuraDriverMode") || "olish"
@@ -57,10 +63,17 @@ export default function DriverPanel({
         )}
 
         {driverMode === "yetkazish" && (
-          <div className="driver-placeholder">
-            <h2>Yetkazish rejimi</h2>
-            <p>Bu bo‘limni keyingi bosqichda yaratamiz.</p>
-          </div>
+          <DriverDeliveryMode
+            orders={orders}
+            driverTeam={driverTeam}
+            loading={loading}
+            runAction={runAction}
+            calculateTotalSalary={calculateTotalSalary}
+            washerPrices={washerPrices}
+            driverPrices={driverPrices}
+            packingPrices={packingPrices}
+            updateExpenseFund={updateExpenseFund}
+          />
         )}
       </div>
     </div>

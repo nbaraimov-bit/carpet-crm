@@ -2377,6 +2377,11 @@ function App() {
         driverTeam={driverTeam}
         loading={loading}
         runAction={runAction}
+        calculateTotalSalary={calculateTotalSalary}
+        washerPrices={washerPrices}
+        driverPrices={driverPrices}
+        packingPrices={packingPrices}
+        updateExpenseFund={updateExpenseFund}
 
       />
     )}
