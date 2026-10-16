@@ -51,7 +51,9 @@
   z-index: 500;
   top: 18px;
   left: 18px;
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 46px;
   height: 46px;
   place-items: center;
@@ -71,6 +73,7 @@
 .washer-back-icon {
   width: 23px;
   height: 23px;
+  transform: translateX(-2px);
   filter: drop-shadow(0 0 3px rgba(192, 132, 252, .9)) drop-shadow(0 0 7px rgba(168, 85, 247, .4));
 }
 
@@ -97,15 +100,20 @@
 .washer-order-card {
   position: relative;
   isolation: isolate;
+  width: 100%;
+  box-sizing: border-box;
   min-width: 0;
-  padding: 16px;
-  overflow: hidden;
-  border: 3px solid #352354;
+  padding: 17px;
+  overflow: visible;
+  border: 3px solid rgba(168, 85, 247, .32);
   border-radius: 22px;
   background:
-    radial-gradient(circle at 100% 0, rgba(126, 34, 206, .16), transparent 38%),
-    linear-gradient(145deg, #19142d, #101427 72%, #171329);
-  box-shadow: 0 8px 24px rgba(5, 4, 20, .24), inset 0 0 18px rgba(126, 34, 206, .06);
+    linear-gradient(145deg, rgba(25, 24, 52, .98), rgba(12, 13, 31, .98));
+  box-shadow:
+    0 0 20px rgba(168, 85, 247, .12),
+    0 12px 35px rgba(0, 0, 0, .28),
+    inset 0 0 0 .8px rgba(203, 161, 247, .85);
+  z-index: 1;
 }
 
 .washer-order-card.quick {
