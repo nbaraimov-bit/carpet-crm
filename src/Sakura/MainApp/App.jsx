@@ -3,6 +3,7 @@ import VaqtinchalikHisobot from "./VaqtinchalikHisobot"
 import ArchivePage from "../Pages/Archive/ArchivePage"
 import HomePage from "../Pages/Home/HomeMain/HomePage"
 import WasherPanel from "../Panels/Washer/WasherPanel"
+import PackingPanel from "../Panels/Packing/PackingPanel"
 import DriverPanel from "../Panels/Driver/DriverPanel"
 import OperatorPanel from "../Panels/Operator/OperatorPanel"
 import AdminPanel from "../../components/AdminPanel"
@@ -1692,6 +1693,99 @@ function App() {
     }
   };
 
+  const updatePackingStatus = async (id, category) => {
+    const productConfig = {
+      carpet: { washerField: "carpetStatus", packingField: "carpetPackingStatus" },
+      blanket: { washerField: "blanketStatus", packingField: "blanketPackingStatus" },
+      yakandoz: { washerField: "yakandozStatus", packingField: "yakandozPackingStatus" },
+    };
+    const config = productConfig[category];
+    if (!config) throw new Error("Mahsulot turi noto'g'ri");
+
+    const team = teams.find((item) =>
+      item.type === "packing" && item.members?.[currentPhone]?.working === true
+    );
+    if (!team || !currentPhone) throw new Error("Faol tayyorlovchi jamoa topilmadi");
+
+    const orderRef = doc(db, "orders", id);
+    const order = await runTransaction(db, async (transaction) => {
+      const snapshot = await transaction.get(orderRef);
+      if (!snapshot.exists()) throw new Error("Buyurtma topilmadi");
+      const latestOrder = snapshot.data();
+      if (latestOrder[config.washerField] !== "Yuvildi") {
+        throw new Error("Mahsulot hali yuvilmagan");
+      }
+      if (latestOrder[config.packingField] === "Tayyor") return null;
+      if (latestOrder.packingTeamId && latestOrder.packingTeamId !== team.id) {
+        throw new Error("Bu buyurtma boshqa tayyorlovchi jamoaga biriktirilgan");
+      }
+
+      const updates = {
+        [config.packingField]: "Tayyor",
+        packingTeamId: team.id,
+        packingTeamName: team.teamName,
+        packingDate: serverTimestamp(),
+      };
+      const presentProducts = [
+        { category: "carpet", washerField: "carpetStatus", packingField: "carpetPackingStatus", count: Number(latestOrder.kvmSt || 0) + Number(latestOrder.kvmPro || 0) || Number(latestOrder.kvm || 0) || Number(latestOrder.carpetCount || 0) },
+        { category: "blanket", washerField: "blanketStatus", packingField: "blanketPackingStatus", count: Number(latestOrder.blanket1x || 0) + Number(latestOrder.blanket2x || 0) + Number(latestOrder.matras || 0) || Number(latestOrder.blanketCount || 0) },
+        { category: "yakandoz", washerField: "yakandozStatus", packingField: "yakandozPackingStatus", count: Number(latestOrder.yakandozM || 0) + Number(latestOrder.yakandozS || 0) + Number(latestOrder.yakandozL || 0) || Number(latestOrder.yakandozCount || 0) },
+      ].filter((product) => product.count > 0);
+      const allPrepared = presentProducts.length > 0 && presentProducts.every((product) =>
+        product.category === category || latestOrder[product.packingField] === "Tayyor"
+      );
+      if (allPrepared) updates.status = "Tayyor";
+
+      transaction.update(orderRef, updates);
+      return latestOrder;
+    });
+
+    if (!order) return;
+
+    const members = Object.entries(team.members || {}).map(([phone, member]) => ({
+      ...member,
+      phone: member.phone || phone,
+    }));
+    let services = [];
+    if (category === "carpet") {
+      const hasSizeFields = Number(order.kvmSt || 0) + Number(order.kvmPro || 0) > 0;
+      const kvm = hasSizeFields
+        ? [{ amount: 300, quantity: Number(order.kvmSt || 0) + Number(order.kvmPro || 0) }]
+        : [{ amount: 300, quantity: Number(order.kvm || 0) }];
+      services = kvm.map((service) => ({ ...service, key: "carpet" }));
+    } else if (category === "blanket") {
+      const hasSizeFields = Number(order.blanket1x || 0) + Number(order.blanket2x || 0) + Number(order.matras || 0) > 0;
+      services = hasSizeFields
+        ? [
+            { key: "blanket", amount: 800, quantity: Number(order.blanket1x || 0) },
+            { key: "blanket", amount: 1000, quantity: Number(order.blanket2x || 0) },
+            { key: "blanket", amount: 2000, quantity: Number(order.matras || 0) },
+          ]
+        : [{ key: "blanket", amount: 800, quantity: Number(order.blanketCount || 0) }];
+    } else {
+      const hasSizeFields = Number(order.yakandozM || 0) + Number(order.yakandozS || 0) + Number(order.yakandozL || 0) > 0;
+      services = hasSizeFields
+        ? [
+            { key: "yakandoz", amount: 500, quantity: Number(order.yakandozM || 0) },
+            { key: "yakandoz", amount: 1000, quantity: Number(order.yakandozS || 0) },
+            { key: "yakandoz", amount: 1500, quantity: Number(order.yakandozL || 0) },
+          ]
+        : [{ key: "yakandoz", amount: 500, quantity: Number(order.yakandozCount || 0) }];
+    }
+
+    for (const service of services) {
+      if (service.quantity <= 0) continue;
+      await addWorkerEarnings({
+        dateId: getTodayString(),
+        members,
+        service,
+        teamId: team.id,
+        teamName: team.teamName,
+        teamType: "packing",
+      });
+    }
+  };
+
 
   {/* ===== kirish ===== */}
   if (!currentWorker && !requestSent ) {
@@ -2363,77 +2457,16 @@ function App() {
   
       />
     )}
-
-
     {/* ===== tayyorlovchi panel ===== */}
     {page === "home" && displayRole === "tayyorlovchi" && (
-    <div>
-      <h1>Tayyorlovchi panel</h1>
-
-      <button
-        onClick={() => changeRole("")}
-        style={{fontSize: 20}} 
-      >
-        ⏪️
-      </button>
-
-      <br /><br />
-
-      <hr />
-
-      <h2>Yuvilgan buyurtmalar</h2>
-
-      {orders
-        .filter(
-          (o) => o.status === "Yuvildi"
-        )
-        .map((order) => (
-          <div
-            key={order.id}
-            style={{
-              border: order.tarif === "tezkor" ? "3px solid red" : "3px solid blue",
-              padding: 10,
-              marginBottom: 10,
-            }}
-          >
-            <p><b>Buyurtma ID:</b> {order.id}</p>
-            <p><b>Telefon:</b> {order.phone}</p>
-            <p><b>Manzil:</b> {order.address}</p>
-            <details>
-              <summary>
-                batafsil
-              </summary>
-              {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
-              {order.kvm && (<p><b>Kv.m:</b> {order.kvm}</p>)}
-              {order.blanketCount && (<p><b>Adyol:</b> {order.blanketCount}</p>)}
-              {order.yakandozCount && (<p><b>Yakandoz:</b> {order.yakandozCount}</p>)}
-              {order.curtainCount && (<p><b>Parda:</b> {order.curtainCount}</p>)}
-              {order.curtainMeter && (<p><b>Parda metri:</b> {order.curtainMeter}</p>)}
-              {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}
-              <p><b>Tarif:</b>{" "}{order.tarif}</p>
-              {order.price && (<p><b>Jami narx:</b> {order.price}</p>)}
-              <p><b>Status:</b> {order.status}</p>
-              {order.comment && (<p><b>Izoh:</b>{" "}{order.comment}</p>)}
-              {order.driverComment&&(<p><b>Izoh:</b>{" "}{order.driverComment}</p>)}
-            </details>
-
-            <button
-              disabled={loading[`tayyor-${order.firebaseId}`]}
-              onClick={() => runAction(
-                `tayyor-${order.firebaseId}`,
-                async () => {
-                  await updateStatus(order.firebaseId, "Tayyor");
-                }
-              )}
-            >
-              {loading[`tayyor-${order.firebaseId}`]
-                ? "⏳ Kuting..." : "Tayyor"}
-            </button>
-          </div>
-        ))
-      }
-    </div>
+      <PackingPanel
+        orders={orders}
+        packingTeam={packingTeam}
+        updatePackingStatus={updatePackingStatus}
+        setRole={changeRole}
+      />
     )}
+
 
 
     {/* ===== admin panel ===== */}
