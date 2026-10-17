@@ -3,6 +3,8 @@ import carpetIcon from "../../MainIcons/carpetIcon.png";
 import blanketIcon from "../../MainIcons/blanketIcon.png";
 import yakandozIcon from "../../MainIcons/yakandozIcon.png";
 import { BackIcon, CommentIcon, LocationIcon, PhoneIcon, UserIcon } from "../../MainIcons/SvgIcons";
+import { db } from "../../../firebase";
+import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
 import "./WasherPanel.css";
 
 const products = [
@@ -65,13 +67,122 @@ function hasProduct(order, key) {
 export default function WasherPanel({
   orders = [],
   washerTeam,
-  updateWasherStatus,
+  addWorkerEarnings,
+  getTodayString,
   setRole,
 }) {
   const [confirmation, setConfirmation] = useState(null);
   const [notice, setNotice] = useState("");
   const [savingKey, setSavingKey] = useState("");
   const teamId = washerTeam?.id;
+
+  const updateWasherStatus = async (id, category) => {
+    const orderRef = doc(db, "orders", id);
+    const team = washerTeam;
+    if (!team) throw new Error("Faol yuvuvchi jamoa topilmadi");
+
+    const categoryConfig = {
+      carpet: {
+        statusField: "carpetStatus",
+        teamIdField: "carpetWasherTeamId",
+        teamNameField: "carpetWasherTeamName",
+        dateField: "carpetDate",
+        rates: [
+          { key: "carpet", rateKey: "carpetSt", legacyRateKey: "carpet", quantity: "kvmSt" },
+          { key: "carpet", rateKey: "carpetPro", legacyRateKey: "carpet", quantity: "kvmPro" },
+        ],
+      },
+      blanket: {
+        statusField: "blanketStatus",
+        teamIdField: "blanketWasherTeamId",
+        teamNameField: "blanketWasherTeamName",
+        dateField: "blanketDate",
+        rates: [
+          { key: "blanket", rateKey: "blanket1x", legacyRateKey: "blanket", quantity: "blanket1x" },
+          { key: "blanket", rateKey: "blanket2x", legacyRateKey: "blanket", quantity: "blanket2x" },
+          { key: "blanket", rateKey: "matras", legacyRateKey: "blanket", quantity: "matras" },
+        ],
+      },
+      yakandoz: {
+        statusField: "yakandozStatus",
+        teamIdField: "yakandozWasherTeamId",
+        teamNameField: "yakandozWasherTeamName",
+        dateField: "yakandozDate",
+        rates: [
+          { key: "yakandoz", rateKey: "yakandozM", legacyRateKey: "yakandoz", quantity: "yakandozM" },
+          { key: "yakandoz", rateKey: "yakandozS", legacyRateKey: "yakandoz", quantity: "yakandozS" },
+          { key: "yakandoz", rateKey: "yakandozL", legacyRateKey: "yakandoz", quantity: "yakandozL" },
+        ],
+      },
+    };
+    const config = categoryConfig[category];
+    if (!config) throw new Error("Mahsulot turi noto'g'ri");
+
+    const order = await runTransaction(db, async (transaction) => {
+      const orderSnapshot = await transaction.get(orderRef);
+      if (!orderSnapshot.exists()) throw new Error("Buyurtma topilmadi");
+      const latestOrder = orderSnapshot.data();
+      if (latestOrder[config.statusField] === "Yuvildi") return null;
+
+      const assignedTeamId = latestOrder[config.teamIdField];
+      if (assignedTeamId && assignedTeamId !== team.id) {
+        throw new Error("Bu mahsulot boshqa jamoaga biriktirilgan");
+      }
+
+      const orderUpdates = {
+        [config.statusField]: "Yuvildi",
+        [config.teamIdField]: team.id,
+        [config.teamNameField]: team.teamName,
+        [config.dateField]: serverTimestamp(),
+      };
+      const categoryFields = [
+        { status: "carpetStatus", count: Number(latestOrder.kvmSt || 0) + Number(latestOrder.kvmPro || 0) || Number(latestOrder.kvm || 0) || Number(latestOrder.carpetCount || 0) },
+        { status: "blanketStatus", count: Number(latestOrder.blanket1x || 0) + Number(latestOrder.blanket2x || 0) + Number(latestOrder.matras || 0) || Number(latestOrder.blanketCount || 0) },
+        { status: "yakandozStatus", count: Number(latestOrder.yakandozM || 0) + Number(latestOrder.yakandozS || 0) + Number(latestOrder.yakandozL || 0) || Number(latestOrder.yakandozCount || 0) },
+      ].filter((item) => item.count > 0);
+      const allProductsDone = categoryFields.every((item) =>
+        item.status === config.statusField || latestOrder[item.status] === "Yuvildi"
+      );
+      if (allProductsDone) orderUpdates.status = "Yuvildi";
+      transaction.update(orderRef, orderUpdates);
+      return latestOrder;
+    });
+    if (!order) return;
+
+    const hasSizeFields = config.rates.some((rate) => Number(order[rate.quantity] || 0) > 0);
+    const legacyQuantity = category === "carpet"
+      ? Number(order.kvm || 0)
+      : Number(order[category === "blanket" ? "blanketCount" : "yakandozCount"] || 0);
+    const wageServices = config.rates
+      .map((rate) => ({
+        key: rate.key,
+        rateKey: hasSizeFields ? rate.rateKey : rate.legacyRateKey,
+        quantity: hasSizeFields ? Number(order[rate.quantity] || 0) : 0,
+      }))
+      .filter((service) => service.quantity > 0);
+
+    if (!hasSizeFields && legacyQuantity > 0) {
+      wageServices.push({
+        key: category,
+        rateKey: config.rates[0].legacyRateKey,
+        quantity: legacyQuantity,
+      });
+    }
+
+    const activeMembers = Object.entries(team.members || {})
+      .filter(([, member]) => member.working)
+      .map(([phone, member]) => ({ ...member, phone: member.phone || phone }));
+    for (const service of wageServices) {
+      await addWorkerEarnings({
+        dateId: getTodayString(),
+        members: activeMembers,
+        service,
+        teamId: team.id,
+        teamName: team.teamName,
+        teamType: "washer",
+      });
+    }
+  };
 
   const visibleOrders = useMemo(() => orders
     .filter((order) => order.status !== "Yuvildi")

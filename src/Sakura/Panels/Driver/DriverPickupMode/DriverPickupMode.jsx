@@ -12,6 +12,17 @@ import {
   TimeIcon,
 } from "../../../MainIcons/SvgIcons";
 
+function getTashkentDateId() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Tashkent",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const part = (type) => parts.find((item) => item.type === type)?.value;
+  return `${part("year")}-${part("month")}-${part("day")}`;
+}
+
 export default function DriverPickupMode({
   orders = [],
   driverTeam,
@@ -131,8 +142,7 @@ export default function DriverPickupMode({
     }
 
     const orderRef = doc(db, "orders", id);
-    const now = new Date();
-    const dateId = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+    const dateId = getTashkentDateId();
     const workerEarningsRef = doc(db, "workerEarnings", dateId);
     const teamEarningsRef = doc(db, "teamEarnings", dateId);
 
@@ -231,13 +241,15 @@ export default function DriverPickupMode({
         (sum, service) => sum + service.quantity * service.amount,
         0
       );
-      const payrollShareTotal = activeMembers.length === 1
-        ? 1
-        : activeMembers.reduce(
-          (sum, member) => sum + (member.rank === "leader" ? 0.55 : 0.45),
-          0
-        );
-      const distributedSalary = totalSalary * payrollShareTotal;
+      const leader = activeMembers.find((member) => member.rank === "leader");
+      const nonLeaderCount = activeMembers.filter((member) => member.rank !== "leader").length;
+      const memberShare = (member, amount) => {
+        if (activeMembers.length === 1) return amount;
+        if (leader && member.rank === "leader") return amount * 0.55;
+        if (leader && member.rank !== "leader") return amount * 0.45 / nonLeaderCount;
+        return amount / activeMembers.length;
+      };
+      const distributedSalary = totalSalary;
 
       if (totalSalary > 0 && activeMembers.length > 0) {
         const workerData = workerEarningsSnap.exists()
@@ -248,20 +260,10 @@ export default function DriverPickupMode({
         for (const member of activeMembers) {
           const earned = payroll.reduce((sum, service) => {
             const total = service.quantity * service.amount;
-            const share = activeMembers.length === 1
-              ? total
-              : member.rank === "leader"
-                ? total * 0.55
-                : total * 0.45;
-            return sum + share;
+            return sum + memberShare(member, total);
           }, 0);
 
-          const oldWorker = workerData[member.phone] || {
-            name: member.name,
-            washerSalary: 0,
-            driverSalary: 0,
-            packingSalary: 0,
-          };
+          const oldWorker = workerData[member.phone] || { name: member.name };
 
           memberEarnings[member.phone] = {
             ...oldWorker,
@@ -278,59 +280,44 @@ export default function DriverPickupMode({
         const teamData = teamEarningsSnap.exists()
           ? teamEarningsSnap.data()
           : {};
-        const oldTeam = teamData[driverTeam.id] || {
-          type: "driver",
-          teamName: driverTeam.teamName,
-          pickupSalary: 0,
-          deliverySalary: 0,
-          salary: 0,
-          pickupCarpetKvm: 0,
-          pickupBlanketCount: 0,
-          pickupYakandozCount: 0,
-          pickupCurtainMeter: 0,
-          pickupCarpetSalary: 0,
-          pickupBlanketSalary: 0,
-          pickupYakandozSalary: 0,
-          pickupCurtainSalary: 0,
-          deliveryCarpetKvm: 0,
-          deliveryBlanketCount: 0,
-          deliveryYakandozCount: 0,
-          deliveryCurtainMeter: 0,
-          deliveryCarpetSalary: 0,
-          deliveryBlanketSalary: 0,
-          deliveryYakandozSalary: 0,
-          deliveryCurtainSalary: 0,
-        };
-
-        const categoryTotals = payroll.reduce((totals, service) => {
-          const salary = service.quantity * service.amount;
-          totals[service.key].quantity += service.quantity;
-          totals[service.key].salary += salary * payrollShareTotal;
-          return totals;
-        }, {
-          carpet: { quantity: 0, salary: 0 },
-          blanket: { quantity: 0, salary: 0 },
-          yakandoz: { quantity: 0, salary: 0 },
-        });
-
+        const oldTeam = teamData[driverTeam.id] || {};
         const nextTeam = {
           ...oldTeam,
           type: "driver",
           teamName: driverTeam.teamName,
+          totalSalary: Number(oldTeam.totalSalary ?? oldTeam.salary ?? 0) + distributedSalary,
+          totalPickupSalary: Number(oldTeam.totalPickupSalary ?? oldTeam.pickupSalary ?? 0) + distributedSalary,
           salary: Number(oldTeam.salary || 0) + distributedSalary,
           pickupSalary: Number(oldTeam.pickupSalary || 0) + distributedSalary,
         };
 
-        for (const [key, values] of Object.entries(categoryTotals)) {
-          if (values.quantity <= 0) continue;
-          const countField = key === "carpet"
-            ? "pickupCarpetKvm"
-            : key === "blanket"
-              ? "pickupBlanketCount"
-              : "pickupYakandozCount";
-          const salaryField = `pickup${key[0].toUpperCase()}${key.slice(1)}Salary`;
-          nextTeam[countField] = Number(oldTeam[countField] || 0) + values.quantity;
-          nextTeam[salaryField] = Number(oldTeam[salaryField] || 0) + values.salary;
+        const pickupFields = [
+          ["pickupCarpetKvm", kvm],
+          ["pickupCarpetSalary", kvm * 700],
+          ["pickupBlanket1xCount", blanket1x],
+          ["pickupBlanket1xSalary", blanket1x * 1200],
+          ["pickupBlanket2xCount", blanket2x],
+          ["pickupBlanket2xSalary", blanket2x * 1500],
+          ["pickupMatrasCount", mattress],
+          ["pickupMatrasSalary", mattress * 2000],
+          ["pickupYakandozMCount", yakandozM],
+          ["pickupYakandozMSalary", yakandozM * 750],
+          ["pickupYakandozSCount", yakandozS],
+          ["pickupYakandozSSalary", yakandozS * 1500],
+          ["pickupYakandozLCount", yakandozL],
+          ["pickupYakandozLSalary", yakandozL * 1800],
+        ];
+        for (const [field, value] of pickupFields) {
+          if (value > 0) nextTeam[field] = Number(oldTeam[field] || 0) + value;
+        }
+        const pickupSummary = [
+          ["pickupBlanketCount", blanketCount],
+          ["pickupBlanketSalary", blanket1x * 1200 + blanket2x * 1500 + mattress * 2000],
+          ["pickupYakandozCount", yakandozCount],
+          ["pickupYakandozSalary", yakandozM * 750 + yakandozS * 1500 + yakandozL * 1800],
+        ];
+        for (const [field, value] of pickupSummary) {
+          if (value > 0) nextTeam[field] = Number(oldTeam[field] || 0) + value;
         }
 
         transaction.set(teamEarningsRef, {

@@ -3,6 +3,8 @@ import carpetIcon from "../../MainIcons/carpetIcon.png";
 import blanketIcon from "../../MainIcons/blanketIcon.png";
 import yakandozIcon from "../../MainIcons/yakandozIcon.png";
 import { BackIcon, CommentIcon, LocationIcon, PhoneIcon, UserIcon } from "../../MainIcons/SvgIcons";
+import { db } from "../../../firebase";
+import { doc, runTransaction } from "firebase/firestore";
 import "./packingPanel.css";
 
 const products = [
@@ -56,11 +58,98 @@ function hasProduct(order, key) {
   return number(order.yakandozM) + number(order.yakandozS) + number(order.yakandozL) + number(order.yakandozCount) > 0;
 }
 
-export default function PackingPanel({ orders = [], packingTeam, updatePackingStatus, setRole }) {
+export default function PackingPanel({ orders = [], packingTeam, addWorkerEarnings, getTodayString, setRole }) {
   const [confirmation, setConfirmation] = useState(null);
   const [notice, setNotice] = useState("");
   const [savingKey, setSavingKey] = useState("");
   const teamId = packingTeam?.id;
+
+  const updatePackingStatus = async (id, category) => {
+    const productConfig = {
+      carpet: { statusField: "carpetStatus" },
+      blanket: { statusField: "blanketStatus" },
+      yakandoz: { statusField: "yakandozStatus" },
+    };
+    const config = productConfig[category];
+    if (!config) throw new Error("Mahsulot turi noto'g'ri");
+    const team = packingTeam;
+    if (!team) throw new Error("Faol tayyorlovchi jamoa topilmadi");
+
+    const orderRef = doc(db, "orders", id);
+    const order = await runTransaction(db, async (transaction) => {
+      const snapshot = await transaction.get(orderRef);
+      if (!snapshot.exists()) throw new Error("Buyurtma topilmadi");
+      const latestOrder = snapshot.data();
+      if (latestOrder[config.statusField] === "Tayyor") return null;
+      if (latestOrder[config.statusField] !== "Yuvildi") {
+        throw new Error("Mahsulot hali yuvilmagan");
+      }
+      if (latestOrder.packingTeamId && latestOrder.packingTeamId !== team.id) {
+        throw new Error("Bu buyurtma boshqa tayyorlovchi jamoaga biriktirilgan");
+      }
+
+      const updates = {
+        [config.statusField]: "Tayyor",
+        packingTeamId: team.id,
+        packingTeamName: team.teamName,
+      };
+      const presentProducts = [
+        { category: "carpet", statusField: "carpetStatus", count: Number(latestOrder.kvmSt || 0) + Number(latestOrder.kvmPro || 0) || Number(latestOrder.kvm || 0) || Number(latestOrder.carpetCount || 0) },
+        { category: "blanket", statusField: "blanketStatus", count: Number(latestOrder.blanket1x || 0) + Number(latestOrder.blanket2x || 0) + Number(latestOrder.matras || 0) || Number(latestOrder.blanketCount || 0) },
+        { category: "yakandoz", statusField: "yakandozStatus", count: Number(latestOrder.yakandozM || 0) + Number(latestOrder.yakandozS || 0) + Number(latestOrder.yakandozL || 0) || Number(latestOrder.yakandozCount || 0) },
+      ].filter((product) => product.count > 0);
+      const allPrepared = presentProducts.length > 0 && presentProducts.every((product) =>
+        product.category === category || latestOrder[product.statusField] === "Tayyor"
+      );
+      if (allPrepared) updates.status = "Tayyor";
+
+      transaction.update(orderRef, updates);
+      return latestOrder;
+    });
+
+    if (!order) return;
+    const members = Object.entries(team.members || {}).map(([phone, member]) => ({
+      ...member,
+      phone: member.phone || phone,
+    }));
+    let services;
+    if (category === "carpet") {
+      const hasSizeFields = Number(order.kvmSt || 0) + Number(order.kvmPro || 0) > 0;
+      services = [{ key: "carpet", amount: 300, quantity: hasSizeFields
+        ? Number(order.kvmSt || 0) + Number(order.kvmPro || 0)
+        : Number(order.kvm || 0) }];
+    } else if (category === "blanket") {
+      const hasSizeFields = Number(order.blanket1x || 0) + Number(order.blanket2x || 0) + Number(order.matras || 0) > 0;
+      services = hasSizeFields
+        ? [
+            { key: "blanket", amount: 800, quantity: Number(order.blanket1x || 0) },
+            { key: "blanket", amount: 1000, quantity: Number(order.blanket2x || 0) },
+            { key: "blanket", amount: 2000, quantity: Number(order.matras || 0) },
+          ]
+        : [{ key: "blanket", amount: 800, quantity: Number(order.blanketCount || 0) }];
+    } else {
+      const hasSizeFields = Number(order.yakandozM || 0) + Number(order.yakandozS || 0) + Number(order.yakandozL || 0) > 0;
+      services = hasSizeFields
+        ? [
+            { key: "yakandoz", amount: 500, quantity: Number(order.yakandozM || 0) },
+            { key: "yakandoz", amount: 1000, quantity: Number(order.yakandozS || 0) },
+            { key: "yakandoz", amount: 1500, quantity: Number(order.yakandozL || 0) },
+          ]
+        : [{ key: "yakandoz", amount: 500, quantity: Number(order.yakandozCount || 0) }];
+    }
+
+    for (const service of services) {
+      if (service.quantity <= 0) continue;
+      await addWorkerEarnings({
+        dateId: getTodayString(),
+        members,
+        service,
+        teamId: team.id,
+        teamName: team.teamName,
+        teamType: "packing",
+      });
+    }
+  };
 
   const visibleOrders = useMemo(() => orders
     .filter((order) => order.status !== "Tayyor" && order.status !== "Yetkazildi")

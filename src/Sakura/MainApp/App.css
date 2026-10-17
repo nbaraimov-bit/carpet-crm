@@ -494,3 +494,53 @@
     transform 0.22s cubic-bezier(.4,0,.2,1);
 }
 /* ===== ⬆️ROLE PANEL TRANSITION⬆️ ===== */
+.role-management-page {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 70vh;
+  padding: 74px 18px 32px;
+  color: #f7f3ff;
+}
+
+.role-back-button {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(168, 85, 247, .45);
+  border-radius: 50%;
+  color: #ead7ff;
+  background: rgba(39, 25, 67, .9);
+  box-shadow: 0 0 14px rgba(126, 34, 206, .24);
+  cursor: pointer;
+}
+
+.admin-request-actions {
+  display: flex;
+  gap: 9px;
+}
+
+.admin-request-actions button {
+  flex: 1;
+  min-height: 42px;
+  border: 1px solid rgba(76, 222, 146, .38);
+  border-radius: 11px;
+  color: #92edb7;
+  background: rgba(24, 125, 75, .2);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-request-actions .admin-request-reject {
+  border-color: rgba(255, 96, 127, .42);
+  color: #ff9eae;
+  background: rgba(149, 35, 66, .22);
+}
+
+.admin-request-actions button:disabled {
+  opacity: .55;
+  cursor: wait;
+}

@@ -23,6 +23,17 @@ const numberOrZero = (value) => {
   return Number.isFinite(number) ? number : 0;
 };
 
+function getTashkentDateId() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Tashkent",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const part = (type) => parts.find((item) => item.type === type)?.value;
+  return `${part("year")}-${part("month")}-${part("day")}`;
+}
+
 export default function DriverDeliveryMode({
   orders = [],
   driverTeam,
@@ -79,8 +90,7 @@ export default function DriverDeliveryMode({
 
     const orderRef = doc(db, "orders", id);
     let completedOrder = null;
-    const now = new Date();
-    const dateId = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+    const dateId = getTashkentDateId();
     const workerEarningsRef = doc(db, "workerEarnings", dateId);
     const teamEarningsRef = doc(db, "teamEarnings", dateId);
 
@@ -100,46 +110,60 @@ export default function DriverDeliveryMode({
         throw new Error("Buyurtma ushbu haydovchi jamoasiga biriktirilmagan");
       }
 
+      const kvm = numberOrZero(order.kvm)
+        || numberOrZero(order.kvmSt) + numberOrZero(order.kvmPro);
+      const hasBlanketSizes = numberOrZero(order.blanket1x)
+        + numberOrZero(order.blanket2x)
+        + numberOrZero(order.matras) > 0;
+      const blanket1x = hasBlanketSizes
+        ? numberOrZero(order.blanket1x)
+        : numberOrZero(order.blanketCount);
+      const blanket2x = hasBlanketSizes ? numberOrZero(order.blanket2x) : 0;
+      const matras = hasBlanketSizes ? numberOrZero(order.matras) : 0;
+      const hasYakandozSizes = numberOrZero(order.yakandozM)
+        + numberOrZero(order.yakandozS)
+        + numberOrZero(order.yakandozL) > 0;
+      const yakandozM = hasYakandozSizes
+        ? numberOrZero(order.yakandozM)
+        : numberOrZero(order.yakandozCount);
+      const yakandozS = hasYakandozSizes ? numberOrZero(order.yakandozS) : 0;
+      const yakandozL = hasYakandozSizes ? numberOrZero(order.yakandozL) : 0;
       const payroll = [
-        { key: "carpet", quantity: numberOrZero(order.kvm), amount: 500 },
-        { key: "blanket", quantity: numberOrZero(order.blanketCount), amount: 1000 },
-        { key: "yakandozM", quantity: numberOrZero(order.yakandozM), amount: 500 },
-        { key: "yakandozS", quantity: numberOrZero(order.yakandozS), amount: 1000 },
-        { key: "yakandozL", quantity: numberOrZero(order.yakandozL), amount: 1200 },
+        { quantityField: "deliveryCarpetKvm", salaryField: "deliveryCarpetSalary", quantity: kvm, amount: 500 },
+        { quantityField: "deliveryBlanket1xCount", salaryField: "deliveryBlanket1xSalary", quantity: blanket1x, amount: 800 },
+        { quantityField: "deliveryBlanket2xCount", salaryField: "deliveryBlanket2xSalary", quantity: blanket2x, amount: 1000 },
+        { quantityField: "deliveryMatrasCount", salaryField: "deliveryMatrasSalary", quantity: matras, amount: 1500 },
+        { quantityField: "deliveryYakandozMCount", salaryField: "deliveryYakandozMSalary", quantity: yakandozM, amount: 500 },
+        { quantityField: "deliveryYakandozSCount", salaryField: "deliveryYakandozSSalary", quantity: yakandozS, amount: 1000 },
+        { quantityField: "deliveryYakandozLCount", salaryField: "deliveryYakandozLSalary", quantity: yakandozL, amount: 1200 },
       ].filter((service) => service.quantity > 0);
       const totalSalary = payroll.reduce(
         (sum, service) => sum + service.quantity * service.amount,
         0
       );
 
-      if (totalSalary > 0) {
-        const activeMembers = Object.values(driverTeam.members || {}).filter(
-          (member) => member.working
-        );
-        const payrollShareTotal = activeMembers.length === 1
-          ? 1
-          : activeMembers.reduce(
-            (sum, member) => sum + (member.rank === "leader" ? 0.55 : 0.45),
-            0
-          );
-        const distributedSalary = totalSalary * payrollShareTotal;
+      const activeMembers = Object.values(driverTeam.members || {}).filter(
+        (member) => member.working
+      );
+      if (totalSalary > 0 && activeMembers.length > 0) {
+        const leader = activeMembers.find((member) => member.rank === "leader");
+        const nonLeaderCount = activeMembers.filter((member) => member.rank !== "leader").length;
+        const memberShare = (member, amount) => {
+          if (activeMembers.length === 1) return amount;
+          if (leader && member.rank === "leader") return amount * 0.55;
+          if (leader && member.rank !== "leader") return amount * 0.45 / nonLeaderCount;
+          return amount / activeMembers.length;
+        };
+        const distributedSalary = totalSalary;
         const workerData = workerSnap.exists() ? workerSnap.data() : {};
         const memberEarnings = {};
 
         for (const member of activeMembers) {
           const earned = payroll.reduce((sum, service) => {
             const total = service.quantity * service.amount;
-            const share = activeMembers.length === 1
-              ? total
-              : member.rank === "leader" ? total * 0.55 : total * 0.45;
-            return sum + share;
+            return sum + memberShare(member, total);
           }, 0);
-          const oldWorker = workerData[member.phone] || {
-            name: member.name,
-            washerSalary: 0,
-            driverSalary: 0,
-            packingSalary: 0,
-          };
+          const oldWorker = workerData[member.phone] || { name: member.name };
           memberEarnings[member.phone] = {
             ...oldWorker,
             name: member.name,
@@ -153,33 +177,29 @@ export default function DriverDeliveryMode({
 
         const teamData = teamSnap.exists() ? teamSnap.data() : {};
         const oldTeam = teamData[driverTeam.id] || {};
-        const categoryTotals = payroll.reduce((totals, service) => {
-          const category = service.key === "carpet"
-            ? "carpet"
-            : service.key === "blanket" ? "blanket" : "yakandoz";
-          totals[category].quantity += service.quantity;
-          totals[category].salary += service.quantity * service.amount * payrollShareTotal;
-          return totals;
-        }, {
-          carpet: { quantity: 0, salary: 0 },
-          blanket: { quantity: 0, salary: 0 },
-          yakandoz: { quantity: 0, salary: 0 },
-        });
         const nextTeam = {
           ...oldTeam,
           type: "driver",
           teamName: driverTeam.teamName,
+          totalSalary: numberOrZero(oldTeam.totalSalary ?? oldTeam.salary) + distributedSalary,
+          totalDeliverySalary: numberOrZero(oldTeam.totalDeliverySalary ?? oldTeam.deliverySalary) + distributedSalary,
           salary: numberOrZero(oldTeam.salary) + distributedSalary,
           deliverySalary: numberOrZero(oldTeam.deliverySalary) + distributedSalary,
         };
 
-        for (const [category, values] of Object.entries(categoryTotals)) {
-          if (!values.quantity) continue;
-          const capitalized = category[0].toUpperCase() + category.slice(1);
-          const quantityField = `delivery${capitalized}${category === "carpet" ? "Kvm" : "Count"}`;
-          const salaryField = `delivery${capitalized}Salary`;
-          nextTeam[quantityField] = numberOrZero(oldTeam[quantityField]) + values.quantity;
-          nextTeam[salaryField] = numberOrZero(oldTeam[salaryField]) + values.salary;
+        for (const service of payroll) {
+          const salary = service.quantity * service.amount;
+          nextTeam[service.quantityField] = numberOrZero(oldTeam[service.quantityField]) + service.quantity;
+          nextTeam[service.salaryField] = numberOrZero(oldTeam[service.salaryField]) + salary;
+        }
+        const deliverySummary = [
+          ["deliveryBlanketCount", blanket1x + blanket2x + matras],
+          ["deliveryBlanketSalary", blanket1x * 800 + blanket2x * 1000 + matras * 1500],
+          ["deliveryYakandozCount", yakandozM + yakandozS + yakandozL],
+          ["deliveryYakandozSalary", yakandozM * 500 + yakandozS * 1000 + yakandozL * 1200],
+        ];
+        for (const [field, value] of deliverySummary) {
+          if (value > 0) nextTeam[field] = numberOrZero(oldTeam[field]) + value;
         }
 
         transaction.set(teamEarningsRef, {
