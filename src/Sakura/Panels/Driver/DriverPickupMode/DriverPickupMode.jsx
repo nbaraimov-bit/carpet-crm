@@ -360,7 +360,7 @@ export default function DriverPickupMode({
     >
       <div className="driver-order-card__top">
         <span className="driver-order-card__id">
-          #{order.id}
+          {order.id}
         </span>
 
         <span

@@ -253,7 +253,7 @@ export default function DriverDeliveryMode({
     return (
       <article className={`driver-order-card ${order.tarif === "tezkor" ? "driver-order-card--quick" : ""}`}>
         <div className="driver-order-card__top">
-          <span className="driver-order-card__id">#{order.id}</span>
+          <span className="driver-order-card__id">{order.id}</span>
           <span className={`driver-order-card__status ${mine ? "is-progress" : "is-new"}`}>
             {order.status}
           </span>

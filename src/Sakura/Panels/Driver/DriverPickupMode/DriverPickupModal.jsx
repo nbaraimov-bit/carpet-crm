@@ -67,7 +67,7 @@ export default function DriverPickupModal({
         <div className="driver-pickup-modal__header">
           <div>
             <h2>Ma’lumot kiritish</h2>
-            <p>Buyurtma #{order.id}</p>
+            <p>Buyurtma {order.id}</p>
           </div>
           <button
             type="button"
