@@ -93,7 +93,7 @@ export default function WasherPanel({
       const firstIsQuick = first.tarif === "tezkor";
       const secondIsQuick = second.tarif === "tezkor";
       if (firstIsQuick !== secondIsQuick) return firstIsQuick ? -1 : 1;
-      return String(second.id ?? "").localeCompare(String(first.id ?? ""), undefined, { numeric: true });
+      return String(first.id ?? "").localeCompare(String(second.id ?? ""), undefined, { numeric: true });
     }), [orders, teamId]);
 
   const confirmProduct = async () => {
