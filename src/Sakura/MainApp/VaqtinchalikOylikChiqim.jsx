@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 
 import {
@@ -245,7 +245,7 @@ const kun = String(
       ) : (
         <div style={styles.list}>
 
-          {items.map((item, index) => (
+          {items.map((item) => (
             <div
               key={item.id}
               style={styles.itemCard}

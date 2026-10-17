@@ -1,4 +1,3 @@
-import React from "react"
 import "./DeleteOrderModal.css"
 
 import { db } from "../../../../firebase"

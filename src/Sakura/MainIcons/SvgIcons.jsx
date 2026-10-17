@@ -1,6 +1,7 @@
 export const UserIcon = ({className = "" }) => (
 
   <svg
+      className={className}
       width="22"
       height="22"
       viewBox="0 0 24 24"
@@ -48,6 +49,7 @@ export const UserIcon = ({className = "" }) => (
 export const PhoneIcon = ({className = "" }) =>
   (
     <svg
+      className={className}
       width="22"
       height="22"
       viewBox="0 0 24 24"
@@ -86,6 +88,7 @@ export const PhoneIcon = ({className = "" }) =>
 
 export const LocationIcon = ({className = "" }) => (
   <svg
+    className={className}
     width="22"
     height="22"
     viewBox="0 0 24 24"
@@ -133,6 +136,7 @@ export const LocationIcon = ({className = "" }) => (
 export const CommentIcon = ({className = "" }) => 
   (
     <svg
+      className={className}
       width="22"
       height="22"
       viewBox="0 0 24 24"
@@ -209,7 +213,7 @@ export const PriceIcon = ({ className = "" }) => (
 export const TimeIcon = ({className = "" }) => (
 
   <svg
-    className="operator-time-icon"
+    className={`operator-time-icon ${className}`.trim()}
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

@@ -51,7 +51,7 @@ export default function AddOrderModal({
       (c) => c.phone === phone
     )
   
-    let customerId = ""
+    let customerId
   
     if (existingCustomer) {
       customerId = existingCustomer.customerId

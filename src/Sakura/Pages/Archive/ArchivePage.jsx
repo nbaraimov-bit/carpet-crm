@@ -2,11 +2,10 @@ import { db } from "../../../firebase";
 import { useState, useEffect } from "react"
 import {
   collection,
-  doc,
   onSnapshot,
 } from "firebase/firestore";
 
-export default function ArchivePage({ }) {
+export default function ArchivePage() {
 
   const [archiveSearch, setArchiveSearch] = useState("");
   const [archives, setArchives] = useState([])

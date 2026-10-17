@@ -1,0 +1,188 @@
+.driver-pickup-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: max(16px, 4vh) 16px 100px;
+  box-sizing: border-box;
+  background: rgba(3, 3, 15, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: driver-modal-fade-in 0.2s ease;
+}
+
+.driver-pickup-modal {
+  width: min(430px, 100%);
+  max-height: min(74vh, 760px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 24px;
+  border: 1px solid rgba(192, 132, 252, 0.45);
+  border-radius: 24px;
+  color: #fff;
+  background: linear-gradient(145deg, #15152b, #0e0e20);
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.25), 0 20px 60px rgba(0, 0, 0, 0.55);
+  animation: driver-modal-open 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.driver-pickup-modal__header h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 24px;
+}
+
+.driver-pickup-modal__header p {
+  margin: 5px 0 22px;
+  color: #85859b;
+  font-size: 13px;
+}
+
+.driver-pickup-modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(192, 132, 252, 0.25);
+  border-radius: 10px;
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.08);
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.driver-pickup-modal__header { position: relative; }
+
+.driver-pickup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.driver-pickup-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  color: #c084fc;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.driver-pickup-form input,
+.driver-pickup-form textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid rgba(148, 85, 220, 0.28);
+  border-radius: 13px;
+  outline: none;
+  color: #fff;
+  background: #191a2d;
+  font: inherit;
+  font-size: 14px;
+}
+
+.driver-pickup-form textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+.driver-pickup-form input:focus,
+.driver-pickup-form textarea:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.12), 0 0 12px rgba(168, 85, 247, 0.18);
+}
+
+.driver-pickup-form__two,
+.driver-pickup-form__three {
+  display: grid;
+  gap: 10px;
+}
+
+.driver-pickup-form__two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.driver-pickup-form__three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.driver-pickup-modal__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.driver-pickup-modal__actions button {
+  flex: 1;
+  min-height: 46px;
+  padding: 13px;
+  border-radius: 13px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.driver-pickup-modal__actions .driver-pickup-secondary-button {
+  border: 1px solid #303149;
+  color: #aaaabd;
+  background: #1b1c2d;
+}
+
+.driver-pickup-modal__actions .driver-pickup-primary-button {
+  border: 1px solid #b66aff;
+  color: #fff;
+  background: linear-gradient(135deg, #a855f7, #7e22ce);
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.35);
+}
+
+.driver-location-prompt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(3, 3, 15, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.driver-location-prompt {
+  width: min(360px, 100%);
+  box-sizing: border-box;
+  padding: 22px;
+  border: 1px solid rgba(192, 132, 252, 0.45);
+  border-radius: 20px;
+  color: #fff;
+  background: linear-gradient(145deg, #15152b, #0e0e20);
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.25), 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+.driver-location-prompt p {
+  margin: 0;
+  color: #c084fc;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@keyframes driver-modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes driver-modal-open {
+  from { opacity: 0; transform: scale(0.88) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (max-width: 420px) {
+  .driver-pickup-modal { padding: 20px 16px; }
+  .driver-pickup-form__three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .driver-pickup-form__three input { padding: 11px 8px; }
+}

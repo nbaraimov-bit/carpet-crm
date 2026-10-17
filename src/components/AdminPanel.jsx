@@ -1,581 +1,96 @@
-import { doc, updateDoc } from "firebase/firestore"
-import { db } from "../firebase"
+import { useEffect, useRef, useState } from "react";
+import { collection, doc, onSnapshot, runTransaction } from "firebase/firestore";
+import { db } from "../firebase";
+import { BackIcon } from "../Sakura/MainIcons/SvgIcons";
 
-export default function AdminPanel({
+export default function AdminPanel({ setRole }) {
+  const [workerRequests, setWorkerRequests] = useState([]);
+  const [processingId, setProcessingId] = useState("");
+  const [error, setError] = useState("");
+  const inFlight = useRef(new Set());
 
-  workers,
-  workerRequests,
-  approveWorker,
-  rejectWorker,
-  editingWorker,
-  setEditingWorker,
-  changeWorkerRole,
-  changeWorkerStatus,
-  washerPrices,
-  setWasherPrices,
-  priceInputs,
-  setPriceInputs,
-  savePrices,
-  attendance,
-  getSalary,
-  getHours,
-  getCount,
-  todayOpen,
-  setTodayOpen,
-  weekOpen,
-  setWeekOpen,
-  MonthOpen,
-  setMonthOpen,
-  allOpen,
-  setAllOpen,
-  selectedDate,
-  setSelectedDate,
-  driverPrices,
-  getHourlyPrice,
-  setRole,
-  editingStatus,
-  setEditingStatus,
-  expandedWorker,
-  setExpandedWorker,
-  orders,
-  setOrders,
-  currentWorker,
-  getAttendanceSalary,
-  workerEarnings,
+  useEffect(() => onSnapshot(
+    collection(db, "workerRequests"),
+    (snapshot) => setWorkerRequests(snapshot.docs.map((requestDoc) => ({
+      firebaseId: requestDoc.id,
+      ...requestDoc.data(),
+    }))),
+    (snapshotError) => setError(snapshotError.message || "So'rovlarni yuklashda xatolik yuz berdi."),
+  ), []);
 
-}) {
+  const runRequestAction = async (request, action) => {
+    const requestId = request.firebaseId;
+    if (!requestId || inFlight.current.has(requestId)) return;
+    inFlight.current.add(requestId);
+    setProcessingId(requestId);
+    setError("");
+    try {
+      const requestRef = doc(db, "workerRequests", requestId);
+      if (action === "approve") {
+        const workerRef = doc(collection(db, "workers"));
+        await runTransaction(db, async (transaction) => {
+          const requestSnapshot = await transaction.get(requestRef);
+          if (!requestSnapshot.exists() || requestSnapshot.data().status !== "pending") return;
+          const latestRequest = requestSnapshot.data();
+          transaction.set(workerRef, {
+            name: latestRequest.name,
+            phone: latestRequest.phone,
+            telegramId: latestRequest.telegramId,
+            role: "worker",
+            approved: true,
+          });
+          transaction.update(requestRef, { status: "approved" });
+        });
+      } else {
+        await runTransaction(db, async (transaction) => {
+          const requestSnapshot = await transaction.get(requestRef);
+          if (!requestSnapshot.exists() || requestSnapshot.data().status !== "pending") return;
+          transaction.update(requestRef, { status: "rejected" });
+        });
+      }
+    } catch (actionError) {
+      setError(actionError.message || "So'rovni yangilashda xatolik yuz berdi.");
+    } finally {
+      inFlight.current.delete(requestId);
+      setProcessingId("");
+    }
+  };
+
+  const requests = workerRequests.filter((request) => request.status === "pending");
 
   return (
-
-    <div>
-          <h1>Admin panel</h1>
-    
-          <button
-            onClick={() => setRole("")}
-            style={{fontSize: 20}}  
-          >
-            ⏪️
-          </button>
-    
-          <hr />
-    
-          <h2>Yangi so'rovlar</h2>
-    
-          {workerRequests
-            .filter(
-              (r) => r.status === "pending"
-            )
-            .map((request) => (
-              <div
-                key={request.firebaseId}
-                style={{
-                  border: "1px solid #ccc",
-                  padding: 10,
-                  marginBottom: 10,
-                }}
-              >
-                <p>
-                  <b>Ism:</b> {request.name}
-                </p>  
-    
-                <p>
-                  <b>Telefon:</b>
-                  {request.phone}
-                </p>
-    
-                <p>
-                  <b>Lavozimlar:</b>{" "}
-                  {request.requestedRole?.join(
-                    ", "
-                  )}
-                </p>
-    
-                <button
-                  onClick={() =>
-                    approveWorker(request)
-                  }
-                >
-                  Tasdiqlash
-                </button>
-    
-                <button
-                  onClick={() =>
-                    rejectWorker(
-                      request.firebaseId
-                    )
-                  }
-                  style={{
-                    marginLeft: 10,
-                    background: "red",
-                    color: "white",
-                  }}
-                >
-                  Rad etish
-                </button>
-    
-              </div>
-            ))
-          }
-    
-          {/* ===== ishchilar malumoti ===== */}
-          <h2>Ishchilar</h2>
-    
-          {workers
-            .filter(
-              (worker) => worker.role !== "ega"
-            )
-            .map((worker) => (
-          <div
-            key={worker.firebaseId}
-            style={{
-              border: "1px solid #ccc",
-              padding: 10,
-              marginBottom: 10,  
-            }}
-          >
-            <p>
-              <b>Ism:</b>
-              {worker.name}
-            </p>  
-    
-            <p> 
-              <b>Telefon:</b>
-              {worker.phone}
-            </p>
-    
-              <b>Status:</b>
-    
-              <span
-                style={{
-                  background:
-                    worker.status === "faol" ? "green" :
-                    worker.status === "bloklangan" ? "red" : "gray",
-    
-                  color: "white",
-                  padding: "4px 10px", 
-                  borderRadius: 20,
-                  marginLeft: 2,
-                }}
-              > 
-    
-                {worker.status}
-    
-              </span>
-    
-              <button
-                style={{marginLeft:2,}}
-                onClick={() =>
-    
-                  setEditingStatus(
-    
-                    editingStatus ===
-                    worker.firebaseId
-                      ? null
-                      : worker.firebaseId
-                  )
-                }
-              >
-    
-                {editingStatus ===
-                worker.firebaseId
-                  ? "▲"
-                  : "▼"}
-    
-              </button>
-    
-              {/* ===== Status edit ===== */}
-              {editingStatus === worker.firebaseId && (
-              <div
-                style={{
-                  marginTop: 5,
-                }}
-              >
-    
-                <button
-                  onClick={() =>
-                    changeWorkerStatus( 
-                      worker.firebaseId,
-                      "faol"
-                    )
-                  }
-                >
-                  🟢
-                </button>
-    
-                <button
-                  onClick={() =>{
-                    changeWorkerStatus( 
-                      worker.firebaseId,
-                      "nofaol"
-                    )
-                  }}
-                >
-                  ⚪️
-                </button> 
-     
-                <button
-                  onClick={() =>
-                    changeWorkerStatus(
-                      worker.firebaseId,
-                      "bloklangan"
-                    )
-                  }
-                >
-                  🔴
-                </button>
-    
-              </div>
-              )}
-    
-            <br />
-    
-            <b>Lavozim:</b>{" "}
-    
-              <button
-                style={{marginLeft:3}}
-                onClick={() =>
-                  setEditingWorker(
-                    editingWorker === worker.firebaseId
-                    ? null : worker.firebaseId,
-                  )
-                }
-              >
-                {editingWorker ===
-                  worker.firebaseId
-                  ? "▲"
-                  : "▼"
-                }
-              </button>
-    
-              {editingWorker === worker.firebaseId && (
-              <div
-                style={{
-                  marginTop: 10,
-                }}
-              >
-    
-                {[
-                  ...(currentWorker?.role === "ega" (
-                    "ega"
-                  )
-                    ? ["admin"]
-                    : []),
-                ].map((role) => (
-    
-                <label
-                  key={role}
-                  style={{
-                    display: "block",
-                  }}
-                >
-    
-                  <input
-                    type="checkbox" 
-    
-                    checked={
-                      worker.role === (
-                        role
-                      )
-                    }
-    
-                    onChange={async (e) => {
-    
-                      let updatedRole =
-                        worker.role || []
-    
-                      if (
-                        e.target.checked
-                      ) {
-    
-                        updatedRole = [
-                          ...updatedRole,
-                          role,
-                        ]
-        
-                      } else {
-    
-                        updatedRole =
-                          updatedRole.filter(
-                            (r) =>
-                              r !== role
-                          )
-                      }
-    
-                      const workerRef = doc(
-                        db,
-                        "workers",
-                        worker.firebaseId
-                      )
-    
-                      await updateDoc(
-                        workerRef,
-                        {
-                          role: updatedRole,
-                        }
-                      )
-    
-                    }}
-                  />
-    
-                  {role}
-    
-                </label>
-                ))} 
-              </div>
-      
-            )}
-
-            <select
-              value={
-                worker.primaryRole ||
-                worker.roles?.[0] ||
-                ""
-              }
-
-              onChange={async (e) => {
-
-                await updateDoc(
-                  doc(
-                    db,
-                    "workers",
-                    worker.firebaseId
-                  ), {
-                    primaryRole:
-                    e.target.value
-                  }
-                )
-
-              }}
-            >
-
-              {worker.roles?.map((role) => (
-
-                <option
-                  key={role}
-                  value={role}
-                >
-                  {role}
-                </option>
-
-              ))}
-
-            </select>
-
-            <br />
-    
+    <main className="admin-approval-page role-management-page">
+      <button type="button" className="role-back-button" onClick={() => setRole?.("")} aria-label="Orqaga">
+        <BackIcon />
+      </button>
+      <h1>Yangi ishchini tasdiqlash</h1>
+      {error && <p role="alert">{error}</p>}
+      {requests.length === 0 ? (
+        <p>Yangi so'rovlar yo'q.</p>
+      ) : requests.map((request) => (
+        <article key={request.firebaseId} className="admin-approval-card">
+          <p><strong>Ism:</strong> {request.name}</p>
+          <p><strong>Telefon:</strong> {request.phone}</p>
+          <div className="admin-request-actions">
             <button
-              onClick={() =>
-    
-                setExpandedWorker(
-    
-                  expandedWorker ===
-                  worker.firebaseId
-    
-                    ? null
-    
-                    : worker.firebaseId
-                )
-              }
+              type="button"
+              className="admin-request-reject"
+              disabled={Boolean(processingId)}
+              onClick={() => runRequestAction(request, "reject")}
             >
-    
-              {expandedWorker ===
-              worker.firebaseId
-    
-                ? "▲"
-    
-                : "▼"}
-      
+              {processingId === request.firebaseId ? "Saqlanmoqda..." : "Rad etish"}
             </button>
-    
-            {expandedWorker ===
-              worker.firebaseId && (
-    
-              <div
-                style={{
-                  marginTop: 10,
-                  padding: 10,
-                  border: "1px solid #ccc",
-                }}
-              >
-    
-                {/*  ===== Driver statistic ===== */}
-                {worker.primaryRole ===
-                  "driver"
-                  && (
-                <div>
-    
-                  <p>
-                    <b>Bugungi ish soati:</b>
-                    {getHours(attendance, worker.phone, 1, selectedDate)} 
-                  </p>
-                
-                  <p>
-                    <b>Bugungi ish haqi:</b>
-      
-                    {" "}{getAttendanceSalary(attendance, worker.phone, 1, selectedDate)}
-      
-                    so'm
-                  </p>
-      
-                  <p>
-                    <b>Haftalik:</b>
-    
-                    {" "}{getAttendanceSalary(attendance, worker.phone, 7, selectedDate)}
-      
-                    so'm
-                  </p>
-      
-                  <p>
-                    <b>Oylik:</b>
-    
-                    {" "}{getAttendanceSalary(attendance, worker.phone, 30, selectedDate)}
-      
-                    so'm
-                  </p>
-    
-                  <p>
-                    <b>jami:</b>
-    
-                    {" "}{getAttendanceSalary(attendance, worker.phone, "all", selectedDate)}
-      
-                    so'm
-                  </p>
-    
-                </div>
-                )}
-    
-                {worker.primaryRole ===
-                  "tayyorlovchi"
-                  && (
-                <div>
-    
-                  <p>
-                    <b>Bugungi ish soati:</b>
-                    {getHours(attendance, worker.phone, 1, selectedDate)} 
-                  </p>
-                
-                  <p>
-                    <b>Bugungi ish haqi:</b>
-      
-                    {" "}{getAttendanceSalary(attendance, worker.phone, 1, selectedDate)}  
-      
-                    so'm
-                  </p>
-      
-                  <p>
-                    <b>Haftalik:</b>
-    
-                    {" "}{getAttendanceSalary(attendance, worker.phone, 7, selectedDate)}
-      
-                    so'm
-                  </p>
-      
-                  <p>
-                    <b>Oylik:</b>
-    
-                    {" "}{getAttendanceSalary(attendance, worker.phone, 30, selectedDate)}
-      
-                    so'm
-                  </p>
-    
-                  <p>
-                    <b>jami:</b>
-    
-                    {" "}{getAttendanceSalary(attendance, worker.phone, "all", selectedDate)}
-      
-                    so'm
-                  </p>
-    
-                </div>
-                )}
-    
-                {/* ===== washer statistic ===== */}
-                {worker.role === "washer"
-                 && (
-                <div>
-    
-                  <p>
-                    <b>Bugungi ish soati:</b>
-                    {
-                      getHours(attendance, worker.phone, 1, selectedDate)
-                    }
-                  </p>
-    
-                  <p>
-                    <b>Gilam kv.m:</b>
-                    {
-                      getCount(
-                        workerEarnings, worker.phone, "carpetWasher", "kvm", 1, selectedDate
-                      )
-                    }  
-                  </p>
-    
-                  <p>
-                    <b>Adyol:</b> 
-                    { 
-                      getCount(
-                        workerEarnings, worker.phone, "blanketWasher", "blanket", 1, selectedDate
-                      )
-                    }
-                  </p>
-    
-                  <p>
-                    <b>Yakandoz:</b>
-                    {
-                      getCount(
-                        workerEarnings, worker.phone, "yakandozWasher", "yakandoz", 1, selectedDate
-                      )
-                    }
-                  </p>
-    
-                  <p>
-                    <b>Parda metri:</b>              
-                      {
-                        getCount(
-                          workerEarnings, worker.phone, "curtainWasher", "curtainMeter", 1, selectedDate
-                        )
-                      }
-                  </p>
-    
-                  <p>
-                    <b>Ish haqi:</b>
-                    {getSalary( workerEarnings, worker.phone, 1, selectedDate )}
-                    so‘m
-                  </p>
-    
-                  <p>
-                    <b>Haftalik:</b>
-                    {getSalary( workerEarnings, worker.phone, 7, selectedDate )}
-                    so‘m
-                  </p>
-    
-                  <p>
-                    <b>Oylik:</b>
-                    {getSalary( workerEarnings, worker.phone, 30, selectedDate )}
-                    so‘m
-                  </p>
-    
-                  <p>
-                    <b>Jami:</b>
-
-                    {
-                      getSalary(workerEarnings, worker.phone, "all").toLocaleString()
-                    }
-
-                    so'm
-                  </p>
-      
-                </div>
-                )}
-    
-              </div>
-            )}
-    
-          </div>  
-          ))}
-           
-        </div> 
-
-  )
-
+            <button
+              type="button"
+              className="admin-request-approve"
+              disabled={Boolean(processingId)}
+              onClick={() => runRequestAction(request, "approve")}
+            >
+              {processingId === request.firebaseId ? "Saqlanmoqda..." : "Tasdiqlash"}
+            </button>
+          </div>
+        </article>
+      ))}
+    </main>
+  );
 }
