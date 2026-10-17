@@ -88,8 +88,8 @@ export default function WasherPanel({
         teamNameField: "carpetWasherTeamName",
         dateField: "carpetDate",
         rates: [
-          { key: "carpet", rateKey: "carpetSt", legacyRateKey: "carpet", quantity: "kvmSt" },
-          { key: "carpet", rateKey: "carpetPro", legacyRateKey: "carpet", quantity: "kvmPro" },
+          { key: "carpet", rateKey: "carpetSt", legacyRateKey: "carpet", earningKey: "carpet", quantity: "kvmSt" },
+          { key: "carpet", rateKey: "carpetPro", legacyRateKey: "carpet", earningKey: "carpet", quantity: "kvmPro" },
         ],
       },
       blanket: {
@@ -98,9 +98,9 @@ export default function WasherPanel({
         teamNameField: "blanketWasherTeamName",
         dateField: "blanketDate",
         rates: [
-          { key: "blanket", rateKey: "blanket1x", legacyRateKey: "blanket", quantity: "blanket1x" },
-          { key: "blanket", rateKey: "blanket2x", legacyRateKey: "blanket", quantity: "blanket2x" },
-          { key: "blanket", rateKey: "matras", legacyRateKey: "blanket", quantity: "matras" },
+          { key: "blanket", rateKey: "blanket1x", legacyRateKey: "blanket", earningKey: "blanket1x", quantity: "blanket1x" },
+          { key: "blanket", rateKey: "blanket2x", legacyRateKey: "blanket", earningKey: "blanket2x", quantity: "blanket2x" },
+          { key: "blanket", rateKey: "matras", legacyRateKey: "blanket", earningKey: "matras", quantity: "matras" },
         ],
       },
       yakandoz: {
@@ -109,9 +109,9 @@ export default function WasherPanel({
         teamNameField: "yakandozWasherTeamName",
         dateField: "yakandozDate",
         rates: [
-          { key: "yakandoz", rateKey: "yakandozM", legacyRateKey: "yakandoz", quantity: "yakandozM" },
-          { key: "yakandoz", rateKey: "yakandozS", legacyRateKey: "yakandoz", quantity: "yakandozS" },
-          { key: "yakandoz", rateKey: "yakandozL", legacyRateKey: "yakandoz", quantity: "yakandozL" },
+          { key: "yakandoz", rateKey: "yakandozM", legacyRateKey: "yakandoz", earningKey: "yakandozM", quantity: "yakandozM" },
+          { key: "yakandoz", rateKey: "yakandozS", legacyRateKey: "yakandoz", earningKey: "yakandozS", quantity: "yakandozS" },
+          { key: "yakandoz", rateKey: "yakandozL", legacyRateKey: "yakandoz", earningKey: "yakandozL", quantity: "yakandozL" },
         ],
       },
     };
@@ -157,6 +157,7 @@ export default function WasherPanel({
       .map((rate) => ({
         key: rate.key,
         rateKey: hasSizeFields ? rate.rateKey : rate.legacyRateKey,
+        earningKey: rate.earningKey,
         quantity: hasSizeFields ? Number(order[rate.quantity] || 0) : 0,
       }))
       .filter((service) => service.quantity > 0);
@@ -165,6 +166,7 @@ export default function WasherPanel({
       wageServices.push({
         key: category,
         rateKey: config.rates[0].legacyRateKey,
+        earningKey: config.rates[0].earningKey,
         quantity: legacyQuantity,
       });
     }

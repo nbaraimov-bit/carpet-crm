@@ -26,7 +26,7 @@ import yuvildiIcon from "../Pages/Home/Assets/yuvildiIcon.png";
 import tayyorIcon from "../Pages/Home/Assets/tayyorIcon.png";
 
 import "./App.css";
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { db } from "../../firebase";
 import {
   collection,
@@ -34,6 +34,7 @@ import {
   onSnapshot,
   doc,
   updateDoc,
+  deleteDoc,
   serverTimestamp,
   query,
   where,
@@ -46,51 +47,44 @@ import {
   orderBy,
 } from "firebase/firestore";
 
-function getTodayString() {
-  const dateParts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Tashkent",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(new Date());
-  const datePart = (type) => dateParts.find((part) => part.type === type)?.value;
-  return `${datePart("year")}-${datePart("month")}-${datePart("day")}`;
-}
-
-function InfoCard({ icon, title, value, suffix = "" }) {
-  return (
-    <div className="info-card">
-      <div className="info-card-icon">{icon}</div>
-      <div className="info-card-title">{title}</div>
-      <div className="info-card-value">
-        {value}
-        {suffix && <span className="info-card-suffix"> {suffix}</span>}
-      </div>
-    </div>
-  );
-}
-
 function App() {
   const [orders, setOrders] = useState([])
   const [role, setRole] = useState("")
   const [displayRole, setDisplayRole] = useState("")
   const [roleTransition, setRoleTransition] = useState("")
+  const [driverMode, setDriverMode] = useState("") 
+  const [carpetCount, setCarpetCount] = useState("")
+  const [kvm, setKvm] = useState("")
+  const [blanketCount, setBlanketCount] = useState("")
+  const [yakandozCount, setYakandozCount] = useState("")
+  const [curtainCount, setCurtainCount] = useState("")
+  const [curtainMeter, setCurtainMeter] = useState("")
+  const [curtainPrice, setCurtainPrice] = useState("")
+  const [other, setOther] = useState("")
+  const [price, setPrice] = useState("")
   const [workerName, setWorkerName] = useState("")
   const [workerPhone, setWorkerPhone] = useState("")
   const [requestSent,setRequestSent,] = useState(false)
+  const [workerRequests,setWorkerRequests,] = useState([])
   const [loginPhone, setLoginPhone] = useState("")
-  const [currentWorker,setCurrentWorker] = useState(() => {
-    try {
-      const savedWorker = localStorage.getItem("worker");
-      return savedWorker ? JSON.parse(savedWorker) : null;
-    } catch {
-      return null;
-    }
-  })
+  const [currentWorker,setCurrentWorker] = useState(null)
   const [workers, setWorkers] = useState([])
+  const [editingWorker,setEditingWorker] = useState(null)
+  const [attendance,setAttendance] = useState([])
+  const [expandedWorker,setExpandedWorker] = useState(null)
+  const [editingStatus,setEditingStatus] = useState(null)
   const [washerPrices,setWasherPrices] = useState({})
+  const [priceInputs,setPriceInputs] = useState({})
+  const [todayOpen,setTodayOpen] = useState(false)
+  const [weekOpen,setWeekOpen] = useState(false)
+  const [MonthOpen,setMonthOpen] = useState(false)
+  const [allOpen,setAllOpen] = useState(false)
+  const [selectedDate,setSelectedDate] = useState("")
   const [driverPrices, setDriverPrices] = useState({})
   const [packingPrices, setPackingPrices] = useState({})
+  const [driverComment, setDriverComment] = useState("")
+  const [archives, setArchives] = useState([])
+  const [workerEarnings, setWorkerEarnings] = useState({})
   const [teams, setTeams] = useState([])
   const [teamEarnings, setTeamEarnings] = useState({})
   const [page, setPage] = useState("home");
@@ -99,7 +93,6 @@ function App() {
   const [statsTab, setStatsTab] = useState("stats");
   const [todayWorkers, setTodayWorkers] = useState([]);
   const [loading, setLoading] = useState({});
-  const actionLocks = useRef(new Set());
   const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [stats, setStats] = useState({
     income: 0,
@@ -127,8 +120,7 @@ function App() {
 
   async function runAction(actionId, callback) {
 
-    if (actionLocks.current.has(actionId)) return;
-    actionLocks.current.add(actionId);
+    if (loading[actionId]) return;
 
     setLoading(prev => ({
       ...prev,
@@ -146,8 +138,6 @@ function App() {
       alert("Xatolik yuz berdi!");
 
     } finally {
-
-      actionLocks.current.delete(actionId);
 
       setLoading(prev => ({
         ...prev,
@@ -187,6 +177,18 @@ function App() {
   }
 
 
+  function getTodayString() {
+    const dateParts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Tashkent",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).formatToParts(new Date());
+    const datePart = (type) => dateParts.find((part) => part.type === type)?.value;
+    return `${datePart("year")}-${datePart("month")}-${datePart("day")}`;
+  }
+
+
   const sendWorkerRequest =
     async () => {
 
@@ -222,6 +224,44 @@ function App() {
       setWorkerPhone("")
   }
 
+  const approveWorker =
+    async (request) => {
+
+    await addDoc(
+      collection(db, "workers"),
+      {
+        name: request.name,
+        phone: request.phone,
+        telegramId: request.telegramId,
+        role: "worker",
+        approved: true,
+      }
+    )
+
+    const requestRef = doc(
+      db,
+      "workerRequests",
+      request.firebaseId
+    )
+
+     await updateDoc(requestRef, {
+      status: "approved",
+    })
+  }
+
+  const rejectWorker = async (requestId) => {
+
+    const requestRef = doc(
+      db,
+      "workerRequests",
+      requestId
+    )
+
+    await updateDoc(requestRef, {
+      status: "rejected",
+    })
+  }
+
   const loginWorker = async () => {
 
     const q = query(
@@ -244,6 +284,8 @@ function App() {
 
     const workerDoc = snapshot.docs[0]
     const worker = {firebaseId: workerDoc.id, ...workerDoc.data()}
+    const telegramId = tg?.initDataUnsafe?.user?.id
+
     await updateDoc(
       doc(
         db,
@@ -278,6 +320,255 @@ function App() {
     setRole("")
   }
 
+  const changeWorkerRole = async (
+    workerId,
+    role
+  ) => {
+
+    const workerRef = doc(
+      db,
+      "workers",
+      workerId
+    )
+
+    await updateDoc(
+      workerRef,
+      {
+        role: role,
+      }
+    )
+
+    setEditingWorker(null)
+  }
+
+  const startWork =
+  async () => {
+
+    const activeWorker = workerData || currentWorker
+
+    if (activeWorker.working) return
+
+    if (!currentWorker) return
+
+    const workerDoc =
+      workers.find(
+        (w) =>
+          w.phone ===
+          currentWorker.phone
+      )
+
+    if (!workerDoc) return
+
+    const workerRef = doc(
+      db,
+      "workers",
+      workerDoc.firebaseId
+    )
+
+    await updateDoc(
+      workerRef,
+      {
+        working: true,
+        status: "faol",
+        startedAt: new Date(),
+      }
+    )
+  }
+
+  const stopWork = async (workerData = null) => {
+
+    const activeWorker = workerData || currentWorker
+
+    const workerDoc =
+      workers.find(
+        (w) =>
+          w.phone ===
+          activeWorker.phone
+      )
+
+    if (!workerDoc) return
+
+    const workerRef = doc(
+      db,
+      "workers",
+      workerDoc.firebaseId
+    )
+
+    const startedAt = workerDoc.startedAt ?.toDate()
+    const endedAt = new Date()
+    const totalHours =
+      (
+        (
+          endedAt -
+          startedAt
+        ) /
+        1000 /
+        60 /
+        60
+      ).toFixed(2)
+
+    const hourlyRate = getHourlyPrice(workerDoc)
+    const salary = Number(totalHours) * Number(hourlyRate)
+
+    await addDoc(
+      collection(db, "attendance"),
+      {
+        workerName: workerDoc.name,
+        workerPhone: workerDoc.phone,
+        primaryRole: workerDoc.primaryRole,
+        startedAt,
+        endedAt,
+        totalHours: Number(totalHours),
+        hourlyRate,
+        salary,
+        createdAt: serverTimestamp(),
+      }
+    )
+
+    await updateDoc(
+      workerRef,
+      {
+        working: false,
+        status: "nofaol",
+        startedAt: null
+      }
+    )
+
+  }
+
+  const changeWorkerStatus =  async (
+    workerId,
+    newStatus
+  ) => {
+      if (newStatus === "nofaol") {
+        const worker = workers.find(
+          (w) => w.firebaseId === workerId
+        )
+
+        if (worker) {await stopWork(worker)}
+
+        return
+      }
+
+    const workerRef =
+      doc(
+        db,
+        "workers",
+        workerId
+      )
+
+    const workerDoc = workers.find(
+      (w) => w.firebaseId === workerId
+    )
+
+    if (
+      newStatus === "faol" &&
+      workerDoc?.working
+    ) {
+      return
+    }
+
+    await updateDoc(
+      workerRef,
+      {
+        status: newStatus,
+        working: newStatus === "faol",
+        startedAt: newStatus === "faol" ? new Date() : null
+      }
+    )
+  }
+
+  const getHourlyPrice = (
+    worker
+  ) => {
+
+    if (
+      worker.primaryRole ===
+      "driver"
+    ) {
+      return driverPrices.hour || 0
+    }
+
+    if (
+      worker.primaryRole ===
+      "tayyorlovchi"
+    ) {
+      return packingPrices.hour || 0
+    }
+ 
+    return 0
+  }
+
+  const today = new Date()
+
+  const todayArchives = archives.filter((o) => {
+
+    if (!o.createdAt) return false
+
+    const d =
+      o.createdAt.toDate()
+
+    return (
+      d.getDate() === today.getDate() &&
+      d.getMonth() === today.getMonth() &&
+      d.getFullYear() === today.getFullYear()
+    )
+
+  })
+
+  const dailyIncome = todayArchives.reduce(
+    (sum, o) =>
+      sum + Number(o.price || 0),
+    0
+  )
+
+  const dailyWasherSalary = todayArchives.reduce(
+    (sum, o) => {
+
+      return (
+        sum +
+        Number(o.carpetSalary || 0) +
+        Number(o.blanketSalary || 0) +
+        Number(o.yakandozSalary || 0) +
+        Number(o.curtainSalary || 0)
+      )
+
+    },
+    0
+  )
+
+  const todayAttendance = attendance.filter((a) => {
+
+    if (!a.createdAt) return false
+
+    const d =
+      a.createdAt.toDate()
+
+    return (
+      d.getDate() === today.getDate() &&
+      d.getMonth() === today.getMonth() &&
+      d.getFullYear() === today.getFullYear()
+    )
+
+  })
+
+  const dailyHourlySalary = todayAttendance.reduce(
+    (sum, a) => {
+
+      const worker = workers.find(
+        (w) => w.phone === a.workerPhone
+      )
+
+      const hourly = getHourlyPrice(worker)
+
+      return (
+        sum + hourly * Number(a.totalHours || 0)
+      )
+
+    },
+    0
+  )
+
   const driverTeam = teams.find(
     (team) =>
       team.type === "driver" &&
@@ -301,6 +592,9 @@ function App() {
       team.type === "operator" &&
       team.members?.[currentPhone]?.working === true
   );
+
+  const totalDailySalary = dailyWasherSalary + dailyHourlySalary
+
 
   const addWorkerEarnings = async ({
     dateId,
@@ -340,7 +634,7 @@ function App() {
 
         if (!member.working) continue;
 
-        earned = Number(member[service.rateKey || service.key] ?? member[service.key] ?? 0) * Number(service.quantity || 0);
+        earned = Number(member[service.rateKey || service.key] || 0) * Number(service.quantity || 0);
 
       }
 
@@ -379,34 +673,22 @@ function App() {
 
       teamSalary += earned;
 
-      const oldWorker = earningsData[member.phone] || {
-        name: member.name,
-        washerSalary: 0,
-        driverSalary: 0,
-        packingSalary: 0,
-      };
+      if (earned <= 0 || !member.phone) continue;
+
+      const salaryField = teamType === "washer"
+        ? "washerSalary"
+        : teamType === "packing" ? "packingsalary" : "driverSalary";
+      const oldWorker = earningsData[member.phone] || { name: member.name };
 
       earningsData[member.phone] = {
         ...oldWorker,
         name: member.name,
-
-        washerSalary:
-          teamType === "washer"
-          ? Number(oldWorker.washerSalary || 0) + earned
-          : Number(oldWorker.washerSalary || 0),
- 
-        driverSalary:
-          teamType === "driver"
-          ? Number(oldWorker.driverSalary || 0) + earned
-          : Number(oldWorker.driverSalary || 0),
-
-        packingSalary:
-          teamType === "packing"
-          ? Number(oldWorker.packingSalary || 0) + earned
-          : Number(oldWorker.packingSalary || 0),
+        [salaryField]: Number(oldWorker[salaryField] || 0) + earned,
       };
 
     }
+
+    if (teamSalary <= 0) return;
 
     await setDoc(
       earningsRef, 
@@ -427,128 +709,82 @@ function App() {
       teamData = teamSnap.data();
     }
 
-    let oldTeam = teamData[teamId];
-
-    if (!oldTeam) {
-      if (teamType === "driver") {
-        oldTeam = {
-          type: "driver",
-          teamName,
-     
-          pickupSalary: 0,
-          deliverySalary: 0,
-          salary: 0,
-
-          pickupCarpetKvm: 0,
-          pickupBlanketCount: 0,
-          pickupYakandozCount: 0,
-          pickupCurtainMeter: 0,
-  
-          pickupCarpetSalary: 0,
-          pickupBlanketSalary: 0,
-          pickupYakandozSalary: 0,
-          pickupCurtainSalary: 0,
-
-          deliveryCarpetKvm: 0,
-          deliveryBlanketCount: 0,
-          deliveryYakandozCount: 0,
-          deliveryCurtainMeter: 0,
-
-          deliveryCarpetSalary: 0,
-          deliveryBlanketSalary: 0,
-          deliveryYakandozSalary: 0,
-          deliveryCurtainSalary: 0,
-        };
-      } else {
-        oldTeam = {
-          type: teamType,
-          teamName,
-
-          salary: 0,
-
-          carpetKvm: 0,
-          blanketCount: 0,
-          yakandozCount: 0,
-          curtainMeter: 0,
-
-          carpetSalary: 0,
-          blanketSalary: 0,
-          yakandozSalary: 0,
-          curtainSalary: 0,
-        };
-      }
-    }
-
-    const field = (name) => {
-      if (teamType !== "driver") return name;
-
-      return stage + name.charAt(0).toUpperCase() + name.slice(1);
-    };
-
-    const addValue = (name, value) => {
-      const key = field(name);
-
-      return (oldTeam[key] || 0) + Number(value || 0);
-    };
-
-    teamData[teamId] = {
+    const oldTeam = teamData[teamId] || {};
+    const nextTeam = {
       ...oldTeam,
       type: teamType,
       teamName,
-
       salary: Number(oldTeam.salary || 0) + teamSalary,
-
-      [field("carpetKvm")] : addValue(
-        "carpetKvm",
-        service.key === "carpet" ? Number(service.quantity || 0) : 0
-      ),
-
-      [field("blanketCount")] : addValue(
-        "blanketCount",
-        service.key === "blanket" ? Number(service.quantity || 0) : 0
-      ),
-
-      [field("yakandozCount")] : addValue(
-        "yakandozCount",
-        service.key === "yakandoz" ? Number(service.quantity || 0) : 0
-      ),
-
-      [field("curtainMeter")] : addValue(
-        "curtainMeter",
-        service.key === "curtain" ? Number(service.quantity || 0) : 0
-      ),
-
-      [field("carpetSalary")] : addValue(
-        "carpetSalary",
-        service.key === "carpet" ? teamSalary : 0
-      ),
-
-      [field("blanketSalary")] : addValue(
-        "blanketSalary",
-        service.key === "blanket" ? teamSalary : 0
-      ),
-
-      [field("yakandozSalary")] : addValue(
-        "yakandozSalary",
-        service.key === "yakandoz" ? teamSalary : 0
-      ),
-
-      [field("curtainSalary")] : addValue(
-        "curtainSalary",
-        service.key === "curtain" ? teamSalary : 0
-      ),
-
-      ...(teamType === "driver" && {
-        pickupSalary:
-        Number(oldTeam.pickupSalary || 0) +
-        (stage === "pickup" ? teamSalary : 0),
-
-        deliverySalary:
-        Number(oldTeam.deliverySalary || 0) +
-        (stage === "delivery" ? teamSalary : 0),
-      }),
+      totalSalary: Number(oldTeam.totalSalary ?? oldTeam.salary ?? 0) + teamSalary,
     };
 
+    if (teamType === "washer" || teamType === "packing") {
+      const productStatFields = [
+        "carpetCount", "carpetSalary", "carpetKvm",
+        "blanket1xCount", "blanket1xSalary", "blanket2xCount", "blanket2xSalary",
+        "matrasCount", "matrasSalary", "blanketCount", "blanketSalary",
+        "yakandozMCount", "yakandozMSalary", "yakandozSCount", "yakandozSSalary",
+        "yakandozLCount", "yakandozLSalary", "yakandozCount", "yakandozSalary",
+        "curtainMeter", "curtainSalary",
+      ];
+      for (const field of productStatFields) {
+        if (Number(nextTeam[field]) === 0) delete nextTeam[field];
+      }
+
+      const earningKey = service.earningKey || (
+        service.key === "blanket" ? "blanket1x"
+          : service.key === "yakandoz" ? "yakandozM"
+            : service.key
+      );
+      const productFields = {
+        carpet: { count: "carpetCount", salary: "carpetSalary", oldCount: "carpetKvm", oldSalary: "carpetSalary" },
+        blanket1x: { count: "blanket1xCount", salary: "blanket1xSalary", oldCount: "blanketCount", oldSalary: "blanketSalary" },
+        blanket2x: { count: "blanket2xCount", salary: "blanket2xSalary", oldCount: "blanketCount", oldSalary: "blanketSalary" },
+        matras: { count: "matrasCount", salary: "matrasSalary", oldCount: "blanketCount", oldSalary: "blanketSalary" },
+        yakandozM: { count: "yakandozMCount", salary: "yakandozMSalary", oldCount: "yakandozCount", oldSalary: "yakandozSalary" },
+        yakandozS: { count: "yakandozSCount", salary: "yakandozSSalary", oldCount: "yakandozCount", oldSalary: "yakandozSalary" },
+        yakandozL: { count: "yakandozLCount", salary: "yakandozLSalary", oldCount: "yakandozCount", oldSalary: "yakandozSalary" },
+        curtain: { count: "curtainMeter", salary: "curtainSalary", oldCount: "curtainMeter", oldSalary: "curtainSalary" },
+      };
+      const fields = productFields[earningKey];
+      const quantity = Number(service.quantity || 0);
+
+      if (fields && quantity > 0 && teamSalary > 0) {
+        nextTeam[fields.count] = Number(oldTeam[fields.count] || 0) + quantity;
+        nextTeam[fields.salary] = Number(oldTeam[fields.salary] || 0) + teamSalary;
+        if (fields.oldCount !== fields.count) {
+          nextTeam[fields.oldCount] = Number(oldTeam[fields.oldCount] || 0) + quantity;
+        }
+        if (fields.oldSalary !== fields.salary) {
+          nextTeam[fields.oldSalary] = Number(oldTeam[fields.oldSalary] || 0) + teamSalary;
+        }
+      }
+    } else if (teamType === "driver") {
+      const legacyFields = {
+        carpet: ["carpetKvm", "carpetSalary"],
+        blanket: ["blanketCount", "blanketSalary"],
+        yakandoz: ["yakandozCount", "yakandozSalary"],
+        curtain: ["curtainMeter", "curtainSalary"],
+      };
+      const fields = legacyFields[service.key];
+      const quantity = Number(service.quantity || 0);
+      if (fields && quantity > 0 && teamSalary > 0) {
+        const countField = stage ? `${stage}${fields[0][0].toUpperCase()}${fields[0].slice(1)}` : fields[0];
+        const salaryField = stage ? `${stage}${fields[1][0].toUpperCase()}${fields[1].slice(1)}` : fields[1];
+        nextTeam[countField] = Number(oldTeam[countField] || 0) + quantity;
+        nextTeam[salaryField] = Number(oldTeam[salaryField] || 0) + teamSalary;
+      }
+      if (stage === "pickup") {
+        nextTeam.totalPickupSalary = Number(oldTeam.totalPickupSalary || 0) + teamSalary;
+        nextTeam.pickupSalary = Number(oldTeam.pickupSalary || 0) + teamSalary;
+      }
+      if (stage === "delivery") {
+        nextTeam.totalDeliverySalary = Number(oldTeam.totalDeliverySalary || 0) + teamSalary;
+        nextTeam.deliverySalary = Number(oldTeam.deliverySalary || 0) + teamSalary;
+      }
+    }
+
+    teamData[teamId] = nextTeam;
     await setDoc(teamRef, teamData);
 
   };
@@ -612,6 +848,24 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const unsubscribe =
+      onSnapshot(
+        collection(db, "workerRequests"),
+        (snapshot) => {
+          const data =
+            snapshot.docs.map((doc) => ({
+              firebaseId: doc.id,
+              ...doc.data(),
+            }))
+
+          setWorkerRequests(data)
+        }
+      )
+
+    return () => unsubscribe()
+  }, [])
+
+  useEffect(() => {
 
     const unsubscribe =
       onSnapshot(
@@ -633,6 +887,72 @@ function App() {
     return () => unsubscribe()
 
   }, [])
+
+  useEffect(() => { 
+
+    const savedWorker =
+      localStorage.getItem(
+        "worker"
+      )
+
+    if (savedWorker) {
+
+      const worker = JSON.parse(savedWorker)
+
+      setCurrentWorker(worker)
+      setRole("")
+    
+    }
+
+  }, [])
+
+  useEffect(() => {
+
+    const unsubscribe =
+    onSnapshot(
+      collection(
+        db,
+        "attendance"
+      ),
+      (snapshot) => {
+
+        const data =
+        snapshot.docs.map(
+          (doc) => ({
+            firebaseId: doc.id,
+            ...doc.data(),
+          })
+        )
+
+        setAttendance(data)
+      }
+    )
+
+    return () => unsubscribe()
+
+  }, [])
+
+  useEffect(() => {
+
+    const unsubscribe =
+      onSnapshot(
+        collection(db, "workerEarnings"),
+        (snapshot) => {
+
+          const data = {}
+
+          snapshot.docs.forEach((doc) => {
+            data[doc.id] = doc.data()
+          })
+
+          setWorkerEarnings(data)
+        }
+      )
+
+    return () => unsubscribe()
+
+  }, [])
+
 
   useEffect(() => {
 
@@ -662,6 +982,7 @@ function App() {
  
       if (snap.exists()) {
         setWasherPrices(snap.data())
+        setPriceInputs(snap.data())
       }
     }
 
@@ -671,9 +992,7 @@ function App() {
 
   useEffect(() => {
 
-    const workerId = currentWorker?.firebaseId;
-    const workerRole = currentWorker?.role;
-    if (!workerId)
+    if (!currentWorker?.firebaseId)
       return
 
     const unsubscribe = onSnapshot(
@@ -681,19 +1000,17 @@ function App() {
       doc(
         db,
         "workers",
-        workerId
+        currentWorker.firebaseId
       ),
 
       (snapshot) => {
 
         const data = snapshot.data()
-
-        if (!data) return
          
         if (
-          workerRole !== "admin" &&
-          workerRole !== "ega" &&
-          data.role !== workerRole
+          currentWorker?.role !== "admin" &&
+          currentWorker?.role !== "ega" &&
+          data.role !== currentWorker.role
         ) {
 
           localStorage.removeItem("worker")
@@ -703,7 +1020,12 @@ function App() {
           return
         }
 
-        setCurrentWorker((worker) => worker ? { ...worker, ...data } : worker)
+        if (!data) return
+
+        setCurrentWorker({
+          ...currentWorker,
+          ...data
+        }) 
 
         if (
           data.status === "bloklangan"
@@ -722,7 +1044,7 @@ function App() {
 
     return () => unsubscribe()
 
-  }, [currentWorker?.firebaseId, currentWorker?.role])
+  }, [currentWorker?.firebaseId])
 
   useEffect(() => {
 
@@ -758,6 +1080,29 @@ function App() {
   }, [])
 
   useEffect(() => {
+
+    const unsubscribe = onSnapshot(
+      collection(
+        db,
+        "archives"
+      ),
+
+      (snapshot) => {
+        setArchives(
+          snapshot.docs.map(
+            (doc) => ({
+              firebaseId: doc.id, ...doc.data(),
+            })
+          )
+        )
+      }
+    )
+
+    return () => unsubscribe()
+
+  }, [])
+
+  useEffect(() => {
     return onSnapshot(
       collection(db, "teams"),
       (snapshot) => {
@@ -782,7 +1127,7 @@ function App() {
         loadExpenseFund();
       }
     }
-  }, [page, statsTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [page, statsTab]);
 
 
   async function ensureExpenseDocument() {
@@ -913,6 +1258,419 @@ function App() {
     return total;
   }
 
+  {/* ===== update status ===== */}
+  const updateStatus = async (id, status) => {
+
+    const orderRef =
+    doc(
+      db,
+      "orders",
+      id
+    )
+
+    const orderSnap = await getDoc(orderRef);
+
+    if (!orderSnap.exists()) return;
+
+    const order = orderSnap.data();
+
+    const updates = {
+      status: status,
+    } 
+
+    if (status === "Yetkazilmoqda") {
+      updates.deliveryDriverTeamId = driverTeam?.id;
+      updates.deliveryDriverTeamName = driverTeam?.teamName;
+    }
+
+    if (status === "Yetkazildi") { 
+
+      const order = orders.find((o) => o.firebaseId === id)
+
+      const deliveryTeam = teams.find(
+        (team) => team.id === order.deliveryDriverTeamId
+      );
+
+      const dateId = getTodayString()
+
+      if (deliveryTeam) {
+
+        const members = Object.values(deliveryTeam.members);
+
+        const driverServices = [
+          {
+            key: "carpet",
+            amount: Number(driverPrices.deliveryCarpet || 0),
+            quantity: Number(order.kvm || 0),
+          },
+          {
+            key: "blanket",
+            amount: Number(driverPrices.deliveryBlanket || 0),
+            quantity: Number(order.blanketCount || 0),
+          },
+          {
+            key: "yakandoz",
+            amount: Number(driverPrices.deliveryYakandoz || 0),
+            quantity: Number(order.yakandozCount || 0),
+          },
+          {
+            key: "curtain",
+            amount: Number(driverPrices.deliveryCurtain || 0),
+            quantity: Number(order.curtainMeter || 0),
+          },
+        ];
+
+        for (const service of driverServices) {
+          if (service.quantity <= 0) continue;
+
+          await addWorkerEarnings({
+            dateId,
+            members,
+            service,
+            teamId: deliveryTeam.id,
+            teamName: deliveryTeam.teamName,
+            teamType: "driver",
+            stage: "delivery",
+          });
+        }
+      }
+
+      const totalSalary = calculateTotalSalary(
+        order,
+        washerPrices,
+        driverPrices,
+        packingPrices
+      );
+
+      await setDoc(
+        doc(
+          db, "archives", order.id
+        ),{
+          ...order,
+          status: "Yetkazildi",
+          archivedAt: serverTimestamp(),
+          archiveDate: dateId,
+          totalSalary,
+        }
+      );
+
+      await updateExpenseFund(order);
+
+      await deleteDoc(orderRef);
+
+      return
+    }
+
+    if (status === "Tayyor") {
+
+      const packingTeam = teams.find(
+        (team) =>
+        team.type === "packing" &&
+        currentWorker &&
+        team.members?.[currentPhone]
+      );
+
+      if (packingTeam) {
+        updates.packingTeamId = packingTeam.id;
+        updates.packingTeamName = packingTeam.teamName;
+      }
+
+      const dateId = getTodayString();
+
+      if (packingTeam) {
+
+        const members = Object.values(packingTeam.members);
+
+        const hasBlanketSizes = [order.blanket1x, order.blanket2x, order.matras]
+          .some((value) => value !== undefined && value !== null && value !== "");
+        const hasYakandozSizes = [order.yakandozM, order.yakandozS, order.yakandozL]
+          .some((value) => value !== undefined && value !== null && value !== "");
+        const packingServices = [
+          { key: "carpet", earningKey: "carpet", amount: 300, quantity: Number(order.kvm || 0) },
+          { key: "blanket", earningKey: "blanket1x", amount: 800, quantity: hasBlanketSizes ? Number(order.blanket1x || 0) : Number(order.blanketCount || 0) },
+          { key: "blanket", earningKey: "blanket2x", amount: 1000, quantity: Number(order.blanket2x || 0) },
+          { key: "blanket", earningKey: "matras", amount: 2000, quantity: Number(order.matras || 0) },
+          { key: "yakandoz", earningKey: "yakandozM", amount: 500, quantity: hasYakandozSizes ? Number(order.yakandozM || 0) : Number(order.yakandozCount || 0) },
+          { key: "yakandoz", earningKey: "yakandozS", amount: 1000, quantity: Number(order.yakandozS || 0) },
+          { key: "yakandoz", earningKey: "yakandozL", amount: 1500, quantity: Number(order.yakandozL || 0) },
+          {
+            key: "curtain",
+            amount: Number(packingPrices.curtain || 0),
+            quantity: Number(order.curtainMeter || 0),
+          },
+        ];
+
+        for (const service of packingServices) {
+          if (service.quantity <= 0) continue;
+ 
+          await addWorkerEarnings({
+            dateId,
+            members,
+            service,
+            teamId: packingTeam.id,
+            teamName: packingTeam.teamName,
+            teamType: "packing",
+          });
+        }
+      }
+
+    }
+
+    if (status === "Olindi") {
+
+      const pickupTeam = teams.find(
+        (team) => team.id === order.pickupDriverTeamId
+      );
+
+      const dateId = getTodayString();
+
+      if (pickupTeam) {
+
+        const members = Object.values(pickupTeam.members);
+
+        const driverServices = [
+          {
+            key: "carpet",
+            amount: Number(driverPrices.pickupCarpet || 0),
+            quantity: Number(order.kvm || 0),
+          },
+          {  
+            key: "blanket",
+            amount: Number(driverPrices.pickupBlanket || 0),
+            quantity: Number(order.blanketCount || 0),
+          },
+          {
+            key: "yakandoz",
+            amount: Number(driverPrices.pickupYakandoz || 0),
+            quantity: Number(order.yakandozCount || 0),
+          },
+          {
+            key: "curtain",
+            amount: Number(driverPrices.pickupCurtain || 0),
+            quantity: Number(order.curtainMeter || 0),
+          },
+        ];
+
+        for (const service of driverServices) {
+          if (service.quantity <= 0) continue;
+
+          await addWorkerEarnings({
+            dateId,
+            members,
+            service,
+            teamId: pickupTeam.id,
+            teamName: pickupTeam.teamName,
+            teamType: "driver",
+            stage: "pickup"
+          });
+        }
+      }
+
+    }
+
+    if (status === "Olinmoqda" ) {
+      updates.pickupDriverTeamId = driverTeam?.id;
+      updates.pickupDriverTeamName = driverTeam?.teamName;
+    }
+ 
+    await updateDoc(
+      orderRef,
+      updates
+    )
+  }
+
+
+  {/* ===== save detail ===== */}
+  const saveDetails = async (id) => {
+    const orderRef = doc(db, "orders", id)
+
+    await updateDoc(orderRef, {
+      carpetCount,
+      kvm,
+      blanketCount,
+      yakandozCount,
+      curtainCount,
+      curtainMeter,
+      curtainPrice,
+      other,
+      driverComment,
+      price,
+      carpetStatus: carpetCount
+        ? "Olindi"
+        : "",
+   
+      blanketStatus: blanketCount
+        ? "Olindi"
+        : "",
+
+      yakandozStatus: yakandozCount || other
+        ? "Olindi"
+        : "",
+
+      curtainStatus: curtainMeter
+        ? "Olindi"
+        : "",
+    })
+
+  }
+
+  
+  {/* ===== update wash status ===== */}
+  const updateWashStatus = async (
+    id,
+    field,
+    value
+  ) => {
+    const orderRef = doc(db, "orders", id)
+
+    const order = orders.find(
+      (o) => o.firebaseId === id
+    )
+
+    const updates = {
+      [field]: value,
+    }
+
+    const team = teams.find(team =>
+      team.type === "washer" &&
+      team.members?.[currentWorker.phone]
+    );
+
+    if (value === "Yuvilmoqda" && team) {
+
+      if (field === "carpetStatus") {
+        updates.carpetWasherTeamId = team.id;
+        updates.carpetWasherTeamName = team.teamName;
+      }
+
+      if (field === "blanketStatus") {
+        updates.blanketWasherTeamId = team.id;
+        updates.blanketWasherTeamName = team.teamName;
+      }
+
+      if (field === "yakandozStatus") {
+        updates.yakandozWasherTeamId = team.id;
+        updates.yakandozWasherTeamName = team.teamName;
+      }
+
+      if (field === "curtainStatus") {
+        updates.curtainWasherTeamId = team.id;
+        updates.curtainWasherTeamName = team.teamName;
+      }
+
+    }
+
+    if (
+      value === "Yuvildi" && currentWorker
+    ) {
+
+      updates[field.replace(
+        "Status",
+        "Date"
+      )] = serverTimestamp() 
+
+      const serviceMap = {
+        carpetStatus: {
+          key: "carpet",
+          amount: Number(team.members[currentWorker.phone].carpet || 0),
+          quantity: Number(order.kvm || 0),
+        },
+
+        blanketStatus: {
+          key: "blanket",
+          amount: Number(team.members[currentWorker.phone].blanket || 0),
+          quantity: Number(order.blanketCount || 0),
+        },
+
+        yakandozStatus: {
+          key: "yakandoz",
+          amount: Number(team.members[currentWorker.phone].yakandoz || 0),
+          quantity: Number(order.yakandozCount || 0),
+        },
+
+        curtainStatus: {
+          key: "curtain",
+          amount: Number(team.members[currentWorker.phone].curtain || 0),
+          quantity: Number(order.curtainMeter || 0),
+        },
+      };
+
+      const serviceStats = {
+        carpet: "carpetKvm",
+        blanket: "blanketCount",
+        yakandoz: "yakandozCount",
+        curtain: "curtainMeter",
+      }; 
+
+      const service = serviceMap[field];
+      const washerTeam = teams.find((team) => team.id === order[`${service.key}WasherTeamId`]);
+      const members = Object.values(washerTeam.members);
+      const serviceAmount = service.amount;
+      const statField = serviceStats[service.key];
+  
+      const today = new Date();
+
+      const dateId = today.getFullYear() +
+      "-" + String(today.getMonth() + 1).padStart(2, "0") +
+      "-" + String(today.getDate()).padStart(2, "0");
+
+      await addWorkerEarnings({
+        dateId,
+        members,
+        service,
+        teamId: washerTeam.id,
+        teamName: washerTeam.teamName,
+        teamType: "washer"
+      });
+
+    }
+
+    const carpetDone =
+      !order.carpetStatus ||
+      field === "carpetStatus"
+        ? value === "Yuvildi"
+        : order.carpetStatus ===
+          "Yuvildi"
+
+    const blanketDone =
+      !order.blanketStatus ||
+      field === "blanketStatus"
+        ? value === "Yuvildi"
+        : order.blanketStatus ===
+          "Yuvildi"
+
+    const yakandozDone =
+      !order.yakandozStatus ||
+      field === "yakandozStatus"
+        ? value === "Yuvildi"
+        : order.yakandozStatus ===
+          "Yuvildi"
+
+    const curtainDone =
+      !order.curtainStatus ||
+      field === "curtainStatus"
+        ? value === "Yuvildi"
+        : order.curtainStatus ===
+          "Yuvildi"
+
+    if (
+      carpetDone &&
+      blanketDone &&
+      yakandozDone &&
+      curtainDone
+    ) {
+      updates.status = "Yuvildi"  
+
+      updates.carpetStatus = ""
+      updates.blanketStatus = ""
+      updates.yakandozStatus = ""
+      updates.curtainStatus = ""
+    }
+
+    await updateDoc(orderRef, updates)
+  }
+
+
   {/* ===== kirish ===== */}
   if (!currentWorker && !requestSent ) {
     return (
@@ -1022,6 +1780,35 @@ function App() {
 
 
   {/* ===== statistikaga tegishli ===== */}
+  function InfoCard({
+    icon,
+    title,
+    value,
+    suffix = "",
+  }) {
+    return (
+      <div className="info-card">
+        <div className="info-card-icon">{icon}</div>
+
+        <div className="info-card-title">
+          {title}
+        </div>
+
+        <div className="info-card-value">
+          {value}
+          {suffix && (
+            <span className="info-card-suffix">
+              {" "}
+              {suffix}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+
+  {/* ===== statistikaga tegishli ===== */}
   async function loadTodayStats() {
 
     const today = getTodayString()
@@ -1050,6 +1837,8 @@ function App() {
     const expenseSnap = await getDoc(expenseRef);
 
     let expenseFund = 0;
+    let earnedToday = 0;
+
     if (expenseSnap.exists()) {
 
       const expense = expenseSnap.data();
@@ -1161,7 +1950,7 @@ function App() {
   };
 
 
-  async function getWorkerEarnings(startDate) {
+  async function getWorkerEarnings(startDate, endDate) {
 
     const workersMap = {};
     let totalSalary = 0;
@@ -1181,7 +1970,7 @@ function App() {
 
       const driverSalary = Number(worker.driverSalary || 0);
       const washerSalary = Number(worker.washerSalary || 0);
-      const packingSalary = Number(worker.packingSalary || 0);
+      const packingSalary = Number(worker.packingsalary ?? worker.packingSalary ?? 0);
 
       const workerTotal = driverSalary + washerSalary + packingSalary;
 
@@ -1487,7 +2276,9 @@ function App() {
       <OperatorPanel
 
         orders={orders}
+        updateStatus={updateStatus}
         setRole={changeRole}
+        role={role}
         loading={loading}
         runAction={runAction}
 
@@ -1501,7 +2292,31 @@ function App() {
       <DriverPanel
 
         orders={orders}
+        driverMode={driverMode}
+        setDriverMode={setDriverMode}
+        saveDetails={saveDetails}
         setRole={changeRole}
+        carpetCount={carpetCount}
+        setCarpetCount={setCarpetCount}
+        kvm={kvm}
+        setKvm={setKvm}
+        blanketCount={blanketCount}
+        setBlanketCount={setBlanketCount}
+        yakandozCount={yakandozCount}
+        setYakandozCount={setYakandozCount}
+        curtainCount={curtainCount}
+        setCurtainCount={setCurtainCount}
+        curtainMeter={curtainMeter}
+        setCurtainMeter={setCurtainMeter}
+        curtainPrice={curtainPrice}
+        setCurtainPrice={setCurtainPrice}
+        other={other}
+        setOther={setOther}
+        price={price}
+        setPrice={setPrice}
+        driverComment={driverComment}
+        setDriverComment={setDriverComment}
+        currentWorker={currentWorker}
         driverTeam={driverTeam}
         loading={loading}
         runAction={runAction}
@@ -1518,15 +2333,15 @@ function App() {
     {/* ===== washer panel ===== */}
     {page === "home" && displayRole === "washer" && (
       <WasherPanel
-
         orders={orders}
+        washerTeam={washerTeam}
         addWorkerEarnings={addWorkerEarnings}
         getTodayString={getTodayString}
-        setRole={changeRole}  
-        washerTeam={washerTeam}
-  
+        setRole={changeRole}
       />
     )}
+
+
     {/* ===== tayyorlovchi panel ===== */}
     {page === "home" && displayRole === "tayyorlovchi" && (
       <PackingPanel
@@ -1538,20 +2353,65 @@ function App() {
       />
     )}
 
-
-
     {/* ===== admin panel ===== */}
     {page === "home" && displayRole === "admin" && (
     
       <AdminPanel
+
+        workers={workers}
+        workerRequests={workerRequests}
+        approveWorker={approveWorker}
+        rejectWorker={rejectWorker}
+        editingWorker={editingWorker}
+        setEditingWorker={setEditingWorker}
+        changeWorkerRole={changeWorkerRole}
+        changeWorkerStatus={changeWorkerStatus}
+        washerPrices={washerPrices}
+        setWasherPrices={setWasherPrices}
+        priceInputs={priceInputs}
+        setPriceInputs={setPriceInputs}
+        attendance={attendance}
+        todayOpen={todayOpen}
+        setTodayOpen={setTodayOpen}
+        weekOpen={weekOpen}
+        setWeekOpen={setWeekOpen}
+        MonthOpen={MonthOpen}
+        setMonthOpen={setMonthOpen}
+        allOpen={allOpen}
+        setAllOpen={setAllOpen}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        driverPrices={driverPrices}
+        getHourlyPrice={getHourlyPrice}
         setRole={changeRole}
+        editingStatus={editingStatus}
+        setEditingStatus={setEditingStatus}
+        expandedWorker={expandedWorker}
+        setExpandedWorker={setExpandedWorker}
+        orders={orders}
+        setOrders={setOrders}
+        workerEarnings={workerEarnings}
+        currentWorker={currentWorker}
+
       />
     )}
 
     {/* ===== ega panel ===== */}
     {page === "home" && displayRole === "ega"  && (
     
-      <EgaPanel setRole={changeRole} />
+      <EgaPanel
+        setRole={changeRole}
+
+        priceInputs={priceInputs}
+        setPriceInputs={setPriceInputs}
+
+        driverPrices={driverPrices}
+        setDriverPrices={setDriverPrices}
+
+        packingPrices={packingPrices}
+        setPackingPrices={setPackingPrices}
+
+      />  
 
     )}
 
@@ -1669,3 +2529,211 @@ function App() {
 }
 
 export default App
+
+/*   { ===== arxiv ===== }
+
+  const groupedArchives = {}
+
+  archives.forEach((order) => {
+
+    if (
+      !groupedArchives[order.customerId]
+    ) {
+      groupedArchives[order.customerId] = []
+    }
+
+    groupedArchives[order.customerId].push(order)
+
+  })
+
+  if (showArchive) {
+
+    return (
+      <div
+        style={{ padding: 20 }}
+      >
+        <button
+          onClick={() => setPage("home")}
+          style={{fontSize: 20}}
+        >
+          ⏪️
+        </button>
+
+        <h1>Arxiv</h1>
+
+        <br />
+
+        <input
+          placeholder="Qidirish"
+          value={archiveSearch}
+          onChange={(e) => setArchiveSearch(e.target.value)}
+        />
+
+        <br /><br />
+
+        {Object.entries(groupedArchives)
+          .filter(
+            ([customerId, orders]) => {
+
+              const text = archiveSearch.toLowerCase()
+
+              return (
+                customerId.toLowerCase().includes(text) ||
+                orders[0] .phone.includes(text) ||
+                orders.some((o) => String(o.id).includes(text))
+              )
+
+            }
+          )
+           
+          .sort(([a], [b]) =>
+            Number(a.replace("C", "")) -
+            Number(b.replace("C", ""))
+          ).map(
+
+          ([customerId, orders]) => (
+
+            <div
+              key={customerId}
+              style={{
+                border: "3px solid #ccc",
+                padding: 10,
+                marginBottom: 20,
+                borderRadius: 10,
+              }}
+            >
+
+              <p><b>Mijoz ID:</b>{" "}{customerId}</p>
+              <p><b>Telefon:</b>{" "}{orders[0].phone}</p>
+              <p><b>Buyurtma soni:</b>{" "}{orders.length}</p>
+            
+              <details>
+                <summary>Batafsil</summary>
+
+                {orders.map((order) => (
+                  <div
+                    key={order.firebaseId}
+                    style={{
+                      border: "1px solid #aaa",
+                      padding: 10,
+                      marginTop: 10,
+                      borderRadius: 10,
+                    }}
+                  >
+
+                    <p>
+                      <b>Sana:</b>{" "}
+                      {
+                        order.createdAt?.toDate
+                        ? order.createdAt
+                        .toDate()
+                        .toLocaleDateString("uz-UZ")
+                        : "-"
+                      }
+                    </p>
+                    <p><b>Buyurtma ID:</b>{" "}{order.id}</p>
+                    <p><b>Manzil:</b>{" "}{order.address}</p>
+                    {order.carpetCount && (<p><b>Gilam:</b> {order.carpetCount}</p>)}
+                    {order.kvm && (<p><b>Kv.m:</b> {order.kvm}</p>)}
+                    {order.blanketCount && (<p><b>Adyol:</b> {order.blanketCount}</p>)}
+                    {order.yakandozCount && (<p><b>Yakandoz:</b> {order.yakandozCount}</p>)}
+                    {order.curtainCount && (<p><b>Parda:</b> {order.curtainCount}</p>)}
+                    {order.curtainMeter && (<p><b>Parda metri:</b> {order.curtainMeter}</p>)}
+                    {order.other && (<p><b>Boshqa:</b> {order.other}</p>)}
+                    <p><b>Tarif:</b>{" "}{order.tarif}</p>
+                    {order.price && (<p><b>Jami narx:</b> {order.price}</p>)}
+                    <p><b>Status:</b>{" "}{order.status}</p>
+
+                  </div>
+                ))}
+              </details>
+
+            </div>
+
+          ))
+        }
+      </div>
+    )
+  } 
+    
+       ===== hisobot panel ===== 
+    {page === "report" && (
+
+      <div
+        style={{
+          padding: 20,
+          color: "white"
+        }}
+      >
+
+        <button onClick={() => setPage("home")}
+          style={{fontSize: 25,}}>
+          {"⏪️"}
+        </button>
+
+        <h1>📊 Hisobot</h1>
+
+        <br /> 
+
+        <div
+          style={{
+            border: "2px solid #555",
+            borderRadius: 10,
+            padding: 15,
+            marginBottom: 15
+          }}
+        >
+
+          <h3>
+            Yakunlangan buyurtmalar:
+          </h3>
+
+          <h2>
+            {todayArchives.length} ta
+          </h2>
+    
+        </div>
+
+        <div
+          style={{
+            border: "2px solid #555",
+            borderRadius: 10,
+            padding: 15,
+            marginBottom: 15
+          }}
+        >
+
+          <h3>
+            Tushum:
+          </h3> 
+
+          <h2>
+            {dailyIncome.toLocaleString()}
+            so'm
+          </h2>
+
+        </div>
+
+        <div
+          style={{
+            border: "2px solid #555",
+            borderRadius: 10,
+            padding: 15,
+            marginBottom: 15
+          }}
+        >
+
+          <h3>
+            Ishchilar maoshi:
+          </h3>
+
+          <h2>
+            {totalDailySalary.toLocaleString()}
+            so'm
+          </h2>
+
+        </div>
+
+      </div>
+
+    )} */

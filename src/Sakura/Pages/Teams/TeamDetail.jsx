@@ -366,7 +366,11 @@ export default function TeamDetail({ team, currentWorker, teamEarnings = {}, dri
         <div className="members-title"><h2>Jamoa a’zolari</h2><span>{members.length} kishi</span></div>
         {members.map(({ key, member }) => {
           const products = memberProducts({ ...member, phone: member.phone || key });
-          const salaryField = team.type === "packing" ? "packingSalary" : team.type === "driver" ? "driverSalary" : "washerSalary";
+          const salaryField = team.type === "packing" ? "packingsalary" : team.type === "driver" ? "driverSalary" : "washerSalary";
+          const memberEarnings = dailyEarnings?.[member.phone || key];
+          const memberSalary = team.type === "packing"
+            ? memberEarnings?.packingsalary ?? memberEarnings?.packingSalary
+            : memberEarnings?.[salaryField];
           return (
             <article className={`member-card ${member.working ? "" : "inactive"}`} key={key}>
               <header className="member-header">
@@ -384,7 +388,7 @@ export default function TeamDetail({ team, currentWorker, teamEarnings = {}, dri
                 ))}
               </div>
 
-              <div className="member-salary"><span><img src={totalIcon} alt="" /> Bugungi ish haqi</span><strong>{money(dailyEarnings?.[member.phone || key]?.[salaryField])} so‘m</strong></div>
+              <div className="member-salary"><span><img src={totalIcon} alt="" /> Bugungi ish haqi</span><strong>{money(memberSalary)} so'm</strong></div>
 
               {canManage && (
                 <div className="member-actions">

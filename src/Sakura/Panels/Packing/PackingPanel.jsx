@@ -115,27 +115,27 @@ export default function PackingPanel({ orders = [], packingTeam, addWorkerEarnin
     let services;
     if (category === "carpet") {
       const hasSizeFields = Number(order.kvmSt || 0) + Number(order.kvmPro || 0) > 0;
-      services = [{ key: "carpet", amount: 300, quantity: hasSizeFields
+      services = [{ key: "carpet", earningKey: "carpet", amount: 300, quantity: hasSizeFields
         ? Number(order.kvmSt || 0) + Number(order.kvmPro || 0)
         : Number(order.kvm || 0) }];
     } else if (category === "blanket") {
       const hasSizeFields = Number(order.blanket1x || 0) + Number(order.blanket2x || 0) + Number(order.matras || 0) > 0;
       services = hasSizeFields
         ? [
-            { key: "blanket", amount: 800, quantity: Number(order.blanket1x || 0) },
-            { key: "blanket", amount: 1000, quantity: Number(order.blanket2x || 0) },
-            { key: "blanket", amount: 2000, quantity: Number(order.matras || 0) },
+            { key: "blanket", earningKey: "blanket1x", amount: 800, quantity: Number(order.blanket1x || 0) },
+            { key: "blanket", earningKey: "blanket2x", amount: 1000, quantity: Number(order.blanket2x || 0) },
+            { key: "blanket", earningKey: "matras", amount: 2000, quantity: Number(order.matras || 0) },
           ]
-        : [{ key: "blanket", amount: 800, quantity: Number(order.blanketCount || 0) }];
+        : [{ key: "blanket", earningKey: "blanket1x", amount: 800, quantity: Number(order.blanketCount || 0) }];
     } else {
       const hasSizeFields = Number(order.yakandozM || 0) + Number(order.yakandozS || 0) + Number(order.yakandozL || 0) > 0;
       services = hasSizeFields
         ? [
-            { key: "yakandoz", amount: 500, quantity: Number(order.yakandozM || 0) },
-            { key: "yakandoz", amount: 1000, quantity: Number(order.yakandozS || 0) },
-            { key: "yakandoz", amount: 1500, quantity: Number(order.yakandozL || 0) },
+            { key: "yakandoz", earningKey: "yakandozM", amount: 500, quantity: Number(order.yakandozM || 0) },
+            { key: "yakandoz", earningKey: "yakandozS", amount: 1000, quantity: Number(order.yakandozS || 0) },
+            { key: "yakandoz", earningKey: "yakandozL", amount: 1500, quantity: Number(order.yakandozL || 0) },
           ]
-        : [{ key: "yakandoz", amount: 500, quantity: Number(order.yakandozCount || 0) }];
+        : [{ key: "yakandoz", earningKey: "yakandozM", amount: 500, quantity: Number(order.yakandozCount || 0) }];
     }
 
     for (const service of services) {

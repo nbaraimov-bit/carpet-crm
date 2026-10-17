@@ -37,8 +37,13 @@ export default function OperatorPanel({
   const [editComment, setEditComment] = useState("")
   const [editCarpetCount, setEditCarpetCount] = useState("")
   const [editKvm, setEditKvm] = useState("")
+  const [editKvmPro, setEditKvmPro] = useState("")
   const [editBlanketCount, setEditBlanketCount] = useState("")
+  const [editBlanket2x, setEditBlanket2x] = useState("")
+  const [editMatras, setEditMatras] = useState("")
   const [editYakandozCount, setEditYakandozCount] = useState("")
+  const [editYakandozS, setEditYakandozS] = useState("")
+  const [editYakandozL, setEditYakandozL] = useState("")
   const [editPrice, setEditPrice] = useState("")
   const [deleteOrderId, setDeleteOrderId] = useState(null) 
   const [openMenuId, setOpenMenuId] = useState(null)
@@ -390,9 +395,23 @@ export default function OperatorPanel({
                           setEditAddress(order.address || "")
                           setEditComment(order.comment || "")
                           setEditCarpetCount(order.carpetCount ?? "")
-                          setEditKvm(order.kvm ?? "")
-                          setEditBlanketCount(order.blanketCount ?? "")
-                          setEditYakandozCount(order.yakandozCount ?? "")
+                          const hasCarpetSizes = order.kvmSt != null || order.kvmPro != null
+                          const hasBlanketSizes = order.blanket1x != null || order.blanket2x != null || order.matras != null
+                          const hasYakandozSizes = order.yakandozM != null || order.yakandozS != null || order.yakandozL != null
+                          setEditKvm(hasCarpetSizes
+                            ? order.kvmSt ?? Math.max(0, Number(order.kvm || 0) - Number(order.kvmPro || 0))
+                            : order.kvm ?? "")
+                          setEditKvmPro(order.kvmPro ?? "")
+                          setEditBlanketCount(hasBlanketSizes
+                            ? order.blanket1x ?? Math.max(0, Number(order.blanketCount || 0) - Number(order.blanket2x || 0) - Number(order.matras || 0))
+                            : order.blanketCount ?? "")
+                          setEditBlanket2x(order.blanket2x ?? "")
+                          setEditMatras(order.matras ?? "")
+                          setEditYakandozCount(hasYakandozSizes
+                            ? order.yakandozM ?? Math.max(0, Number(order.yakandozCount || 0) - Number(order.yakandozS || 0) - Number(order.yakandozL || 0))
+                            : order.yakandozCount ?? "")
+                          setEditYakandozS(order.yakandozS ?? "")
+                          setEditYakandozL(order.yakandozL ?? "")
                           setEditPrice(order.price ?? "")
 
                           setOpenMenuId(null)
@@ -471,10 +490,20 @@ export default function OperatorPanel({
         setEditCarpetCount={setEditCarpetCount}
         editKvm={editKvm}
         setEditKvm={setEditKvm}
+        editKvmPro={editKvmPro}
+        setEditKvmPro={setEditKvmPro}
         editBlanketCount={editBlanketCount}
         setEditBlanketCount={setEditBlanketCount}
+        editBlanket2x={editBlanket2x}
+        setEditBlanket2x={setEditBlanket2x}
+        editMatras={editMatras}
+        setEditMatras={setEditMatras}
         editYakandozCount={editYakandozCount}
         setEditYakandozCount={setEditYakandozCount}
+        editYakandozS={editYakandozS}
+        setEditYakandozS={setEditYakandozS}
+        editYakandozL={editYakandozL}
+        setEditYakandozL={setEditYakandozL}
         editPrice={editPrice}
         setEditPrice={setEditPrice}
         runAction={runAction}
