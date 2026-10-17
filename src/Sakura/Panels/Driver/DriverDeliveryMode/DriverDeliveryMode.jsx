@@ -9,6 +9,7 @@ import {
   CommentIcon,
   LocationIcon,
   PhoneIcon,
+  PriceIcon,
   TimeIcon,
   UserIcon,
 } from "../../../MainIcons/SvgIcons";
@@ -294,6 +295,15 @@ export default function DriverDeliveryMode({
           </div>
         </div>
 
+        {order.price !== undefined &&
+          order.price !== null &&
+          order.price !== "" && (
+            <div className="driver-delivery-price">
+              <PriceIcon className="driver-delivery-price__icon" />
+              <span>{Number(order.price).toLocaleString("uz-UZ")} so'm</span>
+            </div>
+          )}
+
         {(order.comment || order.driverComment) && (
           <div className="driver-delivery-comment">
             <CommentIcon />
@@ -347,15 +357,15 @@ export default function DriverDeliveryMode({
         <p>Tayyor buyurtmalarni yetkazish</p>
       </header>
       <section className="driver-pickup-section">
-        <h2>Tayyor buyurtmalar</h2>
-        <div className="driver-pickup-list">
-          {readyOrders.length ? readyOrders.map((order) => <OrderCard key={order.firebaseId || order.id} order={order} />) : <div className="driver-pickup-empty">Hozircha tayyor buyurtmalar yo'q</div>}
-        </div>
-      </section>
-      <section className="driver-pickup-section">
         <h2>Mening buyurtmalarim</h2>
         <div className="driver-pickup-list">
           {myOrders.length ? myOrders.map((order) => <OrderCard key={order.firebaseId || order.id} order={order} mine />) : <div className="driver-pickup-empty">Sizda yetkazilayotgan buyurtmalar yo'q</div>}
+        </div>
+      </section>
+      <section className="driver-pickup-section">
+        <h2>Tayyor buyurtmalar</h2>
+        <div className="driver-pickup-list">
+          {readyOrders.length ? readyOrders.map((order) => <OrderCard key={order.firebaseId || order.id} order={order} />) : <div className="driver-pickup-empty">Hozircha tayyor buyurtmalar yo'q</div>}
         </div>
       </section>
     </div>
