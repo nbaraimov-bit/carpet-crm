@@ -19,8 +19,9 @@ export default function AnimatedBubbles() {
 
   return (
     <div className="bubble-layer">
-      {bubbles.map((bubble, i) => (
+      {bubbles.map((bubble) => (
         <img
+          key={`${bubble.top}-${bubble.left}`}
           src={bubbler}
           className="bubble"
           style={{

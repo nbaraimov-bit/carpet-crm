@@ -9,18 +9,11 @@ import EgaIcon from "../Assets/egaIcon.png"
 export default function RoleCard ({
   currentWorker,
   setRole,
-  currentPhone,
   washerTeam,
   driverTeam,
   packingTeam,
-  operatorTeam,  
 }) {
 
-  const washerMember = washerTeam?.members?.[currentPhone];
-  const driverMember = driverTeam?.members?.[currentPhone];
-  const packingMember = packingTeam?.members?.[currentPhone];
-  const operatorMember = operatorTeam?.members?.[currentPhone];
-  const operatorEnabled = !!operatorTeam
   const driverEnabled = !!driverTeam
   const washerEnabled = !!washerTeam
   const packingEnabled = !!packingTeam

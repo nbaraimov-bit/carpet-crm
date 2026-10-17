@@ -7,11 +7,9 @@ export default function HomePage({
 
   currentWorker,
   setRole,
-  currentPhone,
   washerTeam,
   driverTeam,
   packingTeam,
-  operatorTeam,
 
 }) {
 
@@ -28,11 +26,9 @@ export default function HomePage({
       <RoleCard
         currentWorker={currentWorker}
         setRole={setRole}
-        currentPhone={currentPhone}
         washerTeam={washerTeam}
         driverTeam={driverTeam}
         packingTeam={packingTeam}
-        operatorTeam={operatorTeam}
       />
 
       <MainInfoCard/>
