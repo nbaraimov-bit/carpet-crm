@@ -88,7 +88,13 @@ export default function WasherPanel({
           && (!assignedTeam || assignedTeam === teamId);
       }),
     }))
-    .filter((order) => order.availableProducts.length > 0), [orders, teamId]);
+    .filter((order) => order.availableProducts.length > 0)
+    .sort((first, second) => {
+      const firstIsQuick = first.tarif === "tezkor";
+      const secondIsQuick = second.tarif === "tezkor";
+      if (firstIsQuick !== secondIsQuick) return firstIsQuick ? -1 : 1;
+      return String(second.id ?? "").localeCompare(String(first.id ?? ""), undefined, { numeric: true });
+    }), [orders, teamId]);
 
   const confirmProduct = async () => {
     if (!confirmation || !teamId) return;
