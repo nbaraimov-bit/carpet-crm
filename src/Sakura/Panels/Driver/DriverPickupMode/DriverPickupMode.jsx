@@ -9,7 +9,6 @@ import {
   PhoneIcon,
   LocationIcon,
   CommentIcon,
-  PriceIcon,
   TimeIcon,
 } from "../../../MainIcons/SvgIcons";
 

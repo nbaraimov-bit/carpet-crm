@@ -21,29 +21,16 @@ import BlanketIcon from "../../MainIcons/blanketIcon.png"
 import YakandozIcon from "../../MainIcons/yakandozIcon.png"
 import CurtainIcon from "../../MainIcons/curtainIcon.png"
 
-import { db } from "../../../firebase"
 import { useState } from "react"
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-  updateDoc,
-  serverTimestamp
-} from "firebase/firestore"
 
 
 export default function OperatorPanel({
   orders,
-  updateStatus,
   setRole,
-  role,
   loading,
   runAction
 }) {
 
-  const [operatorMode, setOperatorMode] = useState("")
   const [editingId, setEditingId] = useState(null)
   const [editPhone, setEditPhone] = useState("")
   const [editAddress, setEditAddress] = useState("")
@@ -80,12 +67,6 @@ export default function OperatorPanel({
     (o) =>
       o.status !== "Yetkazildi" &&
       o.status !== "Rad etildi"
-  )
-
-  const finishedOrders = orders.filter(
-    (o) =>
-      o.status === "Yetkazildi" ||
-      o.status === "Rad etildi"
   )
 
   const filteredActiveOrders = activeOrders.filter((order) => {

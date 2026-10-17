@@ -6,9 +6,9 @@ import { BackIcon, CommentIcon, LocationIcon, PhoneIcon, UserIcon } from "../../
 import "./packingPanel.css";
 
 const products = [
-  { key: "carpet", title: "Gilam", washerField: "carpetStatus", packingField: "carpetPackingStatus", icon: carpetIcon },
-  { key: "blanket", title: "Adyol", washerField: "blanketStatus", packingField: "blanketPackingStatus", icon: blanketIcon },
-  { key: "yakandoz", title: "Yakandoz", washerField: "yakandozStatus", packingField: "yakandozPackingStatus", icon: yakandozIcon },
+  { key: "carpet", title: "Gilam", statusField: "carpetStatus", icon: carpetIcon },
+  { key: "blanket", title: "Adyol", statusField: "blanketStatus", icon: blanketIcon },
+  { key: "yakandoz", title: "Yakandoz", statusField: "yakandozStatus", icon: yakandozIcon },
 ];
 
 const number = (value) => Number(value || 0);
@@ -69,8 +69,8 @@ export default function PackingPanel({ orders = [], packingTeam, updatePackingSt
       presentProducts: products.filter((product) => hasProduct(order, product.key)),
     }))
     .filter((order) =>
-      order.presentProducts.some((product) => order[product.washerField] === "Yuvildi")
-      && order.presentProducts.some((product) => order[product.packingField] !== "Tayyor")
+      order.presentProducts.some((product) => ["Yuvildi", "Tayyor"].includes(order[product.statusField]))
+      && order.presentProducts.some((product) => order[product.statusField] !== "Tayyor")
     )
     .sort((first, second) => {
       const firstIsQuick = first.tarif === "tezkor";
@@ -142,8 +142,8 @@ export default function PackingPanel({ orders = [], packingTeam, updatePackingSt
               {products.map((product) => {
                 const info = getProductInfo(order, product.key);
                 const present = hasProduct(order, product.key);
-                const washed = order[product.washerField] === "Yuvildi";
-                const completed = order[product.packingField] === "Tayyor";
+                const completed = order[product.statusField] === "Tayyor";
+                const washed = completed || order[product.statusField] === "Yuvildi";
                 const actionKey = `packing-${product.key}-${order.firebaseId}`;
                 const busy = savingKey === actionKey;
                 return (
