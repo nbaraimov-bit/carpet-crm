@@ -298,7 +298,7 @@ export default function TeamDetail({ team, currentWorker, teamEarnings = {}, dri
     };
     return [
       { icon: carpetIcon, title: "Gilam", lines: [`Olish · ${money(driverShare(driverPickupRates.carpet))}`, `Yetkazish · ${money(driverShare(driverDeliveryRates.carpet))}`] },
-      { icon: blanketIcon, title: "Adyol", lines: ["Pickup / delivery", `1x • ${money(driverShare(driverPickupRates.blanket1x))}/${money(driverShare(driverDeliveryRates.blanket1x))}`, `2x • ${money(driverShare(driverPickupRates.blanket2x))}/${money(driverShare(driverDeliveryRates.blanket2x))}`, `Matras • ${money(driverShare(driverPickupRates.matras))}/${money(driverShare(driverDeliveryRates.matras))}`] },
+      { icon: blanketIcon, title: "Adyol", lines: [`1x • ${money(driverShare(driverPickupRates.blanket1x))}/${money(driverShare(driverDeliveryRates.blanket1x))}`, `2x • ${money(driverShare(driverPickupRates.blanket2x))}/${money(driverShare(driverDeliveryRates.blanket2x))}`, `Matras • ${money(driverShare(driverPickupRates.matras))}/${money(driverShare(driverDeliveryRates.matras))}`] },
       { icon: yakandozIcon, title: "Yakandoz", lines: [`M · ${money(driverShare(driverPickupRates.yakandozM))} / ${money(driverShare(driverDeliveryRates.yakandozM))}`, `S · ${money(driverShare(driverPickupRates.yakandozS))} / ${money(driverShare(driverDeliveryRates.yakandozS))}`, `L · ${money(driverShare(driverPickupRates.yakandozL))} / ${money(driverShare(driverDeliveryRates.yakandozL))}`] },
       { icon: curtainIcon, title: "Parda", lines: [`Olish · ${money(driverShare(driverPrices.pickupCurtain))}`, `Yetkazish · ${money(driverShare(driverPrices.deliveryCurtain))}`] },
     ];
