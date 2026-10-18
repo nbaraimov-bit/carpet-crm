@@ -131,7 +131,7 @@ export default function DriverDeliveryMode({
       const yakandozL = hasYakandozSizes ? numberOrZero(order.yakandozL) : 0;
       const payroll = [
         { quantityField: "deliveryCarpetKvm", salaryField: "deliveryCarpetSalary", quantity: kvm, amount: 500 },
-        { quantityField: "deliveryBlanket1xCount", salaryField: "deliveryBlanket1xSalary", quantity: blanket1x, amount: 800 },
+        { quantityField: "deliveryBlanket1xCount", salaryField: "deliveryBlanket1xSalary", quantity: blanket1x, amount: 1000 },
         { quantityField: "deliveryBlanket2xCount", salaryField: "deliveryBlanket2xSalary", quantity: blanket2x, amount: 1000 },
         { quantityField: "deliveryMatrasCount", salaryField: "deliveryMatrasSalary", quantity: matras, amount: 1500 },
         { quantityField: "deliveryYakandozMCount", salaryField: "deliveryYakandozMSalary", quantity: yakandozM, amount: 500 },
@@ -195,7 +195,7 @@ export default function DriverDeliveryMode({
         }
         const deliverySummary = [
           ["deliveryBlanketCount", blanket1x + blanket2x + matras],
-          ["deliveryBlanketSalary", blanket1x * 800 + blanket2x * 1000 + matras * 1500],
+          ["deliveryBlanketSalary", blanket1x * 1000 + blanket2x * 1000 + matras * 1500],
           ["deliveryYakandozCount", yakandozM + yakandozS + yakandozL],
           ["deliveryYakandozSalary", yakandozM * 500 + yakandozS * 1000 + yakandozL * 1200],
         ];

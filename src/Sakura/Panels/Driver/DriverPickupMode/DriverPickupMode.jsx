@@ -208,7 +208,7 @@ export default function DriverPickupMode({
 
     const payroll = [
       { key: "carpet", quantity: kvm, amount: 700 },
-      { key: "blanket", quantity: blanket1x, amount: 1200 },
+      { key: "blanket", quantity: blanket1x, amount: 1500 },
       { key: "blanket", quantity: blanket2x, amount: 1500 },
       { key: "blanket", quantity: mattress, amount: 2000 },
       { key: "yakandoz", quantity: yakandozM, amount: 750 },
@@ -295,7 +295,7 @@ export default function DriverPickupMode({
           ["pickupCarpetKvm", kvm],
           ["pickupCarpetSalary", kvm * 700],
           ["pickupBlanket1xCount", blanket1x],
-          ["pickupBlanket1xSalary", blanket1x * 1200],
+          ["pickupBlanket1xSalary", blanket1x * 1500],
           ["pickupBlanket2xCount", blanket2x],
           ["pickupBlanket2xSalary", blanket2x * 1500],
           ["pickupMatrasCount", mattress],
@@ -312,7 +312,7 @@ export default function DriverPickupMode({
         }
         const pickupSummary = [
           ["pickupBlanketCount", blanketCount],
-          ["pickupBlanketSalary", blanket1x * 1200 + blanket2x * 1500 + mattress * 2000],
+          ["pickupBlanketSalary", blanket1x * 1500 + blanket2x * 1500 + mattress * 2000],
           ["pickupYakandozCount", yakandozCount],
           ["pickupYakandozSalary", yakandozM * 750 + yakandozS * 1500 + yakandozL * 1800],
         ];

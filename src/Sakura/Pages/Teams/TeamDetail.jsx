@@ -36,13 +36,13 @@ const packingRates = {
   carpet: 300,
   blanket1x: 800,
   blanket2x: 1000,
-  matras: 2000,
+  matras: 1600,
   yakandozM: 500,
   yakandozS: 1000,
-  yakandozL: 1500,
+  yakandozL: 1200,
 };
-const driverPickupRates = { carpet: 700, blanket1x: 1200, blanket2x: 1500, matras: 2000, yakandozM: 750, yakandozS: 1500, yakandozL: 1800 };
-const driverDeliveryRates = { carpet: 500, blanket: 1000, yakandozM: 500, yakandozS: 1000, yakandozL: 1200 };
+const driverPickupRates = { carpet: 700, blanket1x: 1500, blanket2x: 1500, matras: 2000, yakandozM: 750, yakandozS: 1500, yakandozL: 1800 };
+const driverDeliveryRates = { carpet: 500, blanket1x: 1000, blanket2x: 1000, matras: 1500, yakandozM: 500, yakandozS: 1000, yakandozL: 1200 };
 const money = (value) => Number(value || 0).toLocaleString("uz-UZ");
 
 export default function TeamDetail({ team, currentWorker, teamEarnings = {}, driverPrices = {}, packingPrices = {}, onBack }) {
@@ -298,7 +298,7 @@ export default function TeamDetail({ team, currentWorker, teamEarnings = {}, dri
     };
     return [
       { icon: carpetIcon, title: "Gilam", lines: [`Olish · ${money(driverShare(driverPickupRates.carpet))}`, `Yetkazish · ${money(driverShare(driverDeliveryRates.carpet))}`] },
-      { icon: blanketIcon, title: "Adyol", lines: [`1x · ${money(driverShare(driverPickupRates.blanket1x))}`, `2x · ${money(driverShare(driverPickupRates.blanket2x))}`, `Matras · ${money(driverShare(driverPickupRates.matras))}`, `Yetkazish · ${money(driverShare(driverDeliveryRates.blanket))}`] },
+      { icon: blanketIcon, title: "Adyol", lines: ["Pickup / delivery", `1x • ${money(driverShare(driverPickupRates.blanket1x))}/${money(driverShare(driverDeliveryRates.blanket1x))}`, `2x • ${money(driverShare(driverPickupRates.blanket2x))}/${money(driverShare(driverDeliveryRates.blanket2x))}`, `Matras • ${money(driverShare(driverPickupRates.matras))}/${money(driverShare(driverDeliveryRates.matras))}`] },
       { icon: yakandozIcon, title: "Yakandoz", lines: [`M · ${money(driverShare(driverPickupRates.yakandozM))} / ${money(driverShare(driverDeliveryRates.yakandozM))}`, `S · ${money(driverShare(driverPickupRates.yakandozS))} / ${money(driverShare(driverDeliveryRates.yakandozS))}`, `L · ${money(driverShare(driverPickupRates.yakandozL))} / ${money(driverShare(driverDeliveryRates.yakandozL))}`] },
       { icon: curtainIcon, title: "Parda", lines: [`Olish · ${money(driverShare(driverPrices.pickupCurtain))}`, `Yetkazish · ${money(driverShare(driverPrices.deliveryCurtain))}`] },
     ];
