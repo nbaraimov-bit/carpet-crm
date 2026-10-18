@@ -37,7 +37,7 @@ function getProductInfo(order, key) {
     return {
       count: `${oneX + twoX + matras}`,
       confirmationCount: `${oneX + twoX + matras} ta adyol`,
-      salary: oneX * 800 + twoX * 1000 + matras * 2000,
+      salary: oneX * 800 + twoX * 1000 + matras * 1600,
     };
   }
 
@@ -48,7 +48,7 @@ function getProductInfo(order, key) {
   return {
     count: `${sizeM + sizeS + sizeL}`,
     confirmationCount: `${sizeM + sizeS + sizeL} ta yakandoz`,
-    salary: sizeM * 500 + sizeS * 1000 + sizeL * 1500,
+    salary: sizeM * 500 + sizeS * 1000 + sizeL * 1200,
   };
 }
 
@@ -124,7 +124,7 @@ export default function PackingPanel({ orders = [], packingTeam, addWorkerEarnin
         ? [
             { key: "blanket", earningKey: "blanket1x", amount: 800, quantity: Number(order.blanket1x || 0) },
             { key: "blanket", earningKey: "blanket2x", amount: 1000, quantity: Number(order.blanket2x || 0) },
-            { key: "blanket", earningKey: "matras", amount: 2000, quantity: Number(order.matras || 0) },
+            { key: "blanket", earningKey: "matras", amount: 1600, quantity: Number(order.matras || 0) },
           ]
         : [{ key: "blanket", earningKey: "blanket1x", amount: 800, quantity: Number(order.blanketCount || 0) }];
     } else {
@@ -133,7 +133,7 @@ export default function PackingPanel({ orders = [], packingTeam, addWorkerEarnin
         ? [
             { key: "yakandoz", earningKey: "yakandozM", amount: 500, quantity: Number(order.yakandozM || 0) },
             { key: "yakandoz", earningKey: "yakandozS", amount: 1000, quantity: Number(order.yakandozS || 0) },
-            { key: "yakandoz", earningKey: "yakandozL", amount: 1500, quantity: Number(order.yakandozL || 0) },
+            { key: "yakandoz", earningKey: "yakandozL", amount: 1200, quantity: Number(order.yakandozL || 0) },
           ]
         : [{ key: "yakandoz", earningKey: "yakandozM", amount: 500, quantity: Number(order.yakandozCount || 0) }];
     }
