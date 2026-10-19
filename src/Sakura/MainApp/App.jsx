@@ -100,7 +100,26 @@ function App() {
   const [statsTab, setStatsTab] = useState("stats");
   const [todayWorkers, setTodayWorkers] = useState([]);
   const [selectedIncomeDate, setSelectedIncomeDate] = useState(getTodayString);
-  const [dateIncome, setDateIncome] = useState({ income: 0, expenseFund: 0, orderCount: 0 });
+  const [dateIncome, setDateIncome] = useState({
+    income: 0,
+    expenseFund: 0,
+    orderCount: 0,
+    products: {
+      carpetCount: 0,
+      kvmSt: 0,
+      kvmPro: 0,
+      otherKvm: 0,
+      blanket1x: 0,
+      blanket2x: 0,
+      matras: 0,
+      otherBlankets: 0,
+      yakandozM: 0,
+      yakandozS: 0,
+      yakandozL: 0,
+      otherYakandoz: 0,
+      curtainMeter: 0,
+    },
+  });
   const [dateIncomeLoading, setDateIncomeLoading] = useState(false);
   const [dateIncomeError, setDateIncomeError] = useState("");
   const [loading, setLoading] = useState({});
@@ -736,16 +755,78 @@ function App() {
           getDoc(expenseRef),
         ]);
 
-        const income = archiveSnap.docs.reduce(
-          (sum, archiveDoc) => sum + Number(archiveDoc.data().price || 0),
-          0
-        );
+        const totals = {
+          income: 0,
+          products: {
+            carpetCount: 0,
+            kvmSt: 0,
+            kvmPro: 0,
+            otherKvm: 0,
+            blanket1x: 0,
+            blanket2x: 0,
+            matras: 0,
+            otherBlankets: 0,
+            yakandozM: 0,
+            yakandozS: 0,
+            yakandozL: 0,
+            otherYakandoz: 0,
+            curtainMeter: 0,
+          },
+        };
+        const quantity = (value) => {
+          const parsed = Number(value || 0);
+          return Number.isFinite(parsed) ? parsed : 0;
+        };
+
+        archiveSnap.docs.forEach((archiveDoc) => {
+          const order = archiveDoc.data();
+          const products = totals.products;
+          totals.income += quantity(order.price);
+          products.carpetCount += quantity(order.carpetCount);
+
+          const kvmSt = quantity(order.kvmSt);
+          const kvmPro = quantity(order.kvmPro);
+          if (kvmSt + kvmPro > 0) {
+            products.kvmSt += kvmSt;
+            products.kvmPro += kvmPro;
+          } else {
+            products.otherKvm += quantity(order.kvm);
+          }
+
+          const blanket1x = quantity(order.blanket1x);
+          const blanket2x = quantity(order.blanket2x);
+          const matras = quantity(order.matras);
+          if (blanket1x + blanket2x + matras > 0) {
+            products.blanket1x += blanket1x;
+            products.blanket2x += blanket2x;
+            products.matras += matras;
+          } else {
+            products.otherBlankets += quantity(order.blanketCount);
+          }
+
+          const yakandozM = quantity(order.yakandozM);
+          const yakandozS = quantity(order.yakandozS);
+          const yakandozL = quantity(order.yakandozL);
+          if (yakandozM + yakandozS + yakandozL > 0) {
+            products.yakandozM += yakandozM;
+            products.yakandozS += yakandozS;
+            products.yakandozL += yakandozL;
+          } else {
+            products.otherYakandoz += quantity(order.yakandozCount);
+          }
+
+          products.curtainMeter += quantity(order.curtainMeter);
+        });
         const expenseFund = expenseSnap.exists()
           ? Number(expenseSnap.data().earnedToday || 0)
           : 0;
 
         if (isCurrentRequest) {
-          setDateIncome({ income, expenseFund, orderCount: archiveSnap.size });
+          setDateIncome({
+            ...totals,
+            expenseFund,
+            orderCount: archiveSnap.size,
+          });
         }
       } catch (error) {
         console.error("Sana bo'yicha tushumni yuklashda xatolik:", error);
@@ -1313,6 +1394,10 @@ function App() {
     return Number(value || 0).toLocaleString("uz-UZ");
   }
 
+  function formatQuantity(value) {
+    return Number(value || 0).toLocaleString("uz-UZ");
+  }
+
   /* ===== chiqim fondiniki ===== */
   const expenseCategories = [
     "⛽️ Yoqilg'i",
@@ -1607,6 +1692,40 @@ function App() {
               <div>
                 <span>Chiqim fondi</span>
                 <strong>{formatMoney(dateIncome.expenseFund)} so'm</strong>
+              </div>
+            </div>
+          )}
+
+          {!dateIncomeLoading && !dateIncomeError && (
+            <div className="date-income-products">
+              <h4>Mahsulot sonlari</h4>
+              <div className="date-income-product-grid">
+                <div className="date-income-product">
+                  <strong>Gilam</strong>
+                  <span>{formatQuantity(dateIncome.products.carpetCount)} ta</span>
+                  <span>ST {formatQuantity(dateIncome.products.kvmSt)} kv · PRO {formatQuantity(dateIncome.products.kvmPro)} kv</span>
+                  {dateIncome.products.otherKvm > 0 && (
+                    <span>Umumiy KVM {formatQuantity(dateIncome.products.otherKvm)} kv</span>
+                  )}
+                </div>
+                <div className="date-income-product">
+                  <strong>Adyol</strong>
+                  <span>1x {formatQuantity(dateIncome.products.blanket1x)} · 2x {formatQuantity(dateIncome.products.blanket2x)} · Matras {formatQuantity(dateIncome.products.matras)}</span>
+                  {dateIncome.products.otherBlankets > 0 && (
+                    <span>O'lchami ajratilmagan {formatQuantity(dateIncome.products.otherBlankets)} ta</span>
+                  )}
+                </div>
+                <div className="date-income-product">
+                  <strong>Yakandoz</strong>
+                  <span>M {formatQuantity(dateIncome.products.yakandozM)} · S {formatQuantity(dateIncome.products.yakandozS)} · L {formatQuantity(dateIncome.products.yakandozL)}</span>
+                  {dateIncome.products.otherYakandoz > 0 && (
+                    <span>O'lchami ajratilmagan {formatQuantity(dateIncome.products.otherYakandoz)} ta</span>
+                  )}
+                </div>
+                <div className="date-income-product">
+                  <strong>Parda</strong>
+                  <span>{formatQuantity(dateIncome.products.curtainMeter)} m</span>
+                </div>
               </div>
             </div>
           )}
