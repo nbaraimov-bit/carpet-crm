@@ -294,6 +294,103 @@
     color:#94a3b8;
     padding:18px 0;
 }
+
+.date-income-card {
+    margin-top:20px;
+    padding:18px;
+    border:1px solid rgba(168,85,247,.2);
+    border-radius:18px;
+    background:#181f32;
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.date-income-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:16px;
+}
+
+.date-income-header h3 {
+    margin:0;
+    font-size:19px;
+}
+
+.date-income-header p {
+    margin:5px 0 0;
+    color:#94a3b8;
+    font-size:12px;
+}
+
+.date-income-picker {
+    display:grid;
+    gap:5px;
+    color:#aeb8ca;
+    font-size:11px;
+}
+
+.date-income-picker input {
+    min-height:38px;
+    padding:0 8px;
+    border:1px solid rgba(168,85,247,.32);
+    border-radius:9px;
+    color:#f8fafc;
+    color-scheme:dark;
+    background:#11182b;
+}
+
+.date-income-values {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+}
+
+.date-income-values > div {
+    display:grid;
+    gap:8px;
+    min-width:0;
+    padding:13px;
+    border:1px solid rgba(168,85,247,.2);
+    border-radius:13px;
+    background:rgba(8,13,28,.58);
+}
+
+.date-income-values span {
+    color:#aeb8ca;
+    font-size:12px;
+}
+
+.date-income-values strong {
+    color:#f8fafc;
+    font-size:17px;
+    overflow-wrap:anywhere;
+}
+
+.date-income-message,
+.date-income-empty {
+    padding:12px 0;
+    color:#94a3b8;
+    font-size:13px;
+    text-align:center;
+}
+
+.date-income-message.error {
+    color:#fda4af;
+}
+
+.date-income-empty {
+    margin:0;
+    padding-bottom:0;
+}
+
+@media (max-width:480px) {
+    .date-income-card { padding:14px; }
+    .date-income-header { align-items:flex-start; flex-direction:column; }
+    .date-income-picker { width:100%; }
+    .date-income-picker input { width:100%; box-sizing:border-box; }
+    .date-income-values { grid-template-columns:1fr; }
+}
 /* ===== ⬆️statistikaniki⬆️ ===== */
 
 

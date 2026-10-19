@@ -99,6 +99,10 @@ function App() {
   const [expenseItems, setExpenseItems] = useState([]);
   const [statsTab, setStatsTab] = useState("stats");
   const [todayWorkers, setTodayWorkers] = useState([]);
+  const [selectedIncomeDate, setSelectedIncomeDate] = useState(getTodayString);
+  const [dateIncome, setDateIncome] = useState({ income: 0, expenseFund: 0, orderCount: 0 });
+  const [dateIncomeLoading, setDateIncomeLoading] = useState(false);
+  const [dateIncomeError, setDateIncomeError] = useState("");
   const [loading, setLoading] = useState({});
   const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [stats, setStats] = useState({
@@ -713,6 +717,52 @@ function App() {
     }
   }, [page, statsTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (page !== "stats" || statsTab !== "stats") return undefined;
+
+    let isCurrentRequest = true;
+    setDateIncomeLoading(true);
+    setDateIncomeError("");
+
+    const loadDateIncome = async () => {
+      try {
+        const archiveQuery = query(
+          collection(db, "archives"),
+          where("archiveDate", "==", selectedIncomeDate)
+        );
+        const expenseRef = doc(db, "expenses", selectedIncomeDate);
+        const [archiveSnap, expenseSnap] = await Promise.all([
+          getDocs(archiveQuery),
+          getDoc(expenseRef),
+        ]);
+
+        const income = archiveSnap.docs.reduce(
+          (sum, archiveDoc) => sum + Number(archiveDoc.data().price || 0),
+          0
+        );
+        const expenseFund = expenseSnap.exists()
+          ? Number(expenseSnap.data().earnedToday || 0)
+          : 0;
+
+        if (isCurrentRequest) {
+          setDateIncome({ income, expenseFund, orderCount: archiveSnap.size });
+        }
+      } catch (error) {
+        console.error("Sana bo'yicha tushumni yuklashda xatolik:", error);
+        if (isCurrentRequest) {
+          setDateIncomeError("Tanlangan sana ma'lumotlarini yuklab bo'lmadi.");
+        }
+      } finally {
+        if (isCurrentRequest) setDateIncomeLoading(false);
+      }
+    };
+
+    loadDateIncome();
+    return () => {
+      isCurrentRequest = false;
+    };
+  }, [page, statsTab, selectedIncomeDate]);
+
 
   async function ensureExpenseDocument() {
 
@@ -758,11 +808,15 @@ function App() {
 
   async function updateExpenseFund(order) {
 
-    const carpet = Number(order.kvm || 0) * 3000;
-    const blanket = Number(order.blanketCount || 0) * 15000;
-    const yakandoz = Number(order.yakandozCount || 0) * 15000;
-    const curtain = Number(order.curtainMeter || 0) * 3000;
-    const earnedToday = carpet + blanket + yakandoz + curtain;
+    const earnedToday =
+      Number(order.kvmSt || 0) * 3000 +
+      Number(order.kvmPro || 0) * 3500 +
+      Number(order.blanket1x || 0) * 15000 +
+      Number(order.blanket2x || 0) * 15000 +
+      Number(order.matras || 0) * 20000 +
+      Number(order.yakandozM || 0) * 7500 +
+      Number(order.yakandozS || 0) * 15000 +
+      Number(order.yakandozL || 0) * 15000;
 
     const expenseRef = await ensureExpenseDocument()
 
@@ -1521,6 +1575,46 @@ function App() {
           )}
 
         </div>
+
+        <section className="date-income-card">
+          <div className="date-income-header">
+            <div>
+              <h3>Sana bo'yicha tushum</h3>
+              <p>Arxivlangan buyurtmalar va chiqim fondi</p>
+            </div>
+            <label className="date-income-picker">
+              Sana
+              <input
+                type="date"
+                value={selectedIncomeDate}
+                onChange={(event) => {
+                  if (event.target.value) setSelectedIncomeDate(event.target.value);
+                }}
+              />
+            </label>
+          </div>
+
+          {dateIncomeLoading ? (
+            <div className="date-income-message">Ma'lumot yuklanmoqda...</div>
+          ) : dateIncomeError ? (
+            <div className="date-income-message error">{dateIncomeError}</div>
+          ) : (
+            <div className="date-income-values">
+              <div>
+                <span>Tushum</span>
+                <strong>{formatMoney(dateIncome.income)} so'm</strong>
+              </div>
+              <div>
+                <span>Chiqim fondi</span>
+                <strong>{formatMoney(dateIncome.expenseFund)} so'm</strong>
+              </div>
+            </div>
+          )}
+
+          {!dateIncomeLoading && !dateIncomeError && dateIncome.orderCount === 0 && (
+            <p className="date-income-empty">Bu sanada arxivlangan buyurtma yo'q.</p>
+          )}
+        </section>
 
       </>)}
 
