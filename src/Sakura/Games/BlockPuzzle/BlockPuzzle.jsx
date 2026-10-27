@@ -7,6 +7,7 @@ import "./BlockPuzzle.css";
 
 const BOARD_SIZE = 10;
 const PIECE_COLORS = ["#ed4f86", "#aa62d4", "#e77a83", "#d75eaa"];
+const STICKER_IMAGES = [AjoyibSticker, ZoRSticker, TakrorlanmasSticker];
 
 const SHAPE_LIBRARY = [
   [[0, 0]],
@@ -28,6 +29,35 @@ const SHAPE_LIBRARY = [
   [[0, 0], [1, 0], [1, 1], [2, 1]],
   [[0, 1], [1, 0], [1, 1], [2, 1]],
 ];
+
+function preloadStickerImage(src) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    let loadHandled = false;
+
+    const handleLoad = () => {
+      if (loadHandled) return;
+      loadHandled = true;
+
+      if (!image.naturalWidth) {
+        reject(new Error("Stiker rasmini yuklab bo‘lmadi."));
+        return;
+      }
+
+      if (typeof image.decode === "function") {
+        image.decode().then(resolve, reject);
+      } else {
+        resolve();
+      }
+    };
+
+    image.onload = handleLoad;
+    image.onerror = () => reject(new Error("Stiker rasmini yuklab bo‘lmadi."));
+    image.src = src;
+
+    if (image.complete) handleLoad();
+  });
+}
 
 function createEmptyBoard() {
   return Array.from({ length: BOARD_SIZE }, () =>
@@ -181,6 +211,8 @@ function PieceShape({ piece, className = "", cellWidth, cellHeight, gapX }) {
 }
 
 export default function BlockPuzzle({ onBack }) {
+  const [stickerLoadingState, setStickerLoadingState] = useState("loading");
+  const [stickerLoadAttempt, setStickerLoadAttempt] = useState(0);
   const [board, setBoard] = useState(createEmptyBoard);
   const [pieces, setPieces] = useState(createPieceRack);
   const [score, setScore] = useState(0);
@@ -195,6 +227,22 @@ export default function BlockPuzzle({ onBack }) {
   useLayoutEffect(() => {
     gameStateRef.current = { board, pieces, score, gameOver };
   }, [board, pieces, score, gameOver]);
+
+  useEffect(() => {
+    let isCurrent = true;
+
+    Promise.all(STICKER_IMAGES.map(preloadStickerImage))
+      .then(() => {
+        if (isCurrent) setStickerLoadingState("ready");
+      })
+      .catch(() => {
+        if (isCurrent) setStickerLoadingState("error");
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [stickerLoadAttempt]);
 
   const handlePiecePointerDown = (event, pieceIndex) => {
     const piece = pieces[pieceIndex];
@@ -376,6 +424,55 @@ export default function BlockPuzzle({ onBack }) {
       dragRef.current = null;
     };
   }, []);
+
+  if (stickerLoadingState !== "ready") {
+    const loadingFailed = stickerLoadingState === "error";
+
+    return (
+      <main className="block-puzzle-page block-puzzle-loading-page">
+        <section
+          className="block-puzzle-loading-card"
+          role={loadingFailed ? "alert" : "status"}
+          aria-live="polite"
+        >
+          {onBack && (
+            <button
+              className="block-puzzle-back block-puzzle-loading-back"
+              type="button"
+              onClick={onBack}
+              aria-label="Mini o‘yinlarga qaytish"
+            >
+              <span aria-hidden="true">‹</span>
+            </button>
+          )}
+
+          {loadingFailed ? (
+            <>
+              <h1>Stikerlarni yuklab bo‘lmadi</h1>
+              <p>Internet aloqasini tekshirib, yana urinib ko‘ring.</p>
+              <button
+                className="block-puzzle-loading-retry"
+                type="button"
+                onClick={() => {
+                  setStickerLoadingState("loading");
+                  setStickerLoadAttempt((attempt) => attempt + 1);
+                }}
+              >
+                Qayta urinish
+              </button>
+            </>
+          ) : (
+            <>
+              <span className="block-puzzle-loading-spinner" aria-hidden="true" />
+              <span className="block-puzzle-eyebrow">MINI O‘YINLAR</span>
+              <h1>O‘yin yuklanmoqda</h1>
+              <p>Stikerlar tayyorlanmoqda. Iltimos, kuting.</p>
+            </>
+          )}
+        </section>
+      </main>
+    );
+  }
 
   const restartGame = () => {
     dragRef.current = null;
