@@ -198,7 +198,19 @@ export default function BlockPuzzle({ onBack }) {
 
   const handlePiecePointerDown = (event, pieceIndex) => {
     const piece = pieces[pieceIndex];
-    const targetCell = event.target.closest("[data-piece-row]");
+    const targetCell = event.target.closest("[data-piece-row]") ||
+      Array.from(event.currentTarget.querySelectorAll("[data-piece-row]"))
+        .reduce((nearest, cell) => {
+          const rect = cell.getBoundingClientRect();
+          const distance = Math.hypot(
+            event.clientX - (rect.left + rect.width / 2),
+            event.clientY - (rect.top + rect.height / 2)
+          );
+
+          return !nearest || distance < nearest.distance
+            ? { cell, distance }
+            : nearest;
+        }, null)?.cell;
 
     if (
       !piece ||
