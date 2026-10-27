@@ -1,4 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import AjoyibSticker from "./Assets/Ajoyib.png";
+import ZoRSticker from "./Assets/Zo'r.png";
+import TakrorlanmasSticker from "./Assets/Takrorlanmas.png";
+import { calculateLineScore, clearCompletedLines } from "./BlockPuzzleLogic";
 import "./BlockPuzzle.css";
 
 const BOARD_SIZE = 10;
@@ -69,30 +73,11 @@ function placeBlock(board, piece, startRow, startCol) {
   return nextBoard;
 }
 
-function clearCompletedLines(board) {
-  const fullRows = board
-    .map((row, index) => (row.every(Boolean) ? index : -1))
-    .filter((index) => index !== -1);
-  const fullColumns = Array.from({ length: BOARD_SIZE }, (_, col) => col)
-    .filter((col) => board.every((row) => Boolean(row[col])));
-
-  if (!fullRows.length && !fullColumns.length) {
-    return { board, lineCount: 0 };
-  }
-
-  const nextBoard = board.map((row) => row.slice());
-  nextBoard.forEach((row, rowIndex) => {
-    row.forEach((_, colIndex) => {
-      if (fullRows.includes(rowIndex) || fullColumns.includes(colIndex)) {
-        nextBoard[rowIndex][colIndex] = null;
-      }
-    });
-  });
-
-  return {
-    board: nextBoard,
-    lineCount: fullRows.length + fullColumns.length,
-  };
+function getComboSticker(lineCount) {
+  if (lineCount === 2) return { src: AjoyibSticker, alt: "Ajoyib" };
+  if (lineCount === 3) return { src: ZoRSticker, alt: "Zo‘r" };
+  if (lineCount >= 4) return { src: TakrorlanmasSticker, alt: "Takrorlanmas" };
+  return null;
 }
 
 function hasAnyMove(board, pieces) {
@@ -109,20 +94,36 @@ function hasAnyMove(board, pieces) {
   });
 }
 
-function getBoardCellAtPoint(grid, clientX, clientY) {
+function getBoardMetrics(grid) {
   if (!grid) return null;
-
   const rect = grid.getBoundingClientRect();
-  const x = clientX - rect.left;
-  const y = clientY - rect.top;
-
-  if (x < 0 || y < 0 || x > rect.width || y > rect.height) return null;
-
   const gridStyle = window.getComputedStyle(grid);
   const gapX = Number.parseFloat(gridStyle.columnGap) || 0;
   const gapY = Number.parseFloat(gridStyle.rowGap) || 0;
   const pitchX = (rect.width + gapX) / BOARD_SIZE;
   const pitchY = (rect.height + gapY) / BOARD_SIZE;
+
+  return {
+    rect,
+    gapX,
+    gapY,
+    pitchX,
+    pitchY,
+    cellWidth: (rect.width - gapX * (BOARD_SIZE - 1)) / BOARD_SIZE,
+    cellHeight: (rect.height - gapY * (BOARD_SIZE - 1)) / BOARD_SIZE,
+  };
+}
+
+function getBoardCellAtPoint(grid, clientX, clientY, metrics = getBoardMetrics(grid)) {
+  if (!metrics) return null;
+
+  const { rect, gapX, gapY } = metrics;
+  const x = clientX - rect.left;
+  const y = clientY - rect.top;
+
+  if (x < 0 || y < 0 || x > rect.width || y > rect.height) return null;
+
+  const { pitchX, pitchY } = metrics;
   const col = Math.floor(x / pitchX);
   const row = Math.floor(y / pitchY);
 
@@ -130,10 +131,21 @@ function getBoardCellAtPoint(grid, clientX, clientY) {
     return null;
   }
 
-  return { row, col };
+  return {
+    row,
+    col,
+    cellWidth: metrics.cellWidth,
+    cellHeight: metrics.cellHeight,
+    gapX,
+    gapY,
+    pitchX,
+    pitchY,
+    gridLeft: rect.left,
+    gridTop: rect.top,
+  };
 }
 
-function PieceShape({ piece, className = "" }) {
+function PieceShape({ piece, className = "", cellWidth, cellHeight, gapX }) {
   const rowCount = Math.max(...piece.cells.map((cell) => cell.row)) + 1;
   const colCount = Math.max(...piece.cells.map((cell) => cell.col)) + 1;
   const occupied = new Set(piece.cells.map(({ row, col }) => `${row}:${col}`));
@@ -144,6 +156,9 @@ function PieceShape({ piece, className = "" }) {
       style={{
         gridTemplateColumns: `repeat(${colCount}, var(--piece-cell-size))`,
         "--piece-color": piece.color,
+        "--piece-cell-size": cellWidth ? `${cellWidth}px` : undefined,
+        "--piece-cell-height": cellHeight ? `${cellHeight}px` : undefined,
+        "--piece-gap": gapX !== undefined ? `${gapX}px` : undefined,
       }}
       aria-hidden="true"
     >
@@ -171,8 +186,10 @@ export default function BlockPuzzle({ onBack }) {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [drag, setDrag] = useState(null);
+  const [comboSticker, setComboSticker] = useState(null);
   const gridRef = useRef(null);
   const dragRef = useRef(null);
+  const stickerIdRef = useRef(0);
   const gameStateRef = useRef({ board, pieces, score, gameOver });
 
   useLayoutEffect(() => {
@@ -195,6 +212,7 @@ export default function BlockPuzzle({ onBack }) {
 
     event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
+    const boardMetrics = getBoardMetrics(gridRef.current);
 
     const activeDrag = {
       pointerId: event.pointerId,
@@ -208,6 +226,13 @@ export default function BlockPuzzle({ onBack }) {
       valid: false,
       clientX: event.clientX,
       clientY: event.clientY,
+      cellWidth: boardMetrics?.cellWidth,
+      cellHeight: boardMetrics?.cellHeight,
+      gapX: boardMetrics?.gapX,
+      pitchX: boardMetrics?.pitchX,
+      pitchY: boardMetrics?.pitchY,
+      gridLeft: boardMetrics?.rect.left,
+      gridTop: boardMetrics?.rect.top,
     };
 
     dragRef.current = activeDrag;
@@ -216,10 +241,12 @@ export default function BlockPuzzle({ onBack }) {
 
   useEffect(() => {
     const updateDragPosition = (event, activeDrag) => {
+      const metrics = getBoardMetrics(gridRef.current);
       const boardCell = getBoardCellAtPoint(
         gridRef.current,
         event.clientX,
-        event.clientY
+        event.clientY,
+        metrics
       );
 
       if (!boardCell) {
@@ -230,6 +257,13 @@ export default function BlockPuzzle({ onBack }) {
           valid: false,
           clientX: event.clientX,
           clientY: event.clientY,
+          cellWidth: metrics?.cellWidth ?? activeDrag.cellWidth,
+          cellHeight: metrics?.cellHeight ?? activeDrag.cellHeight,
+          gapX: metrics?.gapX ?? activeDrag.gapX,
+          pitchX: metrics?.pitchX ?? activeDrag.pitchX,
+          pitchY: metrics?.pitchY ?? activeDrag.pitchY,
+          gridLeft: metrics?.rect.left ?? activeDrag.gridLeft,
+          gridTop: metrics?.rect.top ?? activeDrag.gridTop,
         };
       }
 
@@ -244,6 +278,14 @@ export default function BlockPuzzle({ onBack }) {
         valid: canPlaceShape(currentBoard, activeDrag.piece, row, col),
         clientX: event.clientX,
         clientY: event.clientY,
+        cellWidth: boardCell.cellWidth,
+        cellHeight: boardCell.cellHeight,
+        gapX: boardCell.gapX,
+        gapY: boardCell.gapY,
+        pitchX: boardCell.pitchX,
+        pitchY: boardCell.pitchY,
+        gridLeft: boardCell.gridLeft,
+        gridTop: boardCell.gridTop,
       };
     };
 
@@ -287,13 +329,17 @@ export default function BlockPuzzle({ onBack }) {
           }
 
           const nextScore =
-            currentState.score + currentPiece.cells.length + cleared.lineCount * BOARD_SIZE;
+            currentState.score + calculateLineScore(cleared.lineCount);
           const nextGameOver = !hasAnyMove(cleared.board, nextPieces);
+          const nextSticker = getComboSticker(cleared.lineCount);
 
           setBoard(cleared.board);
           setPieces(nextPieces);
           setScore(nextScore);
           setGameOver(nextGameOver);
+          setComboSticker(
+            nextSticker ? { ...nextSticker, id: ++stickerIdRef.current } : null
+          );
         }
       }
 
@@ -303,15 +349,19 @@ export default function BlockPuzzle({ onBack }) {
 
     const handlePointerUp = (event) => finishPointer(event, true);
     const handlePointerCancel = (event) => finishPointer(event, false);
+    const handleLostPointerCapture = (event) => finishPointer(event, false);
 
     window.addEventListener("pointermove", handlePointerMove, { passive: false });
     window.addEventListener("pointerup", handlePointerUp);
     window.addEventListener("pointercancel", handlePointerCancel);
+    window.addEventListener("lostpointercapture", handleLostPointerCapture);
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerup", handlePointerUp);
       window.removeEventListener("pointercancel", handlePointerCancel);
+      window.removeEventListener("lostpointercapture", handleLostPointerCapture);
+      dragRef.current = null;
     };
   }, []);
 
@@ -322,6 +372,7 @@ export default function BlockPuzzle({ onBack }) {
     setPieces(createPieceRack());
     setScore(0);
     setGameOver(false);
+    setComboSticker(null);
   };
 
   const previewCells = new Set();
@@ -339,6 +390,19 @@ export default function BlockPuzzle({ onBack }) {
       }
     });
   }
+  const dragCellWidth = drag?.cellWidth || 20;
+  const dragCellHeight = drag?.cellHeight || dragCellWidth;
+  const dragGap = drag?.gapX ?? 3;
+  const dragGhostLeft = drag
+    ? drag.row !== null
+      ? drag.gridLeft + drag.col * drag.pitchX
+      : drag.clientX - drag.grabCol * (dragCellWidth + dragGap) - dragCellWidth / 2
+    : 0;
+  const dragGhostTop = drag
+    ? drag.row !== null
+      ? drag.gridTop + drag.row * drag.pitchY
+      : drag.clientY - drag.grabRow * (dragCellHeight + dragGap) - dragCellHeight / 2
+    : 0;
 
   return (
     <main className="block-puzzle-page" aria-labelledby="block-puzzle-title">
@@ -393,6 +457,20 @@ export default function BlockPuzzle({ onBack }) {
             })
           )}
         </div>
+        {comboSticker && (
+          <div
+            className="block-puzzle-combo-sticker"
+            key={comboSticker.id}
+            onAnimationEnd={() => {
+              setComboSticker((current) =>
+                current?.id === comboSticker.id ? null : current
+              );
+            }}
+            aria-hidden="true"
+          >
+            <img src={comboSticker.src} alt={comboSticker.alt} />
+          </div>
+        )}
       </section>
 
       <section className="block-puzzle-rack" aria-label="Joylashtirish uchun shakllar">
@@ -443,12 +521,17 @@ export default function BlockPuzzle({ onBack }) {
         <div
           className={`block-puzzle-drag-ghost${drag.valid ? " is-valid" : " is-invalid"}`}
           style={{
-            left: drag.clientX,
-            top: drag.clientY - (drag.pointerType === "touch" ? 34 : 12),
+            left: dragGhostLeft,
+            top: dragGhostTop,
           }}
           aria-hidden="true"
         >
-          <PieceShape piece={drag.piece} />
+          <PieceShape
+            piece={drag.piece}
+            cellWidth={drag.cellWidth}
+            cellHeight={drag.cellHeight}
+            gapX={drag.gapX}
+          />
         </div>
       )}
     </main>
