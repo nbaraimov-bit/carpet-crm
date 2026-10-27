@@ -10,6 +10,7 @@ import AdminPanel from "../../components/AdminPanel"
 import EgaPanel from "../../components/EgaPanel";
 import TeamsPanel from "../Pages/Teams/TeamsPanel";
 import Games from "../Pages/Games/Games";
+import BlockPuzzle from "../Games/BlockPuzzle/BlockPuzzle";
 import BottomNavigation from "../BottomNavigation/BottomNavigation";
 
 import logo from "../Pages/Home/Assets/logo.png";
@@ -2001,7 +2002,11 @@ function App() {
     )}
 
 
-    {page === "games" && <Games />}
+    {page === "games" && <Games setPage={setPage} />}
+
+    {page === "blockPuzzle" && (
+      <BlockPuzzle onBack={() => setPage("games")} />
+    )}
 
     {page === "archive" && (
       <ArchivePage/>
@@ -2009,7 +2014,7 @@ function App() {
 
 
     <BottomNavigation
-      page={page}
+      page={page === "blockPuzzle" ? "games" : page}
       setPage={setPage}
       currentWorker={currentWorker}
     />

@@ -68,14 +68,36 @@
 }
 
 .mini-game-card {
+  display: block;
   min-width: 0;
+  padding: 0;
   overflow: hidden;
   border: 1px solid rgba(126, 83, 131, .42);
   border-radius: 21px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   background:
     radial-gradient(circle at 0 0, rgba(209, 49, 103, .12), transparent 48%),
     linear-gradient(145deg, rgba(27, 22, 48, .98), rgba(12, 17, 38, .98));
   box-shadow: 0 8px 22px rgba(0, 0, 0, .2), inset 0 0 20px rgba(196, 49, 103, .045);
+  cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.mini-game-card:not(:disabled):hover {
+  transform: translateY(-3px);
+  border-color: rgba(239, 94, 143, .62);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, .27), 0 0 19px rgba(213, 54, 112, .13);
+}
+
+.mini-game-card:focus-visible {
+  outline: 2px solid #f0789d;
+  outline-offset: 3px;
+}
+
+.mini-game-card:disabled {
+  cursor: not-allowed;
 }
 
 .mini-game-art {
@@ -236,8 +258,11 @@
 }
 
 .mini-game-button {
+  display: grid;
   width: 100%;
   min-height: 42px;
+  box-sizing: border-box;
+  place-items: center;
   margin-top: 15px;
   border: 1px solid rgba(233, 85, 132, .25);
   border-radius: 12px;
@@ -245,8 +270,14 @@
   background: linear-gradient(110deg, rgba(107, 39, 69, .45), rgba(46, 27, 53, .6));
   font-size: 13px;
   font-weight: 700;
-  cursor: not-allowed;
+  cursor: inherit;
   opacity: .85;
+}
+
+.mini-game-card:not(:disabled) .mini-game-button {
+  border-color: rgba(239, 93, 143, .48);
+  color: #ffe6ed;
+  background: linear-gradient(110deg, rgba(167, 48, 91, .66), rgba(93, 37, 76, .72));
 }
 
 @media (max-width: 620px) {
@@ -339,6 +370,12 @@
 
   .mini-game-info p {
     font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-game-card {
+    transition: none;
   }
 }
 

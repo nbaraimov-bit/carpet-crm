@@ -6,12 +6,15 @@ const games = [
     title: "Block Puzzle",
     description: "Bloklarni joylashtiring va doskani to‘ldiring.",
     artwork: "blocks",
+    available: true,
+    page: "blockPuzzle",
   },
   {
     id: "bubble-shooter",
     title: "Bubble Shooter",
     description: "Rangli pufaklarni moslab, nishonga oling.",
     artwork: "bubbles",
+    available: false,
   },
 ];
 
@@ -44,7 +47,7 @@ function GameArtwork({ type }) {
   );
 }
 
-export default function Games() {
+export default function Games({ setPage }) {
   return (
     <main className="mini-games-page" aria-labelledby="mini-games-title">
       <header className="mini-games-header">
@@ -55,7 +58,14 @@ export default function Games() {
 
       <section className="mini-games-list" aria-label="O‘yinlar ro‘yxati">
         {games.map((game, index) => (
-          <article className={`mini-game-card mini-game-card--${game.artwork}`} key={game.id}>
+          <button
+            className={`mini-game-card mini-game-card--${game.artwork}`}
+            key={game.id}
+            type="button"
+            disabled={!game.available}
+            onClick={() => game.page && setPage(game.page)}
+            aria-label={`${game.title} ${game.available ? "ekranini ochish" : "tez orada"}`}
+          >
             <div className="mini-game-art">
               <span className="mini-game-number">0{index + 1}</span>
               <GameArtwork type={game.artwork} />
@@ -64,15 +74,15 @@ export default function Games() {
             <div className="mini-game-info">
               <span className="mini-game-status">
                 <i aria-hidden="true" />
-                Tez orada
+                {game.available ? "Ekran tayyor" : "Tez orada"}
               </span>
               <h2>{game.title}</h2>
               <p>{game.description}</p>
-              <button className="mini-game-button" type="button" disabled>
-                Tez orada
-              </button>
+              <span className="mini-game-button">
+                {game.available ? "Ekranni ochish" : "Tez orada"}
+              </span>
             </div>
-          </article>
+          </button>
         ))}
       </section>
     </main>
