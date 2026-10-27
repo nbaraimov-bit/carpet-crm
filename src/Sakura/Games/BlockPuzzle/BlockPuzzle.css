@@ -298,7 +298,7 @@
   left: 50%;
   display: grid;
   width: clamp(96px, 29vw, 154px);
-  max-height: 145px;
+  max-height: 200px;
   place-items: center;
   pointer-events: none;
   transform: translate(-50%, -50%);
@@ -308,7 +308,7 @@
 .block-puzzle-combo-sticker img {
   display: block;
   width: 100%;
-  max-height: 145px;
+  max-height: 200px;
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .42));
