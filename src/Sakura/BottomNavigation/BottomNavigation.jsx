@@ -23,6 +23,11 @@ export default function BottomNavigation({
       title: "Arxiv",
     },
     {
+      page: "games",
+      icon: "🎮",
+      title: "Games",
+    },
+    {
       page: "stats",
       icon: "📊",
       title: "Statistika",

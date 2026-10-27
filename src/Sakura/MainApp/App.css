@@ -422,6 +422,10 @@
     padding-bottom:0;
 }
 
+.games-page {
+    min-height:calc(100vh - 70px);
+}
+
 @media (max-width:480px) {
     .date-income-card { padding:14px; }
     .date-income-header { align-items:flex-start; flex-direction:column; }

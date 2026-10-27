@@ -2000,6 +2000,8 @@ function App() {
     )}
 
 
+    {page === "games" && <main className="games-page" aria-label="Games" />}
+
     {page === "archive" && (
       <ArchivePage/>
     )}
