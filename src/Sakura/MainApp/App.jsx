@@ -9,6 +9,7 @@ import OperatorPanel from "../Panels/Operator/OperatorPanel"
 import AdminPanel from "../../components/AdminPanel"
 import EgaPanel from "../../components/EgaPanel";
 import TeamsPanel from "../Pages/Teams/TeamsPanel";
+import Games from "../Pages/Games/Games";
 import BottomNavigation from "../BottomNavigation/BottomNavigation";
 
 import logo from "../Pages/Home/Assets/logo.png";
@@ -2000,7 +2001,7 @@ function App() {
     )}
 
 
-    {page === "games" && <main className="games-page" aria-label="Games" />}
+    {page === "games" && <Games />}
 
     {page === "archive" && (
       <ArchivePage/>
