@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import "./BubbleShooter.css";
 
 const COLORS = ["#ff668e", "#a970ff", "#42d8d0", "#ffc451", "#64a9ff"];
@@ -50,18 +50,26 @@ export default function BubbleShooter({ onBack }) {
   const [gameOver, setGameOver] = useState(false);
   const [won, setWon] = useState(false);
   const [aim, setAim] = useState({ x: WIDTH / 2, y: 200 });
+  const pointerDown = useRef(false);
   const [current, setCurrent] = useState(() => COLORS[Math.floor(Math.random() * COLORS.length)]);
   const next = useMemo(() => COLORS[Math.floor(Math.random() * COLORS.length)], [shots]);
 
-  function shoot(event) {
-    if (gameOver) return;
-    event.preventDefault();
+  function getPoint(event) {
     const svg = event.currentTarget;
     const screenPoint = svg.createSVGPoint();
     screenPoint.x = event.clientX;
     screenPoint.y = event.clientY;
-    const point = screenPoint.matrixTransform(svg.getScreenCTM().inverse());
-    const target = { x: point.x, y: point.y };
+    const matrix = svg.getScreenCTM();
+    if (!matrix) return aim;
+    const point = screenPoint.matrixTransform(matrix.inverse());
+    return { x: point.x, y: point.y };
+  }
+
+  function shoot(event) {
+    if (gameOver) return;
+    event.preventDefault();
+    const target = getPoint(event);
+    setAim(target);
     setAim(target);
     let dx = target.x - WIDTH / 2, dy = target.y - LAUNCH_Y;
     if (dy > -30) dy = -30;
@@ -106,11 +114,29 @@ export default function BubbleShooter({ onBack }) {
 
   function restart() { setBoard(makeBoard()); setScore(0); setShots(0); setGameOver(false); setWon(false); setCurrent(COLORS[Math.floor(Math.random() * COLORS.length)]); }
 
+  function handlePointerDown(event) {
+    if (gameOver) return;
+    event.preventDefault();
+    pointerDown.current = true;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setAim(getPoint(event));
+  }
+
+  function handlePointerMove(event) {
+    if (!gameOver && (pointerDown.current || event.pointerType === "mouse")) setAim(getPoint(event));
+  }
+
+  function handlePointerUp(event) {
+    if (!pointerDown.current) return;
+    pointerDown.current = false;
+    shoot(event);
+  }
+
   return <main className="bubble-page">
     <header className="bubble-header"><button className="bubble-back" onClick={onBack} aria-label="O‘yinlar ro‘yxatiga qaytish">‹</button><div><span>SAKURA · MINI O‘YIN</span><h1>Bubble Shooter</h1></div><button className="bubble-restart" onClick={restart}>Qayta</button></header>
     <div className="bubble-score"><span>BALL</span><strong>{score}</strong><span>OTISH: {shots}</span></div>
     <section className="bubble-stage" aria-label="Pufaklar maydoni">
-      <svg viewBox="0 0 400 520" role="application" aria-label="Nishonni belgilash va pufak otish" onPointerMove={event => { if (!gameOver && event.pointerType === "mouse") { const rect = event.currentTarget.getBoundingClientRect(); setAim({ x: (event.clientX-rect.left)/rect.width*WIDTH, y:(event.clientY-rect.top)/rect.height*520 }); } }} onClick={shoot}>
+      <svg viewBox="0 0 400 520" role="application" aria-label="Nishonni surib belgilang va barmoqni qo‘yib yuborib oting" onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onPointerCancel={() => { pointerDown.current = false; }}>
         <defs>{COLORS.map((color,i)=><radialGradient id={`bubble-shine-${i}`} key={color} cx="32%" cy="25%"><stop stopColor="white" stopOpacity=".75"/><stop offset=".3" stopColor={color}/><stop offset="1" stopColor={color}/></radialGradient>)}</defs>
         {board.map((row,r)=>row.map((color,c)=>color&&<circle key={`${r}-${c}`} cx={center(r,c).x} cy={center(r,c).y} r={R-1} fill={`url(#bubble-shine-${COLORS.indexOf(color)})`} stroke="white" strokeOpacity=".38" strokeWidth="1.5"/>))}
         <line x1="200" y1={LAUNCH_Y-24} x2={aim.x} y2={Math.max(80,aim.y)} className="bubble-aim" strokeDasharray="5 7"/>
@@ -119,6 +145,6 @@ export default function BubbleShooter({ onBack }) {
         {gameOver&&<g><rect x="36" y="205" width="328" height="116" rx="22" fill="#17142d" stroke="#ef6c9c" strokeWidth="2"/><text x="200" y="251" textAnchor="middle" className="bubble-result">{won?"Ajoyib! Maydon tozalandi":"O‘yin tugadi"}</text><text x="200" y="281" textAnchor="middle" className="bubble-result-score">Ball: {score} · Qayta boshlash uchun «Qayta»ni bosing</text></g>}
       </svg>
     </section>
-    <div className="bubble-instructions"><span className="bubble-next" style={{"--next-color":next}}/><p><strong>Navbatdagi rang</strong><br/>Mos rangli 3 yoki undan ko‘p pufakni birlashtiring.</p><span className="bubble-hint">Nishonga teging</span></div>
+    <div className="bubble-instructions"><span className="bubble-next" style={{"--next-color":next}}/><p><strong>Navbatdagi rang</strong><br/>Mos rangli 3 yoki undan ko‘p pufakni birlashtiring.</p><span className="bubble-hint">Mo‘ljallang va qo‘yib yuboring</span></div>
   </main>;
 }
