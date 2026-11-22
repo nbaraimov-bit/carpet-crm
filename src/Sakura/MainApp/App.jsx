@@ -11,6 +11,7 @@ import EgaPanel from "../../components/EgaPanel";
 import TeamsPanel from "../Pages/Teams/TeamsPanel";
 import Games from "../Pages/Games/Games";
 import BlockPuzzle from "../Games/BlockPuzzle/BlockPuzzle";
+import BubbleShooter from "../Games/BubbleShooter/BubbleShooter";
 import BottomNavigation from "../BottomNavigation/BottomNavigation";
 import StatsPage from "../Pages/Stats/StatsPage";
 import ExpenseTab from "../Pages/Stats/ExpenseTab/ExpenseTab";
@@ -1250,6 +1251,9 @@ function App() {
 
     {page === "blockPuzzle" && (
       <BlockPuzzle onBack={() => setPage("games")} />
+    )}
+    {page === "bubbleShooter" && (
+      <BubbleShooter onBack={() => setPage("games")} />
     )}
 
     {page === "archive" && (

@@ -14,6 +14,14 @@ const games = [
     title: "Bubble Shooter",
     description: "Rangli pufaklarni moslab, nishonga oling.",
     artwork: "bubbles",
+    available: true,
+    page: "bubbleShooter",
+  },
+  {
+    id: "sausage-dash",
+    title: "Sausage Dash",
+    description: "To‘siqlardan qochib, marraga yetib boring.",
+    artwork: "sausage",
     available: false,
   },
 ];
@@ -31,6 +39,10 @@ function GameArtwork({ type }) {
         <circle className="game-art-shot" cx="90" cy="105" r="9" />
       </svg>
     );
+  }
+
+  if (type === "sausage") {
+    return <svg viewBox="0 0 180 140" aria-hidden="true"><path d="M33 93c-9-10-6-29 6-36l78-31c14-6 31 1 36 15s-2 30-16 35L59 108c-10 4-20-2-26-15Z" fill="#e98557" stroke="#ffd0a8" strokeWidth="4"/><path d="m43 80 101-39" stroke="#f7b17a" strokeWidth="4" strokeLinecap="round"/><path d="m28 39 15 11-9 15M145 99l13-13-3-16" fill="none" stroke="#d75c83" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"/></svg>;
   }
 
   return (
