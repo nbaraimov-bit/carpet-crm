@@ -65,10 +65,8 @@ export default function BubbleShooter({ onBack }) {
     return { x: point.x, y: point.y };
   }
 
-  function shoot(event) {
+  function shootAt(target) {
     if (gameOver) return;
-    event.preventDefault();
-    const target = getPoint(event);
     setAim(target);
     setAim(target);
     let dx = target.x - WIDTH / 2, dy = target.y - LAUNCH_Y;
@@ -118,7 +116,6 @@ export default function BubbleShooter({ onBack }) {
     if (gameOver) return;
     event.preventDefault();
     pointerDown.current = true;
-    event.currentTarget.setPointerCapture(event.pointerId);
     setAim(getPoint(event));
   }
 
@@ -129,7 +126,7 @@ export default function BubbleShooter({ onBack }) {
   function handlePointerUp(event) {
     if (!pointerDown.current) return;
     pointerDown.current = false;
-    shoot(event);
+    shootAt(getPoint(event));
   }
 
   return <main className="bubble-page">
@@ -145,6 +142,7 @@ export default function BubbleShooter({ onBack }) {
         {gameOver&&<g><rect x="36" y="205" width="328" height="116" rx="22" fill="#17142d" stroke="#ef6c9c" strokeWidth="2"/><text x="200" y="251" textAnchor="middle" className="bubble-result">{won?"Ajoyib! Maydon tozalandi":"O‘yin tugadi"}</text><text x="200" y="281" textAnchor="middle" className="bubble-result-score">Ball: {score} · Qayta boshlash uchun «Qayta»ni bosing</text></g>}
       </svg>
     </section>
+    {!gameOver && <button className="bubble-shoot-button" type="button" onClick={() => shootAt(aim)}>OTISH</button>}
     <div className="bubble-instructions"><span className="bubble-next" style={{"--next-color":next}}/><p><strong>Navbatdagi rang</strong><br/>Mos rangli 3 yoki undan ko‘p pufakni birlashtiring.</p><span className="bubble-hint">Mo‘ljallang va qo‘yib yuboring</span></div>
   </main>;
 }
