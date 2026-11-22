@@ -55,8 +55,13 @@ export default function BubbleShooter({ onBack }) {
 
   function shoot(event) {
     if (gameOver) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const target = { x: ((event.clientX - rect.left) / rect.width) * WIDTH, y: ((event.clientY - rect.top) / rect.height) * 520 };
+    event.preventDefault();
+    const svg = event.currentTarget;
+    const screenPoint = svg.createSVGPoint();
+    screenPoint.x = event.clientX;
+    screenPoint.y = event.clientY;
+    const point = screenPoint.matrixTransform(svg.getScreenCTM().inverse());
+    const target = { x: point.x, y: point.y };
     setAim(target);
     let dx = target.x - WIDTH / 2, dy = target.y - LAUNCH_Y;
     if (dy > -30) dy = -30;
@@ -105,7 +110,7 @@ export default function BubbleShooter({ onBack }) {
     <header className="bubble-header"><button className="bubble-back" onClick={onBack} aria-label="O‘yinlar ro‘yxatiga qaytish">‹</button><div><span>SAKURA · MINI O‘YIN</span><h1>Bubble Shooter</h1></div><button className="bubble-restart" onClick={restart}>Qayta</button></header>
     <div className="bubble-score"><span>BALL</span><strong>{score}</strong><span>OTISH: {shots}</span></div>
     <section className="bubble-stage" aria-label="Pufaklar maydoni">
-      <svg viewBox="0 0 400 520" role="application" aria-label="Nishonni belgilash va pufak otish" onPointerMove={event => { if (!gameOver) { const rect = event.currentTarget.getBoundingClientRect(); setAim({ x: (event.clientX-rect.left)/rect.width*WIDTH, y:(event.clientY-rect.top)/rect.height*520 }); } }} onPointerDown={shoot}>
+      <svg viewBox="0 0 400 520" role="application" aria-label="Nishonni belgilash va pufak otish" onPointerMove={event => { if (!gameOver && event.pointerType === "mouse") { const rect = event.currentTarget.getBoundingClientRect(); setAim({ x: (event.clientX-rect.left)/rect.width*WIDTH, y:(event.clientY-rect.top)/rect.height*520 }); } }} onClick={shoot}>
         <defs>{COLORS.map((color,i)=><radialGradient id={`bubble-shine-${i}`} key={color} cx="32%" cy="25%"><stop stopColor="white" stopOpacity=".75"/><stop offset=".3" stopColor={color}/><stop offset="1" stopColor={color}/></radialGradient>)}</defs>
         {board.map((row,r)=>row.map((color,c)=>color&&<circle key={`${r}-${c}`} cx={center(r,c).x} cy={center(r,c).y} r={R-1} fill={`url(#bubble-shine-${COLORS.indexOf(color)})`} stroke="white" strokeOpacity=".38" strokeWidth="1.5"/>))}
         <line x1="200" y1={LAUNCH_Y-24} x2={aim.x} y2={Math.max(80,aim.y)} className="bubble-aim" strokeDasharray="5 7"/>
